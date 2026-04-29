@@ -1,5 +1,13 @@
+'use client'
+
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
-import { IsometricLattice } from './isometric-lattice'
+
+// Three.js: client-only, lazy-loaded after paint — no LCP impact
+const HeroOrb = dynamic(
+  () => import('@/components/hero-orb/hero-orb').then(m => ({ default: m.HeroOrb })),
+  { ssr: false, loading: () => null }
+)
 
 export function HeroSection() {
   return (
@@ -52,13 +60,13 @@ export function HeroSection() {
         </p>
       </div>
 
-      {/* Right: Genesis Cube */}
+      {/* Right: Three.js orb */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: '#f5f7ff', borderLeft: '1px solid rgba(32,74,248,0.08)',
         position: 'relative', overflow: 'hidden', minHeight: '100vh',
       }}>
-        <IsometricLattice />
+        <HeroOrb />
       </div>
     </section>
   )
