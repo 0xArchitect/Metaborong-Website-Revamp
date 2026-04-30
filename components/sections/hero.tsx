@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { Button } from '@/components/ui/button'
+import { Cta } from '@/components/ui/cta'
 
 // Three.js: client-only, lazy-loaded after paint — no LCP impact
 const HeroOrb = dynamic(
@@ -11,62 +11,56 @@ const HeroOrb = dynamic(
 
 export function HeroSection() {
   return (
-    <section style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '55fr 45fr', background: '#f5f7ff' }}>
-      {/* Left: copy */}
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '96px 64px 96px 80px', maxWidth: 680 }}>
-        {/* Eyebrow */}
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 28,
-          background: '#fff', border: '1px solid #e5e7eb', borderRadius: 4,
-          padding: '5px 12px', fontSize: 12, color: '#676767', letterSpacing: '0.02em', width: 'fit-content',
-        }}>
-          <span style={{ width: 7, height: 7, background: '#204AF8', borderRadius: 2, flexShrink: 0, display: 'inline-block' }} />
-          Web3 Development · AI Agents · Product Studio
-        </div>
+    <section className="section-pad" style={{ background: 'var(--color-paper)' }}>
+      <div className="container-x grid lg:grid-cols-[55fr_45fr] gap-12 items-center">
+        {/* Left: copy column */}
+        <div className="max-w-[640px]">
+          <div
+            className="font-mono uppercase text-[var(--color-muted)]"
+            style={{ fontSize: 'var(--text-eyebrow)', letterSpacing: 'var(--tracking-eyebrow)' }}
+          >
+            {/* SLOT: HERO_EYEBROW — replaced in Task 23 with Lane B copy */}
+            FULL-STACK WEB3 + AI STUDIO
+          </div>
 
-        {/* H1 */}
-        <h1 style={{
-          fontSize: 'clamp(36px, 4.5vw, 64px)', fontWeight: 700,
-          letterSpacing: '-0.04em', lineHeight: 1.02, color: '#303030', marginBottom: 20,
-        }}>
-          Full-Stack Web3 Development
-          <br />
-          <span style={{ color: '#204AF8' }}>&amp; AI Agent Studio</span>
-        </h1>
+          <h1
+            className="mt-4 font-medium text-[var(--color-ink)]"
+            style={{ fontSize: 'var(--text-display)', letterSpacing: 'var(--tracking-display)', lineHeight: 1.05 }}
+          >
+            {/* SLOT: HERO_H1 — replaced in Task 23 */}
+            We build Web3 platforms and AI agents that ship.
+          </h1>
 
-        {/* AEO extraction blockquote */}
-        <blockquote style={{ borderLeft: '2px solid #204AF8', paddingLeft: 16, marginBottom: 24, fontStyle: 'normal' }}>
-          <p style={{ fontSize: 15, color: '#676767', lineHeight: 1.65, letterSpacing: '-0.01em', maxWidth: 480 }}>
-            Metaborong is a Web3 development company and AI agent studio that builds DeFi protocols,
-            autonomous AI systems, and custom SaaS products for founders and crypto-native teams.
-            Based across the US and Europe, Metaborong delivers from spec to production — fast.
+          <blockquote
+            className="mt-6 pl-4 text-[var(--color-ink)]"
+            style={{
+              fontSize: 'var(--text-body-lg)',
+              lineHeight: 1.5,
+              borderLeft: '2px solid var(--color-brand)',
+            }}
+          >
+            {/* SLOT: HERO_BLOCKQUOTE — replaced in Task 23 (38-word AEO sentence) */}
+            Metaborong is a Web3 development company building DeFi protocols, custom blockchain platforms, and AI agents for crypto, with delivery-focused founders who have shipped products since Web2 and now operate at the AI agent in Web3 frontier.
+          </blockquote>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Cta href="/contact" variant="primary">Start a project</Cta>
+            <Cta href="#work" variant="ghost">See our work</Cta>
+          </div>
+
+          <p
+            className="mt-6 text-[var(--color-muted)]"
+            style={{ fontSize: 'var(--text-body-sm)' }}
+          >
+            {/* SLOT: HERO_TRUST_MICROCOPY — replaced in Task 23 */}
+            Trusted by 8 named clients across DeFi, gaming, and AI.
           </p>
-        </blockquote>
-
-        {/* Sub */}
-        <p style={{ fontSize: 16, color: '#676767', lineHeight: 1.65, letterSpacing: '-0.01em', maxWidth: 460, marginBottom: 32 }}>
-          We work with founders and crypto-native teams who need a technical partner that ships, not just consults. Built with product thinking, not just code.
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-          <Button href="/contact/" size="lg">Start a Project &rarr;</Button>
-          <Button href="/work/" variant="ghost" size="lg">See Our Work</Button>
         </div>
 
-        {/* Micro-copy */}
-        <p style={{ fontSize: 12, color: '#999999', letterSpacing: '-0.01em' }}>
-          No pitch decks. No retainers. Direct from founders.
-        </p>
-      </div>
-
-      {/* Right: Three.js orb */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: '#f5f7ff', borderLeft: '1px solid rgba(32,74,248,0.08)',
-        position: 'relative', overflow: 'hidden', minHeight: '100vh',
-      }}>
-        <HeroOrb />
+        {/* Right: orb */}
+        <div className="w-full" style={{ height: 'clamp(360px, 60vh, 520px)' }}>
+          <HeroOrb />
+        </div>
       </div>
     </section>
   )
