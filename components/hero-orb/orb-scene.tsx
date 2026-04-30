@@ -16,7 +16,7 @@ const AUTO_SPEED = 0.058  // rad/s ≈ OrbitControls 0.55
 
 const CAT_COLOR = {
   WEB3:    '#F6851B',
-  AI:      '#4dff9a',
+  AI:      '#3dd685',
   PRODUCT: '#204AF8',
 } as const
 
@@ -95,7 +95,7 @@ const _orangePts    = _orangeIdxs.map(i => _worldPts[i])
 
 function buildBlueMesh(): THREE.InstancedMesh {
   const geo   = new THREE.SphereGeometry(BLUE_R, 9, 7)
-  const mat   = new THREE.MeshBasicMaterial({ color: '#204AF8' })
+  const mat   = new THREE.MeshBasicMaterial({ color: '#c8d0ec' })
   const count = N_TOTAL - N_ORANGE
   const mesh  = new THREE.InstancedMesh(geo, mat, count)
   const dummy = new THREE.Object3D()
@@ -141,7 +141,7 @@ function buildEdgeLines(): THREE.LineSegments {
   geo.setAttribute('color',    new THREE.BufferAttribute(col, 3))
   return new THREE.LineSegments(
     geo,
-    new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.22 })
+    new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.10 })
   )
 }
 
@@ -155,11 +155,6 @@ const KF = `
   100% { opacity:0 }
 }
 @keyframes _orbCur { 0%,100%{opacity:1} 50%{opacity:0} }
-@keyframes _orbScn {
-  0%   { transform:translateY(-100%); opacity:.15 }
-  50%  { opacity:.45 }
-  100% { transform:translateY(350%);  opacity:.15 }
-}
 `
 function useKeyframes() {
   useEffect(() => {
@@ -247,7 +242,7 @@ function FloatingLabel({ state, onExpire }: { state: LabelState; onExpire: () =>
     >
       <div style={{
         position:     'relative',
-        background:   'rgba(2, 6, 26, 0.94)',
+        background:   'rgba(10, 10, 10, 0.88)',
         border:       `1px solid ${color}88`,
         borderRadius: '2px',
         padding:      '10px 20px 10px 14px',
@@ -272,11 +267,6 @@ function FloatingLabel({ state, onExpire }: { state: LabelState; onExpire: () =>
             borderRight:  c[1] === 'r' ? `2px solid ${color}` : 'none',
           }} />
         ))}
-        <span style={{
-          position: 'absolute', inset: 0, height: '30%',
-          background: `linear-gradient(transparent, ${color}14, transparent)`,
-          animation: '_orbScn 2.2s linear infinite', pointerEvents: 'none',
-        }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: 9, position: 'relative' }}>
           <span style={{
             width: 5, height: 5, borderRadius: '50%',
@@ -332,10 +322,11 @@ function ServiceNode({
 
   return (
     <group position={pos}>
-      {/* Large halo — extends the hover hitbox and adds soft glow */}
+      {/* Halo rim — 30% opacity lifts service nodes off desaturated atmosphere
+          (spec §4.2). Also extends the hover hitbox. */}
       <mesh onPointerEnter={onEnter} onPointerLeave={onLeave}>
-        <sphereGeometry args={[NODE_R * 2.6, 8, 6]} />
-        <meshBasicMaterial color={color} transparent opacity={0.09} />
+        <sphereGeometry args={[NODE_R * 1.6, 16, 16]} />
+        <meshBasicMaterial color={color} transparent opacity={0.3} depthWrite={false} />
       </mesh>
       {/* Core — MeshStandardMaterial so world-space lights create a 3D highlight
           that shifts dynamically as the sphere rotates. emissive keeps nodes
