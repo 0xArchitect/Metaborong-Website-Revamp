@@ -1,17 +1,33 @@
-const projects = ['KGeN','Bionic','DATA3 AI','Defiverse','GET Smart','SEDAX','Bayan','Memestakes Vault']
+const CLIENTS = ['KGeN', 'Bionic', 'DATA3 AI', 'Defiverse', 'GET Smart', 'SEDAX', 'Bayan', 'Memestakes Vault']
 
 export function TrustBar() {
-  const doubled = [...projects, ...projects]
   return (
-    <div style={{ borderTop: '1px solid #e5e7eb', borderBottom: '1px solid #e5e7eb', background: '#fff', padding: '14px 0', overflow: 'hidden', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 80, zIndex: 2, background: 'linear-gradient(to right, #fff, transparent)' }} />
-      <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 80, zIndex: 2, background: 'linear-gradient(to left, #fff, transparent)' }} />
-      <div style={{ display: 'flex', gap: 48, animation: 'trustBarScroll 24s linear infinite', width: 'max-content' }}>
-        {doubled.map((name, i) => (
-          <span key={i} style={{ fontSize: 13, fontWeight: 500, color: '#676767', letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>{name}</span>
-        ))}
+    <section className="border-y border-[var(--color-line)]" style={{ background: 'var(--color-paper)' }}>
+      <div className="container-x py-8 flex items-center gap-8">
+        <div
+          className="font-mono uppercase text-[var(--color-muted)] shrink-0"
+          style={{ fontSize: 'var(--text-eyebrow)', letterSpacing: 'var(--tracking-eyebrow)' }}
+        >
+          TRUSTED BY
+        </div>
+        <div className="overflow-hidden flex-1 relative">
+          <div
+            className="flex gap-12 whitespace-nowrap"
+            style={{ animation: 'trustBarScroll 24s linear infinite', width: 'max-content' }}
+          >
+            {[...CLIENTS, ...CLIENTS].map((name, i) => (
+              <span
+                key={i}
+                className="font-mono uppercase text-[var(--color-ink)]"
+                style={{ fontSize: 'var(--text-mono-sm)', letterSpacing: 'var(--tracking-mono)' }}
+              >
+                {name}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
       <style>{`@keyframes trustBarScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
-    </div>
+    </section>
   )
 }
