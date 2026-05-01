@@ -1,3 +1,5 @@
+'use client';
+
 import { Boxes, Brain, LayoutGrid } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
 import { PillarCard } from "@/components/ui/pillar-card";
