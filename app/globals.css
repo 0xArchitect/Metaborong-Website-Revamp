@@ -92,6 +92,12 @@
   animation: navDropdownIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Hero scroll affordance ──────────────────────────────────────────── */
+@keyframes heroScrollBounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
+
 /* ── Hero orb HUD label ──────────────────────────────────────────────────── */
 @keyframes orbLabelIn {
   0%   { opacity: 0; transform: translateY(-10px) scale(0.9); }
