@@ -91,6 +91,20 @@ function buildEdges(pts: THREE.Vector3[]): number[] {
   return pairs
 }
 
+// Adjacency: vertexIndex → list of edge indices (positions in the flat pairs array)
+function buildAdjacency(pairs: number[]): Map<number, number[]> {
+  const adj = new Map<number, number[]>()
+  for (let e = 0; e < pairs.length; e += 2) {
+    const a = pairs[e]
+    const b = pairs[e + 1]
+    if (!adj.has(a)) adj.set(a, [])
+    if (!adj.has(b)) adj.set(b, [])
+    adj.get(a)!.push(e / 2)
+    adj.get(b)!.push(e / 2)
+  }
+  return adj
+}
+
 // Cheap deterministic hash → 0..1 — gives consistent size variation
 // without re-randomising on every module load.
 function hashF(i: number): number {
@@ -173,7 +187,14 @@ function buildGlyphSprites(): THREE.Group {
 // Since the group rotates we use the INITIAL z (precomputed once) as a proxy
 // for the average front/back depth — avoids per-frame colour buffer updates.
 
-function buildEdgeLines(): THREE.LineSegments {
+interface EdgeBundle {
+  lines:          THREE.LineSegments
+  pairs:          number[]
+  adjacency:      Map<number, number[]>
+  baselineColors: Float32Array
+}
+
+function buildEdgeLines(): EdgeBundle {
   const pairs  = buildEdges(_unitPts)
   const n      = pairs.length
   const pos    = new Float32Array(n * 3)
@@ -195,10 +216,107 @@ function buildEdgeLines(): THREE.LineSegments {
   const geo = new THREE.BufferGeometry()
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
   geo.setAttribute('color',    new THREE.BufferAttribute(col, 3))
-  return new THREE.LineSegments(
+  const lines = new THREE.LineSegments(
     geo,
-    new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.22 })
+    new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.32 })
   )
+  return {
+    lines,
+    pairs,
+    adjacency:      buildAdjacency(pairs),
+    baselineColors: col.slice(),
+  }
+}
+
+// ── Edge pulse: walks adjacency graph, animates a chain over 800ms ───────────
+
+interface ActivePulse {
+  edgeIndices: number[]
+  startTime:   number
+}
+
+function walkChain(
+  adjacency: Map<number, number[]>,
+  pairs: number[],
+  length: number,
+): number[] {
+  const vertices = [...adjacency.keys()]
+  if (vertices.length === 0) return []
+  const startVertex = vertices[Math.floor(Math.random() * vertices.length)]
+  const visited = new Set<number>()
+  const chain: number[] = []
+  let current = startVertex
+  for (let step = 0; step < length; step++) {
+    const neighbors = (adjacency.get(current) || []).filter(e => !visited.has(e))
+    if (neighbors.length === 0) break
+    const edgeIdx = neighbors[Math.floor(Math.random() * neighbors.length)]
+    visited.add(edgeIdx)
+    chain.push(edgeIdx)
+    const a = pairs[edgeIdx * 2]
+    const b = pairs[edgeIdx * 2 + 1]
+    current = current === a ? b : a
+  }
+  return chain
+}
+
+function useEdgePulse(bundle: EdgeBundle, reducedMotion: boolean) {
+  const lastFireRef = useRef(0)
+  const activeRef   = useRef<ActivePulse[]>([])
+
+  useFrame(({ clock }) => {
+    if (reducedMotion) {
+      // Restore baseline once and exit so a previously-active pulse doesn't stick
+      if (activeRef.current.length > 0) {
+        const colorAttr = bundle.lines.geometry.getAttribute('color') as THREE.BufferAttribute
+        ;(colorAttr.array as Float32Array).set(bundle.baselineColors)
+        colorAttr.needsUpdate = true
+        activeRef.current = []
+      }
+      return
+    }
+
+    const now = clock.elapsedTime * 1000
+
+    // Fire a new pulse every 3-5s
+    if (now - lastFireRef.current > 3000 + Math.random() * 2000) {
+      lastFireRef.current = now
+      const chainLen = 3 + Math.floor(Math.random() * 3) // 3..5
+      const chain    = walkChain(bundle.adjacency, bundle.pairs, chainLen)
+      if (chain.length > 0) {
+        activeRef.current.push({ edgeIndices: chain, startTime: now })
+      }
+    }
+
+    const colorAttr = bundle.lines.geometry.getAttribute('color') as THREE.BufferAttribute
+    const colArr = colorAttr.array as Float32Array
+
+    // Reset to baseline first
+    colArr.set(bundle.baselineColors)
+
+    // Apply each active pulse's overlay
+    activeRef.current = activeRef.current.filter(p => {
+      const elapsed = now - p.startTime
+      if (elapsed > 800) return false
+      const alpha = elapsed < 200
+        ? (elapsed / 200) * 0.95
+        : (1 - (elapsed - 200) / 600) * 0.95
+      // Pulse color = saturated cyan-tinted brand-blue for max visibility
+      // against the dim periwinkle baseline
+      const r = 0x60 / 255, g = 0xB0 / 255, b = 0xFF / 255
+      for (const edgeIdx of p.edgeIndices) {
+        const offset = edgeIdx * 6 // 2 vertices × 3 components
+        for (let v = 0; v < 2; v++) {
+          const base = offset + v * 3
+          colArr[base]     = colArr[base]     * (1 - alpha) + r * alpha
+          colArr[base + 1] = colArr[base + 1] * (1 - alpha) + g * alpha
+          colArr[base + 2] = colArr[base + 2] * (1 - alpha) + b * alpha
+        }
+      }
+      return true
+    })
+
+    colorAttr.needsUpdate = true
+  })
 }
 
 // ── CSS keyframes injected once ───────────────────────────────────────────────
@@ -451,6 +569,17 @@ function OrbController({
   return null
 }
 
+function EdgePulse({
+  bundle,
+  reducedMotion,
+}: {
+  bundle: EdgeBundle
+  reducedMotion: boolean
+}) {
+  useEdgePulse(bundle, reducedMotion)
+  return null
+}
+
 // ── Main scene ────────────────────────────────────────────────────────────────
 
 export function OrbScene() {
@@ -458,9 +587,9 @@ export function OrbScene() {
 
   const groupRef = useRef<THREE.Group>(null)
 
-  const { glyphSprites, edgeLines } = useMemo(() => ({
+  const { glyphSprites, edgeBundle } = useMemo(() => ({
     glyphSprites: buildGlyphSprites(),
-    edgeLines:    buildEdgeLines(),
+    edgeBundle:   buildEdgeLines(),
   }), [])
 
   useEffect(() => () => {
@@ -469,11 +598,11 @@ export function OrbScene() {
         ;(obj.material as THREE.SpriteMaterial).dispose()
       }
     })
-    edgeLines.geometry.dispose()
-    ;(edgeLines.material as THREE.Material).dispose()
+    edgeBundle.lines.geometry.dispose()
+    ;(edgeBundle.lines.material as THREE.Material).dispose()
     _glyphTextureCache.forEach(tex => tex.dispose())
     _glyphTextureCache.clear()
-  }, [glyphSprites, edgeLines])
+  }, [glyphSprites, edgeBundle])
 
   const [label, setLabel] = useState<LabelState | null>(null)
   const lastUserInteractionRef = useRef(0)
@@ -523,6 +652,7 @@ export function OrbScene() {
   return (
     <>
       <OrbController groupRef={groupRef} reducedMotion={reducedMotion} />
+      <EdgePulse bundle={edgeBundle} reducedMotion={reducedMotion} />
 
       {/* Lights live in world-space so they DON'T rotate with the group.
           This means service nodes get a shifting highlight as they rotate —
@@ -531,7 +661,7 @@ export function OrbScene() {
       <directionalLight position={[3, 4, 3]} intensity={1.0} />
 
       <group ref={groupRef}>
-        <primitive object={edgeLines} />
+        <primitive object={edgeBundle.lines} />
         <primitive object={glyphSprites} />
 
         {_orangeIdxs.map((_, si) => (
