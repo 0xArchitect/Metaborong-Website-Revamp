@@ -476,17 +476,49 @@ export function OrbScene() {
   }, [glyphSprites, edgeLines])
 
   const [label, setLabel] = useState<LabelState | null>(null)
+  const lastUserInteractionRef = useRef(0)
 
   const handleHover = useCallback((localPos: THREE.Vector3, idx: number) => {
     const worldX = groupRef.current
       ? localPos.clone().applyMatrix4(groupRef.current.matrixWorld).x
       : localPos.x
+    lastUserInteractionRef.current = Date.now()
     setLabel({ id: Date.now(), localPos, svc: SERVICES[idx], openLeft: worldX > 0 })
   }, [])
 
   const clearLabel = useCallback(() => setLabel(null), [])
 
   const reducedMotion = useReducedMotion()
+
+  // ── Layer 4 — random label cycle ───────────────────────────────────────────
+  // Every ~6s (5-7s jitter), pick a random service node and surface its label,
+  // making the orb feel alive when no one's interacting. Suppressed if the
+  // user just interacted (within 4s) or under prefers-reduced-motion.
+  useEffect(() => {
+    if (reducedMotion) return
+    let timeoutId: ReturnType<typeof setTimeout>
+
+    const fire = () => {
+      const sinceUser = Date.now() - lastUserInteractionRef.current
+      if (sinceUser > 4000) {
+        const idx = Math.floor(Math.random() * N_ORANGE)
+        const localPos = _orangePts[idx]
+        const worldX = groupRef.current
+          ? localPos.clone().applyMatrix4(groupRef.current.matrixWorld).x
+          : localPos.x
+        setLabel({
+          id: Date.now(),
+          localPos,
+          svc: SERVICES[idx],
+          openLeft: worldX > 0,
+        })
+      }
+      timeoutId = setTimeout(fire, 5000 + Math.random() * 2000)
+    }
+
+    timeoutId = setTimeout(fire, 3000) // wait 3s after mount before first auto-trigger
+    return () => clearTimeout(timeoutId)
+  }, [reducedMotion])
 
   return (
     <>
