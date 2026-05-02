@@ -222,23 +222,23 @@ function buildEdgeLines(): EdgeBundle {
     new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.32 })
   )
 
-  // Pulse overlay mesh — sized for up to 24 active edge segments at once
-  // (well above the realistic max of 5 active pulses × 5 edges = 25). Empty
-  // capacity is hidden via setDrawRange(0, 0).
+  // Pulse overlay mesh — sized for up to 24 active edge segments at once.
+  // Per-vertex colors so concurrent pulses can render in different brand
+  // colors (alternates orange/green, matching Web3/AI pillar palette).
   const PULSE_CAPACITY = 24
   const pulsePositions = new Float32Array(PULSE_CAPACITY * 2 * 3) // 2 vertices per edge
+  const pulseColors    = new Float32Array(PULSE_CAPACITY * 2 * 3)
   const pulseGeo = new THREE.BufferGeometry()
   pulseGeo.setAttribute('position', new THREE.BufferAttribute(pulsePositions, 3))
+  pulseGeo.setAttribute('color',    new THREE.BufferAttribute(pulseColors, 3))
   pulseGeo.setDrawRange(0, 0)
   const pulseLines = new THREE.LineSegments(
     pulseGeo,
     new THREE.LineBasicMaterial({
-      color: '#F6851B',          // brand-accent orange — 3rd color, unmissable against blue mesh
-      transparent: true,
-      opacity: 1.0,
-      // NormalBlending (default) — on a light bg, additive washes toward
-      // white. Normal alpha blending keeps the orange visibly orange.
-      depthWrite: false,
+      vertexColors: true,
+      transparent:  true,
+      opacity:      1.0,
+      depthWrite:   false,
     })
   )
 
@@ -256,7 +256,16 @@ function buildEdgeLines(): EdgeBundle {
 interface ActivePulse {
   edgeIndices: number[]
   startTime:   number
+  color:       [number, number, number]  // RGB 0..1, picked at fire time
 }
+
+// Pulse palette — alternates between Web3 orange and AI green for variety.
+// Brand-blue (Product) is omitted because it would blend into the dim
+// blue baseline mesh.
+const PULSE_COLORS: [number, number, number][] = [
+  [0xF6 / 255, 0x85 / 255, 0x1B / 255],  // orange — Web3
+  [0x4D / 255, 0xFF / 255, 0x9A / 255],  // green — AI
+]
 
 function walkChain(
   adjacency: Map<number, number[]>,
@@ -283,17 +292,19 @@ function walkChain(
 }
 
 function useEdgePulse(bundle: EdgeBundle, reducedMotion: boolean) {
-  const lastFireRef = useRef(0)
-  const activeRef   = useRef<ActivePulse[]>([])
+  const lastFireRef    = useRef(0)
+  const colorIndexRef  = useRef(0)  // alternates 0/1 for orange/green
+  const activeRef      = useRef<ActivePulse[]>([])
 
   useFrame(({ clock }) => {
     const pulseGeo  = bundle.pulseLines.geometry
     const pulseMat  = bundle.pulseLines.material as THREE.LineBasicMaterial
     const posAttr   = pulseGeo.getAttribute('position') as THREE.BufferAttribute
+    const colAttr   = pulseGeo.getAttribute('color')    as THREE.BufferAttribute
     const posArr    = posAttr.array as Float32Array
+    const colArr    = colAttr.array as Float32Array
 
     if (reducedMotion) {
-      // Hide overlay if any pulse was previously active
       if (activeRef.current.length > 0) {
         pulseGeo.setDrawRange(0, 0)
         activeRef.current = []
@@ -303,21 +314,22 @@ function useEdgePulse(bundle: EdgeBundle, reducedMotion: boolean) {
 
     const now = clock.elapsedTime * 1000
 
-    // Fire a new pulse every 1-2s
+    // Fire a new pulse every 1-2s, alternating color
     if (now - lastFireRef.current > 1000 + Math.random() * 1000) {
       lastFireRef.current = now
       const chainLen = 3 + Math.floor(Math.random() * 3) // 3..5
       const chain    = walkChain(bundle.adjacency, bundle.pairs, chainLen)
       if (chain.length > 0) {
-        activeRef.current.push({ edgeIndices: chain, startTime: now })
+        const color = PULSE_COLORS[colorIndexRef.current]
+        colorIndexRef.current = (colorIndexRef.current + 1) % PULSE_COLORS.length
+        activeRef.current.push({ edgeIndices: chain, startTime: now, color })
       }
     }
 
-    // Build the overlay buffer from active pulses. Track peak alpha so the
-    // material's overall opacity reflects the most-recent pulse's intensity
-    // (gives the fade-in/out feel).
     let writeIdx = 0
     let peakAlpha = 0
+    const baselinePos = bundle.lines.geometry.getAttribute('position').array as Float32Array
+
     activeRef.current = activeRef.current.filter(p => {
       const elapsed = now - p.startTime
       if (elapsed > 800) return false
@@ -329,18 +341,24 @@ function useEdgePulse(bundle: EdgeBundle, reducedMotion: boolean) {
       for (const edgeIdx of p.edgeIndices) {
         if (writeIdx >= 24) break // capacity guard
         const srcOffset = edgeIdx * 6
-        const baselinePos = bundle.lines.geometry.getAttribute('position').array as Float32Array
         const dstOffset = writeIdx * 6
         for (let i = 0; i < 6; i++) {
           posArr[dstOffset + i] = baselinePos[srcOffset + i]
+        }
+        // Write this pulse's color to both vertices of the segment
+        for (let v = 0; v < 2; v++) {
+          colArr[dstOffset + v * 3]     = p.color[0]
+          colArr[dstOffset + v * 3 + 1] = p.color[1]
+          colArr[dstOffset + v * 3 + 2] = p.color[2]
         }
         writeIdx++
       }
       return true
     })
 
-    pulseGeo.setDrawRange(0, writeIdx * 2) // 2 vertices per edge segment
+    pulseGeo.setDrawRange(0, writeIdx * 2)
     posAttr.needsUpdate = true
+    colAttr.needsUpdate = true
     pulseMat.opacity = peakAlpha
   })
 }
