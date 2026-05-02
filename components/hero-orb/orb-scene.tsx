@@ -664,7 +664,7 @@ function ServiceNode({
             onHover(pos, serviceIdx)
           }}
           onMouseLeave={() => { document.body.style.cursor = 'default' }}
-          className="w-6 h-6 rounded-full bg-transparent border-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="w-11 h-11 lg:w-6 lg:h-6 rounded-full bg-transparent border-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2"
           style={{ outlineColor: color }}
         />
       </Html>
