@@ -7,7 +7,7 @@ import * as THREE from 'three'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const N_TOTAL    = 294   // 280 filler glyphs + 14 service nodes
+const N_TOTAL    = 394   // 380 filler glyphs + 14 service nodes
 const N_ORANGE   = 14
 const SPHERE_R   = 1.25
 const NODE_R     = 0.030
@@ -415,16 +415,22 @@ function ServiceNode({
           emissiveIntensity={0.32}
         />
       </mesh>
-      {/* Keyboard accessibility — invisible button at the node's screen position.
-          Tab into focus, Enter/Space (or focus alone) opens the same HUD label
-          that pointer hover triggers. */}
+      {/* Always-on-top hit target — sits in screen space via <Html>, so it
+          works for keyboard (Tab, Enter/Space) AND pointer hover when the
+          underlying 3D mesh rotates behind the sphere and gets occluded by
+          glyphs. Without this, hover only worked on front-facing nodes. */}
       <Html center zIndexRange={[20, 20]}>
         <button
           type="button"
           aria-label={`View ${serviceName} service`}
           onKeyDown={onKey}
           onFocus={() => onHover(pos, serviceIdx)}
-          className="w-5 h-5 rounded-full bg-transparent border-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2"
+          onMouseEnter={() => {
+            document.body.style.cursor = 'pointer'
+            onHover(pos, serviceIdx)
+          }}
+          onMouseLeave={() => { document.body.style.cursor = 'default' }}
+          className="w-6 h-6 rounded-full bg-transparent border-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2"
           style={{ outlineColor: color }}
         />
       </Html>
@@ -508,7 +514,7 @@ export function OrbScene() {
 
         <Html center zIndexRange={[10, 10]}>
           <div style={{ pointerEvents: 'none', userSelect: 'none' }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="30"
+            <svg xmlns="http://www.w3.org/2000/svg" width="78" height="45"
               viewBox="0 0 52.082 30.457" fill="none" aria-hidden="true">
               <path
                 d="M 10.421 5.234 C 10.421 2.343 12.754 0 15.631 0 C 18.509 0 20.842 2.343 20.842 5.234 L 20.842 10.326 C 20.842 10.326 21.153 12.766 22.164 13.809 C 23.206 14.886 25.723 15.229 25.723 15.229 L 26.382 15.229 C 26.382 15.229 28.898 14.886 29.941 13.809 C 30.799 12.924 31.153 11.031 31.24 10.48 L 31.24 5.234 C 31.24 2.343 33.573 0 36.451 0 C 39.328 0 41.661 2.343 41.661 5.234 L 41.661 10.326 C 41.661 10.326 41.972 12.766 42.983 13.809 C 44.026 14.886 46.542 15.229 46.542 15.229 L 47.852 15.229 C 50.188 15.229 52.082 17.131 52.082 19.477 L 52.082 30.457 L 41.661 30.457 L 41.661 15.229 L 36.121 15.229 C 36.121 15.229 33.605 15.571 32.562 16.648 C 31.704 17.534 31.35 19.426 31.263 19.977 L 31.263 25.224 C 31.263 28.114 28.93 30.457 26.052 30.457 C 23.175 30.457 20.842 28.114 20.842 25.224 L 20.842 20.131 C 20.842 20.131 20.501 17.604 19.429 16.556 C 18.39 15.541 15.961 15.229 15.961 15.229 L 10.421 15.229 L 10.421 30.457 L 0 30.457 L 0 19.477 C 0 17.131 1.894 15.229 4.23 15.229 L 5.54 15.229 C 5.54 15.229 8.056 14.886 9.099 13.809 C 10.11 12.766 10.421 10.326 10.421 10.326 L 10.421 5.234 Z"
