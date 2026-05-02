@@ -62,7 +62,7 @@ export function HeroSection() {
           </div>
 
           {/* Micro-copy */}
-          <p className="text-xs text-gray-light tracking-[-0.01em]">
+          <p className="text-xs text-gray tracking-[-0.01em]">
             No pitch decks. No retainers. Direct from founders.
           </p>
         </div>
