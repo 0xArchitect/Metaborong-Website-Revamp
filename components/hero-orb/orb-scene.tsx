@@ -188,31 +188,32 @@ function buildGlyphSprites(): THREE.Group {
 // for the average front/back depth — avoids per-frame colour buffer updates.
 
 interface EdgeBundle {
-  lines:          THREE.LineSegments
+  lines:          THREE.LineSegments  // baseline dim mesh — stays calm
+  pulseLines:     THREE.LineSegments  // overlay mesh — only active pulses
+  pulsePositions: Float32Array        // shared buffer for pulse positions
   pairs:          number[]
   adjacency:      Map<number, number[]>
-  baselineColors: Float32Array
 }
 
 function buildEdgeLines(): EdgeBundle {
   const pairs  = buildEdges(_unitPts)
   const n      = pairs.length
   const pos    = new Float32Array(n * 3)
-  const col    = new Float32Array(n * 3)  // per-vertex RGB
+  const col    = new Float32Array(n * 3)
 
   const blue = new THREE.Color('#204AF8')
-  const dim  = new THREE.Color('#99aeff')  // muted periwinkle for back vertices
+  const dim  = new THREE.Color('#99aeff')
 
   for (let i = 0; i < n; i++) {
     const wp = _worldPts[pairs[i]]
     wp.toArray(pos, i * 3)
 
-    // z in [-SPHERE_R, SPHERE_R] → 0..1
     const t = (wp.z + SPHERE_R) / (2 * SPHERE_R)
-    const c = blue.clone().lerp(dim, 1 - t)  // front = blue, back = dim
+    const c = blue.clone().lerp(dim, 1 - t)
     c.toArray(col, i * 3)
   }
 
+  // Baseline mesh — dim, the resting network
   const geo = new THREE.BufferGeometry()
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
   geo.setAttribute('color',    new THREE.BufferAttribute(col, 3))
@@ -220,11 +221,33 @@ function buildEdgeLines(): EdgeBundle {
     geo,
     new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.32 })
   )
+
+  // Pulse overlay mesh — sized for up to 24 active edge segments at once
+  // (well above the realistic max of 5 active pulses × 5 edges = 25). Empty
+  // capacity is hidden via setDrawRange(0, 0).
+  const PULSE_CAPACITY = 24
+  const pulsePositions = new Float32Array(PULSE_CAPACITY * 2 * 3) // 2 vertices per edge
+  const pulseGeo = new THREE.BufferGeometry()
+  pulseGeo.setAttribute('position', new THREE.BufferAttribute(pulsePositions, 3))
+  pulseGeo.setDrawRange(0, 0)
+  const pulseLines = new THREE.LineSegments(
+    pulseGeo,
+    new THREE.LineBasicMaterial({
+      color: '#F6851B',          // brand-accent orange — 3rd color, unmissable against blue mesh
+      transparent: true,
+      opacity: 1.0,
+      // NormalBlending (default) — on a light bg, additive washes toward
+      // white. Normal alpha blending keeps the orange visibly orange.
+      depthWrite: false,
+    })
+  )
+
   return {
     lines,
+    pulseLines,
+    pulsePositions,
     pairs,
-    adjacency:      buildAdjacency(pairs),
-    baselineColors: col.slice(),
+    adjacency: buildAdjacency(pairs),
   }
 }
 
@@ -264,12 +287,15 @@ function useEdgePulse(bundle: EdgeBundle, reducedMotion: boolean) {
   const activeRef   = useRef<ActivePulse[]>([])
 
   useFrame(({ clock }) => {
+    const pulseGeo  = bundle.pulseLines.geometry
+    const pulseMat  = bundle.pulseLines.material as THREE.LineBasicMaterial
+    const posAttr   = pulseGeo.getAttribute('position') as THREE.BufferAttribute
+    const posArr    = posAttr.array as Float32Array
+
     if (reducedMotion) {
-      // Restore baseline once and exit so a previously-active pulse doesn't stick
+      // Hide overlay if any pulse was previously active
       if (activeRef.current.length > 0) {
-        const colorAttr = bundle.lines.geometry.getAttribute('color') as THREE.BufferAttribute
-        ;(colorAttr.array as Float32Array).set(bundle.baselineColors)
-        colorAttr.needsUpdate = true
+        pulseGeo.setDrawRange(0, 0)
         activeRef.current = []
       }
       return
@@ -287,35 +313,35 @@ function useEdgePulse(bundle: EdgeBundle, reducedMotion: boolean) {
       }
     }
 
-    const colorAttr = bundle.lines.geometry.getAttribute('color') as THREE.BufferAttribute
-    const colArr = colorAttr.array as Float32Array
-
-    // Reset to baseline first
-    colArr.set(bundle.baselineColors)
-
-    // Apply each active pulse's overlay
+    // Build the overlay buffer from active pulses. Track peak alpha so the
+    // material's overall opacity reflects the most-recent pulse's intensity
+    // (gives the fade-in/out feel).
+    let writeIdx = 0
+    let peakAlpha = 0
     activeRef.current = activeRef.current.filter(p => {
       const elapsed = now - p.startTime
       if (elapsed > 800) return false
       const alpha = elapsed < 200
-        ? (elapsed / 200) * 0.95
-        : (1 - (elapsed - 200) / 600) * 0.95
-      // Pulse color = saturated cyan-tinted brand-blue for max visibility
-      // against the dim periwinkle baseline
-      const r = 0x60 / 255, g = 0xB0 / 255, b = 0xFF / 255
+        ? (elapsed / 200) * 1.0
+        : (1 - (elapsed - 200) / 600) * 1.0
+      if (alpha > peakAlpha) peakAlpha = alpha
+
       for (const edgeIdx of p.edgeIndices) {
-        const offset = edgeIdx * 6 // 2 vertices × 3 components
-        for (let v = 0; v < 2; v++) {
-          const base = offset + v * 3
-          colArr[base]     = colArr[base]     * (1 - alpha) + r * alpha
-          colArr[base + 1] = colArr[base + 1] * (1 - alpha) + g * alpha
-          colArr[base + 2] = colArr[base + 2] * (1 - alpha) + b * alpha
+        if (writeIdx >= 24) break // capacity guard
+        const srcOffset = edgeIdx * 6
+        const baselinePos = bundle.lines.geometry.getAttribute('position').array as Float32Array
+        const dstOffset = writeIdx * 6
+        for (let i = 0; i < 6; i++) {
+          posArr[dstOffset + i] = baselinePos[srcOffset + i]
         }
+        writeIdx++
       }
       return true
     })
 
-    colorAttr.needsUpdate = true
+    pulseGeo.setDrawRange(0, writeIdx * 2) // 2 vertices per edge segment
+    posAttr.needsUpdate = true
+    pulseMat.opacity = peakAlpha
   })
 }
 
@@ -684,6 +710,8 @@ export function OrbScene() {
     })
     edgeBundle.lines.geometry.dispose()
     ;(edgeBundle.lines.material as THREE.Material).dispose()
+    edgeBundle.pulseLines.geometry.dispose()
+    ;(edgeBundle.pulseLines.material as THREE.Material).dispose()
     drift.points.geometry.dispose()
     ;(drift.points.material as THREE.Material).dispose()
     _glyphTextureCache.forEach(tex => tex.dispose())
@@ -749,6 +777,7 @@ export function OrbScene() {
 
       <group ref={groupRef}>
         <primitive object={edgeBundle.lines} />
+        <primitive object={edgeBundle.pulseLines} />
         <primitive object={glyphSprites} />
 
         {_orangeIdxs.map((_, si) => (
