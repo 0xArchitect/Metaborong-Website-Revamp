@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +27,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      {/* suppressHydrationWarning targets a known dev-time mismatch: browser
+          extensions (Grammarly is the most common offender — `data-gr-*`,
+          `data-new-gr-c-s-check-loaded`) inject attributes into <body> before
+          React hydrates. The flag suppresses *only* the body element's
+          attribute mismatch, not anything inside it. */}
+      <body suppressHydrationWarning>
+        {children}
+        <ConsentBanner />
+        <ConsentRevokePill />
+      </body>
     </html>
   )
 }
