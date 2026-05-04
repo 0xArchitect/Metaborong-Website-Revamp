@@ -7,36 +7,36 @@ import * as THREE from 'three'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const N_TOTAL    = 214
-const N_ORANGE   = 14
-const SPHERE_R   = 1.25
-const BLUE_R     = 0.019
-const NODE_R     = 0.030
+const N_TOTAL = 214
+const N_ORANGE = 14
+const SPHERE_R = 1.25
+const BLUE_R = 0.019
+const NODE_R = 0.030
 const AUTO_SPEED = 0.058  // rad/s ≈ OrbitControls 0.55
 
 const CAT_COLOR = {
-  WEB3:    '#F6851B',
-  AI:      '#4dff9a',
+  WEB3: '#F6851B',
+  AI: '#4dff9a',
   PRODUCT: '#204AF8',
 } as const
 
 // ── Services ──────────────────────────────────────────────────────────────────
 
 const SERVICES: { name: string; cat: keyof typeof CAT_COLOR }[] = [
-  { name: 'DeFi Protocol Development',  cat: 'WEB3'    },
-  { name: 'Smart Contract Security',    cat: 'WEB3'    },
-  { name: 'NFT Marketplace Dev',        cat: 'WEB3'    },
-  { name: 'Crypto Wallet Development',  cat: 'WEB3'    },
-  { name: 'Token Launchpad',            cat: 'WEB3'    },
-  { name: 'Liquid Staking Vaults',      cat: 'WEB3'    },
-  { name: 'DAO & Governance Systems',   cat: 'WEB3'    },
-  { name: 'Agentic AI Systems',         cat: 'AI'      },
-  { name: 'Generative AI Development',  cat: 'AI'      },
-  { name: 'AI Workflow Automation',     cat: 'AI'      },
-  { name: 'Voice Agent Integration',    cat: 'AI'      },
-  { name: 'RAG & Knowledge Systems',    cat: 'AI'      },
-  { name: 'AI Systems Integration',     cat: 'AI'      },
-  { name: 'SaaS Product Development',   cat: 'PRODUCT' },
+  { name: 'DeFi Protocol Development', cat: 'WEB3' },
+  { name: 'Smart Contract Security', cat: 'WEB3' },
+  { name: 'NFT Marketplace Dev', cat: 'WEB3' },
+  { name: 'Crypto Wallet Development', cat: 'WEB3' },
+  { name: 'Token Launchpad', cat: 'WEB3' },
+  { name: 'Liquid Staking Vaults', cat: 'WEB3' },
+  { name: 'DAO & Governance Systems', cat: 'WEB3' },
+  { name: 'Agentic AI Systems', cat: 'AI' },
+  { name: 'Generative AI Development', cat: 'AI' },
+  { name: 'AI Workflow Automation', cat: 'AI' },
+  { name: 'Voice Agent Integration', cat: 'AI' },
+  { name: 'RAG & Knowledge Systems', cat: 'AI' },
+  { name: 'AI Systems Integration', cat: 'AI' },
+  { name: 'SaaS Product Development', cat: 'PRODUCT' },
 ]
 
 // ── Geometry helpers ──────────────────────────────────────────────────────────
@@ -84,20 +84,20 @@ function hashF(i: number): number {
 
 // ── Module-level geometry (client-only, built once) ───────────────────────────
 
-const _unitPts      = fibonacciSphere(N_TOTAL)
+const _unitPts = fibonacciSphere(N_TOTAL)
 const _orangeIdxSet = pickOrangeIndices()
-const _orangeIdxs   = [..._orangeIdxSet]
-const _worldPts     = _unitPts.map(p => p.clone().multiplyScalar(SPHERE_R))
-const _orangePts    = _orangeIdxs.map(i => _worldPts[i])
+const _orangeIdxs = [..._orangeIdxSet]
+const _worldPts = _unitPts.map(p => p.clone().multiplyScalar(SPHERE_R))
+const _orangePts = _orangeIdxs.map(i => _worldPts[i])
 
 // ── Blue nodes: InstancedMesh with deterministic size variation ────────────────
 // Skills ref (threejs-geometry): vary dummy.scale per instance before setMatrixAt.
 
 function buildBlueMesh(): THREE.InstancedMesh {
-  const geo   = new THREE.SphereGeometry(BLUE_R, 9, 7)
-  const mat   = new THREE.MeshBasicMaterial({ color: '#204AF8' })
+  const geo = new THREE.SphereGeometry(BLUE_R, 9, 7)
+  const mat = new THREE.MeshBasicMaterial({ color: '#204AF8' })
   const count = N_TOTAL - N_ORANGE
-  const mesh  = new THREE.InstancedMesh(geo, mat, count)
+  const mesh = new THREE.InstancedMesh(geo, mat, count)
   const dummy = new THREE.Object3D()
   let slot = 0
   _unitPts.forEach((_, i) => {
@@ -118,13 +118,13 @@ function buildBlueMesh(): THREE.InstancedMesh {
 // for the average front/back depth — avoids per-frame colour buffer updates.
 
 function buildEdgeLines(): THREE.LineSegments {
-  const pairs  = buildEdges(_unitPts)
-  const n      = pairs.length
-  const pos    = new Float32Array(n * 3)
-  const col    = new Float32Array(n * 3)  // per-vertex RGB
+  const pairs = buildEdges(_unitPts)
+  const n = pairs.length
+  const pos = new Float32Array(n * 3)
+  const col = new Float32Array(n * 3)  // per-vertex RGB
 
   const blue = new THREE.Color('#204AF8')
-  const dim  = new THREE.Color('#99aeff')  // muted periwinkle for back vertices
+  const dim = new THREE.Color('#99aeff')  // muted periwinkle for back vertices
 
   for (let i = 0; i < n; i++) {
     const wp = _worldPts[pairs[i]]
@@ -138,7 +138,7 @@ function buildEdgeLines(): THREE.LineSegments {
 
   const geo = new THREE.BufferGeometry()
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3))
+  geo.setAttribute('color', new THREE.BufferAttribute(col, 3))
   return new THREE.LineSegments(
     geo,
     new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.22 })
@@ -173,9 +173,9 @@ function useKeyframes() {
 
 function useOrbit(groupRef: React.RefObject<THREE.Group | null>) {
   const { gl } = useThree()
-  const velY   = useRef(0)
-  const velX   = useRef(0)
-  const d      = useRef({ active: false, moved: false, lx: 0, ly: 0 })
+  const velY = useRef(0)
+  const velX = useRef(0)
+  const d = useRef({ active: false, moved: false, lx: 0, ly: 0 })
 
   useEffect(() => {
     const canvas = gl.domElement
@@ -196,11 +196,11 @@ function useOrbit(groupRef: React.RefObject<THREE.Group | null>) {
 
     document.addEventListener('pointerdown', onDown)
     document.addEventListener('pointermove', onMove)
-    document.addEventListener('pointerup',   onUp)
+    document.addEventListener('pointerup', onUp)
     return () => {
       document.removeEventListener('pointerdown', onDown)
       document.removeEventListener('pointermove', onMove)
-      document.removeEventListener('pointerup',   onUp)
+      document.removeEventListener('pointerup', onUp)
     }
   }, [gl])
 
@@ -208,11 +208,11 @@ function useOrbit(groupRef: React.RefObject<THREE.Group | null>) {
     if (!groupRef.current) return
     if (!d.current.active) {
       const target = AUTO_SPEED * delta
-      velY.current  = velY.current * 0.90 + target * 0.10
+      velY.current = velY.current * 0.90 + target * 0.10
       velX.current *= 0.90
     }
     groupRef.current.rotation.y += velY.current
-    groupRef.current.rotation.x  = Math.max(-0.28, Math.min(0.28,
+    groupRef.current.rotation.x = Math.max(-0.28, Math.min(0.28,
       groupRef.current.rotation.x + velX.current
     ))
   })
@@ -221,9 +221,9 @@ function useOrbit(groupRef: React.RefObject<THREE.Group | null>) {
 // ── HUD floating label ────────────────────────────────────────────────────────
 
 interface LabelState {
-  id:       number
+  id: number
   localPos: THREE.Vector3
-  svc:      { name: string; cat: keyof typeof CAT_COLOR }
+  svc: { name: string; cat: keyof typeof CAT_COLOR }
   openLeft: boolean
 }
 
@@ -246,30 +246,30 @@ function FloatingLabel({ state, onExpire }: { state: LabelState; onExpire: () =>
       style={{ transform: wrapTransform, pointerEvents: 'none' }}
     >
       <div style={{
-        position:     'relative',
-        background:   'rgba(2, 6, 26, 0.94)',
-        border:       `1px solid ${color}88`,
+        position: 'relative',
+        background: 'rgba(2, 6, 26, 0.94)',
+        border: `1px solid ${color}88`,
         borderRadius: '2px',
-        padding:      '10px 20px 10px 14px',
-        boxShadow:    `0 0 28px ${color}38, 0 0 8px ${color}65, inset 0 0 20px ${color}06`,
-        whiteSpace:   'nowrap',
-        overflow:     'hidden',
-        userSelect:   'none',
-        minWidth:     '170px',
-        animation:    '_orbIn 3.6s cubic-bezier(.16,1,.3,1) forwards',
+        padding: '10px 20px 10px 14px',
+        boxShadow: `0 0 28px ${color}38, 0 0 8px ${color}65, inset 0 0 20px ${color}06`,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        userSelect: 'none',
+        minWidth: '170px',
+        animation: '_orbIn 3.6s cubic-bezier(.16,1,.3,1) forwards',
       }}>
-        {(['tl','tr','bl','br'] as const).map(c => (
+        {(['tl', 'tr', 'bl', 'br'] as const).map(c => (
           <span key={c} style={{
-            position:     'absolute',
+            position: 'absolute',
             width: 9, height: 9,
-            top:    c[0] === 't' ? -1 : 'auto',
+            top: c[0] === 't' ? -1 : 'auto',
             bottom: c[0] === 'b' ? -1 : 'auto',
-            left:   c[1] === 'l' ? -1 : 'auto',
-            right:  c[1] === 'r' ? -1 : 'auto',
-            borderTop:    c[0] === 't' ? `2px solid ${color}` : 'none',
+            left: c[1] === 'l' ? -1 : 'auto',
+            right: c[1] === 'r' ? -1 : 'auto',
+            borderTop: c[0] === 't' ? `2px solid ${color}` : 'none',
             borderBottom: c[0] === 'b' ? `2px solid ${color}` : 'none',
-            borderLeft:   c[1] === 'l' ? `2px solid ${color}` : 'none',
-            borderRight:  c[1] === 'r' ? `2px solid ${color}` : 'none',
+            borderLeft: c[1] === 'l' ? `2px solid ${color}` : 'none',
+            borderRight: c[1] === 'r' ? `2px solid ${color}` : 'none',
           }} />
         ))}
         <span style={{
@@ -369,16 +369,16 @@ export function OrbScene() {
   const groupRef = useRef<THREE.Group>(null)
 
   const { blueMesh, edgeLines } = useMemo(() => ({
-    blueMesh:  buildBlueMesh(),
+    blueMesh: buildBlueMesh(),
     edgeLines: buildEdgeLines(),
   }), [])
 
   useEffect(() => () => {
     blueMesh.geometry.dispose()
-    ;(blueMesh.material as THREE.Material).dispose()
+      ; (blueMesh.material as THREE.Material).dispose()
     blueMesh.dispose()
     edgeLines.geometry.dispose()
-    ;(edgeLines.material as THREE.Material).dispose()
+      ; (edgeLines.material as THREE.Material).dispose()
   }, [blueMesh, edgeLines])
 
   const [label, setLabel] = useState<LabelState | null>(null)
@@ -415,18 +415,6 @@ export function OrbScene() {
             onHover={handleHover}
           />
         ))}
-
-        <Html center zIndexRange={[10, 10]}>
-          <div style={{ pointerEvents: 'none', userSelect: 'none' }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="52" height="30"
-              viewBox="0 0 52.082 30.457" fill="none" aria-hidden="true">
-              <path
-                d="M 10.421 5.234 C 10.421 2.343 12.754 0 15.631 0 C 18.509 0 20.842 2.343 20.842 5.234 L 20.842 10.326 C 20.842 10.326 21.153 12.766 22.164 13.809 C 23.206 14.886 25.723 15.229 25.723 15.229 L 26.382 15.229 C 26.382 15.229 28.898 14.886 29.941 13.809 C 30.799 12.924 31.153 11.031 31.24 10.48 L 31.24 5.234 C 31.24 2.343 33.573 0 36.451 0 C 39.328 0 41.661 2.343 41.661 5.234 L 41.661 10.326 C 41.661 10.326 41.972 12.766 42.983 13.809 C 44.026 14.886 46.542 15.229 46.542 15.229 L 47.852 15.229 C 50.188 15.229 52.082 17.131 52.082 19.477 L 52.082 30.457 L 41.661 30.457 L 41.661 15.229 L 36.121 15.229 C 36.121 15.229 33.605 15.571 32.562 16.648 C 31.704 17.534 31.35 19.426 31.263 19.977 L 31.263 25.224 C 31.263 28.114 28.93 30.457 26.052 30.457 C 23.175 30.457 20.842 28.114 20.842 25.224 L 20.842 20.131 C 20.842 20.131 20.501 17.604 19.429 16.556 C 18.39 15.541 15.961 15.229 15.961 15.229 L 10.421 15.229 L 10.421 30.457 L 0 30.457 L 0 19.477 C 0 17.131 1.894 15.229 4.23 15.229 L 5.54 15.229 C 5.54 15.229 8.056 14.886 9.099 13.809 C 10.11 12.766 10.421 10.326 10.421 10.326 L 10.421 5.234 Z"
-                fill="#204AF8" fillRule="evenodd"
-              />
-            </svg>
-          </div>
-        </Html>
 
         {label && <FloatingLabel key={label.id} state={label} onExpire={clearLabel} />}
       </group>
