@@ -56,6 +56,17 @@ export function LoginForm() {
   const [fieldError, setFieldError] = useState<FieldKey | null>(null)
   const [retryAt, setRetryAt] = useState<number | null>(null) // epoch ms
   const [retryRemaining, setRetryRemaining] = useState<number>(0) // seconds
+  // Defers focus until after `busy` flips back to false — direct focus()
+  // calls inside the catch block run while the input is still disabled,
+  // which silently no-ops in real browsers and happy-dom alike.
+  const [focusAfterReset, setFocusAfterReset] = useState<FieldKey | null>(null)
+
+  useEffect(() => {
+    if (busy) return
+    if (focusAfterReset === 'email') emailRef.current?.focus()
+    else if (focusAfterReset === 'password') passwordRef.current?.focus()
+    if (focusAfterReset !== null) setFocusAfterReset(null)
+  }, [busy, focusAfterReset])
 
   useEffect(() => {
     if (retryAt === null) return
@@ -130,8 +141,8 @@ export function LoginForm() {
           err.field === 'email' || err.field === 'password' ? err.field : null
         setFieldError(f)
         setError(err.message)
-        if (f === 'email') emailRef.current?.focus()
-        else passwordRef.current?.focus()
+        // Defer focus until busy is back to false (input is no longer disabled).
+        setFocusAfterReset(f === 'email' ? 'email' : 'password')
         setBusy(false)
         return
       }
