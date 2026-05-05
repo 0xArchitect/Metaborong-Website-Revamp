@@ -10,7 +10,11 @@ type Props = {
 }
 
 const HUB = { x: 250, y: 250 }
-const SPOKE_LENGTH = 160
+const SPOKE_LENGTH = 150
+const NODE_SIZE = 104
+const NODE_HALF = NODE_SIZE / 2
+// Spokes terminate at the glyph perimeter, not the glyph center — clean visual seal.
+const SPOKE_TERMINUS = SPOKE_LENGTH - NODE_HALF * 0.55
 const NODE_OFFSETS: Record<PillarId, { x: number; y: number }> = {
   web3: { x: HUB.x, y: HUB.y - SPOKE_LENGTH },
   'ai-agents': { x: HUB.x - SPOKE_LENGTH * Math.cos(Math.PI / 6), y: HUB.y + SPOKE_LENGTH * Math.sin(Math.PI / 6) },
@@ -69,24 +73,28 @@ export function ServicesTrefoil({ className = '' }: Props) {
     <>
       <style precedence="default">{`
         .services-spoke {
-          stroke-dasharray: 4 6;
-          animation: services-spoke-flow 3s linear infinite;
-          transition: stroke-opacity 200ms ease-out, stroke-width 200ms ease-out;
+          transition: stroke-opacity 320ms cubic-bezier(0.4, 0, 0.2, 1),
+                      stroke-width   320ms cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .services-spoke-active   { stroke-opacity: 0.9; stroke-width: 1.5; }
-        .services-spoke-inactive { stroke-opacity: 0.3; stroke-width: 1; }
-        @keyframes services-spoke-flow {
-          from { stroke-dashoffset: 0; }
-          to   { stroke-dashoffset: -10; }
+        .services-spoke-active   { stroke-opacity: 0.7; stroke-width: 1.5; }
+        .services-spoke-inactive { stroke-opacity: 0.18; stroke-width: 1; }
+
+        .services-hub-glow {
+          transform-origin: center;
+          animation: services-hub-breath 7s ease-in-out infinite;
         }
-        [data-reduced-motion="true"] .services-spoke { animation: none; }
+        @keyframes services-hub-breath {
+          0%, 100% { opacity: 0.85; transform: scale(1); }
+          50%      { opacity: 1;    transform: scale(1.04); }
+        }
+        [data-reduced-motion="true"] .services-hub-glow { animation: none; }
 
         [data-primed="true"][data-active="true"][data-reduced-motion="false"] {
           animation: services-glyph-in 700ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes services-glyph-in {
-          from { transform: scale(0.92); }
-          to   { transform: scale(1); }
+          from { transform: scale(0.88); filter: blur(1px); }
+          to   { transform: scale(1);    filter: blur(0); }
         }
 
         .services-node-btn:focus-visible svg {
@@ -103,33 +111,85 @@ export function ServicesTrefoil({ className = '' }: Props) {
       <div className="relative aspect-square max-h-[520px] w-full">
         <svg viewBox="0 0 500 500" className="w-full h-full">
           <defs>
+            {/* Iso ground glow — wide, flat ellipse beneath the trefoil. Real atmosphere. */}
             <radialGradient id="services-ground" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#204AF8" stopOpacity="0.04" />
-              <stop offset="60%" stopColor="#204AF8" stopOpacity="0" />
+              <stop offset="0%" stopColor="#204AF8" stopOpacity="0.16" />
+              <stop offset="55%" stopColor="#204AF8" stopOpacity="0.04" />
+              <stop offset="100%" stopColor="#204AF8" stopOpacity="0" />
             </radialGradient>
+            {/* Hub multi-stop glow — concentrated, premium */}
+            <radialGradient id="services-hub-radial" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#204AF8" stopOpacity="0.55" />
+              <stop offset="35%" stopColor="#204AF8" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#204AF8" stopOpacity="0" />
+            </radialGradient>
+            {/* Spoke gradient — vivid at hub, fading toward node. Light-beam quality. */}
+            <linearGradient id="spoke-fade-top" x1="250" y1="250" x2="250" y2="90" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#204AF8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#204AF8" stopOpacity="0.35" />
+            </linearGradient>
+            <linearGradient id="spoke-fade-ll" x1="250" y1="250" x2={NODE_OFFSETS['ai-agents'].x} y2={NODE_OFFSETS['ai-agents'].y} gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#204AF8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#204AF8" stopOpacity="0.35" />
+            </linearGradient>
+            <linearGradient id="spoke-fade-lr" x1="250" y1="250" x2={NODE_OFFSETS['product-studio'].x} y2={NODE_OFFSETS['product-studio'].y} gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#204AF8" stopOpacity="1" />
+              <stop offset="100%" stopColor="#204AF8" stopOpacity="0.35" />
+            </linearGradient>
           </defs>
-          <rect x="0" y="0" width="500" height="500" fill="url(#services-ground)" aria-hidden="true" />
 
+          {/* Iso elliptical ground glow — anchors the trefoil, gives the figure a stage */}
+          <ellipse cx="250" cy="305" rx="195" ry="42" fill="url(#services-ground)" aria-hidden="true" />
+
+          {/* Spokes — terminate before the glyph perimeter so the line doesn't pierce the mark */}
           {pillars.map((p) => {
             const node = NODE_OFFSETS[p.id]
             const isActive = p.id === activeId
+            const gradId =
+              p.id === 'web3' ? 'spoke-fade-top'
+              : p.id === 'ai-agents' ? 'spoke-fade-ll'
+              : 'spoke-fade-lr'
+            const dx = node.x - HUB.x
+            const dy = node.y - HUB.y
+            const len = Math.hypot(dx, dy)
+            const tx = HUB.x + (dx * SPOKE_TERMINUS) / len
+            const ty = HUB.y + (dy * SPOKE_TERMINUS) / len
             return (
               <line
                 key={`spoke-${p.id}`}
                 x1={HUB.x}
                 y1={HUB.y}
-                x2={node.x}
-                y2={node.y}
-                stroke="#204AF8"
-                strokeDasharray="4 6"
+                x2={tx}
+                y2={ty}
+                stroke={`url(#${gradId})`}
+                strokeLinecap="round"
                 className={`services-spoke ${isActive ? 'services-spoke-active' : 'services-spoke-inactive'}`}
                 aria-hidden="true"
               />
             )
           })}
 
-          <circle cx={HUB.x} cy={HUB.y} r="16" fill="#204AF8" fillOpacity="0.15" aria-hidden="true" />
-          <circle cx={HUB.x} cy={HUB.y} r="8" fill="#204AF8" aria-hidden="true" />
+          {/* Hub — three layers: breathing outer glow → ring → solid core */}
+          <circle
+            className="services-hub-glow"
+            cx={HUB.x}
+            cy={HUB.y}
+            r="38"
+            fill="url(#services-hub-radial)"
+            aria-hidden="true"
+          />
+          <circle
+            cx={HUB.x}
+            cy={HUB.y}
+            r="14"
+            fill="none"
+            stroke="#204AF8"
+            strokeWidth="1"
+            strokeOpacity="0.35"
+            aria-hidden="true"
+          />
+          <circle cx={HUB.x} cy={HUB.y} r="6.5" fill="#204AF8" aria-hidden="true" />
+          <circle cx={HUB.x} cy={HUB.y} r="2.5" fill="#FFFFFF" fillOpacity="0.7" aria-hidden="true" />
 
           {pillars.map((p) => {
             const node = NODE_OFFSETS[p.id]
@@ -137,10 +197,10 @@ export function ServicesTrefoil({ className = '' }: Props) {
             return (
               <foreignObject
                 key={`node-${p.id}`}
-                x={node.x - 40}
-                y={node.y - 40}
-                width="80"
-                height="80"
+                x={node.x - NODE_HALF}
+                y={node.y - NODE_HALF}
+                width={NODE_SIZE}
+                height={NODE_SIZE}
                 style={{ overflow: 'visible' }}
               >
                 <button
