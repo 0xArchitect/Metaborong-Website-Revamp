@@ -277,11 +277,28 @@ export function ServicesTrefoil({ className = '' }: Props) {
         </div>
 
         <div
-          className="relative flex flex-col border-l border-border-subtle"
+          className="relative flex flex-col rounded-md border border-border bg-white overflow-hidden"
           role="tablist"
           aria-orientation="vertical"
           onKeyDown={handleTabKeyDown}
         >
+          <div className="flex items-center justify-between border-b border-border px-[20px] py-[10px]">
+            <span className="text-[11px] font-mono tracking-[0.18em] uppercase text-gray">
+              Three Pillars
+            </span>
+            <span className="text-[11px] font-mono text-gray-light tabular-nums">
+              [
+              <span
+                className="font-semibold transition-colors duration-200"
+                style={{ color: activeId ? PILLAR_COLOR[activeId] : '#676767' }}
+              >
+                {activeId ? String(pillars.findIndex((p) => p.id === activeId) + 1).padStart(2, '0') : '00'}
+              </span>
+              {' / '}
+              {String(pillars.length).padStart(2, '0')}
+              ]
+            </span>
+          </div>
           {pillars.map((p) => {
             const isActive = p.id === activeId
             const panelId = `services-panel-${p.id}`
@@ -289,15 +306,8 @@ export function ServicesTrefoil({ className = '' }: Props) {
             return (
               <div
                 key={p.id}
-                className="relative border-b border-border-subtle last:border-b-0 pl-[24px]"
+                className="relative border-b border-border last:border-b-0"
               >
-                {isActive && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-px top-0 bottom-0 w-[3px]"
-                    style={{ background: p.color }}
-                  />
-                )}
                 <button
                   type="button"
                   role="tab"
@@ -306,7 +316,7 @@ export function ServicesTrefoil({ className = '' }: Props) {
                   aria-controls={panelId}
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => activate(p.id)}
-                  className="w-full flex items-center gap-[16px] py-[20px] bg-transparent border-0 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+                  className="w-full flex items-center gap-[16px] px-[20px] py-[18px] bg-transparent border-0 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-colors hover:bg-border-subtle/40"
                 >
                   <span className="text-[13px] font-mono text-gray tabular-nums">{p.num}</span>
                   <span className="w-[8px] h-[8px] rounded-full" style={{ background: p.color }} />
@@ -321,7 +331,17 @@ export function ServicesTrefoil({ className = '' }: Props) {
                   </span>
                 </button>
                 {isActive && (
-                  <div role="tabpanel" id={panelId} aria-labelledby={tabId} className="pb-[24px]">
+                  <div
+                    role="tabpanel"
+                    id={panelId}
+                    aria-labelledby={tabId}
+                    className="relative pl-[20px] pr-[20px] pt-[4px] pb-[24px]"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 top-[4px] bottom-[24px] w-[3px]"
+                      style={{ background: p.color }}
+                    />
                     <h3 className="text-[20px] font-bold tracking-[-0.025em] leading-[1.2] text-dark mb-[12px]">
                       {p.headline}
                     </h3>
