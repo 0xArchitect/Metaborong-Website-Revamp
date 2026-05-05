@@ -244,3 +244,24 @@ Slugs to be finalized in writing-plans phase (kebab-case from name unless conten
   - Problem signature (Session 6): `~/.gstack/projects/Anyx30-Metaborong-Portfolio/designs/section-problem-stamp-20260504/approved.json` — V1 hairline restraint.
   - Services trefoil (this section, 2026-05-04): `~/.gstack/projects/Anyx30-Metaborong-Portfolio/designs/section-services-trefoil-20260504/approved.json` — C-variant "Atmospheric Depth" (stroke + faint fills + soft drop-shadows + radial-gradient ground tint). Tool used: visual-companion HTML/CSS path (hand-authored SVG), not the gstack design binary — same rationale as Problem signature (sub-pixel geometry needs real-CSS fidelity).
 - Visual companion file: `~/.gstack/projects/Anyx30-Metaborong-Portfolio/designs/section-services-trefoil-20260504/visual-companion.html` (3 hand-authored SVG variants A/B/C side-by-side, kept for posterity).
+
+---
+
+## Section 5 deviations from master plan (Session 7.5 polish pass — 2026-05-05)
+
+After initial implementation, the at-rest design felt structurally correct but visually thin. Polish pass deviated from the locked plan in four places. None affected shared primitives, the IntersectionObserver-gated first-paint, reduced-motion behavior, or the SEO-static-markup gate.
+
+1. **Killed the spoke-flow marching-dashes animation** (plan locked decision #9). At ~3s loop the `stroke-dashoffset` travel read as a loading indicator, which violates the Visual temperament rule "motion as punctuation, not page-wide grammar." Spokes are now solid gradient strokes (vivid at hub → soft at glyph perimeter), with a 320ms opacity/width transition on activation. Active = 0.7 opacity + 1.5px; inactive = 0.18 + 1px.
+2. **Replaced the rect ground-fill with an iso-projected elliptical glow.** Plan called for `<rect>` filled with a 0.04→0 radial gradient — invisible in practice. Now an `<ellipse cx=250 cy=305 rx=195 ry=42>` with a 0.16→0 radial gradient. Anchors the figure like a stage spotlight; delivers the "Atmospheric Depth" promise the rect didn't.
+3. **Layered hub.** Plan locked a flat 8px dot + 16px outer fill (locked decision #11). Replaced with a four-layer hub: 38px breathing radial-gradient glow + 14px hairline ring + 6.5px solid core + 2.5px white pinhole highlight. Hub now reads as the gravitational anchor at any zoom level. Breathing animation is 7s ease-in-out (opacity 0.85↔1, scale 1↔1.04) — much slower than a heartbeat, well below the loading-indicator threshold; still off under `prefers-reduced-motion`.
+4. **Glyph SVG bodies** (plan locked decision #8 baked the approved C-variant geometry directly). Each glyph was redrawn as a confident mark instead of a wireframe diagram:
+   - Web3: nested dual-hex with 45°-rotated diamond core (3 elements). Replaces the 7-hex lattice + hairline connectors that read as a CAD diagram.
+   - AI Agents: ambient halo + faint outer ring + broken inner ring (intentional gap) + asymmetric satellite pair + gradient core with white pinhole (6 elements, asymmetric placement). Replaces the 5-fold-symmetric halo + 2 rings + 5 dots + 5 arcs (13 competing elements).
+   - Product Studio: real iso cube with three-face gradient shading (lit top, mid-tone right, shadow left) + a single craft-highlight stroke on the lit face. Replaces three flat opacity-laddered parallelograms with no volumetric shading.
+   - Glyph render size bumped 80px → 104px to give the marks proper presence relative to the 500px trefoil canvas. Spoke length shortened 160 → 150 to bring the glyphs into a tighter visual relationship with the hub.
+
+The locked decisions in question (#8, #9, #11) were all "decided here so we don't relitigate at implementation time" calls. The plan's risk model treated them as cheap to lock; the visual outcome treated them as expensive. Future sections: implementation-time visual review remains a load-bearing gate even when the plan thinks geometry is settled.
+
+Reference artifacts updated:
+- New baseline screenshot: `/tmp/services-after-v3.png` (web3 active), `/tmp/services-ai-active.png`, `/tmp/services-ps-active.png`.
+- Original `~/.gstack/projects/.../section-services-trefoil-20260504/approved.json` retained for historical reference but no longer the source of truth for shipped geometry.
