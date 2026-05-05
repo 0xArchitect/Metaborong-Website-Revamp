@@ -8,61 +8,16 @@ const baseClass = 'transition-[opacity,transform] duration-300 ease-out'
 
 const stateClass = (primed: boolean, active: boolean) => {
   if (!primed) return 'opacity-0'
-  return active ? 'opacity-100' : 'opacity-40'
+  return active ? 'opacity-100' : 'opacity-45'
 }
 
-const SOFT_SHADOW = (
-  <filter id="soft-shadow" x="-50%" y="-50%" width="200%" height="200%">
-    <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
-    <feOffset dx="0" dy="2" result="off" />
-    <feComponentTransfer><feFuncA type="linear" slope="0.18" /></feComponentTransfer>
-    <feMerge>
-      <feMergeNode />
-      <feMergeNode in="SourceGraphic" />
-    </feMerge>
-  </filter>
-)
-
+// Web3 — nested hex with diamond core. Block-chain reference without 7-hex CAD energy.
 export function Web3Glyph({ active, primed, reducedMotion }: GlyphProps) {
   return (
     <svg
       viewBox="-40 -40 80 80"
-      width="80"
-      height="80"
-      className={`${baseClass} ${stateClass(primed ?? false, active)}`}
-      data-active={active}
-      data-primed={primed ?? false}
-      data-reduced-motion={reducedMotion ?? false}
-      aria-hidden="true"
-    >
-      <defs>{SOFT_SHADOW}</defs>
-      <g filter="url(#soft-shadow)">
-        <polygon points="12.12,-7 0,-14 -12.12,-7 -12.12,7 0,14 12.12,7" fill="#204AF8" fillOpacity="0.18" stroke="#204AF8" strokeWidth="1" />
-        <g transform="translate(21.65, 12.5)"><polygon points="8.66,-5 0,-10 -8.66,-5 -8.66,5 0,10 8.66,5" fill="#204AF8" fillOpacity="0.10" stroke="#204AF8" strokeWidth="1" /></g>
-        <g transform="translate(0, 25)"><polygon points="8.66,-5 0,-10 -8.66,-5 -8.66,5 0,10 8.66,5" fill="#204AF8" fillOpacity="0.10" stroke="#204AF8" strokeWidth="1" /></g>
-        <g transform="translate(-21.65, 12.5)"><polygon points="8.66,-5 0,-10 -8.66,-5 -8.66,5 0,10 8.66,5" fill="#204AF8" fillOpacity="0.10" stroke="#204AF8" strokeWidth="1" /></g>
-        <g transform="translate(-21.65, -12.5)"><polygon points="8.66,-5 0,-10 -8.66,-5 -8.66,5 0,10 8.66,5" fill="#204AF8" fillOpacity="0.10" stroke="#204AF8" strokeWidth="1" /></g>
-        <g transform="translate(0, -25)"><polygon points="8.66,-5 0,-10 -8.66,-5 -8.66,5 0,10 8.66,5" fill="#204AF8" fillOpacity="0.10" stroke="#204AF8" strokeWidth="1" /></g>
-        <g transform="translate(21.65, -12.5)"><polygon points="8.66,-5 0,-10 -8.66,-5 -8.66,5 0,10 8.66,5" fill="#204AF8" fillOpacity="0.10" stroke="#204AF8" strokeWidth="1" /></g>
-        <g stroke="#204AF8" strokeWidth="0.5" opacity="0.6">
-          <line x1="6.5" y1="3.75" x2="15.15" y2="8.75" />
-          <line x1="0" y1="7" x2="0" y2="18" />
-          <line x1="-6.5" y1="3.75" x2="-15.15" y2="8.75" />
-          <line x1="-6.5" y1="-3.75" x2="-15.15" y2="-8.75" />
-          <line x1="0" y1="-7" x2="0" y2="-18" />
-          <line x1="6.5" y1="-3.75" x2="15.15" y2="-8.75" />
-        </g>
-      </g>
-    </svg>
-  )
-}
-
-export function AIAgentsGlyph({ active, primed, reducedMotion }: GlyphProps) {
-  return (
-    <svg
-      viewBox="-40 -40 80 80"
-      width="80"
-      height="80"
+      width="104"
+      height="104"
       className={`${baseClass} ${stateClass(primed ?? false, active)}`}
       data-active={active}
       data-primed={primed ?? false}
@@ -70,51 +25,194 @@ export function AIAgentsGlyph({ active, primed, reducedMotion }: GlyphProps) {
       aria-hidden="true"
     >
       <defs>
-        {SOFT_SHADOW}
-        <radialGradient id="ai-halo" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#10b981" stopOpacity="0.7" />
-          <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
-        </radialGradient>
+        <linearGradient id="web3-fill" x1="0" y1="-30" x2="0" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#204AF8" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="#204AF8" stopOpacity="0.04" />
+        </linearGradient>
+        <filter id="web3-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
+          <feOffset dx="0" dy="2" result="off" />
+          <feComponentTransfer><feFuncA type="linear" slope="0.22" /></feComponentTransfer>
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </defs>
-      <circle cx="0" cy="0" r="14" fill="url(#ai-halo)" />
-      <circle cx="0" cy="0" r="4" fill="#10b981" />
-      <circle cx="0" cy="0" r="13" fill="none" stroke="#10b981" strokeWidth="1" opacity="0.7" />
-      <circle cx="0" cy="0" r="22" fill="none" stroke="#10b981" strokeWidth="1" opacity="0.5" />
-      <g filter="url(#soft-shadow)">
-        <circle cx="0" cy="-28" r="2.8" fill="#10b981" />
-        <circle cx="26.63" cy="-8.65" r="2.8" fill="#10b981" />
-        <circle cx="16.46" cy="22.65" r="2.8" fill="#10b981" />
-        <circle cx="-16.46" cy="22.65" r="2.8" fill="#10b981" />
-        <circle cx="-26.63" cy="-8.65" r="2.8" fill="#10b981" />
-      </g>
-      <g stroke="#10b981" strokeWidth="0.5" fill="none" opacity="0.4">
-        <path d="M 0 0 Q 4 -16 0 -28" />
-        <path d="M 0 0 Q 16 -8 26.63 -8.65" />
-        <path d="M 0 0 Q 12 14 16.46 22.65" />
-        <path d="M 0 0 Q -12 14 -16.46 22.65" />
-        <path d="M 0 0 Q -16 -8 -26.63 -8.65" />
+      <g filter="url(#web3-shadow)">
+        {/* Outer hex — solid presence */}
+        <polygon
+          points="26,0 13,-22.5 -13,-22.5 -26,0 -13,22.5 13,22.5"
+          fill="url(#web3-fill)"
+          stroke="#204AF8"
+          strokeWidth="1.25"
+          strokeLinejoin="round"
+        />
+        {/* Inner inset hex — geometric depth */}
+        <polygon
+          points="15,0 7.5,-13 -7.5,-13 -15,0 -7.5,13 7.5,13"
+          fill="none"
+          stroke="#204AF8"
+          strokeWidth="1"
+          strokeOpacity="0.4"
+          strokeLinejoin="round"
+        />
+        {/* Diamond core — sharp accent */}
+        <rect
+          x="-3.5"
+          y="-3.5"
+          width="7"
+          height="7"
+          fill="#204AF8"
+          transform="rotate(45)"
+        />
       </g>
     </svg>
   )
 }
 
-export function ProductStudioGlyph({ active, primed, reducedMotion }: GlyphProps) {
+// AI Agents — luminous core with asymmetric orbit. Aperture/lens, not radial diagram.
+export function AIAgentsGlyph({ active, primed, reducedMotion }: GlyphProps) {
   return (
     <svg
       viewBox="-40 -40 80 80"
-      width="80"
-      height="80"
+      width="104"
+      height="104"
       className={`${baseClass} ${stateClass(primed ?? false, active)}`}
       data-active={active}
       data-primed={primed ?? false}
       data-reduced-motion={reducedMotion ?? false}
       aria-hidden="true"
     >
-      <defs>{SOFT_SHADOW}</defs>
-      <g filter="url(#soft-shadow)">
-        <polygon points="0,-22 22,-14 0,-6 -22,-14" fill="#F6851B" fillOpacity="0.28" stroke="#F6851B" strokeWidth="1" />
-        <polygon points="0,-4 26,6 0,16 -26,6" fill="#F6851B" fillOpacity="0.18" stroke="#F6851B" strokeWidth="1" />
-        <polygon points="0,14 30,26 0,38 -30,26" fill="#F6851B" fillOpacity="0.12" stroke="#F6851B" strokeWidth="1" />
+      <defs>
+        <radialGradient id="ai-core" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#10b981" stopOpacity="0.85" />
+          <stop offset="55%" stopColor="#10b981" stopOpacity="0.20" />
+          <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id="ai-dot" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stopColor="#5be3b3" stopOpacity="1" />
+          <stop offset="60%" stopColor="#10b981" stopOpacity="1" />
+          <stop offset="100%" stopColor="#0a8a62" stopOpacity="1" />
+        </radialGradient>
+        <filter id="ai-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" />
+          <feOffset dx="0" dy="1.5" result="off" />
+          <feComponentTransfer><feFuncA type="linear" slope="0.32" /></feComponentTransfer>
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      {/* Ambient halo — generous, brighter so it survives at small scale */}
+      <circle cx="0" cy="0" r="34" fill="url(#ai-core)" />
+      {/* Outer ring — full circle, hairline, low opacity for atmosphere */}
+      <circle
+        cx="0"
+        cy="0"
+        r="24"
+        fill="none"
+        stroke="#10b981"
+        strokeWidth="1"
+        strokeOpacity="0.3"
+      />
+      {/* Inner ring with intentional break — gives the mark dynamism */}
+      <path
+        d="M 16 0 A 16 16 0 1 1 -13.86 -8"
+        fill="none"
+        stroke="#10b981"
+        strokeWidth="1.5"
+        strokeOpacity="0.7"
+        strokeLinecap="round"
+      />
+      {/* Asymmetric satellites — 2, intentional placement, with subtle glow */}
+      <g filter="url(#ai-shadow)">
+        <circle cx="24" cy="-13" r="3.2" fill="#10b981" />
+        <circle cx="-20" cy="15" r="2" fill="#10b981" opacity="0.75" />
+      </g>
+      {/* Core — solid presence, gradient volume, white pinhole highlight */}
+      <circle cx="0" cy="0" r="8" fill="url(#ai-dot)" filter="url(#ai-shadow)" />
+      <circle cx="-2" cy="-3" r="1.8" fill="#FFFFFF" fillOpacity="0.65" />
+    </svg>
+  )
+}
+
+// Product Studio — real iso cube with three-face gradient shading. Volumetric, not flat.
+export function ProductStudioGlyph({ active, primed, reducedMotion }: GlyphProps) {
+  return (
+    <svg
+      viewBox="-40 -40 80 80"
+      width="104"
+      height="104"
+      className={`${baseClass} ${stateClass(primed ?? false, active)}`}
+      data-active={active}
+      data-primed={primed ?? false}
+      data-reduced-motion={reducedMotion ?? false}
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="ps-top" x1="0" y1="-22" x2="0" y2="2" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFB068" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#F6851B" stopOpacity="0.85" />
+        </linearGradient>
+        <linearGradient id="ps-right" x1="0" y1="-10" x2="0" y2="26" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#F6851B" stopOpacity="0.65" />
+          <stop offset="100%" stopColor="#C56612" stopOpacity="0.55" />
+        </linearGradient>
+        <linearGradient id="ps-left" x1="0" y1="-10" x2="0" y2="26" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#C56612" stopOpacity="0.45" />
+          <stop offset="100%" stopColor="#7E4309" stopOpacity="0.4" />
+        </linearGradient>
+        <filter id="ps-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1.8" />
+          <feOffset dx="0" dy="3" result="off" />
+          <feComponentTransfer><feFuncA type="linear" slope="0.22" /></feComponentTransfer>
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#ps-shadow)">
+        {/* Left face (deepest shadow) */}
+        <polygon
+          points="-22,-10 -22,14 0,26 0,2"
+          fill="url(#ps-left)"
+          stroke="#7E4309"
+          strokeWidth="0.75"
+          strokeOpacity="0.5"
+          strokeLinejoin="round"
+        />
+        {/* Right face (mid-tone) */}
+        <polygon
+          points="22,-10 22,14 0,26 0,2"
+          fill="url(#ps-right)"
+          stroke="#C56612"
+          strokeWidth="0.75"
+          strokeOpacity="0.55"
+          strokeLinejoin="round"
+        />
+        {/* Top face (lit) */}
+        <polygon
+          points="0,-22 22,-10 0,2 -22,-10"
+          fill="url(#ps-top)"
+          stroke="#F6851B"
+          strokeWidth="0.75"
+          strokeOpacity="0.7"
+          strokeLinejoin="round"
+        />
+        {/* Highlight accent on top face — craft mark */}
+        <line
+          x1="-14"
+          y1="-7"
+          x2="-2"
+          y2="-13"
+          stroke="#FFFFFF"
+          strokeWidth="0.6"
+          strokeOpacity="0.35"
+          strokeLinecap="round"
+        />
       </g>
     </svg>
   )
