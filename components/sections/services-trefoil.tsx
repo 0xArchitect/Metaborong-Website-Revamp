@@ -19,7 +19,16 @@ const NODE_OFFSETS: Record<PillarId, { x: number; y: number }> = {
 
 export function ServicesTrefoil({ className = '' }: Props) {
   const [activeId, setActiveId] = useState<PillarId | null>(null)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mql.matches)
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
+  }, [])
 
   useEffect(() => {
     const el = rootRef.current
@@ -42,7 +51,40 @@ export function ServicesTrefoil({ className = '' }: Props) {
   const primed = activeId !== null
 
   return (
-    <div ref={rootRef} className={`grid grid-cols-1 lg:grid-cols-2 gap-[48px] ${className}`}>
+    <>
+      <style precedence="default">{`
+        .services-spoke {
+          stroke-dasharray: 4 6;
+          animation: services-spoke-flow 3s linear infinite;
+          transition: stroke-opacity 200ms ease-out, stroke-width 200ms ease-out;
+        }
+        .services-spoke-active   { stroke-opacity: 0.9; stroke-width: 1.5; }
+        .services-spoke-inactive { stroke-opacity: 0.3; stroke-width: 1; }
+        @keyframes services-spoke-flow {
+          from { stroke-dashoffset: 0; }
+          to   { stroke-dashoffset: -10; }
+        }
+        [data-reduced-motion="true"] .services-spoke { animation: none; }
+
+        [data-primed="true"][data-active="true"][data-reduced-motion="false"] {
+          animation: services-glyph-in 700ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes services-glyph-in {
+          from { transform: scale(0.92); }
+          to   { transform: scale(1); }
+        }
+
+        .services-node-btn:focus-visible svg {
+          outline: 2px solid var(--color-brand);
+          outline-offset: 4px;
+          border-radius: 50%;
+        }
+      `}</style>
+      <div
+        ref={rootRef}
+        data-reduced-motion={reducedMotion}
+        className={`grid grid-cols-1 lg:grid-cols-2 gap-[48px] ${className}`}
+      >
       <div className="relative aspect-square max-h-[520px] w-full">
         <svg viewBox="0 0 500 500" className="w-full h-full">
           <defs>
@@ -92,7 +134,7 @@ export function ServicesTrefoil({ className = '' }: Props) {
                   aria-label={`Activate ${p.label} pillar`}
                   className="services-node-btn w-full h-full bg-transparent border-0 p-0 cursor-pointer focus:outline-none rounded-full"
                 >
-                  <PillarGlyph pillarId={p.id} active={isActive} primed={primed} />
+                  <PillarGlyph pillarId={p.id} active={isActive} primed={primed} reducedMotion={reducedMotion} />
                 </button>
               </foreignObject>
             )
@@ -176,5 +218,6 @@ export function ServicesTrefoil({ className = '' }: Props) {
         })}
       </div>
     </div>
+    </>
   )
 }
