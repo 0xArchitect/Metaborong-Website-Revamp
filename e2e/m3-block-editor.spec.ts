@@ -32,6 +32,17 @@ const POST_SLUG = slugify(POST_TITLE)
 
 async function signIn(page: Page) {
   await page.context().clearCookies()
+  // Pre-set the consent cookie so the privacy banner never renders.
+  // Otherwise on a fresh context (no mb_consent) the banner mounts at
+  // z-[60] over the lower-right of the page; even though it doesn't
+  // visually overlap the editor canvas, it adds focusable buttons to
+  // the document and made the M3 spec flake on slow first compiles.
+  // addInitScript runs before any page JS so useConsent's
+  // useState(() => readConsent()) sees the cookie on first render and
+  // <ConsentBanner> short-circuits to null.
+  await page.context().addInitScript(() => {
+    document.cookie = 'mb_consent=rejected; path=/; SameSite=Lax'
+  })
   await page.goto('/admin/login')
   await page.getByLabel(/email/i).fill(ADMIN_EMAIL!)
   await page.getByLabel(/password/i).fill(ADMIN_PASSWORD!)
@@ -109,14 +120,35 @@ test.describe('M3 — block editor + live preview pane golden path', () => {
     // public render emits an <h3>.
     await page.getByLabel(/heading level/i).first().selectOption('3')
 
-    // Slash-menu insert: paragraph.
+    // selectOption leaves focus on the <select>; without restoring the
+    // caret to the contentEditable, the next `/` keystroke never
+    // reaches editor.view.dom (where slash-menu's keydown listener is
+    // bound), the slash menu silently no-ops, and the typed text
+    // ("/paragraph", "/faq") lands inside the heading as plain
+    // content. Click the heading's text *inside the editor canvas*
+    // (the same string also appears in the live preview pane after
+    // its 150ms debounce, which would resolve to a non-editable target
+    // under strict mode) and End jumps to the line end so the next
+    // slash menu opens at the right caret position.
+    const canvas = page.getByTestId('editor-canvas')
+    await canvas.getByText('Why we shipped').click()
     await page.keyboard.press('End')
-    await page.keyboard.press('Enter')
+
+    // Slash-menu insert: paragraph. The slash menu's deleteRange +
+    // insertContent path inserts the new paragraph as a sibling after
+    // the heading and lands the caret inside it — no manual Enter
+    // needed (Tiptap's default splitBlock would have created another
+    // heading instead of a paragraph).
     await insertViaSlash(page, 'paragraph')
     await page.keyboard.type('We chipped away at the deadline.')
 
+    // Same focus-restoration trick before the FAQ insert. The
+    // preview's 150ms debounce has long since fired by now so the
+    // bare paragraph text matches in two places.
+    await canvas.getByText('We chipped away at the deadline.').click()
+    await page.keyboard.press('End')
+
     // Slash-menu insert: faq (atom — fill the inline inputs).
-    await page.keyboard.press('Enter')
     await insertViaSlash(page, 'faq')
     await page.getByPlaceholder(/what is geo/i).fill('What are blocks?')
     await page
@@ -124,7 +156,10 @@ test.describe('M3 — block editor + live preview pane golden path', () => {
       .fill('Typed JSON nodes the editor and renderer share.')
 
     // Click the paragraph block and assign role='tldr' via the inspector.
-    await page.getByText('We chipped away at the deadline.').click()
+    // Scope to the editor canvas so the live preview's matching paragraph
+    // (same text, post-debounce) doesn't trip strict-mode click on a
+    // non-editable target.
+    await canvas.getByText('We chipped away at the deadline.').click()
     await page.getByLabel(/^block role$/i).selectOption('tldr')
 
     // Autosave fires 2s after the last edit; wait for the saved indicator.
