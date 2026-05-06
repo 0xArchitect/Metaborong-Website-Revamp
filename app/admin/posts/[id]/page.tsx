@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDraftPostById } from '@/lib/posts'
+import { getImageById } from '@/lib/images'
 import { EditPostForm } from '@/components/admin/edit-post-form'
 
 export const metadata: Metadata = {
@@ -23,6 +24,11 @@ export default async function AdminEditPostPage({ params }: EditPageProps) {
   // editor needs both views.
   const post = await getDraftPostById(id)
   if (!post) notFound()
+
+  const [initialCover, initialOg] = await Promise.all([
+    post.cover_image_id ? getImageById(post.cover_image_id) : Promise.resolve(null),
+    post.og_image_id ? getImageById(post.og_image_id) : Promise.resolve(null),
+  ])
 
   return (
     <div className="flex flex-col gap-[24px]">
@@ -51,7 +57,7 @@ export default async function AdminEditPostPage({ params }: EditPageProps) {
         </Link>
       </header>
 
-      <EditPostForm initialPost={post} />
+      <EditPostForm initialPost={post} initialCover={initialCover} initialOg={initialOg} />
     </div>
   )
 }
