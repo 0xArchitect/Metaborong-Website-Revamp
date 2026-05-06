@@ -31,6 +31,12 @@ function safeNext(value: string | null): string {
   if (value.startsWith('//')) return '/admin'
   // Block protocol-relative and full URLs that slipped past the prefix check.
   if (value.includes('://')) return '/admin'
+  // Never redirect back to the login page itself. If post-login auth fails
+  // for any reason (stale cookie, env drift, layout-level rejection), that
+  // creates an encoded-URL spiral as each round-trip stacks another `next=`
+  // layer. Falling back to /admin lets the layout's own gate decide where
+  // to land.
+  if (value.startsWith('/admin/login')) return '/admin'
   return value
 }
 
