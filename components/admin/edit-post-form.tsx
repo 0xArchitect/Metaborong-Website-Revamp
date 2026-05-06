@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ApiError, NetworkError, api } from '@/lib/api-client'
 import {
@@ -9,9 +10,11 @@ import {
   tagRegex,
   validateContentJson,
   type Block,
+  type Image as ImageRow,
   type Post,
 } from '@/lib/blog-schema'
 import { EditorShell } from '@/components/admin/editor/editor-shell'
+import { ImagePicker, type PickerMode } from '@/components/admin/images/image-picker'
 
 type SaveState =
   | { kind: 'idle' }
@@ -126,9 +129,11 @@ function validate(state: FormState, blocks: Block[]): ValidationResult {
 
 interface Props {
   initialPost: Post
+  initialCover?: ImageRow | null
+  initialOg?: ImageRow | null
 }
 
-export function EditPostForm({ initialPost }: Props) {
+export function EditPostForm({ initialPost, initialCover = null, initialOg = null }: Props) {
   const router = useRouter()
   const [, startTransition] = useTransition()
 
@@ -142,6 +147,13 @@ export function EditPostForm({ initialPost }: Props) {
   const [deleteError, setDeleteError] = useState<string | null>(null)
   const [confirmSlug, setConfirmSlug] = useState('')
   const [savedToastAt, setSavedToastAt] = useState(0)
+  // Picker state — one modal serves both the cover and og slots; the
+  // currently-active slot is encoded in the open value.
+  const [pickerOpen, setPickerOpen] = useState<null | PickerMode>(null)
+  // Local thumbnail cache so the preview stays visible across re-renders
+  // without a server round-trip per keystroke.
+  const [coverThumb, setCoverThumb] = useState<ImageRow | null>(initialCover)
+  const [ogThumb, setOgThumb] = useState<ImageRow | null>(initialOg)
 
   const dirty = useMemo(() => {
     const baseline = postToFormState(post)
@@ -470,34 +482,38 @@ export function EditPostForm({ initialPost }: Props) {
         </Field>
 
         <Field
-          label="Cover image ID"
+          label="Cover image"
           id="f-cover"
           error={errs.cover_image_id}
-          hint="UUID. Image picker UI lands in M4."
+          hint="Shown at the top of /blog/[slug] and in social cards."
         >
-          <input
+          <ImageSlot
             id="f-cover"
-            type="text"
-            value={state.cover_image_id}
-            onChange={(e) => setField('cover_image_id', e.target.value)}
-            placeholder="00000000-0000-0000-0000-000000000000"
-            className={inputClass(!!errs.cover_image_id)}
+            label="Cover image"
+            image={coverThumb}
+            onPick={() => setPickerOpen('cover')}
+            onRemove={() => {
+              setField('cover_image_id', '')
+              setCoverThumb(null)
+            }}
           />
         </Field>
 
         <Field
-          label="OG image ID"
+          label="OG image"
           id="f-og"
           error={errs.og_image_id}
-          hint="UUID. Falls back to cover when unset."
+          hint="Falls back to cover when unset."
         >
-          <input
+          <ImageSlot
             id="f-og"
-            type="text"
-            value={state.og_image_id}
-            onChange={(e) => setField('og_image_id', e.target.value)}
-            placeholder="00000000-0000-0000-0000-000000000000"
-            className={inputClass(!!errs.og_image_id)}
+            label="OG image"
+            image={ogThumb}
+            onPick={() => setPickerOpen('og')}
+            onRemove={() => {
+              setField('og_image_id', '')
+              setOgThumb(null)
+            }}
           />
         </Field>
       </div>
@@ -546,6 +562,22 @@ export function EditPostForm({ initialPost }: Props) {
           onConfirm={handleDelete}
         />
       ) : null}
+
+      <ImagePicker
+        open={pickerOpen !== null}
+        mode={pickerOpen ?? 'cover'}
+        onClose={() => setPickerOpen(null)}
+        onSelect={(image) => {
+          if (pickerOpen === 'cover') {
+            setField('cover_image_id', image.id)
+            setCoverThumb(image)
+          } else if (pickerOpen === 'og') {
+            setField('og_image_id', image.id)
+            setOgThumb(image)
+          }
+          setPickerOpen(null)
+        }}
+      />
     </>
   )
 }
@@ -577,6 +609,64 @@ function Field({
       ) : hint ? (
         <p className="text-[12px] text-gray-light tracking-[-0.005em]">{hint}</p>
       ) : null}
+    </div>
+  )
+}
+
+function ImageSlot({
+  id, label, image, onPick, onRemove,
+}: {
+  id: string
+  label: string
+  image: ImageRow | null
+  onPick: () => void
+  onRemove: () => void
+}) {
+  if (!image) {
+    return (
+      <button
+        id={id}
+        type="button"
+        onClick={onPick}
+        aria-label={`Choose ${label}`}
+        className="flex h-[88px] w-full items-center justify-center gap-2 rounded-md border border-dashed border-border bg-bg-subtle text-[13px] font-medium text-gray transition-colors duration-150 hover:border-brand/30 hover:text-brand focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+      >
+        <span aria-hidden="true">+</span> Choose image
+      </button>
+    )
+  }
+  return (
+    <div className="flex items-center gap-3 rounded-md border border-border bg-white p-2">
+      <div className="relative h-[64px] w-[96px] flex-shrink-0 overflow-hidden rounded-md border border-border bg-bg-subtle">
+        <Image
+          src={image.blob_url}
+          alt={image.alt || image.filename}
+          fill
+          sizes="96px"
+          className="object-cover"
+          style={{ objectPosition: `${image.focal_x * 100}% ${image.focal_y * 100}%` }}
+        />
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <p className="truncate text-[13px] text-dark" title={image.filename}>{image.filename}</p>
+        <div className="flex gap-2">
+          <button
+            id={id}
+            type="button"
+            onClick={onPick}
+            className="inline-flex h-[28px] items-center rounded-md border border-border bg-white px-2 text-[12px] font-medium text-dark transition-colors duration-150 hover:border-brand/30 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Change
+          </button>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="inline-flex h-[28px] items-center rounded-md border border-transparent px-2 text-[12px] font-medium text-gray transition-colors duration-150 hover:border-[#fda29b] hover:text-[#b42318] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
