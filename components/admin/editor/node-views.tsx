@@ -1,15 +1,19 @@
 'use client'
 
 // React NodeViews for the Tiptap nodes that need inline UI affordances.
-// Per dispatch: heading (level dropdown), image (UUID + alt input), callout
-// (tone selector), faq (question + answer inputs).
+// Per dispatch: heading (level dropdown), image (picker trigger + alt
+// input), callout (tone selector), faq (question + answer inputs).
 //
 // The remaining block types (paragraph, list, quote, code, key-takeaway)
 // render with default Tiptap DOM and surface their knobs through the
 // right-rail inspector.
 
 import { NodeViewContent, NodeViewWrapper, type NodeViewProps } from '@tiptap/react'
-import { useCallback } from 'react'
+import NextImage from 'next/image'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ApiError, api } from '@/lib/api-client'
+import { ImagePicker } from '@/components/admin/images/image-picker'
+import type { Image as ImageRow } from '@/lib/blog-schema'
 
 const HEADING_LEVELS: ReadonlyArray<2 | 3 | 4 | 5 | 6> = [2, 3, 4, 5, 6]
 
@@ -65,42 +69,150 @@ export function HeadingNodeView({ node, updateAttributes, selected }: NodeViewPr
   )
 }
 
-/** Image block — atom; UUID input + alt input + caption input. */
+/**
+ * Image block — atom node. Real M4 picker swap-in:
+ *   · "Choose image" button when imageId is empty → opens ImagePicker.
+ *   · Selected: thumbnail preview + alt input + caption input + Replace.
+ *   · imageId set but row missing in DB (stale UUID from M3) →
+ *     broken-image placeholder with a "Replace" button.
+ *
+ * The imageId attr is set from the picker's onSelect; alt is REQUIRED to
+ * pass the form-level Zod validation. The picker also writes alt back to
+ * the image row (PATCH /api/admin/images/[id]) so the next time this image
+ * is reused the alt is pre-filled — but the block-level alt attr is what
+ * the public renderer uses (so per-context alt is allowed).
+ */
 export function ImageNodeView({ node, updateAttributes, selected }: NodeViewProps) {
   const imageId = (node.attrs.imageId as string | null) ?? ''
   const alt = (node.attrs.alt as string | null) ?? ''
   const caption = (node.attrs.caption as string | null) ?? ''
   const altMissing = alt.trim().length === 0
 
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const [resolved, setResolved] = useState<ImageRow | null>(null)
+  const [resolveStatus, setResolveStatus] = useState<'idle' | 'loading' | 'missing'>('idle')
+  const altInputRef = useRef<HTMLInputElement | null>(null)
+
+  // Resolve imageId → image row whenever the attr changes. Uses an empty
+  // PATCH (allowed by the BE) as a "GET by id" since that's what M4 BE
+  // exposes for single-row reads.
+  useEffect(() => {
+    if (!imageId) {
+      setResolved(null)
+      setResolveStatus('idle')
+      return
+    }
+    if (resolved && resolved.id === imageId) return
+    let cancelled = false
+    setResolveStatus('loading')
+    api
+      .patch<{ image: ImageRow }>(`/api/admin/images/${imageId}`, {})
+      .then((res) => {
+        if (cancelled) return
+        setResolved(res.image)
+        setResolveStatus('idle')
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return
+        if (err instanceof ApiError && err.status === 404) {
+          setResolved(null)
+          setResolveStatus('missing')
+        } else {
+          setResolveStatus('idle')
+        }
+      })
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageId])
+
+  const onPick = useCallback((image: ImageRow) => {
+    updateAttributes({
+      imageId: image.id,
+      // Pre-fill alt from the image row when the block alt is empty so the
+      // user lands in a valid state by default; they can still tailor.
+      ...(alt.trim().length === 0 ? { alt: image.alt } : {}),
+    })
+    setResolved(image)
+    setResolveStatus('idle')
+    requestAnimationFrame(() => altInputRef.current?.focus())
+  }, [alt, updateAttributes])
+
   return (
     <NodeViewWrapper
       as="div"
-      className={`mb-block my-[24px] rounded-lg border ${altMissing ? 'border-[#fda29b]' : 'border-dashed border-border'} bg-bg-subtle p-[16px] ${selected ? 'ring-2 ring-brand/30' : ''}`}
+      className={`mb-block my-[24px] rounded-lg border ${altMissing && imageId ? 'border-[#fda29b]' : 'border-border'} bg-white p-[16px] ${selected ? 'ring-2 ring-brand/30' : ''}`}
       data-block-id={node.attrs.id ?? undefined}
       data-block-type="image"
     >
-      <div contentEditable={false} className="flex flex-col gap-2">
-        <p
-          className="text-[10px] font-medium uppercase tracking-[0.16em] text-gray"
+      <div contentEditable={false} className="flex flex-col gap-3">
+        {!imageId ? (
+          <div className="flex flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-bg-subtle py-[40px] text-center">
+            <p className="text-[13px] text-gray">No image selected.</p>
+            <button
+              type="button"
+              onClick={() => setPickerOpen(true)}
+              className="inline-flex h-[36px] items-center rounded-md bg-brand px-3 text-[13px] font-semibold text-white transition-opacity duration-150 hover:opacity-95 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              Choose image
+            </button>
+          </div>
+        ) : resolveStatus === 'loading' ? (
+          <div className="flex h-[160px] w-full items-center justify-center rounded-md border border-dashed border-border bg-bg-subtle text-[13px] text-gray-light">
+            Loading image…
+          </div>
+        ) : resolveStatus === 'missing' || !resolved ? (
+          <div className="flex flex-col items-start gap-2 rounded-md border border-dashed border-[#fda29b] bg-[#fef3f2] p-3">
+            <p className="text-[13px] text-[#b42318]">
+              This image was deleted or is unavailable.
+            </p>
+            <button
+              type="button"
+              onClick={() => setPickerOpen(true)}
+              className="inline-flex h-[32px] items-center rounded-md border border-[#fda29b] bg-white px-2 text-[12px] font-semibold text-[#b42318] hover:bg-[#fef3f2] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              Replace
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2">
+            <div
+              className="relative w-full overflow-hidden rounded-md border border-border bg-bg-subtle"
+              style={{ aspectRatio: `${resolved.width} / ${resolved.height}`, maxHeight: '320px' }}
+            >
+              <NextImage
+                src={resolved.blob_url}
+                alt={alt || resolved.alt || resolved.filename}
+                fill
+                sizes="(max-width: 768px) 100vw, 720px"
+                className="object-contain"
+                style={{ objectPosition: `${resolved.focal_x * 100}% ${resolved.focal_y * 100}%` }}
+              />
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="truncate text-[12px] text-gray" title={resolved.filename}>
+                {resolved.filename} · {resolved.width}×{resolved.height}
+              </p>
+              <button
+                type="button"
+                onClick={() => setPickerOpen(true)}
+                className="inline-flex h-[28px] items-center rounded-md border border-border bg-white px-2 text-[12px] font-medium text-dark transition-colors duration-150 hover:border-brand/30 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                Replace
+              </button>
+            </div>
+          </div>
+        )}
+
+        <label
+          className="text-[11px] font-medium uppercase tracking-[0.08em] text-gray"
           style={{ fontFamily: 'var(--font-mono)' }}
+          htmlFor={`image-alt-${node.attrs.id ?? 'new'}`}
         >
-          Image · pre-M4 placeholder
-        </p>
-        <label className="text-[11px] font-medium uppercase tracking-[0.08em] text-gray" style={{ fontFamily: 'var(--font-mono)' }}>
-          Image ID (UUID)
+          Alt text <span className="text-[#b42318]" aria-hidden="true">*</span>
         </label>
         <input
-          type="text"
-          value={imageId}
-          onChange={(e) => updateAttributes({ imageId: e.target.value })}
-          placeholder="00000000-0000-0000-0000-000000000000"
-          className="h-[34px] w-full rounded-md border border-border bg-white px-2 text-[13px] tracking-[-0.005em] text-dark placeholder:text-gray-light focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-          style={{ fontFamily: 'var(--font-mono)' }}
-        />
-        <label className="mt-1 text-[11px] font-medium uppercase tracking-[0.08em] text-gray" style={{ fontFamily: 'var(--font-mono)' }}>
-          Alt text <span className="text-[#b42318]">*</span>
-        </label>
-        <input
+          ref={altInputRef}
+          id={`image-alt-${node.attrs.id ?? 'new'}`}
           type="text"
           value={alt}
           aria-required="true"
@@ -113,10 +225,15 @@ export function ImageNodeView({ node, updateAttributes, selected }: NodeViewProp
             Alt text required.
           </p>
         ) : null}
-        <label className="mt-1 text-[11px] font-medium uppercase tracking-[0.08em] text-gray" style={{ fontFamily: 'var(--font-mono)' }}>
+        <label
+          className="mt-1 text-[11px] font-medium uppercase tracking-[0.08em] text-gray"
+          style={{ fontFamily: 'var(--font-mono)' }}
+          htmlFor={`image-caption-${node.attrs.id ?? 'new'}`}
+        >
           Caption (optional)
         </label>
         <input
+          id={`image-caption-${node.attrs.id ?? 'new'}`}
           type="text"
           value={caption}
           onChange={(e) => updateAttributes({ caption: e.target.value })}
@@ -124,6 +241,12 @@ export function ImageNodeView({ node, updateAttributes, selected }: NodeViewProp
           className="h-[34px] w-full rounded-md border border-border bg-white px-2 text-[13px] tracking-[-0.005em] text-dark placeholder:text-gray-light focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         />
       </div>
+      <ImagePicker
+        open={pickerOpen}
+        mode="inline"
+        onClose={() => setPickerOpen(false)}
+        onSelect={onPick}
+      />
     </NodeViewWrapper>
   )
 }
