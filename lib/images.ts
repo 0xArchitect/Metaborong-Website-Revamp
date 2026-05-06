@@ -19,7 +19,7 @@ import 'server-only'
 import { randomUUID } from 'node:crypto'
 import sharp from 'sharp'
 import { put as blobPut, del as blobDel } from '@vercel/blob'
-import { and, desc, eq, lt, or } from 'drizzle-orm'
+import { and, desc, eq, inArray, lt, or } from 'drizzle-orm'
 import { db as defaultDb } from '../db/client'
 import { images, type ImageRow } from '../db/schema'
 import { type Image } from './blog-schema'
@@ -198,6 +198,43 @@ export function decodeCursor(raw: string): DecodedCursor | null {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DbLike = any
+
+/**
+ * Server-only fetch of a single image row by id. Returns null when the
+ * id is missing from the table (rather than throwing), so callers can
+ * gracefully render a broken-image placeholder for stale imageId attrs.
+ */
+export async function getImageById(
+  id: string,
+  dbHandle: DbLike = defaultDb,
+): Promise<Image | null> {
+  const rows = (await dbHandle
+    .select()
+    .from(images)
+    .where(eq(images.id, id))
+    .limit(1)) as ImageRow[]
+  const row = rows[0]
+  return row ? rowToImage(row) : null
+}
+
+/**
+ * Server-only batch fetch — used by the public reader and admin preview
+ * to resolve every imageId referenced by a post in one round-trip rather
+ * than one query per image block.
+ */
+export async function getImagesByIds(
+  ids: ReadonlyArray<string>,
+  dbHandle: DbLike = defaultDb,
+): Promise<Map<string, Image>> {
+  const out = new Map<string, Image>()
+  if (ids.length === 0) return out
+  const rows = (await dbHandle
+    .select()
+    .from(images)
+    .where(inArray(images.id, ids as string[]))) as ImageRow[]
+  for (const row of rows) out.set(row.id, rowToImage(row))
+  return out
+}
 
 /**
  * One page of images, ordered (created_at DESC, id DESC). The cursor is
