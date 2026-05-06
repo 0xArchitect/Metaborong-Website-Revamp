@@ -112,7 +112,7 @@ describe('breadcrumbSchema', () => {
   it('emits Home → Blog → Post in order', () => {
     const out = breadcrumbSchema({
       post: { slug: 'how-we-shipped', title: 'How we shipped' },
-    }) as { itemListElement: Array<{ position: number; name: string; item: string }> }
+    }) as { '@type': string; itemListElement: Array<{ position: number; name: string; item: string }> }
     expect(out['@type']).toBe('BreadcrumbList')
     expect(out.itemListElement).toHaveLength(3)
     expect(out.itemListElement[0]).toEqual({
