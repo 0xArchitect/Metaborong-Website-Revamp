@@ -1,4 +1,5 @@
-import type { Post } from '@/lib/blog-schema'
+import Image from 'next/image'
+import type { Post, Image as ImageRow } from '@/lib/blog-schema'
 import { BlockRenderer } from './block-renderer'
 
 // Format an ISO timestamp as "Mar 14, 2026". Server-rendered, deterministic
@@ -15,11 +16,11 @@ function formatDate(iso: string | null): string | null {
 interface PostViewProps {
   post: Post
   /**
-   * Optional resolver for image-block ids. Pre-M4, both call sites pass
-   * undefined and the BlockRenderer falls back to a placeholder. M4 will
-   * inject a resolver backed by the images table.
+   * Optional resolver for image-block ids and the cover. M4 onward both
+   * call sites inject a resolver backed by the `images` table; without
+   * one, image blocks fall back to alt-only placeholders.
    */
-  resolveImage?: (imageId: string) => { src: string; width: number; height: number } | null
+  resolveImage?: (imageId: string) => ImageRow | null
   /**
    * When true, render a "Draft preview" banner above the title. Used by
    * the standalone preview route so the admin reader knows they're not
@@ -58,12 +59,15 @@ export function PostView({ post, resolveImage, draftBanner }: PostViewProps) {
       ) : null}
 
       {cover ? (
-        <img
-          src={cover.src}
-          alt=""
+        <Image
+          src={cover.blob_url}
+          alt={cover.alt || ''}
           width={cover.width}
           height={cover.height}
+          sizes="(max-width: 768px) 100vw, 720px"
+          priority
           className="mb-[40px] w-full rounded-xl border border-border"
+          style={{ objectPosition: `${cover.focal_x * 100}% ${cover.focal_y * 100}%` }}
         />
       ) : post.cover_image_id ? (
         <div

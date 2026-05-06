@@ -1,4 +1,5 @@
-import type { Block } from '@/lib/blog-schema'
+import Image from 'next/image'
+import type { Block, Image as ImageRow } from '@/lib/blog-schema'
 
 // Slugify heading text into a stable anchor id so jump-link snippets work
 // for SEO. Block.data.anchor wins when explicitly set; otherwise we derive.
@@ -14,10 +15,11 @@ function anchorFor(text: string): string {
 
 interface BlockRendererProps {
   block: Block
-  // Pre-M4: image blocks don't have a real blob URL until the image
-  // pipeline lands. Callers can pass a resolver to swap an imageId for an
-  // actual URL; when omitted we render a placeholder div sized 16:9.
-  resolveImage?: (imageId: string) => { src: string; width: number; height: number } | null
+  // M4: resolver returns the full Image row (or null when the image was
+  // deleted / never existed). Public route + admin preview both inject one
+  // backed by getImagesByIds; when omitted (or returning null) the image
+  // block renders a dashed 16:9 placeholder so AEO bots still see the alt.
+  resolveImage?: (imageId: string) => ImageRow | null
 }
 
 export function BlockRenderer({ block, resolveImage }: BlockRendererProps) {
@@ -44,14 +46,14 @@ export function BlockRenderer({ block, resolveImage }: BlockRendererProps) {
       return (
         <figure className="my-[32px]">
           {resolved ? (
-            <img
-              src={resolved.src}
+            <Image
+              src={resolved.blob_url}
               alt={alt}
               width={resolved.width}
               height={resolved.height}
-              loading="lazy"
-              decoding="async"
-              className="block w-full h-auto rounded-lg border border-border"
+              sizes="(max-width: 768px) 100vw, 720px"
+              className="block h-auto w-full rounded-lg border border-border"
+              style={{ objectPosition: `${resolved.focal_x * 100}% ${resolved.focal_y * 100}%` }}
             />
           ) : (
             <div
