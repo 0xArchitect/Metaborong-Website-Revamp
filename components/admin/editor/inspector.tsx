@@ -1,7 +1,7 @@
 'use client'
 
 import type { Editor } from '@tiptap/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import type { SemanticRole } from '@/lib/blog-schema'
 import { NODE_NAMES } from '@/lib/editor/serialize'
 
@@ -190,9 +190,21 @@ function HeadingFields({ attrs, update }: { attrs: Record<string, unknown>; upda
 
 function ListFields({ attrs, update }: { attrs: Record<string, unknown>; update: (a: Record<string, unknown>) => void }) {
   const ordered = !!attrs.ordered
+  // Don't reuse <Field>: it wraps children in <label>, which leaks the
+  // field label + the *other* button's text into each button's
+  // accessible name. role="group" + aria-labelledby is the screen-reader
+  // -correct pattern for a labeled toggle pair.
+  const labelId = useId()
   return (
-    <Field label="List style">
-      <div className="flex gap-2">
+    <div className="flex flex-col gap-[4px]">
+      <span
+        id={labelId}
+        className="text-[10px] font-medium uppercase tracking-[0.12em] text-gray"
+        style={{ fontFamily: 'var(--font-mono)' }}
+      >
+        List style
+      </span>
+      <div role="group" aria-labelledby={labelId} className="flex gap-2">
         <button
           type="button"
           aria-pressed={!ordered}
@@ -206,7 +218,7 @@ function ListFields({ attrs, update }: { attrs: Record<string, unknown>; update:
           className={`flex-1 rounded-md border px-2 py-1 text-[12px] font-medium ${ordered ? 'border-brand bg-brand text-white' : 'border-border bg-white text-dark hover:border-brand/30'}`}
         >Ordered</button>
       </div>
-    </Field>
+    </div>
   )
 }
 

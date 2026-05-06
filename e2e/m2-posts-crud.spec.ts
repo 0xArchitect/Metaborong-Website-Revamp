@@ -12,10 +12,17 @@ import { expect, test, type BrowserContext, type Page } from '@playwright/test'
  *   E2E_ADMIN_PASSWORD — plaintext that bcrypts to ADMIN_PASSWORD_HASH
  *
  * Flow:
- *   login → New post → fill title → land on edit → paste valid Block[] →
- *   Save → Publish → public render in incognito → admin Unpublish →
- *   refresh public → expect 404 → Delete → confirm modal → dashboard
- *   shows zero of that slug.
+ *   login → New post → fill title → land on edit → seed content_json /
+ *   author / excerpt via the admin PATCH API → Publish → public render
+ *   in incognito → admin Unpublish → refresh public → expect 404 →
+ *   Delete → confirm modal → dashboard shows zero of that slug.
+ *
+ * Why API instead of typing in the editor: M3 replaced the content
+ * <textarea> with the Tiptap-backed <EditorShell />. Editor UX (slash
+ * menu, node views, autosave, etc) is covered end-to-end by
+ * e2e/m3-block-editor.spec.ts; this spec only needs server-side state
+ * to verify publish + public render + unpublish + delete, so we PATCH
+ * the row directly.
  */
 
 const ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL
@@ -103,14 +110,27 @@ test.describe('M2 — posts CRUD golden path', () => {
     postId = segments[segments.length - 1]
     expect(postId).toMatch(/^[0-9a-f-]{36}$/)
 
-    const contentTextarea = page.getByLabel(/content/i)
-    await contentTextarea.fill(VALID_CONTENT)
+    // Seed content_json + author + excerpt directly via PATCH. The M3
+    // editor owns its own UI tests; here we only need the row in DB to
+    // be publishable so the public render + unpublish + delete steps
+    // below have something real to chew on.
+    const cookies = await page.context().cookies()
+    const csrf = cookies.find((c) => c.name === 'mb_csrf')?.value
+    expect(csrf, 'login should have set the mb_csrf cookie').toBeTruthy()
+    const patchRes = await page.request.patch(`/api/admin/posts/${postId}`, {
+      headers: { 'X-CSRF-Token': csrf! },
+      data: {
+        content_json: JSON.parse(VALID_CONTENT),
+        author_name: 'E2E Test',
+        excerpt: `Smoke check ${RUN_TAG}.`,
+      },
+    })
+    expect(patchRes.status(), `PATCH /api/admin/posts/${postId} should 200`).toBe(200)
 
-    await page.getByLabel(/author name/i).fill('E2E Test')
-    await page.getByLabel(/^excerpt$/i).fill(`Smoke check ${RUN_TAG}.`)
-
-    await page.getByRole('button', { name: /^save$/i }).click()
-    await expect(page.getByText(/saved/i).first()).toBeVisible()
+    // Reload so the editor hydrates from the patched row before publish.
+    // Without this, the Tiptap autosave loop could overwrite content_json
+    // with whatever the editor mounted with (empty doc) on debounce.
+    await page.reload()
 
     await page.getByRole('button', { name: /^publish$/i }).click()
     await expect(page.getByRole('status', { name: /status: published/i })).toBeVisible()
