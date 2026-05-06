@@ -4,7 +4,9 @@ import { notFound } from 'next/navigation'
 import { Nav } from '@/components/layout/nav'
 import { PostView } from '@/components/blog/post-view'
 import { getPostBySlug } from '@/lib/posts'
+import { getImagesByIds } from '@/lib/images'
 import { resolveRegion } from '@/lib/geo'
+import type { Block } from '@/lib/blog-schema'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -53,12 +55,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getPostBySlug(slug, region)
   if (!post) notFound()
 
+  // Batch-fetch every image row referenced by the post (cover + inline
+  // image blocks) in one round-trip so PostView can render via next/image
+  // without N+1 queries.
+  const imageIds = collectImageIds(post.content_json, post.cover_image_id)
+  const imageMap = await getImagesByIds(imageIds)
+  const resolveImage = (id: string) => imageMap.get(id) ?? null
+
   return (
     <>
       <Nav />
       <main className="bg-bg pt-[80px]">
-        <PostView post={post} />
+        <PostView post={post} resolveImage={resolveImage} />
       </main>
     </>
   )
+}
+
+function collectImageIds(blocks: Block[], cover: string | null): string[] {
+  const seen = new Set<string>()
+  if (cover) seen.add(cover)
+  for (const b of blocks) {
+    if (b.type === 'image' && b.data.imageId) seen.add(b.data.imageId)
+  }
+  return Array.from(seen)
 }
