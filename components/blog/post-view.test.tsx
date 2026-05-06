@@ -124,4 +124,30 @@ describe('<PostView />', () => {
     rerender(<PostView post={makePost({ cover_image_id: '00000000-0000-0000-0000-000000000000' })} />)
     expect(container.querySelector('[style*="aspect-ratio"]')).not.toBeNull()
   })
+
+  it('withToc=true wraps the article in a TOC layout when there are headings', () => {
+    const blocks: Block[] = [
+      { id: 'b1', type: 'heading',   data: { text: 'Section A', level: 2 } },
+      { id: 'b2', type: 'paragraph', data: { text: 'Body.' } },
+    ]
+    render(<PostView post={makePost({ content_json: blocks })} withToc />)
+    const labels = screen.getAllByText(/on this page/i)
+    expect(labels.length).toBeGreaterThan(0)
+    expect(
+      screen.getAllByRole('navigation', { name: /table of contents/i }).length,
+    ).toBeGreaterThan(0)
+  })
+
+  it('withToc=true with zero-heading post renders no TOC nav', () => {
+    render(<PostView post={makePost({ content_json: [] })} withToc />)
+    expect(screen.queryByRole('navigation', { name: /table of contents/i })).toBeNull()
+  })
+
+  it('withToc=false (admin preview default) never renders the TOC layout', () => {
+    const blocks: Block[] = [
+      { id: 'b1', type: 'heading', data: { text: 'Section A', level: 2 } },
+    ]
+    render(<PostView post={makePost({ content_json: blocks })} />)
+    expect(screen.queryByRole('navigation', { name: /table of contents/i })).toBeNull()
+  })
 })
