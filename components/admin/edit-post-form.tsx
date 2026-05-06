@@ -548,6 +548,7 @@ export function EditPostForm({ initialPost, initialCover = null, initialOg = nul
             cover_image_id: state.cover_image_id.trim() || null,
             og_image_id: state.og_image_id.trim() || null,
           }}
+          images={[coverThumb, ogThumb].filter((x): x is ImageRow => x !== null)}
         />
       </div>
 
@@ -622,13 +623,20 @@ function ImageSlot({
   onPick: () => void
   onRemove: () => void
 }) {
+  // Buttons intentionally do NOT carry `id={id}`. The wrapping <Field>
+  // emits a <label htmlFor={id}> for visible-text-only purposes. Screen
+  // readers compute a button's accessible name from its own attributes
+  // first; binding the label to a button via htmlFor would replace the
+  // button text ("Change", "Remove") with the field label ("Cover image"),
+  // making both Change AND Remove announce as the same generic "Cover
+  // image" — caught as M4 Tester HIGH 1, same root-cause class as M3's
+  // list-toggle a11y fix. Each button declares its own aria-label.
   if (!image) {
     return (
       <button
-        id={id}
         type="button"
         onClick={onPick}
-        aria-label={`Choose ${label}`}
+        aria-label={`Choose ${label.toLowerCase()}`}
         className="flex h-[88px] w-full items-center justify-center gap-2 rounded-md border border-dashed border-border bg-bg-subtle text-[13px] font-medium text-gray transition-colors duration-150 hover:border-brand/30 hover:text-brand focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
         <span aria-hidden="true">+</span> Choose image
@@ -651,9 +659,9 @@ function ImageSlot({
         <p className="truncate text-[13px] text-dark" title={image.filename}>{image.filename}</p>
         <div className="flex gap-2">
           <button
-            id={id}
             type="button"
             onClick={onPick}
+            aria-label={`Change ${label.toLowerCase()}`}
             className="inline-flex h-[28px] items-center rounded-md border border-border bg-white px-2 text-[12px] font-medium text-dark transition-colors duration-150 hover:border-brand/30 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             Change
@@ -661,6 +669,7 @@ function ImageSlot({
           <button
             type="button"
             onClick={onRemove}
+            aria-label={`Remove ${label.toLowerCase()}`}
             className="inline-flex h-[28px] items-center rounded-md border border-transparent px-2 text-[12px] font-medium text-gray transition-colors duration-150 hover:border-[#fda29b] hover:text-[#b42318] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             Remove

@@ -113,7 +113,11 @@ test.describe('M4 — image picker + cover/og + inline image block', () => {
 
     // Picker closes; cover preview appears with Change/Remove.
     await expect(dialog).toBeHidden()
-    await expect(page.getByRole('button', { name: /^change$/i }).first()).toBeVisible()
+    // Post-fix accessible name is descriptive ("Change cover image" / "Change og
+    // image") rather than just "Change". The label-for-as-accessible-name bug
+    // from M4 Tester HIGH 1 is gone; each picker action button now declares
+    // its own aria-label.
+    await expect(page.getByRole('button', { name: /^change cover image$/i })).toBeVisible()
 
     // Save + publish.
     await expect(page.getByText(/saved|unsaved/i).first()).toBeVisible({ timeout: 8_000 })

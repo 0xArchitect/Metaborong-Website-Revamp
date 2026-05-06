@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { Block, GeoRegion, Post } from '@/lib/blog-schema'
+import type { Block, GeoRegion, Image as ImageRow, Post } from '@/lib/blog-schema'
 import { mergeVariant } from '@/lib/geo'
 import { PostView } from '@/components/blog/post-view'
 
@@ -18,6 +18,15 @@ interface PreviewPaneProps {
   liveBlocks: Block[]
   /** Live edits to title/excerpt/tags/meta from the form fields above. */
   liveOverlay?: Partial<Pick<Post, 'title' | 'excerpt' | 'tags' | 'author_name' | 'author_url' | 'meta_title' | 'meta_description' | 'cover_image_id' | 'og_image_id'>>
+  /**
+   * Image rows the parent has resolved (cover, og, plus inline images
+   * the picker has fetched this session). Used to build the `resolveImage`
+   * callback PostView needs to render <img> blocks live. Pre-existing
+   * inline images that haven't been re-picked won't be in this map; the
+   * preview shows a placeholder for them, but the public route renders
+   * them correctly via server-side getImagesByIds.
+   */
+  images?: ImageRow[]
 }
 
 /**
@@ -30,7 +39,7 @@ interface PreviewPaneProps {
  *     route will produce under each geo header.
  *   · Wraps PostView verbatim — same DOM as the public renderer.
  */
-export function PreviewPane({ basePost, liveBlocks, liveOverlay }: PreviewPaneProps) {
+export function PreviewPane({ basePost, liveBlocks, liveOverlay, images }: PreviewPaneProps) {
   const [region, setRegion] = useState<GeoRegion>('OTHER')
   const [debouncedBlocks, setDebouncedBlocks] = useState<Block[]>(liveBlocks)
   const [debouncedOverlay, setDebouncedOverlay] = useState(liveOverlay ?? {})
@@ -58,6 +67,16 @@ export function PreviewPane({ basePost, liveBlocks, liveOverlay }: PreviewPanePr
     }
     return mergeVariant(draft, region)
   }, [basePost, debouncedBlocks, debouncedOverlay, region])
+
+  // Resolver from id → ImageRow. Memoized over the images array so PostView
+  // doesn't re-render on every parent re-render. Returns null for unknown
+  // ids (the renderer falls back to a placeholder, same as for missing
+  // image rows in the public route).
+  const resolveImage = useMemo(() => {
+    const map = new Map<string, ImageRow>()
+    for (const img of images ?? []) map.set(img.id, img)
+    return (imageId: string): ImageRow | null => map.get(imageId) ?? null
+  }, [images])
 
   return (
     <div className="flex h-full flex-col" data-testid="preview-pane" data-render-tick={renderTick}>
@@ -88,7 +107,7 @@ export function PreviewPane({ basePost, liveBlocks, liveOverlay }: PreviewPanePr
         </label>
       </div>
       <div className="flex-1 overflow-y-auto bg-white">
-        <PostView post={previewPost} draftBanner />
+        <PostView post={previewPost} resolveImage={resolveImage} draftBanner />
       </div>
     </div>
   )
