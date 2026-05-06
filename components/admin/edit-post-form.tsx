@@ -11,6 +11,7 @@ import {
   type Block,
   type Post,
 } from '@/lib/blog-schema'
+import { EditorShell } from '@/components/admin/editor/editor-shell'
 
 type SaveState =
   | { kind: 'idle' }
@@ -31,7 +32,8 @@ interface FormState {
   meta_description: string
   cover_image_id: string
   og_image_id: string
-  content_json_text: string  // raw textarea content
+  // The Tiptap editor owns the canonical Block[] state — held outside
+  // FormState so editor re-renders don't rebuild every form input.
 }
 
 function postToFormState(p: Post): FormState {
@@ -46,7 +48,6 @@ function postToFormState(p: Post): FormState {
     meta_description: p.meta_description ?? '',
     cover_image_id:   p.cover_image_id ?? '',
     og_image_id:      p.og_image_id ?? '',
-    content_json_text: JSON.stringify(p.content_json, null, 2),
   }
 }
 
@@ -57,7 +58,7 @@ interface ValidationResult {
   parsedTags?: string[]
 }
 
-function validate(state: FormState, status: Post['status']): ValidationResult {
+function validate(state: FormState, blocks: Block[]): ValidationResult {
   const errors: Partial<Record<Field, string>> = {}
 
   const title = state.title.trim()
@@ -102,26 +103,23 @@ function validate(state: FormState, status: Post['status']): ValidationResult {
     errors.og_image_id = 'OG image ID must be a UUID.'
   }
 
+  // Validate the Tiptap-emitted Block[] against the canonical Zod schema
+  // BEFORE submitting. The editor can briefly hold an empty heading or an
+  // image without alt; both are caught here so save is blocked with an
+  // inline error rather than bouncing off the BE 422.
+  const parse = contentJsonSchema.safeParse(blocks)
   let parsedContent: Block[] | undefined
-  let raw: unknown
-  try { raw = JSON.parse(state.content_json_text) }
-  catch { errors.content_json = 'Content is not valid JSON.' }
-  if (!errors.content_json) {
-    const parse = contentJsonSchema.safeParse(raw)
-    if (!parse.success) {
-      const issue = parse.error.issues[0]
-      const path = issue?.path?.join('.') || ''
-      errors.content_json = path
-        ? `Content schema error at ${path}: ${issue.message}`
-        : `Content schema error: ${issue?.message ?? 'invalid'}`
-    } else {
-      parsedContent = parse.data
-      const enforce = validateContentJson(parsedContent)
-      if (!enforce.ok) errors.content_json = enforce.message
-    }
+  if (!parse.success) {
+    const issue = parse.error.issues[0]
+    const path = issue?.path?.join('.') || ''
+    errors.content_json = path
+      ? `Block ${path}: ${issue.message}`
+      : `Block schema error: ${issue?.message ?? 'invalid'}`
+  } else {
+    parsedContent = parse.data
+    const enforce = validateContentJson(parsedContent)
+    if (!enforce.ok) errors.content_json = enforce.message
   }
-
-  void status
 
   return { ok: Object.keys(errors).length === 0, errors, parsedContent, parsedTags }
 }
@@ -136,6 +134,7 @@ export function EditPostForm({ initialPost }: Props) {
 
   const [state, setState] = useState<FormState>(() => postToFormState(initialPost))
   const [post, setPost] = useState<Post>(initialPost)
+  const [blocks, setBlocks] = useState<Block[]>(initialPost.content_json)
   const [save, setSave] = useState<SaveState>({ kind: 'idle' })
   const [statusBusy, setStatusBusy] = useState<'publish' | 'unpublish' | null>(null)
   const [showDelete, setShowDelete] = useState(false)
@@ -146,10 +145,11 @@ export function EditPostForm({ initialPost }: Props) {
 
   const dirty = useMemo(() => {
     const baseline = postToFormState(post)
-    return JSON.stringify(state) !== JSON.stringify(baseline)
-  }, [state, post])
+    if (JSON.stringify(state) !== JSON.stringify(baseline)) return true
+    return JSON.stringify(blocks) !== JSON.stringify(post.content_json)
+  }, [state, post, blocks])
 
-  const validation = useMemo(() => validate(state, post.status), [state, post.status])
+  const validation = useMemo(() => validate(state, blocks), [state, blocks])
   const slugLocked = post.status === 'published' || !!post.published_at
 
   // Autosave: debounced 2s after the last edit. Skips if validation fails
@@ -177,6 +177,22 @@ export function EditPostForm({ initialPost }: Props) {
     window.addEventListener('beforeunload', onBeforeUnload)
     return () => window.removeEventListener('beforeunload', onBeforeUnload)
   }, [dirty])
+
+  // Global Cmd/Ctrl+S → save now. The editor pane also binds this for
+  // when focus is inside Tiptap; we mirror it at window-level for the
+  // form fields above.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const meta = e.metaKey || e.ctrlKey
+      if (meta && e.key.toLowerCase() === 's') {
+        e.preventDefault()
+        void runSave()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validation.ok, dirty])
 
   const setField = useCallback(
     <K extends keyof FormState>(field: K, value: FormState[K]) => {
@@ -209,6 +225,7 @@ export function EditPostForm({ initialPost }: Props) {
       const res = await api.patch<{ post: Post }>(`/api/admin/posts/${post.id}`, patch)
       setPost(res.post)
       setState(postToFormState(res.post))
+      setBlocks(res.post.content_json)
       setSave({ kind: 'saved', at: Date.now() })
       setSavedToastAt(Date.now())
       return true
@@ -239,6 +256,7 @@ export function EditPostForm({ initialPost }: Props) {
       const res = await api.post<{ post: Post }>(`/api/admin/posts/${post.id}/publish`)
       setPost(res.post)
       setState(postToFormState(res.post))
+      setBlocks(res.post.content_json)
       router.refresh()
     } catch (err) {
       setPost((p) => ({ ...p, status: prevStatus }))
@@ -261,6 +279,7 @@ export function EditPostForm({ initialPost }: Props) {
       const res = await api.post<{ post: Post }>(`/api/admin/posts/${post.id}/unpublish`)
       setPost(res.post)
       setState(postToFormState(res.post))
+      setBlocks(res.post.content_json)
       router.refresh()
     } catch (err) {
       setPost((p) => ({ ...p, status: prevStatus }))
@@ -483,22 +502,38 @@ export function EditPostForm({ initialPost }: Props) {
         </Field>
       </div>
 
-      <Field
-        label="Content (Block[] JSON)"
-        id="f-content"
-        error={errs.content_json}
-        hint="The Tiptap editor lands in M3. For now, paste a Block[] JSON document — schema validates client-side before save."
-      >
-        <textarea
-          id="f-content"
-          rows={20}
-          spellCheck={false}
-          value={state.content_json_text}
-          onChange={(e) => setField('content_json_text', e.target.value)}
-          className={`${textareaClass(!!errs.content_json)} font-mono text-[13px] leading-[1.55]`}
-          style={{ fontFamily: 'var(--font-mono)' }}
+      <div className="flex flex-col gap-[8px]">
+        <div className="flex items-center justify-between">
+          <p
+            className="text-[12px] font-medium uppercase tracking-[0.08em] text-gray"
+            style={{ fontFamily: 'var(--font-mono)' }}
+          >
+            Content
+          </p>
+          {errs.content_json ? (
+            <p role="alert" className="text-[12px] text-[#b42318] tracking-[-0.005em]">{errs.content_json}</p>
+          ) : (
+            <p className="text-[11px] text-gray-light tracking-[-0.005em]">Type / to insert a block.</p>
+          )}
+        </div>
+        <EditorShell
+          basePost={post}
+          initialBlocks={post.content_json}
+          onBlocksChange={setBlocks}
+          onSaveShortcut={() => { void runSave() }}
+          liveOverlay={{
+            title: state.title,
+            excerpt: state.excerpt.trim() || null,
+            tags: validation.parsedTags ?? post.tags,
+            author_name: state.author_name.trim() || post.author_name,
+            author_url: state.author_url.trim() || null,
+            meta_title: state.meta_title.trim() || null,
+            meta_description: state.meta_description.trim() || null,
+            cover_image_id: state.cover_image_id.trim() || null,
+            og_image_id: state.og_image_id.trim() || null,
+          }}
         />
-      </Field>
+      </div>
 
       {showDelete ? (
         <DeleteModal

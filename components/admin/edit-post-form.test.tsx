@@ -24,17 +24,17 @@ vi.mock('@/lib/api-client', async () => {
   }
 })
 
+// The Tiptap-backed EditorShell is exercised in components/admin/editor/
+// editor-shell.test.tsx; the form-level tests stay focused on form
+// validation, save flow, status changes, and the delete modal. The mock
+// returns a minimal placeholder so happy-dom doesn't spin up a full
+// ProseMirror runtime per form test.
+vi.mock('@/components/admin/editor/editor-shell', () => ({
+  EditorShell: () => null,
+}))
+
 const apiPatch = api.patch as unknown as ReturnType<typeof vi.fn>
 const apiPost  = api.post  as unknown as ReturnType<typeof vi.fn>
-
-const validBlocksJson = JSON.stringify(
-  [
-    { id: 'h1', type: 'heading',   data: { text: 'Section', level: 2 } },
-    { id: 'p1', type: 'paragraph', data: { text: 'Body text.' } },
-  ],
-  null,
-  2,
-)
 
 function makePost(overrides: Partial<Post> = {}): Post {
   return {
@@ -111,24 +111,22 @@ describe('<EditPostForm />', () => {
     expect(slugInput).toBeDisabled()
   })
 
-  it('flags invalid JSON in the content textarea and blocks Save', () => {
-    render(<EditPostForm initialPost={makePost()} />)
-    const textarea = screen.getByLabelText(/content/i)
-    fireEvent.change(textarea, { target: { value: '{ this is not json' } })
+  it('rejects content that fails the Block schema at form validation time (e.g. heading level 1)', () => {
+    // Simulates the editor emitting an invalid Block[] — the form-level
+    // Zod safeParse must catch it and disable Save before any network round-trip.
+    render(
+      <EditPostForm
+        initialPost={makePost({
+          content_json: [
+            // @ts-expect-error — deliberately invalid level for the test
+            { id: 'h0', type: 'heading', data: { text: 'Banned', level: 1 } },
+          ],
+        })}
+      />,
+    )
     const errors = screen.getAllByRole('alert')
-    expect(errors.some((el) => /not valid json/i.test(el.textContent ?? ''))).toBe(true)
+    expect(errors.some((el) => /block|level/i.test(el.textContent ?? ''))).toBe(true)
     expect(screen.getByRole('button', { name: /^save$/i })).toBeDisabled()
-  })
-
-  it('rejects content that fails the Block schema (e.g. heading level 1)', () => {
-    render(<EditPostForm initialPost={makePost()} />)
-    const textarea = screen.getByLabelText(/content/i)
-    const bad = JSON.stringify([
-      { id: 'h0', type: 'heading', data: { text: 'Banned', level: 1 } },
-    ])
-    fireEvent.change(textarea, { target: { value: bad } })
-    const errors = screen.getAllByRole('alert')
-    expect(errors.some((el) => /content schema|level/i.test(el.textContent ?? ''))).toBe(true)
   })
 
   it('explicit Save: PATCH /api/admin/posts/<id> with only changed fields, save indicator transitions saving → saved', async () => {
@@ -137,8 +135,6 @@ describe('<EditPostForm />', () => {
     })
     render(<EditPostForm initialPost={makePost()} />)
     fireEvent.change(screen.getByLabelText(/^title$/i), { target: { value: 'Renamed' } })
-
-    expect(screen.getByLabelText(/content/i)).toHaveValue(validBlocksJson)
 
     const saveBtn = screen.getByRole('button', { name: /^save$/i })
     expect(saveBtn).toBeEnabled()
