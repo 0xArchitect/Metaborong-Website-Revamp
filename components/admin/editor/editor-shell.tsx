@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { Block, Post } from '@/lib/blog-schema'
+import type { Block, Image as ImageRow, Post } from '@/lib/blog-schema'
 import { BlockEditor } from './editor'
 import { PreviewPane } from './preview-pane'
 
@@ -15,6 +15,17 @@ interface EditorShellProps {
   onSaveShortcut?: () => void
   /** Form-level live overlay for non-content fields visible in the preview. */
   liveOverlay?: Partial<Pick<Post, 'title' | 'excerpt' | 'tags' | 'author_name' | 'author_url' | 'meta_title' | 'meta_description' | 'cover_image_id' | 'og_image_id'>>
+  /**
+   * Image rows the parent has resolved (cover, og, plus any inline images
+   * the editor's picker has fetched during this session). Forwarded to the
+   * preview pane so PostView's resolveImage callback can render covers
+   * and inline images live. Pre-existing inline images that haven't been
+   * re-picked won't be in this map; they still render correctly on the
+   * public route which fetches server-side. M4 v1.5+ improvement is to
+   * pre-fetch inline imageIds at page load so the preview is fully
+   * faithful for existing posts.
+   */
+  images?: ImageRow[]
 }
 
 /**
@@ -35,6 +46,7 @@ export function EditorShell({
   onBlocksChange,
   onSaveShortcut,
   liveOverlay,
+  images,
 }: EditorShellProps) {
   const [blocks, setBlocks] = useState<Block[]>(initialBlocks)
   const [split, setSplit] = useState<number>(DEFAULT_SPLIT)
@@ -148,7 +160,7 @@ export function EditorShell({
             />
           </div>
           <div className={tab === 'preview' ? 'h-full' : 'hidden'}>
-            <PreviewPane basePost={basePost} liveBlocks={blocks} liveOverlay={liveOverlay} />
+            <PreviewPane basePost={basePost} liveBlocks={blocks} liveOverlay={liveOverlay} images={images} />
           </div>
         </div>
       </div>
@@ -216,7 +228,7 @@ export function EditorShell({
               className="w-[6px] flex-shrink-0 cursor-col-resize bg-border hover:bg-brand/30 focus:outline-none focus-visible:bg-brand/50"
             />
             <div style={{ width: `${rightPct}%` }} className="h-full flex-shrink-0 overflow-hidden">
-              <PreviewPane basePost={basePost} liveBlocks={blocks} liveOverlay={liveOverlay} />
+              <PreviewPane basePost={basePost} liveBlocks={blocks} liveOverlay={liveOverlay} images={images} />
             </div>
           </>
         ) : null}
