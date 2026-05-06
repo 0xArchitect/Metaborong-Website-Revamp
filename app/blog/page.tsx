@@ -52,14 +52,38 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexProps) {
                 Web3 protocol design, AI agent architecture, and the messy product
                 decisions in between. Written by the engineers who shipped them.
               </p>
-              {tag ? (
-                <Link
-                  href="/blog"
-                  className="mt-[16px] inline-flex items-center gap-1 text-[13px] text-brand no-underline hover:underline"
+              <div className="mt-[16px] flex flex-wrap items-center gap-x-[20px] gap-y-[8px] text-[13px]">
+                {tag ? (
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-1 text-brand no-underline hover:underline"
+                  >
+                    ← All posts
+                  </Link>
+                ) : null}
+                <a
+                  href="/blog/rss.xml"
+                  className="inline-flex items-center gap-[6px] text-gray no-underline hover:text-brand"
+                  aria-label="Subscribe to the RSS feed"
                 >
-                  ← All posts
-                </Link>
-              ) : null}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 11a9 9 0 0 1 9 9" />
+                    <path d="M4 4a16 16 0 0 1 16 16" />
+                    <circle cx="5" cy="19" r="1" />
+                  </svg>
+                  RSS
+                </a>
+              </div>
             </header>
 
             {fetchError ? (
