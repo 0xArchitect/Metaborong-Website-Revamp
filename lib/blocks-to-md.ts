@@ -159,6 +159,33 @@ function pickText(block: Block): string {
   }
 }
 
+/**
+ * Plain-text rendition of a single block. Used by JSON-LD builders that
+ * need a clean text body for schema fields like `HowToStep.text` —
+ * markdown markers (`# `, `- `, ``` ``` ```, `> `, …) are stripped.
+ *
+ * Returns `''` only when the block has no text-bearing content (e.g.
+ * a malformed block); callers may treat that as "skip this block".
+ */
+export function blockToPlainText(block: Block): string {
+  switch (block.type) {
+    case 'heading':
+    case 'paragraph':
+    case 'quote':
+    case 'callout':
+    case 'key-takeaway':
+      return block.data.text
+    case 'list':
+      return block.data.items.join('\n')
+    case 'code':
+      return block.data.code
+    case 'image':
+      return block.data.caption ? `${block.data.alt}. ${block.data.caption}` : block.data.alt
+    case 'faq':
+      return `${block.data.question} ${block.data.answer}`
+  }
+}
+
 function truncateAtWord(input: string, maxChars: number): string {
   // Collapse all whitespace (including newlines) into single spaces so
   // line breaks in source markdown don't show up as literal newlines in
