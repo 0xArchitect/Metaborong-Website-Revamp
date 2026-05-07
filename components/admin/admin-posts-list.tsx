@@ -59,6 +59,7 @@ function VariantChips({ regions }: { regions: ReadonlyArray<'US' | 'EU'> }) {
         <span
           key={r}
           aria-label={`Has ${r} variant`}
+          data-testid={`variant-chip-${r}`}
           className="inline-flex h-[20px] items-center rounded-sm border border-brand/30 bg-[#eef2ff] px-2 text-[10px] font-medium uppercase tracking-[0.12em] text-brand"
           style={{ fontFamily: 'var(--font-mono)' }}
         >
