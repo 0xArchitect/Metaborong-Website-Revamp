@@ -1,8 +1,16 @@
 // Unit tests for the M5-core JSON-LD builders.
 
 import { describe, expect, it } from 'vitest'
-import { articleSchema, breadcrumbSchema, SITE_ORIGIN } from './seo'
-import type { Post } from './blog-schema'
+import {
+  articleSchema,
+  breadcrumbSchema,
+  deriveStepName,
+  faqPageSchema,
+  howToSchema,
+  speakableSchema,
+  SITE_ORIGIN,
+} from './seo'
+import type { Block, Post } from './blog-schema'
 
 function makePost(overrides: Partial<Post> = {}): Post {
   return {
@@ -133,5 +141,242 @@ describe('breadcrumbSchema', () => {
       name: 'How we shipped',
       item: `${SITE_ORIGIN}/blog/how-we-shipped/`,
     })
+  })
+})
+
+// ─── M9-AEO ───────────────────────────────────────────────────────────────────
+
+function faq(id: string, question: string, answer: string): Block {
+  return { id, type: 'faq', data: { question, answer } }
+}
+
+function step(id: string, text: string): Block {
+  return { id, type: 'paragraph', role: 'step', data: { text } }
+}
+
+describe('faqPageSchema', () => {
+  it('returns null when no faq blocks are present', () => {
+    expect(faqPageSchema(makePost({ content_json: [] }))).toBeNull()
+    expect(
+      faqPageSchema(
+        makePost({
+          content_json: [
+            { id: '1', type: 'paragraph', data: { text: 'Body.' } },
+          ],
+        }),
+      ),
+    ).toBeNull()
+  })
+
+  it('emits an FAQPage with a single Question for one faq block', () => {
+    const out = faqPageSchema(
+      makePost({ content_json: [faq('q1', 'Why?', 'Because.')] }),
+    ) as { '@context': string; '@type': string; mainEntity: Array<Record<string, unknown>> }
+    expect(out['@context']).toBe('https://schema.org')
+    expect(out['@type']).toBe('FAQPage')
+    expect(out.mainEntity).toHaveLength(1)
+    expect(out.mainEntity[0]).toEqual({
+      '@type': 'Question',
+      name: 'Why?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Because.' },
+    })
+  })
+
+  it('preserves block order across multiple faqs', () => {
+    const out = faqPageSchema(
+      makePost({
+        content_json: [
+          faq('a', 'First?', 'One.'),
+          { id: 'mid', type: 'paragraph', data: { text: 'Filler.' } },
+          faq('b', 'Second?', 'Two.'),
+          faq('c', 'Third?', 'Three.'),
+        ],
+      }),
+    ) as { mainEntity: Array<{ name: string }> }
+    expect(out.mainEntity.map((q) => q.name)).toEqual([
+      'First?',
+      'Second?',
+      'Third?',
+    ])
+  })
+
+  it('still emits when an answer is empty (does not gate on data quality)', () => {
+    const out = faqPageSchema(
+      makePost({ content_json: [faq('q1', 'Why?', '')] }),
+    ) as { mainEntity: Array<{ acceptedAnswer: { text: string } }> }
+    expect(out.mainEntity[0].acceptedAnswer.text).toBe('')
+  })
+})
+
+describe('howToSchema', () => {
+  it('returns null when no step-role blocks exist', () => {
+    expect(howToSchema(makePost({ content_json: [] }))).toBeNull()
+    expect(
+      howToSchema(
+        makePost({
+          content_json: [
+            { id: '1', type: 'paragraph', data: { text: 'Body.' } },
+            { id: '2', type: 'paragraph', role: 'intro', data: { text: 'Intro.' } },
+          ],
+        }),
+      ),
+    ).toBeNull()
+  })
+
+  it('returns null below the three-step threshold', () => {
+    expect(
+      howToSchema(
+        makePost({
+          content_json: [step('1', 'First.'), step('2', 'Second.')],
+        }),
+      ),
+    ).toBeNull()
+  })
+
+  it('emits a HowTo with positions 1..N preserving content_json order', () => {
+    const out = howToSchema(
+      makePost({
+        content_json: [
+          step('s1', 'Boot the cluster.'),
+          { id: 'mid', type: 'paragraph', data: { text: 'Aside.' } },
+          step('s2', 'Apply migrations.'),
+          step('s3', 'Verify health.'),
+        ],
+      }),
+    ) as { '@type': string; name: string; step: Array<{ position: number; name: string; text: string }> }
+    expect(out['@type']).toBe('HowTo')
+    expect(out.name).toBe('How we shipped the protocol in six weeks')
+    expect(out.step).toHaveLength(3)
+    expect(out.step.map((s) => s.position)).toEqual([1, 2, 3])
+    expect(out.step[0].text).toBe('Boot the cluster.')
+    expect(out.step[2].name).toBe('Verify health')
+  })
+
+  it('omits description entirely when both excerpt and meta_description are null', () => {
+    const out = howToSchema(
+      makePost({
+        excerpt: null,
+        meta_description: null,
+        content_json: [step('1', 'A.'), step('2', 'B.'), step('3', 'C.')],
+      }),
+    ) as Record<string, unknown>
+    expect('description' in out).toBe(false)
+  })
+
+  it('uses excerpt for description when present, falling back to meta_description', () => {
+    const fromExcerpt = howToSchema(
+      makePost({
+        excerpt: 'Excerpt body.',
+        meta_description: 'Meta body.',
+        content_json: [step('1', 'A.'), step('2', 'B.'), step('3', 'C.')],
+      }),
+    ) as { description?: string }
+    expect(fromExcerpt.description).toBe('Excerpt body.')
+
+    const fromMeta = howToSchema(
+      makePost({
+        excerpt: null,
+        meta_description: 'Meta body.',
+        content_json: [step('1', 'A.'), step('2', 'B.'), step('3', 'C.')],
+      }),
+    ) as { description?: string }
+    expect(fromMeta.description).toBe('Meta body.')
+  })
+})
+
+describe('speakableSchema', () => {
+  it('returns null when no tldr or intro blocks exist', () => {
+    expect(speakableSchema(makePost({ content_json: [] }))).toBeNull()
+    expect(
+      speakableSchema(
+        makePost({
+          content_json: [
+            { id: '1', type: 'paragraph', data: { text: 'Plain body.' } },
+          ],
+        }),
+      ),
+    ).toBeNull()
+  })
+
+  it('emits a single cssSelector for one tldr block', () => {
+    const out = speakableSchema(
+      makePost({
+        content_json: [
+          { id: 'tldr-1', type: 'paragraph', role: 'tldr', data: { text: 'Summary.' } },
+        ],
+      }),
+    ) as { '@type': string; speakable: { '@type': string; cssSelector: string[] } }
+    expect(out['@type']).toBe('WebPage')
+    expect(out.speakable['@type']).toBe('SpeakableSpecification')
+    expect(out.speakable.cssSelector).toEqual(['[data-block-id="tldr-1"]'])
+  })
+
+  it('includes both intro and tldr selectors in content order', () => {
+    const out = speakableSchema(
+      makePost({
+        content_json: [
+          { id: 'intro-1', type: 'paragraph', role: 'intro', data: { text: 'Intro.' } },
+          { id: 'mid', type: 'paragraph', data: { text: 'Body.' } },
+          { id: 'tldr-1', type: 'paragraph', role: 'tldr', data: { text: 'Summary.' } },
+        ],
+      }),
+    ) as { speakable: { cssSelector: string[] } }
+    expect(out.speakable.cssSelector).toEqual([
+      '[data-block-id="intro-1"]',
+      '[data-block-id="tldr-1"]',
+    ])
+  })
+})
+
+describe('deriveStepName', () => {
+  it('extracts the first sentence and trims trailing punctuation', () => {
+    const block: Block = {
+      id: '1',
+      type: 'paragraph',
+      role: 'step',
+      data: { text: 'First step is to boot the cluster. Then apply migrations.' },
+    }
+    expect(deriveStepName(block)).toBe('First step is to boot the cluster')
+  })
+
+  it('handles ? and ! sentence terminators', () => {
+    const q: Block = { id: '1', type: 'paragraph', data: { text: 'Why does this matter? Because reasons.' } }
+    expect(deriveStepName(q)).toBe('Why does this matter')
+    const e: Block = { id: '2', type: 'paragraph', data: { text: 'Watch out! It is sharp.' } }
+    expect(deriveStepName(e)).toBe('Watch out')
+  })
+
+  it('truncates a 200-char single-sentence paragraph to ≤ 80 chars', () => {
+    const long = 'word '.repeat(50).trim() // 249 chars, no sentence terminators
+    const block: Block = { id: '1', type: 'paragraph', data: { text: long } }
+    const name = deriveStepName(block)
+    expect(name.length).toBeLessThanOrEqual(80)
+    expect(name.length).toBeGreaterThan(0)
+    // Should break at a word boundary, not mid-word.
+    expect(name.endsWith('word')).toBe(true)
+  })
+
+  it('uses heading text directly', () => {
+    const block: Block = { id: '1', type: 'heading', role: 'step', data: { text: 'Boot the cluster', level: 2 } }
+    expect(deriveStepName(block)).toBe('Boot the cluster')
+  })
+
+  it('uses an image block alt as the descriptive fallback', () => {
+    const block: Block = {
+      id: '1',
+      type: 'image',
+      data: { imageId: '11111111-1111-1111-1111-111111111111', alt: 'cluster diagram' },
+    }
+    expect(deriveStepName(block)).toBe('cluster diagram')
+  })
+
+  it('falls back to "Step" for a code block (no descriptive text)', () => {
+    const block: Block = { id: '1', type: 'code', data: { lang: 'ts', code: 'const x = 1' } }
+    expect(deriveStepName(block)).toBe('Step')
+  })
+
+  it('falls back to "Step" for an empty paragraph', () => {
+    const block: Block = { id: '1', type: 'paragraph', data: { text: '   ' } }
+    expect(deriveStepName(block)).toBe('Step')
   })
 })
