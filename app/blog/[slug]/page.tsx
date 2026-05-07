@@ -7,7 +7,7 @@ import { getPostBySlug } from '@/lib/posts'
 import { getImagesByIds } from '@/lib/images'
 import { resolveRegion } from '@/lib/geo'
 import type { Block } from '@/lib/blog-schema'
-import { articleSchema, breadcrumbSchema } from '@/lib/seo'
+import { articleSchema, breadcrumbSchema, faqPageSchema, howToSchema, speakableSchema } from '@/lib/seo'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -75,10 +75,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const resolveImage = (id: string) => imageMap.get(id) ?? null
 
   // M5-core: inline JSON-LD as <script> tags. Same pattern as
-  // app/page.tsx organizationSchema. Article + BreadcrumbList are the
-  // narrowed v1 essentials; FAQPage/HowTo/Speakable land in v1.5+.
+  // app/page.tsx organizationSchema. Article + BreadcrumbList are
+  // unconditional. M9-AEO: FAQPage / HowTo / Speakable each emit only when
+  // the post carries the relevant content (faq blocks / 3+ step-role
+  // blocks / tldr|intro role); the builders return null otherwise so we
+  // never render an empty <script>.
   const article = articleSchema({ post })
   const breadcrumb = breadcrumbSchema({ post })
+  const faqPage = faqPageSchema(post)
+  const howTo = howToSchema(post)
+  const speakable = speakableSchema(post)
 
   return (
     <>
@@ -90,6 +96,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
+      {faqPage && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        />
+      )}
+      {howTo && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howTo) }}
+        />
+      )}
+      {speakable && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(speakable) }}
+        />
+      )}
 
       <Nav />
       <main className="bg-bg pt-[80px]">
