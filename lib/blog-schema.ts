@@ -244,6 +244,9 @@ export const postSummarySchema = postSchema.pick({
   ai_readiness_band: true,
 }).extend({
   has_geo_variants: z.boolean(),
+  // The list of regions that carry a geo variant. Drives the per-region
+  // chip row in the admin dashboard. Order is canonical (US, EU).
+  geo_variant_regions: z.array(z.enum(['US', 'EU'])),
 })
 export type PostSummary = z.infer<typeof postSummarySchema>
 
