@@ -72,6 +72,15 @@ function toIso(d: Date | string | null | undefined): string | null {
 }
 
 export function rowToSummary(row: PostRow): PostSummary {
+  // Canonical chip order on the dashboard: US first, EU second. Regions with
+  // empty payloads (e.g. `{ US: {} }`) are skipped — the variant only
+  // counts if at least one field actually overrides base.
+  const variantRegions: ('US' | 'EU')[] = []
+  const variants = row.geo_variants ?? {}
+  for (const region of ['US', 'EU'] as const) {
+    const payload = variants[region]
+    if (payload && Object.keys(payload).length > 0) variantRegions.push(region)
+  }
   return {
     id:                  row.id,
     slug:                row.slug,
@@ -82,7 +91,8 @@ export function rowToSummary(row: PostRow): PostSummary {
     published_at:        toIso(row.published_at),
     ai_readiness_score:  row.ai_readiness_score ?? null,
     ai_readiness_band:   row.ai_readiness_band ?? null,
-    has_geo_variants:    !!row.geo_variants && Object.keys(row.geo_variants).length > 0,
+    has_geo_variants:    variantRegions.length > 0,
+    geo_variant_regions: variantRegions,
   }
 }
 

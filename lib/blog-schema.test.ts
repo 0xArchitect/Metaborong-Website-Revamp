@@ -273,6 +273,7 @@ describe('postSummarySchema', () => {
       ai_readiness_score: null,
       ai_readiness_band: null,
       has_geo_variants: false,
+      geo_variant_regions: [],
     }
     expect(postSummarySchema.safeParse(summary).success).toBe(true)
   })

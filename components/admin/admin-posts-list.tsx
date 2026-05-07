@@ -51,6 +51,24 @@ function StatusPill({ status }: { status: 'draft' | 'published' }) {
   )
 }
 
+function VariantChips({ regions }: { regions: ReadonlyArray<'US' | 'EU'> }) {
+  if (regions.length === 0) return null
+  return (
+    <span className="hidden items-center gap-1 sm:inline-flex" data-testid="variant-chips">
+      {regions.map((r) => (
+        <span
+          key={r}
+          aria-label={`Has ${r} variant`}
+          className="inline-flex h-[20px] items-center rounded-sm border border-brand/30 bg-[#eef2ff] px-2 text-[10px] font-medium uppercase tracking-[0.12em] text-brand"
+          style={{ fontFamily: 'var(--font-mono)' }}
+        >
+          {r}
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export function AdminPostsList({ initialPosts, status, fetchError }: Props) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -116,7 +134,7 @@ export function AdminPostsList({ initialPosts, status, fetchError }: Props) {
         {posts.map((p) => (
           <li
             key={p.id}
-            className="grid grid-cols-[1fr_auto] items-center gap-[16px] px-[20px] py-[16px] sm:grid-cols-[1fr_auto_auto_auto]"
+            className="grid grid-cols-[1fr_auto] items-center gap-[16px] px-[20px] py-[16px] sm:grid-cols-[1fr_auto_auto_auto_auto]"
           >
             <div className="min-w-0">
               <Link
@@ -133,6 +151,7 @@ export function AdminPostsList({ initialPosts, status, fetchError }: Props) {
               </p>
             </div>
             <StatusPill status={p.status} />
+            <VariantChips regions={p.geo_variant_regions ?? []} />
             <span className="hidden text-[12px] tracking-[-0.005em] text-gray sm:inline">
               {formatRelative(p.updated_at)}
             </span>
