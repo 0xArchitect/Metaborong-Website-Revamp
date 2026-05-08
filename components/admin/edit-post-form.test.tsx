@@ -444,6 +444,39 @@ describe('<EditPostForm />', () => {
     expect(apiPatch.mock.calls[1][1].geo_variants).toEqual({})
   })
 
+  it('PATCH drops orphan block_overrides whose blockId is no longer in content_json', async () => {
+    // Seed: the post arrives with a US block override against `orphan-id`,
+    // but content_json carries only `h1` and `p1` — `orphan-id` is dead.
+    const post = makePost({
+      geo_variants: {
+        US: {
+          title: 'US title',
+          block_overrides: { 'orphan-id': { text: 'gone' } },
+        },
+      },
+    })
+    // The shared id collides with the M9-C variant tab persistence test —
+    // wipe the localStorage key so this test starts on the Base tab.
+    window.localStorage.removeItem(`mb.editor.variant.${post.id}`)
+    apiPatch.mockResolvedValueOnce({
+      post: makePost({ geo_variants: { US: { title: 'US title' } } }),
+    })
+    render(<EditPostForm initialPost={post} />)
+
+    // Touch a base field so dirty=true and the explicit Save can fire.
+    fireEvent.change(screen.getByLabelText(/^title$/i), { target: { value: 'Renamed' } })
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: /^save$/i }))
+    })
+
+    expect(apiPatch).toHaveBeenCalledTimes(1)
+    const [, body] = apiPatch.mock.calls[0]
+    // The override map's only entry pointed at a dead blockId; after GC the
+    // map is empty, so block_overrides is dropped from the US payload.
+    expect(body.geo_variants.US.block_overrides).toBeUndefined()
+    expect(body.geo_variants.US.title).toBe('US title')
+  })
+
   // ── M7 AI readiness soft-prompt on publish ────────────────────────────────
 
   it('soft-prompt appears after publish when ai_readiness_checked_at is null', async () => {
