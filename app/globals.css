@@ -86,6 +86,16 @@
   }
 }
 
+@keyframes mega-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes nav-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
 /* ── Base styles ─────────────────────────────────────────── */
 @layer base {
 

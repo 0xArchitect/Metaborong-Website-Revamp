@@ -1,18 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { ArrowRight, Boxes, ChevronDown, Layers, Menu, Sparkles, X, type LucideIcon } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { Logo } from '@/components/ui/logo'
 import { Button } from '@/components/ui/button'
-
-type Pillar = 'web3' | 'ai' | 'product'
-type Service = { pillar: string; href: string; sub: string; icon: LucideIcon; tone: Pillar }
-
-const services: Service[] = [
-  { pillar: 'Web3 / Blockchain', icon: Boxes,    href: '/services/web3/',           sub: 'DeFi, NFT, wallets, DAO — multichain',     tone: 'web3' },
-  { pillar: 'AI Agents',         icon: Sparkles, href: '/services/ai-agents/',      sub: 'Agentic AI, RAG, voice agents, automation', tone: 'ai' },
-  { pillar: 'Product Studio',    icon: Layers,   href: '/services/product-studio/', sub: 'End-to-end SaaS product builds',            tone: 'product' },
-]
+import { pillars } from '@/components/sections/services-data'
 
 const navLinks = [
   { label: 'Work', href: '/#work' },
@@ -20,118 +12,64 @@ const navLinks = [
   { label: 'FAQ',  href: '/#faq' },
 ]
 
-const toneClass: Record<Pillar, { text: string; bg: string }> = {
-  web3:    { text: 'text-brand', bg: 'bg-brand/10' },
-  ai:      { text: 'text-brand', bg: 'bg-brand/10' },
-  product: { text: 'text-brand', bg: 'bg-brand/10' },
-}
-
 export function Nav() {
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [mobileOpen, setMobileOpen]   = useState(false)
-  const [scrolled, setScrolled]       = useState(false)
+  const [megaOpen, setMegaOpen]     = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
 
+  // Esc closes mega-menu + mobile menu
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  // Esc closes mobile menu + dropdown
-  useEffect(() => {
-    if (!mobileOpen && !dropdownOpen) return
+    if (!megaOpen && !mobileOpen) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        setMegaOpen(false)
         setMobileOpen(false)
-        setDropdownOpen(false)
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [mobileOpen, dropdownOpen])
+  }, [megaOpen, mobileOpen])
+
+  // Click outside <header> closes mega-menu
+  useEffect(() => {
+    if (!megaOpen) return
+    const onClick = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMegaOpen(false)
+      }
+    }
+    window.addEventListener('mousedown', onClick)
+    return () => window.removeEventListener('mousedown', onClick)
+  }, [megaOpen])
 
   const closeMobile = () => setMobileOpen(false)
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-[var(--duration-instant)] ${
-        scrolled
-          ? 'bg-white/95 border-b border-border shadow-[var(--shadow-sm)]'
-          : 'bg-white/80'
-      }`}
+      ref={headerRef}
+      className="fixed inset-x-0 top-0 z-50 bg-bg-subtle border-b border-dashed border-border"
     >
+      {/* Nav bar row */}
       <nav className="flex h-14 w-full items-center gap-[32px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
         <Logo size="sm" />
 
-        {/* Desktop links */}
-        <div className="hidden md:flex flex-1 items-center gap-[24px]">
-          <div
-            className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
+        {/* Desktop: links + dropdown trigger (lg+) */}
+        <div className="hidden lg:flex flex-1 items-center gap-[24px]">
+          <button
+            type="button"
+            aria-expanded={megaOpen}
+            aria-haspopup="menu"
+            aria-controls="mega-services"
+            data-active={megaOpen}
+            onClick={() => setMegaOpen(v => !v)}
+            className="relative flex cursor-pointer items-center gap-[4px] border-0 bg-transparent p-0 text-sm tracking-[-0.01em] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark data-[active=true]:text-dark after:absolute after:-bottom-[6px] after:left-0 after:h-[2px] after:w-0 after:bg-brand after:transition-[width] after:duration-[var(--duration-fast)] hover:after:w-full data-[active=true]:after:w-full"
           >
-            <button
-              type="button"
-              aria-expanded={dropdownOpen}
-              aria-haspopup="menu"
-              data-active={dropdownOpen}
-              className="relative flex cursor-pointer items-center gap-[4px] border-0 bg-transparent p-0 text-sm tracking-[-0.01em] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark data-[active=true]:text-dark after:absolute after:-bottom-[6px] after:left-0 after:h-[2px] after:w-0 after:bg-brand after:transition-[width] after:duration-[var(--duration-fast)] hover:after:w-full data-[active=true]:after:w-full"
-            >
-              Services
-              <ChevronDown
-                size={14}
-                className={`transition-transform duration-[var(--duration-instant)] ${dropdownOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
-
-            {dropdownOpen && (
-              <div className="absolute left-0 top-full w-[300px] pt-[12px]" role="menu">
-                <div className="absolute left-[18px] top-[7px] h-[10px] w-[10px] rotate-45 border border-border border-r-0 border-b-0 bg-white" />
-                <div className="nav-dd-card relative rounded-lg border border-border bg-white p-[8px] shadow-[var(--shadow-md)]">
-                  {services.map((s, i) => {
-                    const Icon = s.icon
-                    const tone = toneClass[s.tone]
-                    return (
-                      <a
-                        key={s.pillar}
-                        href={s.href}
-                        role="menuitem"
-                        style={{ animationDelay: `${i * 40}ms` }}
-                        className="nav-dd-row group relative flex items-center gap-[12px] rounded-md px-[12px] py-[10px] no-underline hover:bg-border-subtle"
-                      >
-                        <div className={`flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-md ${tone.bg} ${tone.text}`}>
-                          <Icon size={16} strokeWidth={2} />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className={`text-[13px] font-semibold tracking-[-0.01em] leading-[1.3] ${tone.text}`}>{s.pillar}</div>
-                          <div className="mt-[2px] text-[11px] leading-[1.4] text-gray-light">{s.sub}</div>
-                        </div>
-                        <ArrowRight
-                          size={14}
-                          className={`shrink-0 -translate-x-[4px] ${tone.text} opacity-0 transition-[transform,opacity] duration-[var(--duration-fast)] group-hover:translate-x-0 group-hover:opacity-100`}
-                        />
-                      </a>
-                    )
-                  })}
-                  <div className="mt-[4px] border-t border-border-subtle pt-[4px]">
-                    <a
-                      href="/services/"
-                      role="menuitem"
-                      className="group flex items-center justify-between rounded-md px-[12px] py-[8px] no-underline hover:bg-border-subtle"
-                    >
-                      <span className="text-[12px] font-semibold tracking-[-0.01em] text-gray transition-colors duration-[var(--duration-instant)] group-hover:text-brand">
-                        Explore all services
-                      </span>
-                      <ArrowRight
-                        size={12}
-                        className="text-gray transition-[transform,color] duration-[var(--duration-fast)] group-hover:translate-x-[2px] group-hover:text-brand"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+            Services
+            <ChevronDown
+              size={14}
+              className={`transition-transform duration-[var(--duration-instant)] ${megaOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
 
           {navLinks.map(link => (
             <a
@@ -144,41 +82,132 @@ export function Nav() {
           ))}
         </div>
 
-        <div className="hidden md:inline-flex">
+        {/* Desktop CTA (lg+) */}
+        <div className="hidden lg:inline-flex">
           <Button href="/#contact" size="sm" arrow="→">Let&apos;s Talk</Button>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile hamburger (<lg) */}
         <button
           type="button"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen(v => !v)}
-          className="ml-auto cursor-pointer border-0 bg-transparent p-[4px] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark md:hidden"
+          className="ml-auto cursor-pointer border-0 bg-transparent p-[4px] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark lg:hidden"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </nav>
 
+      {/* Desktop mega-menu strip (full-width, lg+) */}
+      {megaOpen && (
+        <div
+          id="mega-services"
+          role="menu"
+          className="hidden lg:block absolute inset-x-0 top-full bg-white border-b border-dashed border-border animate-[mega-in_var(--duration-fast)_ease-out_forwards] motion-reduce:animate-none"
+        >
+          <div className="grid grid-cols-3 gap-[48px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px] py-[32px]">
+            {pillars.map((p) => (
+              <div key={p.id}>
+                <div className="flex items-center gap-[10px]">
+                  <span className="text-[13px] font-mono text-gray tabular-nums">{p.num}</span>
+                  <span
+                    aria-hidden="true"
+                    className="w-[8px] h-[8px] rounded-full animate-[nav-dot-pulse_1800ms_ease-in-out_infinite] motion-reduce:animate-none"
+                    style={{ background: p.color }}
+                  />
+                </div>
+                <h3
+                  role="presentation"
+                  className="mt-[12px] text-[20px] font-bold tracking-[-0.025em] leading-[1.2] text-dark"
+                >
+                  {p.label}
+                </h3>
+                <p className="mt-[6px] text-sm leading-[1.5] text-gray">{p.headline}</p>
+
+                <ul className="mt-[16px] flex flex-col gap-[8px]">
+                  {p.children.slice(0, 5).map(c => (
+                    <li key={c.slug}>
+                      <a
+                        href={`/services/${p.id}/${c.slug}/`}
+                        role="menuitem"
+                        onClick={() => setMegaOpen(false)}
+                        className="text-sm text-gray no-underline transition-colors duration-[var(--duration-instant)] hover:text-dark"
+                      >
+                        {c.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={p.hubHref}
+                  role="menuitem"
+                  onClick={() => setMegaOpen(false)}
+                  style={{ color: p.color }}
+                  className="mt-[20px] inline-flex items-center gap-[4px] font-mono text-[11px] uppercase tracking-[0.1em] no-underline group"
+                >
+                  All {p.hubCta}
+                  <ArrowRight size={12} className="transition-transform duration-[var(--duration-fast)] group-hover:translate-x-[2px]" />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile menu (<lg) */}
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="nav-dd-card flex flex-col gap-[12px] border-t border-border bg-white px-[24px] py-[16px] md:px-[48px] md:hidden"
+          className="lg:hidden bg-bg-subtle border-t border-border px-[24px] md:px-[48px] py-[24px] flex flex-col gap-[24px]"
         >
-          {services.map(s => {
-            const tone = toneClass[s.tone]
-            return (
+          {/* Pillar blocks */}
+          {pillars.map((p, i) => (
+            <div
+              key={p.id}
+              className={i > 0 ? 'pt-[24px] border-t border-dashed border-border' : ''}
+            >
+              <div className="flex items-center gap-[10px]">
+                <span className="text-[13px] font-mono text-gray tabular-nums">{p.num}</span>
+                <span
+                  aria-hidden="true"
+                  className="w-[8px] h-[8px] rounded-full animate-[nav-dot-pulse_1800ms_ease-in-out_infinite] motion-reduce:animate-none"
+                  style={{ background: p.color }}
+                />
+              </div>
+              <h3 className="mt-[10px] text-[18px] font-bold tracking-[-0.025em] leading-[1.2] text-dark">
+                {p.label}
+              </h3>
+              <p className="mt-[4px] text-sm leading-[1.5] text-gray">{p.headline}</p>
+
+              <ul className="mt-[12px] flex flex-col gap-[8px]">
+                {p.children.slice(0, 5).map(c => (
+                  <li key={c.slug}>
+                    <a
+                      href={`/services/${p.id}/${c.slug}/`}
+                      onClick={closeMobile}
+                      className="text-sm text-gray no-underline"
+                    >
+                      {c.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
               <a
-                key={s.pillar}
-                href={s.href}
+                href={p.hubHref}
                 onClick={closeMobile}
-                className={`text-sm font-semibold no-underline ${tone.text}`}
+                style={{ color: p.color }}
+                className="mt-[12px] inline-flex items-center gap-[4px] font-mono text-[11px] uppercase tracking-[0.1em] no-underline"
               >
-                {s.pillar}
+                All {p.hubCta} <ArrowRight size={12} />
               </a>
-            )
-          })}
-          <div className="border-t border-border-subtle pt-[12px] flex flex-col gap-[12px]">
+            </div>
+          ))}
+
+          {/* Nav links group */}
+          <div className="pt-[24px] border-t border-dashed border-border flex flex-col gap-[12px]">
             {navLinks.map(link => (
               <a
                 key={link.label}
@@ -189,15 +218,10 @@ export function Nav() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="/services/"
-              onClick={closeMobile}
-              className="text-[12px] font-semibold tracking-[-0.01em] text-gray no-underline"
-            >
-              Explore all services →
-            </a>
           </div>
-          <div className="mt-[4px]">
+
+          {/* CTA */}
+          <div>
             <Button href="/#contact" size="sm" arrow="→">Let&apos;s Talk</Button>
           </div>
         </div>
