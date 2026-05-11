@@ -96,15 +96,55 @@ Flagged by step-3 audits:
 2. **Proof anchors for "audit-ready" / "senior team" / "production-grade"** — these claims need verification from Trust/Founders sections (audit-partner logos, named founders, shipped client work). **Decision:** record dependency; no edits in this section.
 3. **Footnote/proof links on pillar bodies** — out of scope for the redesign. Revisit when Trust section ships.
 
-## Deviations from master plan
+## Deviations from master plan (locked at step 8 from Figma frame 1707481126)
 
-None introduced by this spec. The redesign is an exercise in *removing* a deviation (the trefoil's atmospheric backdrop, traveling pulse dot, halo-on-active, and slate inactive scheme — all section-level DESIGN.md additions logged in the now-archived 2026-05-04 spec) and returning the section to the master grammar plus one new signature accent. The single new signature accent will be logged below once locked from Figma at step 8.
+The Figma direction is a **scroll-driven sticky-stack** with a 3D isometric signature visual. This *supersedes* the step-5 "pillars-as-containers, all-children-inline" decision after explicit user sign-off. Recorded deviations below.
 
-### Pending deviation log (filled at step 8)
+### 1. Layout — sticky-rail + scroll-stacked pillar panels (NOT three side-by-side containers)
 
-- _Reserved: signature accent description._
-- _Reserved: any motion deviation introduced (must be one-shot)._
-- _Reserved: any spacing/layout deviation from the standard `<Section maxWidth="wide">` two-column or three-column grammar._
+- **Desktop (≥lg):** two-column grid. Left column is a `position: sticky` nav rail showing `[01] WEB3/BLOCKCHAIN`, `[02] AI AGENTS`, `[03] PRODUCT STUDIO`. Right column is three vertically-stacked pillar panels (one per pillar). As the visitor scrolls, an IntersectionObserver per panel toggles the active state on the matching rail item at ~30% viewport-from-top threshold. **No scroll-jacking; no scroll-snap; free-flow page.**
+- **Mobile (<lg):** left rail collapses inline as bracket-number badges above each pillar's H3 (`[01]`, `[02]`, `[03]`). No stickiness, no IntersectionObserver-driven active state. Panels stack naturally. 3D block visualization renders statically (no animation) or simplified.
+- **Conflict with step-5 lock:** This direction supersedes the locked "pillars-as-containers" topology after user review of the Figma frame. The "scan-by-pillar" intent is preserved — visitor sees all three pillars by scrolling, no clicks required. The "all 14 children inline" intent is partially relaxed (see #3).
+
+### 2. Signature accent — 3D isometric block visualization, one-shot animation per pillar
+
+- Each pillar panel contains a self-contained SVG isometric scene of three shapes (one per pillar). The active pillar's shape is rendered as a **raised cube** in that pillar's brand color; the other two are **flat diamonds** in DESIGN.md inactive-slate (`#cbd5e1` stroke / `#e2e8f0` fill).
+- **Motion:** on viewport entry (IO-gated, one-shot), the active pillar's cube animates from flat-diamond position to raised-cube position over `motion.duration.slow` (620ms) with `cubic-bezier(0.16, 1, 0.3, 1)` (out-expo). Honors `prefers-reduced-motion: reduce` (renders raised immediately, no animation).
+- **No infinite animation introduced.** Each pillar's scene animates exactly once when its panel enters the viewport.
+- **Pillar color usage:** the raised cube's fill is the pillar's brand color (`#204AF8` / `#10b981` / `#F6851B`). Diamond shapes for the other two pillars stay slate.
+
+### 3. Child-service rendering — truncated top-5 per pillar + hub link (NOT all 14 inline)
+
+- Each pillar panel renders the **top 5 children** (user-curated, see Plan task 0). Web3 7→5, AI 6→5, Product Studio 1→1.
+- A `See all <pillar> services →` link below the truncated grid points to `pillar.hubHref` (existing routes). This becomes the pillar's primary hub CTA — **replacing the standalone `Open Web3 / Open AI / Open Studio` button pattern from the copy lock.**
+- **SEO impact:** 3 child names (Liquid Staking Vaults, DAO & Governance Systems, AI Systems Integration) drop out of this section's SSR HTML. They remain reachable via:
+  - The pillar hub page at `/services/<pillar>/`.
+  - Their existing noindex stub pages at `/services/<pillar>/<slug>/`.
+  - The footer / sitemap / internal-linking refresh (Context C2 in SESSIONS.md).
+- **Conflict with step-5 lock:** This direction supersedes the locked "child services as clickable links to existing slugs (all 14 inline)" decision after user review of the Figma frame.
+
+### 4. Hub CTA pattern — text-link with arrow, not Bauhaus split-button
+
+- Per Figma, the pillar hub CTA renders as a text-link (`See all <pillar> services →`) inside the panel, not as the standalone Bauhaus split-arrow primary button per DESIGN.md's button signature.
+- The split-arrow primary button signature is preserved for **other sections** (hero, contact CTA). This section's hub CTAs are intentionally lighter to keep visual weight on the 3D iso-block accent.
+- **The 3-word verb-first hubCta strings in `services-data.ts`** (`Open Web3`, `Open AI`, `Open Studio`) are **not used** by this section in its current incarnation. They remain in the data file for use by other section consumers (mobile menu, etc.).
+
+### 5. Eyebrow treatment — boxed pill above H2
+
+- Per Figma, the section-intro eyebrow `WHAT WE BUILD` renders inside a 1px-bordered pill (`border-border`, `rounded-md`, `px-[12px] py-[6px]`) above the centered H2. This is a section-local treatment; the Eyebrow primitive itself is not changed.
+
+### 6. Hard constraints honored
+
+- SSR/SEO: H2, lede, AEO blockquote, all 11 visible child names + descriptions, all 3 hub-CTA links, all FAQ JSON-LD render server-side.
+- ARIA: section uses `aria-labelledby="services-heading"`. Each pillar panel uses `<section aria-labelledby="pillar-<id>-heading">`. The sticky rail is `<nav aria-label="Service pillars">` with an `<ol>` of links anchoring to `#pillar-<id>`.
+- Mobile fallback: renders all 11 visible child names + descriptions in SSR HTML at every viewport.
+- `prefers-reduced-motion: reduce`: short-circuits the iso-block raise animation; all content visible immediately.
+- Brand color discipline: only the three locked pillar colors used as fills. No new tinted UI introduced.
+- Focus-visible: brand ring on every interactive element (rail items, child links, hub links).
+
+## Active-pillar deep-link behavior
+
+Sticky rail items are anchor links to `#pillar-web3`, `#pillar-ai-agents`, `#pillar-product-studio`. Clicking a rail item scrolls smoothly (`scroll-behavior: smooth`) to the corresponding panel. This gives keyboard-only and screen-reader users a fast way to jump between pillars without scrolling through. The IntersectionObserver active-state syncs after the scroll lands.
 
 ## QA checklist (carried into step 11)
 
