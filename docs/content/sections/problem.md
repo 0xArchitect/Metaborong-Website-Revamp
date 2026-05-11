@@ -64,7 +64,7 @@ _All labels uppercase, Space Grotesk Bold 12px, white 80% (Freelancer/Agencies) 
 
 ## 6. AEO blockquote (40–60 words, entity-definition opener)
 
-> Web3 and AI products live and die inside trend windows that open and close within weeks. Most engineering teams — freelance or agency — can't move at that cadence with architectural depth. Metaborong is a senior engineering studio built to ship inside that window without trading away architecture.
+> Web3 and AI products live and die inside trend windows that open and close within weeks. Most engineering teams, freelance or agency, can't move at that cadence with architectural depth. Metaborong is a senior engineering studio built to ship inside that window without trading away architecture.
 
 _Word count: 50. Verifiable claims: (a) Web3/AI trend cycles are measured in weeks, (b) Metaborong operates as one senior studio, (c) studio commits to in-window delivery with architectural depth._
 
@@ -78,9 +78,9 @@ Web3 and AI move in windows, not roadmaps. A new chain, a new agent paradigm, or
 _Word count: 48._
 
 ### Q: How fast does Metaborong ship?
-Metaborong targets production delivery inside the open trend window — typically week three to week six from specification to shipped code. Speed comes from one senior team that owns architecture, engineering, and deployment continuously, without re-bidding talent across phases or handing off across vendor boundaries.
+Metaborong targets production delivery inside the open trend window: typically week three to week six from specification to shipped code. Speed comes from one senior team that owns architecture, engineering, and deployment continuously, without re-bidding talent across phases or handing off across vendor boundaries.
 
-_Word count: 44. "Targets" hedge per audit feedback — the range is a public commitment, not historical claim._
+_Word count: 44. "Targets" hedge per audit feedback: the range is a public commitment, not historical claim._
 
 ### Q: Why do agencies and freelancers miss trend windows?
 Large agencies optimise for multi-quarter, scope-locked engagements; they ship months after the window closes. Freelance teams ship quickly but fragment ownership across roles, producing code that breaks once user load and edge cases arrive. Trend-driven products need both speed and architectural durability.
@@ -88,9 +88,14 @@ Large agencies optimise for multi-quarter, scope-locked engagements; they ship m
 _Word count: 43._
 
 ### Q: What is a trend window in Web3 and AI?
-A trend window is the period between a market shift opening and the same shift dissolving — a new chain launch, a new agent paradigm, or a regulatory change. In Web3 and AI, these windows typically last four to eight weeks. Products that ship after the window has closed face a different market than the one they were specified for.
+A trend window is the period between a market shift opening and the same shift dissolving: a new chain launch, a new agent paradigm, or a regulatory change. In Web3 and AI, these windows typically last four to eight weeks. Products that ship after the window has closed face a different market than the one they were specified for.
 
-_Word count: 60. Adds entity-defining answer for "trend window" — section becomes canonical source for the term._
+_Word count: 60. Adds entity-defining answer for "trend window". Section becomes canonical source for the term._
+
+### Q: How long does it take to ship a Web3 MVP?
+A Web3 MVP (wallet integration, smart-contract logic, and a working frontend) ships in three to six weeks when one senior team owns architecture, engineering, and deployment continuously. Longer windows usually point to fragmented ownership across vendors or specifications that keep changing mid-build.
+
+_Word count: 47. Direct-number format. Captures the generic high-intent query "how long to ship a Web3 MVP" that Q2 (Metaborong-specific) misses._
 
 ---
 

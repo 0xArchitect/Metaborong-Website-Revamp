@@ -66,7 +66,7 @@ export function ProblemSection() {
         </div>
 
         <blockquote className="problem-blockquote" cite="https://metaborong.com/#problem">
-          Web3 and AI products live and die inside trend windows that open and close within weeks. Most engineering teams — freelance or agency — can&apos;t move at that cadence with architectural depth. Metaborong is a senior engineering studio built to ship inside that window without trading away architecture.
+          Web3 and AI products live and die inside trend windows that open and close within weeks. Most engineering teams, freelance or agency, can&apos;t move at that cadence with architectural depth. Metaborong is a senior engineering studio built to ship inside that window without trading away architecture.
         </blockquote>
 
         <ProblemAEOAccordion />
