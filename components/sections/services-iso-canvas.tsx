@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrthographicCamera, Grid, Edges, Text } from '@react-three/drei'
+import { OrthographicCamera, Grid, Text } from '@react-three/drei'
 import { useRef, useEffect, useState, Suspense } from 'react'
 import { Group, MathUtils } from 'three'
 import { type PillarId } from '@/components/sections/services-data'
@@ -18,18 +18,28 @@ const PILLAR_LABEL: Record<PillarId, string> = {
   'product-studio': 'PRODUCT',
 }
 
-const INACTIVE_COLOR = '#cbd5e1'
-const INACTIVE_LABEL_COLOR = '#1f2937'
-const PLATE_HEIGHT = 0.04 // thin grey slab shown under inactive (and beneath active too)
-
-// Three cubes spaced along x-axis, base sitting at y=0 (the floor plane).
-const POSITIONS: Record<PillarId, [number, number, number]> = {
-  'ai-agents':       [-2.6, 0, 0],
-  'web3':            [ 0,   0, 0],
-  'product-studio':  [ 2.6, 0, 0],
+// Per-pillar label offset (relative to pillar center, world-space). Per the Figma
+// canvas (Frame 1707481128): AI label sits upper-left of its plate, PRODUCT sits
+// upper-right, WEB3 sits centered just above the cube top. All slant up-right.
+const LABEL_OFFSET: Record<PillarId, { active: [number, number, number]; inactive: [number, number, number] }> = {
+  'web3':            { active: [0,    1.95, 0  ], inactive: [-0.40, 0.30, 0   ] },
+  'ai-agents':       { active: [-0.3, 1.95, 0  ], inactive: [-0.60, 0.30, 0   ] },
+  'product-studio':  { active: [0,    1.95, -0.3], inactive: [ 0,   0.30, -0.6] },
 }
 
-const CUBE_SIZE = 1.6 // edge length
+const INACTIVE_COLOR = '#cbd5e1'
+const PLATE_HEIGHT = 0.04 // thin grey slab shown for inactive
+
+// Three slots arranged along the iso "horizontal" axis (world -X + +Z = pure screen
+// left, world +X + -Z = pure screen right). Keeps all three pillars on the same
+// screen Y row, matching the Figma layout.
+const POSITIONS: Record<PillarId, [number, number, number]> = {
+  'ai-agents':       [-1.8, 0,  1.8],
+  'web3':            [ 0,   0,  0  ],
+  'product-studio':  [ 1.8, 0, -1.8],
+}
+
+const CUBE_SIZE = 1.6 // edge length — also matches the major grid step
 
 export function ServicesIsoCanvas({ activeId }: { activeId: PillarId }) {
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -45,20 +55,15 @@ export function ServicesIsoCanvas({ activeId }: { activeId: PillarId }) {
 
   return (
     <div className="absolute inset-0" style={{ background: '#fafbff' }}>
-      <Canvas
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
-        shadows
-      >
-        {/* True isometric ortho camera, tuned zoom so cubes fill the canvas */}
-        <OrthographicCamera makeDefault position={[5, 5.5, 5]} zoom={72} near={0.1} far={50} />
+      <Canvas dpr={[1, 2]} gl={{ antialias: true, alpha: true }} shadows>
+        <OrthographicCamera makeDefault position={[5, 5.5, 5]} zoom={64} near={0.1} far={50} />
         <IsoCameraTarget />
 
-        {/* Cool neutral lighting — paper-blueprint vibe */}
-        <ambientLight intensity={0.85} />
+        {/* Lighting: bright top, soft cool fill — mimics the Figma cube highlight. */}
+        <ambientLight intensity={0.7} />
         <directionalLight
-          position={[6, 9, 4]}
-          intensity={0.85}
+          position={[4, 10, 6]}
+          intensity={1.0}
           castShadow
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
@@ -91,7 +96,7 @@ export function ServicesIsoCanvas({ activeId }: { activeId: PillarId }) {
 
 function IsoCameraTarget() {
   useFrame(({ camera }) => {
-    camera.lookAt(0, 0.7, 0)
+    camera.lookAt(0, 1.0, 0)
   })
   return null
 }
@@ -102,20 +107,20 @@ function Floor() {
       {/* Shadow plane */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.001, 0]} receiveShadow>
         <planeGeometry args={[40, 40]} />
-        <shadowMaterial opacity={0.12} />
+        <shadowMaterial opacity={0.10} />
       </mesh>
-      {/* Engineering grid — cell sized to cube subdivisions */}
+      {/* Single-level iso diamond grid — uniform lines, no section hierarchy. */}
       <Grid
         args={[40, 40]}
         position={[0, 0, 0]}
-        cellSize={0.4}
-        cellThickness={0.5}
-        cellColor="#c5cdd9"
+        cellSize={1.6}
+        cellThickness={0.8}
+        cellColor="#b8c2cf"
         sectionSize={1.6}
-        sectionThickness={1}
-        sectionColor="#9ca5b4"
-        fadeDistance={20}
-        fadeStrength={1.5}
+        sectionThickness={0.8}
+        sectionColor="#b8c2cf"
+        fadeDistance={30}
+        fadeStrength={1.0}
         infiniteGrid={false}
         followCamera={false}
       />
@@ -135,7 +140,6 @@ function PillarCube({
   reducedMotion: boolean
 }) {
   const extrudeRef = useRef<Group>(null)
-  // scale.y interpolates between thin grey slab (inactive) and full pillar cube (active).
   const targetScale = isActive ? 1 : PLATE_HEIGHT
 
   useFrame((_, delta) => {
@@ -150,35 +154,27 @@ function PillarCube({
   })
 
   const color = isActive ? PILLAR_COLOR[id] : INACTIVE_COLOR
-  // Label sits on the top face of the cube/plate. With scale.y applied to the parent
-  // group, the local-space top of the box is at y = CUBE_SIZE (which gets scaled).
-  // Position the label at scaled top via the parent group's scale by anchoring to the
-  // cube body and using local y = CUBE_SIZE + small epsilon.
-  const labelY = isActive ? CUBE_SIZE + 0.002 : PLATE_HEIGHT * CUBE_SIZE + 0.002
+  const labelOffset = isActive ? LABEL_OFFSET[id].active : LABEL_OFFSET[id].inactive
 
   return (
     <group position={position}>
-      {/* Cube — base pinned at y=0, scales upward. Inactive cubes shrink to a thin
-          grey slab (plate). The parent group's scale.y is animated for the rise. */}
+      {/* Cube — base pinned at y=0, scales upward. Inactive collapses to a thin slab. */}
       <group ref={extrudeRef} scale={[1, isActive ? 1 : PLATE_HEIGHT, 1]}>
         <mesh castShadow receiveShadow position={[0, CUBE_SIZE / 2, 0]}>
           <boxGeometry args={[CUBE_SIZE, CUBE_SIZE, CUBE_SIZE]} />
-          <meshStandardMaterial color={color} metalness={0.02} roughness={0.7} />
-          <Edges threshold={15} color={isActive ? color : '#94a3b8'} lineWidth={1.0} />
+          <meshStandardMaterial color={color} metalness={0} roughness={0.55} />
         </mesh>
       </group>
 
-      {/* Label — flat on the top surface (cube top for active, plate top for inactive),
-          oriented along the iso "depth" axis so the word slants up-right on screen,
-          matching the Figma reference. */}
+      {/* Label — flat-painted on the iso top surface, slanting up-right (matches Figma). */}
       <Text
-        position={[0, labelY, 0]}
+        position={labelOffset}
         rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-        fontSize={isActive ? 0.34 : 0.28}
-        color={isActive ? '#ffffff' : INACTIVE_LABEL_COLOR}
+        fontSize={isActive ? 0.34 : 0.30}
+        color="#040404"
         anchorX="center"
         anchorY="middle"
-        letterSpacing={0.06}
+        letterSpacing={0.04}
         characters="WEB3AIPRODUCT"
         renderOrder={10}
         material-toneMapped={false}
@@ -190,4 +186,3 @@ function PillarCube({
     </group>
   )
 }
-
