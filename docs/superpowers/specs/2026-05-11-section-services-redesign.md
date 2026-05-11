@@ -12,6 +12,13 @@
 
 Replace the trefoil hub-and-spoke topology and accordion-gated children with a **hybrid index**: clean scan-first structure carrying the three pillars and their children inline, with a single signature accent providing visual identity. Pillars must read in two seconds; child services must be skimmable without interaction; pillar hub CTAs must be primary visible affordances.
 
+**Information posture.** Three pillars are co-equal categories. The section must not present them as a ranked list (primary+two-secondaries) — Metaborong is a multi-pillar studio, not a Web3-first studio with side practices. Layout treatment must reflect equal weight (three equal columns, or three sibling rows, not a hero pillar plus subordinates).
+
+**Time-horizon read:**
+- **First 5 seconds (visceral):** Eyebrow + H2 + pillar labels visible. The reader knows this is a studio that does three things and what they are.
+- **5 minutes (behavioral):** Reader scans child services within the pillar they care about, sees the hub CTA, clicks through to the pillar hub.
+- **5-year (reflective):** This section reads as the studio's catalog — must not date by referencing temporary trends (no "Web3 winter recovery", no specific model names).
+
 ## Rejected directions
 
 - Hub-and-spoke / orbital / trefoil topology — the read it currently has.
@@ -20,37 +27,55 @@ Replace the trefoil hub-and-spoke topology and accordion-gated children with a *
 - Multi-tab carousel — interaction tax on a passive-scan section.
 - Ambient gradient / glow backdrops — violates DESIGN.md "no decorative gradients" rule.
 - Per-child illustrations or icons — slop risk + maintenance burden across 14 children.
+- **3-column feature grid (icon-in-colored-circle + bold title + 2-line description × 3)** — most recognized AI-generated layout. The pillars must not render as this pattern even if the column count matches.
+- **Centered-everything composition** — text-align center on every heading + body. Hierarchy collapses; reads as template.
+- **Colored-left-border cards as the pillar treatment** — directly conflicts with `Card variant="featured"` which already owns the 3px left-border accent for highlighted single cards. Re-using it here would dilute the featured-card signature.
+- **System-ui / default font stacks for display copy** — DESIGN.md mandates Satoshi for display. No falling back to system fonts as a "minimalist" choice.
 
 ## Locked content shape
 
 Source: `docs/content/sections/services.md`.
 
 - 1 eyebrow + 1 H2 + 1 lede (above pillars, centered or left-aligned per Figma).
-- 1 AEO blockquote — must render in SSR HTML, must not be hidden behind toggle.
+- 1 AEO blockquote — **renders as semantic `<blockquote>` after the lede and before pillar 01**. Must render in initial SSR HTML, must not be hidden behind toggle, must not depend on hydration to be readable.
 - 3 pillars (`01 / 02 / 03`), each with: num, label, headline (≤8 words), body (1 sentence, ≤22 words), hubCta button (≤3 words verb-first), hubHref.
-- Child services rendered inline per pillar (7 Web3 + 6 AI + 1 Product Studio = 14 entries), each with name + description (≤16 words).
-- 3 AEO Q&A blocks — render decision deferred to step 7 (plan). Possibilities: (a) visible after pillars; (b) JSON-LD only; (c) both. **Default if undecided at impl time: emit as JSON-LD only to keep section visual tight; visible FAQ ships on dedicated FAQ section.**
+- Child services rendered inline per pillar (7 Web3 + 6 AI + 1 Product Studio = **14 entries**), each with name + description (≤16 words). **Locked: rendered as clickable links to existing slugs in `services-data.ts` (`/services/<pillar>/<slug>/`)**. The 17 noindex stub pages exist for crawl depth; not linking from this section wastes that depth.
+- 3 AEO Q&A blocks — **locked: JSON-LD only at this section.** Emit as `FAQPage` schema embedded via `<Script type="application/ld+json">`. Do NOT render as visible HTML. Rationale: visible FAQ at section bottom would create a competing focal point against the index pattern; visible FAQ ships in its own dedicated section per project CHANGELOG.
 
 ## Hard constraints (DESIGN.md, non-negotiable)
 
-- Tokens only — no raw hex, no raw px outside the scale. Section uses `<Section bg="subtle" maxWidth="wide">`.
+- Tokens only — no raw hex, no raw px outside the scale. Section uses `<Section bg="subtle" maxWidth="wide" id="services">`. The `id="services"` is a deep-link target — must preserve.
 - Pillar colors locked to `services-data.ts`: Web3 `#204AF8`, AI `#10b981`, Product Studio `#F6851B`.
 - `color.text.tertiary` (`#999`) not allowed for body copy or child-service descriptions.
 - Borders over shadows. Card hover follows DESIGN.md card hover spec.
 - One-shot motion only — no infinite animations introduced. Reveal via `<Section>` IO gate.
 - `prefers-reduced-motion: reduce` short-circuits any introduced animation.
-- Tap targets ≥44×44px on all clickable rows.
+- Tap targets ≥44×44px on all clickable rows (child-service links and pillar hub CTAs).
 - Mobile fallback renders the same IA in SSR HTML (no `display:none` on SEO-relevant child links).
-- Focus-visible ring on every interactive element (pillar hub CTAs, child-service links if interactive).
+- Focus-visible ring on every interactive element (pillar hub CTAs, all 14 child-service links).
 - Buttons: Bauhaus signature — `radius: 0`, flat fills, 150ms transitions, no transform on hover. Primary hub CTAs may use the split-arrow pattern (text + arrow span with 1px white-15 divider).
+- **Typography:** no new `--font-*` introduced. Display copy uses `--font-brand` (Satoshi); the eyebrow + index numerals use `--font-mono` (JetBrains Mono) per existing eyebrow primitive.
+- **Semantics:** section uses `aria-labelledby` pointing at the H2's `id`. Each pillar grouping uses `<section aria-labelledby="pillar-<id>-heading">` so screen readers expose three pillars as navigable landmarks. Child-service lists use `<ul role="list">` (Tailwind reset re-adds the role).
+- **Card variant choice:** if pillars render as card-like containers, use `<Card variant="default">` per DESIGN.md (`radius.lg`, no left-border). The `featured` variant is reserved for single-card highlights and may not be repurposed here.
+
+### Per-element interaction states (DESIGN.md seven-state matrix)
+
+| Element | default | hover | focus-visible | active | disabled | loading | error |
+|---|---|---|---|---|---|---|---|
+| Pillar hub CTA (`<Button variant="primary" size="md">`) | brand fill / off-white text | bg darkens ~10% (150ms) | brand 2px ring, 2px offset | bg darkens ~15%, no transform | n/a (always enabled) | n/a (links not async) | n/a |
+| Child-service row link | dark text + gray-light description | text shifts to pillar color (150ms); subtle bg shift `bg-subtle → bg-raised` if rendered as boxed row | brand 2px ring, 2px offset | text darker pillar tone | n/a | n/a | n/a |
+| Eyebrow / H2 / lede / blockquote | static (non-interactive) | — | — | — | — | — | — |
 
 ## Open decisions (resolve at step 7 — plan)
 
-1. **Pillar layout** — three equal columns vs. stacked rows vs. primary+two-secondaries. Resolve from Figma at step 8.
-2. **Child-service interaction** — clickable rows to stub pages now (driving traffic to noindex stubs is fine — they have value as crawlable depth) OR text-only until pages are deindexed-promoted. Recommend: clickable links rendered to existing slugs in `services-data.ts`.
-3. **Signature accent** — exactly one. Candidates: oversized index numerals (`01/02/03`), structural rule between pillars, single typographic mark in the eyebrow row. Locked from Figma at step 8.
-4. **AEO Q&A render** — visible vs. JSON-LD only (see Locked content shape).
-5. **Mobile layout** — keep current `services-mobile.tsx` `<Card>` list pattern with new copy, or unify into a single component that responsive-shifts? Recommend unify if Figma's mobile layout is structurally similar to desktop; keep split if mobile diverges (e.g., desktop is grid, mobile is stack with disclosure).
+1. **Pillar layout shape** — three equal columns vs. three sibling rows (full-width per pillar). Both honor the "co-equal" posture. Resolve from Figma at step 8. **Topology constraint locked:** pillars render as **containers** (each pillar owns its children visually as a column/row container), not as section-dividers above a single shared index. This isolates pillar identity, supports scan-by-pillar, and keeps the hub CTA legible per pillar. Pillar 03 (Product Studio, 1 child) needs a treatment that doesn't read as empty — see plan.
+2. **Signature accent** — exactly one. Candidates: oversized index numerals (`01/02/03` in display-size mono), structural rule between pillars (1px hairline with pillar-color tick), or a single typographic mark in the eyebrow row. Locked from Figma at step 8.
+3. **Mobile layout** — keep current `services-mobile.tsx` `<Card>` list pattern with new copy, or unify into a single component that responsive-shifts? Recommend unify if Figma's mobile layout is structurally similar to desktop; keep split if mobile diverges (e.g., desktop is row, mobile is collapsed list with inline expansion).
+
+### Resolved at this gate (no longer open)
+
+- ~~Child-service interaction~~ — **locked: clickable links to existing slugs.** (No real design tradeoff; crawl depth is load-bearing.)
+- ~~AEO Q&A render~~ — **locked: JSON-LD only.** (Visible FAQ would compete; dedicated FAQ section owns visible Q&A.)
 
 ## Component graph (post-redesign target)
 
