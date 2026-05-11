@@ -1,13 +1,12 @@
 'use client'
 
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrthographicCamera, Grid, Text } from '@react-three/drei'
-import { useRef, useEffect, useState, Suspense } from 'react'
-import { Group, MathUtils } from 'three'
 import { type PillarId } from '@/components/sections/services-data'
 
+// Per the Figma (Frame 1707481128), the active cube uses #296ff0 not the brand
+// #204AF8 — the design lightens the blue slightly for the iso surface so the
+// inset white shine reads correctly.
 const PILLAR_COLOR: Record<PillarId, string> = {
-  'web3': '#204AF8',
+  'web3': '#296ff0',
   'ai-agents': '#10b981',
   'product-studio': '#F6851B',
 }
@@ -18,171 +17,285 @@ const PILLAR_LABEL: Record<PillarId, string> = {
   'product-studio': 'PRODUCT',
 }
 
-// Per-pillar label offset (relative to pillar center, world-space). Per the Figma
-// canvas (Frame 1707481128): AI label sits upper-left of its plate, PRODUCT sits
-// upper-right, WEB3 sits centered just above the cube top. All slant up-right.
-const LABEL_OFFSET: Record<PillarId, { active: [number, number, number]; inactive: [number, number, number] }> = {
-  'web3':            { active: [0,    1.95, 0  ], inactive: [-0.40, 0.30, 0   ] },
-  'ai-agents':       { active: [-0.3, 1.95, 0  ], inactive: [-0.60, 0.30, 0   ] },
-  'product-studio':  { active: [0,    1.95, -0.3], inactive: [ 0,   0.30, -0.6] },
+// Pillars sit on integer grid intersections. With the grid using the cube's
+// iso transform (rotate(-30) skewX(30) scaleY(0.866)), moving (+1, +1) in grid
+// cells maps to (+173.2, 0) on screen — exactly horizontal. So three pillars
+// at grid (-1,-1), (0,0), (+1,+1) sit on the same iso-horizontal line, each
+// one cube-edge apart so plates and the active cube nearly touch — matching
+// the tight spacing in Figma Frame 1707481128.
+const PILLAR_OFFSET_X: Record<PillarId, number> = {
+  'ai-agents': -173.2,
+  'web3': 0,
+  'product-studio': 173.2,
 }
 
-const INACTIVE_COLOR = '#cbd5e1'
-const PLATE_HEIGHT = 0.04 // thin grey slab shown for inactive
-
-// Three slots arranged along the iso "horizontal" axis (world -X + +Z = pure screen
-// left, world +X + -Z = pure screen right). Keeps all three pillars on the same
-// screen Y row, matching the Figma layout.
-const POSITIONS: Record<PillarId, [number, number, number]> = {
-  'ai-agents':       [-1.8, 0,  1.8],
-  'web3':            [ 0,   0,  0  ],
-  'product-studio':  [ 1.8, 0, -1.8],
-}
-
-const CUBE_SIZE = 1.6 // edge length — also matches the major grid step
+const PILLAR_ORDER: PillarId[] = ['ai-agents', 'web3', 'product-studio']
 
 export function ServicesIsoCanvas({ activeId }: { activeId: PillarId }) {
-  const [reducedMotion, setReducedMotion] = useState(false)
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReducedMotion(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-
   return (
-    <div className="absolute inset-0" style={{ background: '#fafbff' }}>
-      <Canvas dpr={[1, 2]} gl={{ antialias: true, alpha: true }} shadows>
-        <OrthographicCamera makeDefault position={[5, 5.5, 5]} zoom={64} near={0.1} far={50} />
-        <IsoCameraTarget />
-
-        {/* Lighting: bright top, soft cool fill — mimics the Figma cube highlight. */}
-        <ambientLight intensity={0.7} />
-        <directionalLight
-          position={[4, 10, 6]}
-          intensity={1.0}
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-near={0.1}
-          shadow-camera-far={30}
-          shadow-camera-left={-10}
-          shadow-camera-right={10}
-          shadow-camera-top={10}
-          shadow-camera-bottom={-10}
-        />
-        <directionalLight position={[-5, 4, -3]} intensity={0.25} color="#dbe4ff" />
-
-        <Floor />
-
-        <Suspense fallback={null}>
-          {(Object.keys(POSITIONS) as PillarId[]).map((id) => (
-            <PillarCube
-              key={id}
-              id={id}
-              position={POSITIONS[id]}
-              isActive={id === activeId}
-              reducedMotion={reducedMotion}
-            />
-          ))}
-        </Suspense>
-      </Canvas>
+    <div className="iso-canvas">
+      <ScopedStyle />
+      <IsoGrid />
+      <div className="iso-stage">
+        {PILLAR_ORDER.map((id) => (
+          <Pillar
+            key={id}
+            id={id}
+            isActive={id === activeId}
+            offsetX={PILLAR_OFFSET_X[id]}
+          />
+        ))}
+      </div>
     </div>
   )
 }
 
-function IsoCameraTarget() {
-  useFrame(({ camera }) => {
-    camera.lookAt(0, 1.0, 0)
-  })
-  return null
-}
-
-function Floor() {
+function IsoGrid() {
   return (
-    <group>
-      {/* Shadow plane */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.001, 0]} receiveShadow>
-        <planeGeometry args={[40, 40]} />
-        <shadowMaterial opacity={0.10} />
-      </mesh>
-      {/* Single-level iso diamond grid — uniform lines, no section hierarchy. */}
-      <Grid
-        args={[40, 40]}
-        position={[0, 0, 0]}
-        cellSize={1.6}
-        cellThickness={0.8}
-        cellColor="#b8c2cf"
-        sectionSize={1.6}
-        sectionThickness={0.8}
-        sectionColor="#b8c2cf"
-        fadeDistance={30}
-        fadeStrength={1.0}
-        infiniteGrid={false}
-        followCamera={false}
-      />
-    </group>
+    <div aria-hidden className="iso-grid-stage">
+      <div className="iso-grid">
+        {Array.from({ length: 144 }).map((_, i) => (
+          <div key={i} className="iso-grid-cell" />
+        ))}
+      </div>
+    </div>
   )
 }
 
-function PillarCube({
+function Pillar({
   id,
-  position,
   isActive,
-  reducedMotion,
+  offsetX,
 }: {
   id: PillarId
-  position: [number, number, number]
   isActive: boolean
-  reducedMotion: boolean
+  offsetX: number
 }) {
-  const extrudeRef = useRef<Group>(null)
-  const targetScale = isActive ? 1 : PLATE_HEIGHT
-
-  useFrame((_, delta) => {
-    const eg = extrudeRef.current
-    if (eg) {
-      if (reducedMotion) {
-        eg.scale.y = targetScale
-      } else {
-        eg.scale.y = MathUtils.damp(eg.scale.y, targetScale, 5, delta)
-      }
-    }
-  })
-
-  const color = isActive ? PILLAR_COLOR[id] : INACTIVE_COLOR
-  const labelOffset = isActive ? LABEL_OFFSET[id].active : LABEL_OFFSET[id].inactive
+  // Labels for AI & WEB3 mount to the iso left-facing plane; PRODUCT mounts
+  // to the right-facing plane so the text reads outward from the scene.
+  const labelOrientation = id === 'product-studio' ? 'right' : 'left'
 
   return (
-    <group position={position}>
-      {/* Cube — base pinned at y=0, scales upward. Inactive collapses to a thin slab. */}
-      <group ref={extrudeRef} scale={[1, isActive ? 1 : PLATE_HEIGHT, 1]}>
-        <mesh castShadow receiveShadow position={[0, CUBE_SIZE / 2, 0]}>
-          <boxGeometry args={[CUBE_SIZE, CUBE_SIZE, CUBE_SIZE]} />
-          <meshStandardMaterial color={color} metalness={0} roughness={0.55} />
-        </mesh>
-      </group>
+    <div
+      className="iso-pillar"
+      data-active={isActive}
+      data-label-orientation={labelOrientation}
+      data-pillar-id={id}
+      style={
+        {
+          '--pillar-color': PILLAR_COLOR[id],
+          '--offset-x': `${offsetX}px`,
+        } as React.CSSProperties
+      }
+    >
+      <div className="iso-cube">
+        <div className="iso-face iso-face--left" />
+        <div className="iso-face iso-face--right" />
+        <div className="iso-face iso-face--top" />
+        <div className="iso-label">{PILLAR_LABEL[id]}</div>
+      </div>
+    </div>
+  )
+}
 
-      {/* Label — flat-painted on the iso top surface, slanting up-right (matches Figma). */}
-      <Text
-        position={labelOffset}
-        rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-        fontSize={isActive ? 0.34 : 0.30}
-        color="#040404"
-        anchorX="center"
-        anchorY="middle"
-        letterSpacing={0.04}
-        characters="WEB3AIPRODUCT"
-        renderOrder={10}
-        material-toneMapped={false}
-        material-depthTest={false}
-        material-transparent={true}
-      >
-        {PILLAR_LABEL[id]}
-      </Text>
-    </group>
+function ScopedStyle() {
+  return (
+    <style precedence="default">{`
+      .iso-canvas {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: #fffffc;
+      }
+
+      /* ---------------- ISO GRID ---------------- */
+      .iso-grid-stage {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      /* Grid uses the SAME iso transform as the cube top face so grid lines
+         run parallel to cube edges, and cube floor corners land on grid
+         intersections. Centered such that the canvas center is at grid (0,0). */
+      .iso-grid {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: grid;
+        grid-template-columns: repeat(14, 100px);
+        grid-template-rows: repeat(14, 100px);
+        width: 1400px;
+        height: 1400px;
+        transform: translate(-50%, -50%) rotate(-30deg) skewX(30deg) scaleY(0.866);
+      }
+      .iso-grid-cell {
+        width: 100px;
+        height: 100px;
+        background: transparent;
+        border-right: 1px solid #e8e8e8;
+        border-bottom: 1px solid #e8e8e8;
+      }
+
+      /* ---------------- STAGE & PILLAR POSITIONING ---------------- */
+      .iso-stage {
+        position: absolute;
+        inset: 0;
+      }
+      .iso-pillar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 173.2px;
+        height: 200px;
+        /* translateY(-100%) lifts the floor to canvas vertical center — the
+           grid origin. With offsets at ±173.2 (one grid diagonal), each cube's
+           front-bottom corner lands exactly on grid intersections (-1,-1),
+           (0,0), (+1,+1). */
+        transform: translate(calc(-50% + var(--offset-x)), -100%);
+      }
+
+      /* ---------------- CUBE ---------------- */
+      .iso-cube {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Shared face properties — all three faces transition the same way. */
+      .iso-face {
+        position: absolute;
+        transform-origin: 0 0;
+        backface-visibility: hidden;
+        will-change: transform, height, background;
+        transition:
+          height 520ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+          background 520ms cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 520ms cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 520ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* TOP face: 100x100 div, iso-projected to a diamond.
+         translateY(-H) lifts it as the cube extrudes. */
+      .iso-face--top {
+        top: 150px;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        transform: translateY(0) rotate(-30deg) skewX(30deg) scaleY(0.866);
+        background: #c7ccd1;
+        box-shadow:
+          inset 0 0 0 0.667px rgba(255, 255, 255, 0.5),
+          inset 0 -8px 16px rgba(0, 0, 0, 0.08);
+        border: 0.667px solid #d8dbe0;
+      }
+
+      /* LEFT side: parallelogram, top edge anchored at diamond's LEFT vertex.
+         Height grows 0 -> 100 as cube extrudes. */
+      .iso-face--left {
+        top: 150px;
+        left: 0;
+        width: 100px;
+        height: 0;
+        transform: translateY(0) skewY(30deg) scaleX(0.866);
+        background: color-mix(in srgb, var(--pillar-color, #94a3b8) 78%, black);
+      }
+
+      /* RIGHT side: anchored at diamond's FRONT vertex (86.6, 50) below origin
+         in floor coords, i.e. (86.6, 200) in pillar coords. */
+      .iso-face--right {
+        top: 200px;
+        left: 86.6px;
+        width: 100px;
+        height: 0;
+        transform: translateY(0) skewY(-30deg) scaleX(0.866);
+        background: color-mix(in srgb, var(--pillar-color, #94a3b8) 62%, black);
+      }
+
+      /* ---------------- ACTIVE STATE ---------------- */
+      /* Top face lifts to translateY(-100), colour fills with pillar hue,
+         and the Figma "inset 0 50px 80px white-24%" inner shine kicks in. */
+      .iso-pillar[data-active="true"] .iso-face--top {
+        background: var(--pillar-color);
+        box-shadow: inset 0 50px 80px 0 rgba(255, 255, 255, 0.24);
+        border: 0.667px solid rgba(255, 255, 255, 0.9);
+        transform: translateY(-100px) rotate(-30deg) skewX(30deg) scaleY(0.866);
+      }
+
+      .iso-pillar[data-active="true"] .iso-face--left {
+        height: 100px;
+        transform: translateY(-100px) skewY(30deg) scaleX(0.866);
+      }
+
+      .iso-pillar[data-active="true"] .iso-face--right {
+        height: 100px;
+        transform: translateY(-100px) skewY(-30deg) scaleX(0.866);
+      }
+
+      /* ---------------- LABEL ---------------- */
+      .iso-label {
+        position: absolute;
+        font-family: var(--font-grotesk, 'Space Grotesk', system-ui, sans-serif);
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 1;
+        color: #040404;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        pointer-events: none;
+        transform-origin: 0 0;
+        transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* Labels float OUTSIDE the diamond, running parallel to the back edges.
+         Asymmetric top values are intentional: left-orientation bbox extends
+         UP from origin (rotate(-30) lifts top-right corner), right-orientation
+         bbox extends DOWN. So matching visual "above the diamond" requires a
+         smaller top value for the right-orientation label.
+         - Left (AI, WEB3): sits above-left, parallel to the back-LEFT edge
+           (L vertex up to B). WEB3 has an extra shift toward B (see below)
+           to clear the AI cube when AI rises.
+         - Right (PRODUCT): sits above-right, parallel to the back-RIGHT edge
+           (B to R), origin pushed past the R vertex so the text overhang
+           sits in empty space.
+         When active, label rides up with the cube via translateY(-100px),
+         preserving its outside-the-block stance. */
+      .iso-pillar[data-label-orientation="left"] .iso-label {
+        top: 108px;
+        left: -10px;
+        transform: translateY(0) rotate(-30deg) skewX(-30deg) scaleY(0.866);
+      }
+      /* WEB3 is the centre pillar — when AI rises on its left, the AI cube's
+         right edge sits at the same X as WEB3's left vertex, which clips the
+         WEB3 label. Shift WEB3 ~30px along the back-left edge direction
+         (toward vertex B) so the label clears the AI cube. AI keeps the
+         outside-left origin since nothing rises on its left. */
+      .iso-pillar[data-pillar-id="web3"][data-label-orientation="left"] .iso-label {
+        top: 93px;
+        left: 16px;
+      }
+      .iso-pillar[data-label-orientation="right"] .iso-label {
+        top: 70px;
+        left: 110px;
+        transform: translateY(0) rotate(30deg) skewX(30deg) scaleY(0.866);
+      }
+
+      /* Active state — label rises with the cube. */
+      .iso-pillar[data-active="true"][data-label-orientation="left"] .iso-label {
+        transform: translateY(-100px) rotate(-30deg) skewX(-30deg) scaleY(0.866);
+      }
+      .iso-pillar[data-active="true"][data-label-orientation="right"] .iso-label {
+        transform: translateY(-100px) rotate(30deg) skewX(30deg) scaleY(0.866);
+      }
+
+      /* ---------------- REDUCED MOTION ---------------- */
+      @media (prefers-reduced-motion: reduce) {
+        .iso-face, .iso-label {
+          transition: none !important;
+        }
+      }
+    `}</style>
   )
 }
