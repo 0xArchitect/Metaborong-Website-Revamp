@@ -58,7 +58,7 @@ const LANES: Lane[] = [
   },
 ]
 
-function Lane({ lane, index }: { lane: Lane; index: number }) {
+function LaneRow({ lane, index }: { lane: Lane; index: number }) {
   const yCenter = LANE_TOP + index * LANE_HEIGHT + LANE_HEIGHT / 2
   const yTop = yCenter - BAR_HEIGHT / 2
   const shipX = xAt(lane.shipWeek)
@@ -251,7 +251,7 @@ export function ProblemTrendChart() {
 
         {/* Lanes */}
         {LANES.map((lane, i) => (
-          <Lane key={lane.id} lane={lane} index={i} />
+          <LaneRow key={lane.id} lane={lane} index={i} />
         ))}
 
         {/* X axis baseline */}
@@ -371,7 +371,7 @@ export function ProblemTrendChart() {
                     )}
                     <circle cx={shipX} cy={yC} r="4" fill={overshoots ? '#296ff0' : '#fffffc'} stroke={lane.fill} strokeWidth="2" />
                     <text x={shipX + 8} y={yC + 4} fill="rgba(255,255,252,0.85)" className="problem-chart-status">
-                      W{lane.shipWeek === 11.5 ? '11+' : lane.shipWeek} {lane.statusGlyph}
+                      W{lane.shipWeekLabel ?? lane.shipWeek} {lane.statusGlyph}
                     </text>
                   </g>
                 )

@@ -27,9 +27,12 @@ export function ProblemSection() {
         </div>
 
         <div className="problem-grid">
-          <div className="problem-chart-wrap">
+          <figure className="problem-chart-wrap">
             <ProblemTrendChart />
-          </div>
+            <figcaption className="sr-only">
+              Chart: three teams ship at week three, week five, and week eleven. Only Metaborong&apos;s week-five delivery lands inside the six-week trend window.
+            </figcaption>
+          </figure>
           <div className="problem-content">
             <span className="problem-chip">THE PROBLEM</span>
             <h2 className="problem-h2">
@@ -43,10 +46,6 @@ export function ProblemSection() {
             </p>
           </div>
         </div>
-
-        <span className="sr-only">
-          Chart: three teams ship at week three, week five, and week eleven. Only Metaborong&apos;s week-five delivery lands inside the six-week trend window.
-        </span>
 
         <ProblemAEOAccordion />
       </div>
