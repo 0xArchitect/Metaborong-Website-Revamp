@@ -34,7 +34,7 @@ Skill names are slash-commands. Skip a step only when explicitly noted.
 | `find-skills` | Locate the right skill for off-template tasks | Whenever the chain doesn't fit |
 | `verification-before-completion` | Typecheck/build/QA before claiming done | Before review |
 | `simplify` | Tighten the diff | Before review |
-| `codex` / `requesting-code-review` | Final review gate | Pre-merge |
+| `requesting-code-review` | Final review gate | Pre-merge (skip for small section work covered by impeccable + design-review) |
 | `seo-fundamentals` / `geo-fundamentals` | Reference primers | Skim once, never again |
 | `seo` | Site-wide SEO orchestrator | Once now, once pre-launch, then quarterly |
 | `seo-aeo-keyword-research` | Keywords + AEO questions per page | Once per net-new page |
@@ -77,7 +77,9 @@ For greenfield sections where copy doesn't exist and visual direction is open.
 [ ] 11. verification-before-completion     — typecheck, build, manual QA
 [ ] 12. design-review                      — live-site designer's-eye QA
 [ ] 13. simplify                           — tighten diff
-[ ] 14. codex / requesting-code-review     — final review gate
+[ ] 14. requesting-code-review (optional)  — final review gate; skip for
+                                              small section work already covered
+                                              by impeccable + design-review
 [ ] 15. Graduate                           — DESIGN.md grammar + CHANGELOG.md
                                               decision log; spec/plan stay in
                                               place as historical record
@@ -106,7 +108,7 @@ Preconditions: copy locked · spec exists · component shipped
 [ ] 5. verification-before-completion      — typecheck, build, manual QA
 [ ] 6. design-review                       — live-site QA on the diff
 [ ] 7. simplify                            — tighten diff
-[ ] 8. codex (only if diff is non-trivial) — skip for ≤20-line fixes
+[ ] 8. requesting-code-review (optional)   — skip for ≤20-line fixes
 [ ] 9. Graduate                            — update spec deviation log if pattern
                                               shifted + CHANGELOG.md entry
 ```
@@ -144,7 +146,7 @@ Then per page:
                                               via dispatching-parallel-agents
                                               — Service/BreadcrumbList/FAQPage JSON-LD,
                                                 title/meta/OG, OG card image
-[ ] 11. verification + design-review + codex
+[ ] 11. verification + design-review + requesting-code-review (optional)
 [ ] 12. seo-aeo-internal-linking           — rerun once 3+ new pages exist
 [ ] 13. Remove noindex stub
 [ ] 14. Graduate                           — DESIGN.md + CHANGELOG.md
