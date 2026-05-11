@@ -184,11 +184,11 @@ function ScopedStyle() {
         width: 100px;
         height: 100px;
         transform: translateY(0) rotate(-30deg) skewX(30deg) scaleY(0.866);
-        background: #c7ccd1;
+        background: #d8d2c8;
         box-shadow:
           inset 0 0 0 0.667px rgba(255, 255, 255, 0.5),
-          inset 0 -8px 16px rgba(0, 0, 0, 0.08);
-        border: 0.667px solid #d8dbe0;
+          inset 0 -12px 20px rgba(0, 0, 0, 0.10);
+        border: 0.667px solid #cec7bc;
       }
 
       /* LEFT side: parallelogram, top edge anchored at diamond's LEFT vertex.
@@ -199,7 +199,7 @@ function ScopedStyle() {
         width: 100px;
         height: 0;
         transform: translateY(0) skewY(30deg) scaleX(0.866);
-        background: color-mix(in srgb, var(--pillar-color, #94a3b8) 78%, black);
+        background: color-mix(in srgb, var(--pillar-color, #94a3b8) 85%, black);
       }
 
       /* RIGHT side: anchored at diamond's FRONT vertex (86.6, 50) below origin
@@ -210,7 +210,7 @@ function ScopedStyle() {
         width: 100px;
         height: 0;
         transform: translateY(0) skewY(-30deg) scaleX(0.866);
-        background: color-mix(in srgb, var(--pillar-color, #94a3b8) 62%, black);
+        background: color-mix(in srgb, var(--pillar-color, #94a3b8) 72%, black);
       }
 
       /* ---------------- ACTIVE STATE ---------------- */
@@ -218,7 +218,7 @@ function ScopedStyle() {
          and the Figma "inset 0 50px 80px white-24%" inner shine kicks in. */
       .iso-pillar[data-active="true"] .iso-face--top {
         background: var(--pillar-color);
-        box-shadow: inset 0 50px 80px 0 rgba(255, 255, 255, 0.24);
+        box-shadow: inset 0 50px 80px 0 rgba(255, 255, 255, 0.32);
         border: 0.667px solid rgba(255, 255, 255, 0.9);
         transform: translateY(-100px) rotate(-30deg) skewX(30deg) scaleY(0.866);
       }
