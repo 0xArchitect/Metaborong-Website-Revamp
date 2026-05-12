@@ -133,6 +133,17 @@ The Figma direction is a **scroll-driven sticky-stack** with a 3D isometric sign
 
 - Per Figma, the section-intro eyebrow `WHAT WE BUILD` renders inside a 1px-bordered pill (`border-border`, `rounded-md`, `px-[12px] py-[6px]`) above the centered H2. This is a section-local treatment; the Eyebrow primitive itself is not changed.
 
+### 7. AEO blockquote removed; lede absorbs entity-definition surface (2026-05-13)
+
+- **Removed:** the visible `<blockquote>` between lede and pillar 01. Was a 58-word entity-definition paragraph; restated content already carried by H2 + lede + FAQ JSON-LD.
+- **Lede word-count relaxed:** ≤28 → ≤45 words. The lede now absorbs the entity-definition opener, the EVM/Solana/Cosmos ecosystem fact, the single-team accountability claim, and the "for founders without an in-house CTO" buyer-persona phrase that previously lived only in the blockquote.
+- **AEO surface preservation:** Hero retains its `<blockquote>` for site-wide AEO grammar — one visible extraction surface remains. The Services FAQ JSON-LD (3 Q&A blocks) remains the primary structured-data AEO surface for this section.
+- **SSR/SEO impact:** lede word-count grows by ~17 words; entity definition + ecosystem fact + accountability claim still render in initial SSR HTML, now inside the lede `<p>` rather than a separate `<blockquote>`. No content loss for crawlers or LLM scrapers.
+- **Tab order updated:** eyebrow → H2 → lede → pillar 01 (no blockquote stop).
+- **QA checklist:** the "AEO blockquote in initial SSR HTML" item no longer applies to Services; replaced by "Lede contains entity-definition opener + ecosystem fact + accountability claim".
+- **Supersedes:** locked-content-shape line 40 ("1 AEO blockquote — renders as semantic `<blockquote>`…") and the blockquote row in the seven-state matrix (line 67) — both no longer apply to Services. Hero spec unaffected.
+- **Rationale:** the four-layer header (eyebrow + H2 + lede + blockquote) had H2 + lede + blockquote restating the same three pillars in three voices; reads as generic. Single tightened lede earns its space; the section's heavy lifting moves to the canvas+accordion experience below, which is the real demonstration of "three pillars, end to end".
+
 ### 6. Hard constraints honored
 
 - SSR/SEO: H2, lede, AEO blockquote, all 11 visible child names + descriptions, all 3 hub-CTA links, all FAQ JSON-LD render server-side.
