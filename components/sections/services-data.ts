@@ -32,7 +32,7 @@ export const pillars: Pillar[] = [
     headline: 'Decentralised protocol engineering',
     body: 'DeFi protocols, NFT marketplaces, wallets, and DAO systems — smart-contract engineering across EVM, Solana, and Cosmos.',
     hubHref: '/services/web3/',
-    hubCta: 'Open Web3',
+    hubCta: 'Web3 services',
     children: [
       { name: 'DeFi Protocol Development', description: "Lending, AMM, perp-DEX, and yield infrastructure spec'd for third-party audit.", slug: 'defi-protocol-development' },
       { name: 'Smart Contract Security', description: 'Specs, audits, and post-deploy monitoring for production smart contracts.', slug: 'smart-contract-security' },
@@ -51,7 +51,7 @@ export const pillars: Pillar[] = [
     headline: 'AI agents that ship to production',
     body: 'Agentic pipelines, RAG systems, voice agents, generative products, and workflow automation — production-grade, not demos.',
     hubHref: '/services/ai-agents/',
-    hubCta: 'Open AI',
+    hubCta: 'AI agent services',
     children: [
       { name: 'Agentic AI Systems', description: 'Multi-step autonomous agents that plan, use tools, and report results.', slug: 'agentic-ai-systems' },
       { name: 'RAG & Knowledge Systems', description: 'Retrieval pipelines that ground LLMs in your proprietary data.', slug: 'rag-knowledge-systems' },
@@ -69,9 +69,11 @@ export const pillars: Pillar[] = [
     headline: 'The full technical team for your SaaS',
     body: 'Web2 product builds for founders without a CTO — architecture, engineering, design, deployment.',
     hubHref: '/services/product-studio/',
-    hubCta: 'Open Studio',
+    hubCta: 'Product Studio services',
     children: [
       { name: 'SaaS Product Development', description: 'Web2 product builds — architecture, engineering, design, and deployment.', slug: 'saas-product-development' },
+      { name: 'MVP Software Development', description: 'Zero-to-launch product builds, founder-led scope through first paying users.', slug: 'mvp-software-development' },
+      { name: 'B2B Software Development', description: 'Multi-tenant B2B platforms with SSO, role-based access, and audit trails.', slug: 'b2b-software-development' },
     ],
   },
 ]
