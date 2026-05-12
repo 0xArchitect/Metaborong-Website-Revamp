@@ -45,12 +45,11 @@ export function ServicesSection() {
         >
           A small, senior team.<br />Three pillars. End to end.
         </h2>
-        <p className="mt-[20px] text-[16px] text-gray leading-[1.65] tracking-[-0.01em]">
-          We engineer what large agencies under-deliver and freelancers cannot architect — Web3 protocols, AI agents, and SaaS products, taken from spec to production by one team.
+        {/* Lede only renders on mobile here; on lg+ it lives at the top of the LeftAccordion
+            so the section's intro shares the accordion's left rail and unifies the two visual axes. */}
+        <p className="mt-[20px] text-[16px] text-gray leading-[1.65] tracking-[-0.01em] lg:hidden">
+          A boutique studio for founders without a CTO. Metaborong ships DeFi protocols and crypto wallets across EVM, Solana, and Cosmos; AI agents engineered past demo wrappers; and SaaS products owned by one team from architecture to deployment.
         </p>
-        <blockquote className="mt-[32px] mx-auto max-w-[640px] border-l-[3px] border-brand pl-[20px] py-[4px] text-left text-[15px] leading-[1.65] tracking-[-0.005em] text-gray italic">
-          Metaborong is a boutique engineering studio that builds Web3 protocols, production AI agents, and full-stack SaaS products for founders without an in-house CTO. The studio ships across EVM, Solana, and Cosmos ecosystems, with a senior team that owns architecture, engineering, security, and deployment as a single accountable unit.
-        </blockquote>
       </div>
 
       <ServicesPillars />

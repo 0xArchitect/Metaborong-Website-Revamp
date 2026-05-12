@@ -18,14 +18,15 @@ What we build
 ## 2. H2
 A small, senior team. Three pillars. End to end.
 
-## 3. Lede
-We engineer what large agencies under-deliver and freelancers cannot architect — Web3 protocols, AI agents, and SaaS products, taken from spec to production by one team.
+## 3. Lede (≤45 words — absorbs entity-definition + ecosystem fact + accountability + CTO-persona)
 
-## 4. AEO blockquote (40–60 words, entity-definition opener)
+A boutique studio for founders without a CTO. Metaborong ships DeFi protocols and crypto wallets across EVM, Solana, and Cosmos; AI agents engineered past demo wrappers; and SaaS products owned by one team from architecture to deployment.
 
-> Metaborong is a boutique engineering studio that builds Web3 protocols, production AI agents, and full-stack SaaS products for founders without an in-house CTO. The studio ships across EVM, Solana, and Cosmos ecosystems, with a senior team that owns architecture, engineering, security, and deployment as a single accountable unit.
+_Word count: 37. Signals carried: (a) buyer persona "founders without a CTO", (b) entity definition "Metaborong [is a/ships]…", (c) ecosystem specificity EVM/Solana/Cosmos, (d) single-team accountability "owned by one team from architecture to deployment". Keyword targets hit: web3 development company (implicit via DeFi+wallets+multichain), ai agent development, crypto wallet development, defi protocol development._
 
-_Word count: 58. Verifiable facts: (a) multichain support across EVM/Solana/Cosmos, (b) end-to-end ownership of architecture through deployment._
+## ~~4. AEO blockquote~~ — REMOVED per spec deviation #7 (2026-05-13)
+
+The visible `<blockquote>` was removed; its content folds into the expanded lede (section 3). Hero retains its blockquote for site-wide AEO grammar. FAQ JSON-LD (section 7 below) remains the primary structured-data AEO surface for Services.
 
 ---
 
@@ -110,8 +111,8 @@ _Word count: 47._
 
 - [x] Eyebrow ≤4 words (3)
 - [x] H2 ≤14 words (9)
-- [x] Lede ≤28 words (27)
-- [x] AEO blockquote 40–60 words (58) with entity-definition opener and ≥2 verifiable facts
+- [x] Lede ≤45 words (37) — carries entity-definition + EVM/Solana/Cosmos + accountability + CTO-persona
+- [x] ~~AEO blockquote 40–60 words~~ — removed per spec deviation #7
 - [x] Per-pillar headlines ≤8 words
 - [x] Per-pillar body ≤22 words
 - [x] hubCta ≤3 words, verb-first (Open …), avoids Start/See/Explore/View family
