@@ -1,30 +1,14 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Eyebrow } from '@/components/ui/eyebrow'
-import { useGeo } from '@/lib/use-geo'
 import { Reveal } from '@/components/ui/reveal'
 import { Typewriter } from '@/components/ui/typewriter'
 
-/** Two-letter ISO country code → flag emoji via Regional Indicator Symbols.
- *  Returns '' for invalid input. */
-function countryFlag(code: string): string {
-  if (!code || code.length !== 2) return ''
-  const upper = code.toUpperCase()
-  const A = 0x1F1E6
-  const offset = 'A'.charCodeAt(0)
-  const cp1 = A + upper.charCodeAt(0) - offset
-  const cp2 = A + upper.charCodeAt(1) - offset
-  if (cp1 < A || cp1 > A + 25 || cp2 < A || cp2 > A + 25) return ''
-  return String.fromCodePoint(cp1, cp2)
-}
-
 export function HeroSection() {
   const [scrolled, setScrolled] = useState(false)
-  const geo = useGeo()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100)
@@ -32,16 +16,25 @@ export function HeroSection() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Pause the ASCII shimmer filter when the hero scrolls out of view.
-  // Frees the compositor + saves battery on mobile while in-section visuals stay live.
+  // Pause the ASCII video when the hero scrolls out of view.
+  // Frees the decoder + saves battery on mobile while in-section visuals stay live.
   const asciiBoxRef = useRef<HTMLDivElement | null>(null)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
   useEffect(() => {
     const box = asciiBoxRef.current
-    if (!box) return
-    const img = box.querySelector('.hero-ascii-image')
-    if (!img) return
+    const video = videoRef.current
+    if (!box || !video) return
+    video.playbackRate = 0.3
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion) {
+      video.pause()
+      return
+    }
     const obs = new IntersectionObserver(
-      ([entry]) => img.setAttribute('data-active', String(entry.isIntersecting)),
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
       { threshold: 0 },
     )
     obs.observe(box)
@@ -53,12 +46,14 @@ export function HeroSection() {
       <div className="max-w-[1600px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
         {/* Left: copy */}
         <Reveal className="flex flex-col justify-center pt-[104px] pb-[48px] lg:pt-[120px] lg:pb-[64px] px-[24px] md:px-[48px] lg:px-[112px] xl:px-[144px]">
-          {/* Eyebrow chip */}
-          <div className="inline-flex items-center gap-2 mb-7 bg-bg border border-border rounded-sm px-3 py-[5px] w-fit">
-            <span className="w-2 h-2 bg-brand rounded-sm shrink-0 inline-block" />
-            <Eyebrow>
-              Web3 Development · AI Agents · Product Studio
-              {geo?.country && geo?.city && ` · ${countryFlag(geo.country)} ${geo.city}`}
+          {/* Eyebrow chip — live availability signal */}
+          <div className="inline-flex items-center gap-2 mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
+            <span className="hero-live-dot relative w-2 h-2 shrink-0 inline-block">
+              <span className="absolute inset-0 bg-[#10b981] rounded-sm" />
+              <span aria-hidden="true" className="hero-live-pulse absolute inset-0 bg-[#10b981] rounded-sm" />
+            </span>
+            <Eyebrow className="text-[12px]! tracking-[0.12em]!">
+              Accepting new work · Reply in 12h
             </Eyebrow>
           </div>
 
@@ -97,60 +92,17 @@ export function HeroSection() {
         <div className="relative overflow-hidden h-[60vh] lg:h-auto lg:min-h-screen flex items-center justify-center">
           {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
           <div ref={asciiBoxRef} className="relative w-[86%] h-[80%] max-w-[520px] max-h-[700px]">
-            {/* SVG filter that injects pixel-level jitter via animated turbulence noise.
-               Lives inline so the whole shimmer is GPU-rasterized and CSS-toggleable. */}
-            <svg
-              className="absolute w-0 h-0 pointer-events-none"
+            <video
+              ref={videoRef}
+              src="/hero-ascii.mp4"
+              poster="/hero-ascii-poster.png"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
               aria-hidden="true"
-              focusable="false"
-            >
-              <filter
-                id="hero-ascii-shimmer"
-                x="0%"
-                y="0%"
-                width="100%"
-                height="100%"
-              >
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.9"
-                  numOctaves="1"
-                  seed="1"
-                  result="noise"
-                >
-                  <animate
-                    attributeName="seed"
-                    values="1;7;3;9;5;1"
-                    dur="2.6s"
-                    repeatCount="indefinite"
-                    calcMode="discrete"
-                  />
-                </feTurbulence>
-                <feDisplacementMap
-                  in="SourceGraphic"
-                  in2="noise"
-                  scale="8"
-                  xChannelSelector="R"
-                  yChannelSelector="G"
-                >
-                  {/* Glitch spike: scale jumps to 14 briefly every 3s for a subtle tear */}
-                  <animate
-                    attributeName="scale"
-                    values="8;8;14;8;8"
-                    keyTimes="0;0.45;0.5;0.55;1"
-                    dur="3s"
-                    repeatCount="indefinite"
-                  />
-                </feDisplacementMap>
-              </filter>
-            </svg>
-            <Image
-              src="/hero-ascii-art.png"
-              alt=""
-              fill
-              priority
-              sizes="(min-width: 1024px) 520px, 86vw"
-              className="hero-ascii-image object-contain object-center select-none pointer-events-none"
+              className="hero-ascii-image absolute inset-0 w-full h-full object-contain object-center select-none pointer-events-none"
             />
             {/* Inset vignette anchored to the image edges — matches Figma's
                tight inset shadow (20px blur + 20px spread on a ~531px frame). */}

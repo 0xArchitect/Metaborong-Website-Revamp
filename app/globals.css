@@ -179,25 +179,22 @@
   }
 }
 
-/* ── Hero ASCII-art shimmer ───────────────────────────────────────────────── */
-.hero-ascii-image {
-  filter: url(#hero-ascii-shimmer);
-  /* Pre-feather the image edges so the displacement filter can't visibly wobble
-     them. Two crossed linear masks compose to an inset rectangle with soft sides. */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+/* Hero live-availability dot — slow outward pulse signals presence. */
+.hero-live-pulse {
+  transform-origin: center;
+  animation: heroLivePulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  will-change: transform, opacity;
 }
 
-/* IntersectionObserver flips data-active="false" when the hero scrolls out of view —
-   frees the compositor for the rest of the page. */
-.hero-ascii-image[data-active="false"] {
-  filter: none;
+@keyframes heroLivePulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 /* Hero overlay cards pop in 700ms after first paint, in unison */
@@ -221,10 +218,9 @@
     animation: none;
     opacity: 1;
   }
-  /* Kills the SVG turbulence shimmer: filter chain + its inner <animate> tags
-     stop having any visual effect when the source isn't filtered. */
-  .hero-ascii-image {
-    filter: none;
+  .hero-live-pulse {
+    animation: none;
+    opacity: 0;
   }
 }
 
