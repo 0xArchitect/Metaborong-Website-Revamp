@@ -10,7 +10,7 @@ const footerLinks: { label: string; href: string }[] = [
 
 export function Footer() {
   return (
-    <footer style={{ background: '#0a0a0a', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '36px 80px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+    <footer style={{ background: '#0a0a0a', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '36px var(--section-px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
       <Logo showWordmark wordmarkColor="rgba(255,255,255,0.85)" />
       <nav style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
         {footerLinks.map(({ label, href }) => (

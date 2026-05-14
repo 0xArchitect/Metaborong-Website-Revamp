@@ -6,7 +6,7 @@ const founders = [
 
 export function FoundersSection() {
   return (
-    <section style={{ padding: '96px 80px', background: '#fff' }}>
+    <section style={{ padding: '96px var(--section-px)', background: '#fff' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ marginBottom: 16 }}>
           <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>The team</p>
