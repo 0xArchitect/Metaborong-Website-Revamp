@@ -9,35 +9,35 @@ const rows = [
 
 export function ComparisonSection() {
   return (
-    <section style={{ padding: '96px 80px', background: '#f5f7ff' }}>
-      <div style={{ maxWidth: 960, margin: '0 auto' }}>
-        <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>Comparison</p>
-          <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', fontWeight: 700, letterSpacing: '-0.035em', color: '#303030' }}>How Metaborong compares</h2>
+    <section className="bg-bg-subtle px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+      <div className="mx-auto max-w-[960px]">
+        <div className="mb-[36px] md:mb-[48px]">
+          <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Comparison</p>
+          <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">How Metaborong compares</h2>
         </div>
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+        <div className="overflow-x-auto">
+          <table className="min-w-[720px] w-full border-collapse text-[14px]">
             <thead>
-              <tr style={{ borderBottom: '2px solid #e5e7eb' }}>
-                <th style={{ textAlign: 'left', padding: '12px 16px', color: '#999999', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', width: '22%' }} />
-                <th style={{ textAlign: 'left', padding: '12px 16px', color: '#204AF8', fontSize: 13, fontWeight: 700, width: '26%' }}>Metaborong</th>
-                <th style={{ textAlign: 'left', padding: '12px 16px', color: '#676767', fontSize: 13, fontWeight: 600, width: '26%' }}>Large Web3 Agency</th>
-                <th style={{ textAlign: 'left', padding: '12px 16px', color: '#676767', fontSize: 13, fontWeight: 600, width: '26%' }}>Freelance Team</th>
+              <tr className="border-b-2 border-border">
+                <th className="w-[22%] px-[16px] py-[12px] text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-gray-light" />
+                <th className="w-[26%] px-[16px] py-[12px] text-left text-[13px] font-bold text-brand">Metaborong</th>
+                <th className="w-[26%] px-[16px] py-[12px] text-left text-[13px] font-semibold text-gray">Large Web3 Agency</th>
+                <th className="w-[26%] px-[16px] py-[12px] text-left text-[13px] font-semibold text-gray">Freelance Team</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r, i) => (
-                <tr key={r.label} style={{ borderBottom: '1px solid #f3f4f6', background: i % 2 === 0 ? '#fff' : 'transparent' }}>
-                  <td style={{ padding: '14px 16px', color: '#676767', fontWeight: 500, fontSize: 13 }}>{r.label}</td>
-                  <td style={{ padding: '14px 16px', color: '#303030', fontWeight: 600 }}>{r.mb}</td>
-                  <td style={{ padding: '14px 16px', color: '#676767' }}>{r.large}</td>
-                  <td style={{ padding: '14px 16px', color: '#676767' }}>{r.free}</td>
+                <tr key={r.label} className={`border-b border-border-subtle ${i % 2 === 0 ? 'bg-white' : 'bg-transparent'}`}>
+                  <td className="px-[16px] py-[14px] text-[13px] font-medium text-gray">{r.label}</td>
+                  <td className="px-[16px] py-[14px] font-semibold text-dark">{r.mb}</td>
+                  <td className="px-[16px] py-[14px] text-gray">{r.large}</td>
+                  <td className="px-[16px] py-[14px] text-gray">{r.free}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p style={{ marginTop: 16, fontSize: 12, color: '#999999' }}>✓ denotes where the alternative genuinely wins. Large agencies have longer track records — a real advantage for enterprises needing procurement comfort.</p>
+        <p className="mt-[16px] text-[12px] text-gray-light">✓ denotes where the alternative genuinely wins. Large agencies have longer track records — a real advantage for enterprises needing procurement comfort.</p>
       </div>
     </section>
   )

@@ -141,6 +141,7 @@ function ScopedStyle() {
       .iso-stage {
         position: absolute;
         inset: 0;
+        transform: translateY(14px);
       }
       .iso-pillar {
         position: absolute;

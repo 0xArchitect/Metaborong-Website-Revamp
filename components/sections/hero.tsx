@@ -58,7 +58,7 @@ export function HeroSection() {
           </div>
 
           {/* H1 */}
-          <h1 className="text-[clamp(32px,4.8vw,72px)] font-black tracking-[-0.04em] leading-[1.02] text-dark mb-6 whitespace-nowrap">
+          <h1 className="text-[clamp(32px,4.8vw,72px)] font-black tracking-[-0.04em] leading-[1.02] text-dark mb-6">
             <Typewriter
               lines={[
                 { text: 'Web3 protocols.' },
@@ -82,16 +82,16 @@ export function HeroSection() {
           </blockquote>
 
           {/* CTAs */}
-          <div className="flex items-center gap-3">
-            <Button href="/#contact" size="lg" arrow="→">Get a scope</Button>
-            <Button href="/#work" variant="ghost" size="lg">Open recent work</Button>
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
+            <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
           </div>
         </Reveal>
 
         {/* Right: ASCII-art still — replaces the orb */}
-        <div className="relative overflow-hidden h-[60vh] lg:h-auto lg:min-h-screen flex items-center justify-center">
+        <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-screen flex items-center justify-center">
           {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
-          <div ref={asciiBoxRef} className="relative w-[86%] h-[80%] max-w-[520px] max-h-[700px]">
+          <div ref={asciiBoxRef} className="relative w-[92%] h-[82%] max-w-[520px] max-h-[700px] sm:w-[86%] sm:h-[80%]">
             <video
               ref={videoRef}
               src="/hero-ascii.mp4"
@@ -102,32 +102,25 @@ export function HeroSection() {
               playsInline
               preload="auto"
               aria-hidden="true"
-              className="hero-ascii-image absolute inset-0 w-full h-full object-contain object-center select-none pointer-events-none"
+              className="hero-ascii-image absolute inset-0 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-contain sm:object-center select-none pointer-events-none"
             />
             {/* Inset vignette anchored to the image edges — matches Figma's
                tight inset shadow (20px blur + 20px spread on a ~531px frame). */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                boxShadow: 'inset 0 0 36px 30px var(--color-bg-subtle)',
-              }}
-            />
             {/* Glassmorphic overlay "windows" — three pillar proofs, anchored to the image frame */}
             <HeroOverlayCard
               loadingLabels={['Cogitating…', 'Reasoning…', 'Inferring…', 'Embedding…']}
               resultLabel="w₁ 0.83, ∑ 0.44"
-              style={{ left: '8.7%', top: '25.3%' }}
+              style={{ left: '7.4%', top: '25.3%' }}
             />
             <HeroOverlayCard
               loadingLabels={['Mining block…', 'Signing tx…', 'Validating…', 'Committing…']}
               resultLabel="0x4a7f..."
-              style={{ left: '41.6%', top: '8.2%' }}
+              style={{ left: '41.8%', top: '7.4%' }}
             />
             <HeroOverlayCard
               loadingLabels={['Deploying…', 'Building…', 'Migrating…', 'Scaling…']}
               resultLabel="/v1/deploy"
-              style={{ left: '66.9%', top: '34.5%' }}
+              style={{ left: '74.0%', top: '34.8%' }}
             />
           </div>
         </div>
@@ -218,7 +211,7 @@ function HeroOverlayCard({
     <div
       ref={cardRef}
       aria-hidden="true"
-      className="hero-card-pop absolute z-20 w-[92px] h-[108px] lg:w-[116px] lg:h-[137px] backdrop-blur-[15px] border border-white/80 opacity-0"
+      className="hero-card-pop max-[420px]:hidden absolute z-20 w-[92px] h-[108px] lg:w-[116px] lg:h-[137px] backdrop-blur-[15px] border border-white/80 opacity-0"
       style={style}
     >
       {/* Title bar with three traffic-light squares */}

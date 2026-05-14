@@ -33,7 +33,7 @@ export function Section({
 }: SectionProps) {
   return (
     <Tag
-      className={`${bgClass[bg]} py-[96px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px] ${className}`}
+      className={`${bgClass[bg]} py-[72px] md:py-[88px] lg:py-[96px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px] ${className}`}
       {...props}
     >
       <div className={`${maxWidthClass[maxWidth]} mx-auto`}>

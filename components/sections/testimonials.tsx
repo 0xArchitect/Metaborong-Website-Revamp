@@ -7,21 +7,21 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section style={{ padding: '96px 80px', background: '#f5f7ff' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div style={{ marginBottom: 48 }}>
-          <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>Social proof</p>
-          <h2 style={{ fontSize: 'clamp(28px, 3.5vw, 44px)', fontWeight: 700, letterSpacing: '-0.035em', color: '#303030' }}>Voices of trust</h2>
+    <section className="bg-bg-subtle px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="mb-[36px] md:mb-[48px]">
+          <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Social proof</p>
+          <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">Voices of trust</h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+        <div className="grid grid-cols-1 gap-[16px] md:grid-cols-2 md:gap-[20px]">
           {testimonials.map(t => (
-            <div key={t.name} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: 32 }}>
-              <p style={{ fontSize: 16, color: '#303030', lineHeight: 1.7, letterSpacing: '-0.01em', marginBottom: 24, fontStyle: 'italic' }}>&ldquo;{t.quote}&rdquo;</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#204AF8', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>{t.name[0]}</div>
+            <div key={t.name} className="rounded-[12px] border border-border bg-white p-[20px] sm:p-[24px] lg:p-[32px]">
+              <p className="mb-[24px] text-[16px] italic leading-[1.7] tracking-[-0.01em] text-dark">&ldquo;{t.quote}&rdquo;</p>
+              <div className="flex items-center gap-[12px]">
+                <div className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-brand text-[14px] font-bold text-white">{t.name[0]}</div>
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#303030', letterSpacing: '-0.01em' }}>{t.name}</div>
-                  <div style={{ fontSize: 12, color: '#676767' }}>{t.role}</div>
+                  <div className="text-[14px] font-semibold tracking-[-0.01em] text-dark">{t.name}</div>
+                  <div className="text-[12px] text-gray">{t.role}</div>
                 </div>
               </div>
             </div>
