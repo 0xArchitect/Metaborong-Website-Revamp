@@ -1,6 +1,6 @@
 export function ContactCtaSection() {
   return (
-    <section style={{ background: '#0a0a0a', padding: '96px 80px', textAlign: 'center' }}>
+    <section style={{ background: '#0a0a0a', padding: '96px var(--section-px)', textAlign: 'center' }}>
       <div style={{ maxWidth: 600, margin: '0 auto' }}>
         <h2 style={{ fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1.03, marginBottom: 18 }}>
           Got a project in mind?

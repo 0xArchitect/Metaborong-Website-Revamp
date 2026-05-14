@@ -7,7 +7,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section style={{ padding: '96px 80px', background: '#f5f7ff' }}>
+    <section style={{ padding: '96px var(--section-px)', background: '#f5f7ff' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>Social proof</p>

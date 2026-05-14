@@ -91,6 +91,16 @@
   to   { opacity: 1; }
 }
 
+/* Canonical horizontal section padding — every section reads from this var.
+   Values match DESIGN.md Layout spec. Used by inline-style sections and any
+   surface that can't use the Section primitive's Tailwind classes directly. */
+:root {
+  --section-px: 24px;
+}
+@media (min-width: 768px)  { :root { --section-px: 48px; } }
+@media (min-width: 1024px) { :root { --section-px: 96px; } }
+@media (min-width: 1280px) { :root { --section-px: 128px; } }
+
 /* Mobile nav <details>/<summary> — hide native disclosure marker so the
    custom rotating chevron carries the open/closed signal. */
 .nav-summary {

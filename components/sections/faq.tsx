@@ -7,7 +7,7 @@ import { faqs } from '@/components/sections/faq-data'
 export function FaqSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section style={{ padding: '96px 80px', background: '#fff' }}>
+    <section style={{ padding: '96px var(--section-px)', background: '#fff' }}>
       <div style={{ maxWidth: 760, margin: '0 auto' }}>
         <div style={{ marginBottom: 48 }}>
           <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>FAQ</p>

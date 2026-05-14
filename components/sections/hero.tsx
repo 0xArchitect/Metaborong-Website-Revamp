@@ -45,7 +45,7 @@ export function HeroSection() {
     <section className="relative min-h-screen bg-bg-subtle">
       <div className="max-w-[1600px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
         {/* Left: copy */}
-        <Reveal className="flex flex-col justify-center pt-[104px] pb-[48px] lg:pt-[120px] lg:pb-[64px] px-[24px] md:px-[48px] lg:px-[112px] xl:px-[144px]">
+        <Reveal className="flex flex-col justify-center pt-[104px] pb-[48px] lg:pt-[120px] lg:pb-[64px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
           {/* Eyebrow chip — live availability signal */}
           <div className="inline-flex items-center gap-2 mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
             <span className="hero-live-dot relative w-2 h-2 shrink-0 inline-block">
@@ -89,7 +89,7 @@ export function HeroSection() {
         </Reveal>
 
         {/* Right: ASCII-art still — replaces the orb */}
-        <div className="relative overflow-hidden h-[60vh] lg:h-auto lg:min-h-screen flex items-center justify-center">
+        <div className="relative overflow-hidden h-[60vh] lg:h-auto lg:min-h-screen flex items-center justify-center pr-[24px] md:pr-[48px] lg:pr-[96px] xl:pr-[128px]">
           {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
           <div ref={asciiBoxRef} className="relative w-[86%] h-[80%] max-w-[520px] max-h-[700px]">
             <video

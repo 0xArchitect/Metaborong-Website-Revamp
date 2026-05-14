@@ -7,7 +7,7 @@ const projects = [
 
 export function WorkPreviewSection() {
   return (
-    <section style={{ padding: '96px 80px', background: '#fff' }}>
+    <section style={{ padding: '96px var(--section-px)', background: '#fff' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48 }}>
           <div>
