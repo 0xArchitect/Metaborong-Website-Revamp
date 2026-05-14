@@ -7,22 +7,22 @@ const projects = [
 
 export function WorkPreviewSection() {
   return (
-    <section style={{ padding: '96px 80px', background: '#fff' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48 }}>
+    <section className="bg-bg px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="mb-[36px] flex flex-col gap-[18px] sm:mb-[48px] sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>Our work</p>
-            <h2 style={{ fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700, letterSpacing: '-0.035em', color: '#303030' }}>What we&apos;ve built</h2>
+            <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Our work</p>
+            <h2 className="text-[clamp(32px,4vw,52px)] font-bold tracking-[-0.035em] text-dark">What we&apos;ve built</h2>
           </div>
-          <a href="/#contact" style={{ fontSize: 14, fontWeight: 600, color: '#204AF8', textDecoration: 'none' }}>Talk to us →</a>
+          <a href="/#contact" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-brand no-underline">Talk to us →</a>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 xl:grid-cols-4">
           {projects.map(p => (
-            <div key={p.name} style={{ border: '1px solid #e5e7eb', borderRadius: 12, padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div style={{ height: 80, background: '#f5f7ff', borderRadius: 8, marginBottom: 8 }} />
-              <div style={{ fontSize: 11, fontWeight: 600, color: p.color, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{p.category}</div>
-              <h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.025em', color: '#303030' }}>{p.name}</h3>
-              <a href="/#contact" style={{ fontSize: 13, color: '#204AF8', fontWeight: 500, textDecoration: 'none', marginTop: 'auto' }}>Read more →</a>
+            <div key={p.name} className="flex flex-col gap-[12px] rounded-[12px] border border-border px-[20px] py-[24px] sm:px-[24px] sm:py-[28px] lg:px-[28px] lg:py-[32px]">
+              <div className="mb-[8px] h-[80px] rounded-[8px] bg-bg-subtle" />
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em]" style={{ color: p.color }}>{p.category}</div>
+              <h3 className="text-[18px] font-bold tracking-[-0.025em] text-dark">{p.name}</h3>
+              <a href="/#contact" className="mt-auto inline-flex min-h-[44px] items-center text-[13px] font-medium text-brand no-underline">Read more →</a>
             </div>
           ))}
         </div>
