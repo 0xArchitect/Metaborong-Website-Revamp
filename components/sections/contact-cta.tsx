@@ -1,19 +1,25 @@
 export function ContactCtaSection() {
   return (
-    <section style={{ background: '#0a0a0a', padding: '96px var(--section-px)', textAlign: 'center' }}>
-      <div style={{ maxWidth: 600, margin: '0 auto' }}>
-        <h2 style={{ fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1.03, marginBottom: 18 }}>
+    <section className="bg-canvas px-[16px] py-[72px] text-center sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+      <div className="mx-auto max-w-[600px]">
+        <h2 className="mb-[18px] text-[clamp(34px,5vw,64px)] font-bold leading-[1.03] tracking-[-0.04em] text-white">
           Got a project in mind?
         </h2>
-        <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.5)', letterSpacing: '-0.01em', lineHeight: 1.65, maxWidth: 440, margin: '0 auto 36px' }}>
+        <p className="mx-auto mb-[28px] max-w-[440px] text-[16px] leading-[1.65] tracking-[-0.01em] text-white/55 md:mb-[36px] md:text-[17px]">
           Tell us what you are building. We will tell you how we would approach it — no pitch deck, no fluff, no commitment required.
         </p>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-          <a href="mailto:contact@metaborong.com?subject=New%20project%20inquiry" style={{ display: 'inline-flex', alignItems: 'stretch', background: '#296ff0', color: '#fff', fontSize: 15, fontWeight: 600, textDecoration: 'none', letterSpacing: '-0.01em', fontFeatureSettings: '"tnum"' }}>
-            <span style={{ padding: '12px 22px' }}>Email us</span>
-            <span aria-hidden="true" style={{ padding: '12px 16px', background: 'rgba(255,255,255,0.10)', borderLeft: '1px solid rgba(255,255,255,0.15)' }}>→</span>
+        <div className="flex flex-col items-stretch justify-center gap-[12px] sm:flex-row sm:items-center">
+          <a
+            href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
+            className="inline-flex min-h-[44px] items-stretch justify-center bg-brand text-[15px] font-semibold tracking-[-0.01em] text-white no-underline [font-feature-settings:'tnum']"
+          >
+            <span className="px-[22px] py-[12px]">Email us</span>
+            <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[16px] py-[12px]">→</span>
           </a>
-          <a href="mailto:contact@metaborong.com" style={{ display: 'inline-flex', alignItems: 'center', fontSize: 15, color: 'rgba(255,255,255,0.4)', textDecoration: 'none', letterSpacing: '-0.01em', padding: '14px 0' }}>
+          <a
+            href="mailto:contact@metaborong.com"
+            className="inline-flex min-h-[44px] items-center justify-center px-[8px] py-[10px] text-[15px] tracking-[-0.01em] text-white/55 no-underline transition-colors duration-[var(--duration-instant)] hover:text-white"
+          >
             contact@metaborong.com
           </a>
         </div>
