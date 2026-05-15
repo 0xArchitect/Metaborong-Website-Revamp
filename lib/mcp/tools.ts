@@ -17,11 +17,16 @@ import {
   tagRegex,
   type SemanticRole,
 } from '../blog-schema'
-import { createPost } from '../posts'
+import {
+  createPost,
+  updatePost,
+  type UpdatePostFields,
+} from '../posts'
 import { markdownToBlocks } from '../markdown/markdown-to-blocks'
 import {
   APP_INTERNAL,
   APP_INVALID_CONTENT,
+  APP_NOT_FOUND,
   APP_SLUG_CONFLICT,
   APP_VALIDATION_FAILED,
   type ToolDescriptor,
@@ -148,6 +153,88 @@ async function createDraftHandler(
   return { id: result.post.id, slug: result.post.slug }
 }
 
+// ── 5.2 cms_patch_post ───────────────────────────────────────────────────────
+
+const patchPostInputSchema = z.object({
+  id:     z.string().uuid(),
+  fields: z.object({
+    title:            z.string().trim().min(1).max(200).optional(),
+    slug:             z.string().regex(slugRegex).min(1).max(80).optional(),
+    excerpt:          z.string().max(500).nullable().optional(),
+    markdown:         z.string().optional(),
+    tags:             z.array(z.string().regex(tagRegex).max(40)).max(10).optional(),
+    author_name:      z.string().min(1).max(120).optional(),
+    author_url:       z.string().url().nullable().optional(),
+    meta_title:       z.string().max(200).nullable().optional(),
+    meta_description: z.string().max(160).nullable().optional(),
+    cover_image_id:   z.string().uuid().nullable().optional(),
+    og_image_id:      z.string().uuid().nullable().optional(),
+    block_roles:      blockRolesMap.optional(),
+  }).strict(),
+}).strict()
+
+export type PatchPostInput = z.infer<typeof patchPostInputSchema>
+export interface PatchPostOutput {
+  id: string
+}
+
+async function patchPostHandler(
+  input: PatchPostInput,
+  dbHandle?: Db,
+): Promise<PatchPostOutput> {
+  const fields: UpdatePostFields = {}
+
+  // Direct passthrough — only set when the caller supplied it so we
+  // never accidentally null-out something the caller didn't touch.
+  const direct = [
+    'title', 'slug', 'excerpt', 'tags', 'author_name', 'author_url',
+    'meta_title', 'meta_description', 'cover_image_id', 'og_image_id',
+  ] as const
+  for (const k of direct) {
+    if (input.fields[k] !== undefined) {
+      (fields as Record<string, unknown>)[k] = input.fields[k]
+    }
+  }
+
+  // markdown → content_json conversion. We re-run the converter from
+  // scratch — partial-block diffs are too risky for v1 (a malformed
+  // diff could corrupt the post irrecoverably).
+  if (input.fields.markdown !== undefined) {
+    const conv = markdownToBlocks(input.fields.markdown, {
+      blockRoles: normaliseBlockRoles(input.fields.block_roles),
+    })
+    if (!conv.ok) {
+      throw new ToolError(APP_INVALID_CONTENT, conv.code, conv.message, conv.field)
+    }
+    const parsedContent = contentJsonSchema.safeParse(conv.blocks)
+    if (!parsedContent.success) {
+      const issue = parsedContent.error.issues[0]
+      throw new ToolError(
+        APP_VALIDATION_FAILED,
+        'VALIDATION_FAILED',
+        issue?.message ?? 'invalid content_json',
+        issue?.path?.join('.'),
+      )
+    }
+    fields.content_json = parsedContent.data
+  }
+
+  const result = await updatePost(input.id, fields, dbHandle)
+  if (!result.ok) {
+    switch (result.code) {
+      case 'NOT_FOUND':
+        throw new ToolError(APP_NOT_FOUND, result.code, result.message)
+      case 'VALIDATION_FAILED':
+        throw new ToolError(APP_VALIDATION_FAILED, result.code, result.message, result.field)
+      case 'SLUG_CONFLICT':
+        throw new ToolError(APP_SLUG_CONFLICT, result.code, result.message, result.field)
+      case 'INTERNAL':
+        throw new ToolError(APP_INTERNAL, result.code, result.message)
+    }
+  }
+  return { id: result.post.id }
+}
+
 // ── registry ─────────────────────────────────────────────────────────────────
 //
 // Built lazily so tests that swap @/db/client between runs can still wire
@@ -174,6 +261,18 @@ export function buildToolRegistry(opts: RegistryOptions = {}): Record<string, To
         required: ['id', 'slug'],
       },
       handler: (input) => createDraftHandler(input as CreateDraftInput, opts.dbHandle),
+    },
+    cms_patch_post: {
+      name:        'cms_patch_post',
+      description:
+        'Patch an existing post. Supplying `markdown` replaces content_json wholesale. Cannot patch status, published_at, or a published post\'s slug.',
+      inputSchema: patchPostInputSchema,
+      outputJsonSchema: {
+        type: 'object',
+        properties: { id: { type: 'string', format: 'uuid' } },
+        required: ['id'],
+      },
+      handler: (input) => patchPostHandler(input as PatchPostInput, opts.dbHandle),
     },
   }
 }
