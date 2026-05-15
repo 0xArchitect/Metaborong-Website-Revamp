@@ -72,7 +72,7 @@ export function ServicesPillars() {
         ))}
 
         <div className="sticky top-0 h-screen flex items-center">
-          <div className="w-full grid grid-cols-[minmax(320px,380px)_1fr] items-stretch">
+          <div className="w-full grid grid-cols-[minmax(280px,360px)_1fr] xl:grid-cols-[minmax(320px,380px)_1fr] items-stretch">
             <LeftAccordion activeId={activeId} setActiveId={setActiveId} active={active} />
             <RightCanvas active={active} activeId={activeId} />
           </div>
@@ -94,7 +94,7 @@ function LeftAccordion({
   active: (typeof pillars)[number]
 }) {
   return (
-    <div className="border-r border-border-subtle bg-white overflow-hidden flex flex-col h-[600px]">
+    <div className="border-r border-border-subtle bg-white overflow-hidden flex flex-col h-[560px] xl:h-[600px]">
       <div className="px-[20px] py-[14px] border-b border-border-subtle flex items-center justify-between flex-shrink-0">
         <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-gray-light">
           Three pillars
@@ -202,7 +202,7 @@ function LeftAccordion({
 
 function RightCanvas({ active, activeId }: { active: (typeof pillars)[number]; activeId: PillarId }) {
   return (
-    <div className="bg-white overflow-hidden h-[600px] flex flex-col">
+    <div className="bg-white overflow-hidden h-[560px] xl:h-[600px] flex flex-col">
       <div className="px-[24px] pt-[20px] pb-[12px] flex-shrink-0">
         <p
           key={`hl-${active.id}`}

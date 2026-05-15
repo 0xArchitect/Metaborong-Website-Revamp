@@ -50,38 +50,38 @@ const reasons = [
 
 export function WhyUsSection() {
   return (
-    <section style={{ padding: '96px var(--section-px)', background: '#f5f7ff' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div style={{ marginBottom: 56, maxWidth: 720 }}>
-          <p style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#999999', fontWeight: 600, marginBottom: 12 }}>Why us</p>
-          <h2 style={{ fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700, letterSpacing: '-0.035em', lineHeight: 1.05, color: '#303030', marginBottom: 20 }}>Why founders choose Metaborong</h2>
-          <p style={{ fontSize: 16, color: '#676767', lineHeight: 1.65, letterSpacing: '-0.01em', maxWidth: 640, marginBottom: 24 }}>
+    <section className="bg-bg-subtle px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="mb-[40px] max-w-[720px] md:mb-[56px]">
+          <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Why us</p>
+          <h2 className="mb-[20px] text-[clamp(32px,4vw,52px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">Why founders choose Metaborong</h2>
+          <p className="mb-[24px] max-w-[640px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
             Founders pick Metaborong over larger Web3 and AI agencies for three reasons: shorter time to a first working version, sharper push-back on the brief, and the specialist depth — multichain protocols and AI agent orchestration — most studios don&apos;t have.
           </p>
 
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', fontSize: 13, letterSpacing: '-0.005em' }}>
+          <div className="flex flex-wrap items-center gap-[14px] text-[13px] tracking-[-0.005em]">
             <a
               href={clutchProfileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#303030', textDecoration: 'none', fontWeight: 600 }}
+              className="inline-flex items-center gap-[6px] font-semibold text-dark no-underline"
             >
               <span>4.9</span>
-              <span aria-label="5 out of 5 stars" style={{ color: '#F6851B', letterSpacing: 1, fontSize: 12 }}>★★★★★</span>
-              <span style={{ color: '#676767', fontWeight: 500 }}>on Clutch</span>
+              <span aria-label="5 out of 5 stars" className="text-[12px] leading-none tracking-[1px] text-[#F6851B]">★★★★★</span>
+              <span className="font-medium text-gray">on Clutch</span>
             </a>
-            <span aria-hidden="true" style={{ color: '#d4d4d8' }}>·</span>
-            <span style={{ color: '#303030', fontWeight: 600 }}>Reply within 12h</span>
-            <span aria-hidden="true" style={{ color: '#d4d4d8' }}>·</span>
-            <span style={{ color: '#303030', fontWeight: 600 }}>4–12 weeks to ship</span>
+            <span aria-hidden="true" className="text-[#d4d4d8]">·</span>
+            <span className="font-semibold text-dark">Reply within 12h</span>
+            <span aria-hidden="true" className="text-[#d4d4d8]">·</span>
+            <span className="font-semibold text-dark">4–12 weeks to ship</span>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-3 lg:gap-[24px]">
           {reasons.map(r => (
-            <div key={r.tag} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '36px 32px' }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: r.color, marginBottom: 18 }}>{r.tag}</div>
-              <h3 style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.2, color: '#303030', marginBottom: 14 }}>{r.title}</h3>
-              <p style={{ fontSize: 14, color: '#676767', lineHeight: 1.75, letterSpacing: '-0.005em' }}>{r.body}</p>
+            <div key={r.tag} className="rounded-[12px] border border-border bg-white px-[20px] py-[24px] sm:px-[24px] sm:py-[28px] lg:px-[32px] lg:py-[36px]">
+              <div className="mb-[18px] text-[11px] font-bold uppercase tracking-[0.08em]" style={{ color: r.color }}>{r.tag}</div>
+              <h3 className="mb-[14px] text-[22px] font-bold leading-[1.2] tracking-[-0.025em] text-dark">{r.title}</h3>
+              <p className="text-[14px] leading-[1.75] tracking-[-0.005em] text-gray">{r.body}</p>
             </div>
           ))}
         </div>
