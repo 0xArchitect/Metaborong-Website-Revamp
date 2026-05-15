@@ -26,7 +26,7 @@ import {
   type PatchPostInput,
   type UploadImageInput,
 } from '@/lib/mcp/tools'
-import type { PostDoc } from '@/db/schema'
+import type { ImageDoc, PostDoc } from '@/db/schema'
 
 let testHandle: TestDbHandle
 
@@ -196,7 +196,7 @@ describe('cms_upload_image', () => {
     expect(out.height).toBe(20)
     expect(out.blob_url).toMatch(/\.webp$/)
 
-    const row = await testHandle.db.collection('images').findOne({ _id: out.id })
+    const row = await testHandle.db.collection<ImageDoc>('images').findOne({ _id: out.id })
     expect(row).toBeTruthy()
   })
 
