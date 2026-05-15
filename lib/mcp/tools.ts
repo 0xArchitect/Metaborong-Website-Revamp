@@ -557,22 +557,19 @@ export function buildToolRegistry(opts: RegistryOptions = {}): Record<string, To
 
 /**
  * Build the tools/list payload (MCP standard) from the registry. We
- * surface only the top-level JSON-Schema shape (input + output) since
- * Zod 4's `.toJSONSchema()` isn't surfaced uniformly across versions.
- * The runtime contract is the Zod schema; this is documentation only.
+ * surface a stub `inputSchema` object — Zod 4's `.toJSONSchema()` isn't
+ * surfaced uniformly across versions, and clients that need the full
+ * schema can read lib/mcp/tools.ts directly. The runtime contract is
+ * the Zod schema; this is documentation only.
  */
 export function toolListEntries(registry: Record<string, ToolDescriptor>): ToolListEntry[] {
   return Object.values(registry).map((d) => ({
     name:        d.name,
     description: d.description,
-    inputSchema: zodToJsonSchemaShape(d.inputSchema),
+    inputSchema: {
+      type:        'object',
+      description: 'See lib/mcp/tools.ts for the authoritative Zod schema.',
+    },
     outputSchema: d.outputJsonSchema,
   }))
-}
-
-function zodToJsonSchemaShape(_schema: z.ZodType): Record<string, unknown> {
-  return {
-    type:        'object',
-    description: 'See lib/mcp/tools.ts for the authoritative Zod schema.',
-  }
 }
