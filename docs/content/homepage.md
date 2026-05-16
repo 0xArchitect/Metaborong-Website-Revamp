@@ -1,7 +1,7 @@
 # Homepage Content
 **URL:** `/`
 **Last updated:** 2026-05-16
-**Status:** Below-services copy refresh synced to JSX (live on `design-revamp`). Open placeholders: Clutch quotes/rating/count in testimonials.tsx; founder-bio specifics in founders.tsx.
+**Status:** Services + below-services copy refresh synced to JSX (live on `design-revamp`). Open placeholders: Clutch quotes/rating/count in testimonials.tsx; founder-bio specifics in founders.tsx.
 
 ---
 
@@ -91,27 +91,29 @@ We work with founders and crypto-native teams who need a technical partner that 
 
 ### [SERVICES — H2]
 
-## Three pillars. One studio.
+## A small, senior team. Three pillars. End to end.
 
-*Section intro (134 words — optimised for AI citability):*
-Metaborong operates across three interconnected service pillars. The first is Web3 and blockchain development — building the decentralised infrastructure that DeFi protocols, NFT platforms, token launches, and DAO governance systems run on, across multiple chains. The second is AI agent development — designing and deploying autonomous AI systems that automate workflows, process knowledge, and interact through voice, from single-agent tools to multi-agent orchestration pipelines. The third is product studio work — end-to-end development of custom SaaS platforms for startups that need a complete technical build. What connects all three is how Metaborong works: small team, direct communication, and a co-builder mindset that treats every project as if it were the team's own product. Metaborong serves founders and crypto-native teams in the US and Europe.
+*Eyebrow:* What we build
+
+*Section intro (synced to live `services.tsx`):*
+A boutique studio for founders without a CTO. We ship Web3 protocols, production AI agents, and full SaaS products with one senior team that owns the work from architecture to deployment. Every build is engineered for production, not stopped at a demo.
 
 **Pillar cards (each links to its hub page):**
 
 #### ⬡ Web3 / Blockchain
 **Headline:** Decentralised protocol engineering
-**Body:** DeFi, NFT marketplaces, crypto wallets, token launches, liquid staking, and DAO systems — built multichain.
-**CTA:** `Explore Web3 Services →` → `/services/web3/`
+**Body:** DeFi protocols, NFT marketplaces, wallets, and DAO systems. Smart-contract engineering across EVM, Solana, and Cosmos.
+**CTA:** `Web3 services →` → `/services/web3/`
 
 #### ⬡ AI Agents
-**Headline:** AI systems that work while you sleep
-**Body:** Agentic pipelines, RAG applications, voice agents, generative AI, and workflow automation — from prototype to production.
-**CTA:** `Explore AI Agent Services →` → `/services/ai-agents/`
+**Headline:** Production AI agent engineering
+**Body:** Agentic pipelines, RAG systems, voice agents, generative AI, and workflow automation. Agents that plan, retrieve, and act inside real software.
+**CTA:** `AI agent services →` → `/services/ai-agents/`
 
 #### ⬡ Product Studio
-**Headline:** SaaS products built to scale
-**Body:** End-to-end Web2 product builds — architecture, design, development, and deployment for startups that need a full technical team.
-**CTA:** `Explore Product Studio →` → `/services/product-studio/`
+**Headline:** Your full SaaS engineering team
+**Body:** SaaS, MVP, and B2B product builds for founders without a CTO. One team owns architecture, engineering, design, and deployment, so the build doesn't fragment across vendors.
+**CTA:** `Product Studio services →` → `/services/product-studio/`
 
 ---
 
