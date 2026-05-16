@@ -10,6 +10,7 @@ const navLinks = [
   { label: 'Work', href: '/#work' },
   { label: 'Team', href: '/#founders' },
   { label: 'FAQ',  href: '/#faq' },
+  { label: 'Blog', href: '/blog' },
 ]
 
 /** 1px vertical hairline that cells the nav bar into discrete items.
