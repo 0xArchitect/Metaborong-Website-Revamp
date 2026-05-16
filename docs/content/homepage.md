@@ -1,7 +1,7 @@
 # Homepage Content
 **URL:** `/`
-**Last updated:** 2026-05-16
-**Status:** Services + below-services copy refresh synced to JSX (live on `design-revamp`). Open placeholders: Clutch quotes/rating/count in testimonials.tsx; founder-bio specifics in founders.tsx.
+**Last updated:** 2026-05-17
+**Status:** Hero copy reconciled to shipped JSX + geo unified to remote-first/global (A3 chain). Services + below-services copy refresh synced to JSX (live on `design-revamp`). Open placeholders: Clutch quotes/rating/count in testimonials.tsx; founder-bio specifics in founders.tsx.
 
 ---
 
@@ -57,27 +57,31 @@ Services dropdown:
 
 ### [HERO — H1 + AEO block + CTAs]
 
-**Eyebrow tag:**
-`Web3 Development · AI Agents · Product Studio`
+**Eyebrow chip (live availability signal):**
+`Accepting new work · Reply in 12h`
 
-**H1:**
-# Full-Stack Web3 Development & AI Agent Studio
+**H1 (typewriter, 3 beats — renders as static SSR text, crawlable):**
+# Web3 protocols. AI agents. Shipped.
 
-**AEO Extraction Block** *(blockquote — AI engines extract this)*:
-> Metaborong is a Web3 development company and AI agent studio that builds DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams. Based across the US and Europe, Metaborong delivers from spec to production — fast.
-
-**Subheading (not an H tag — styled paragraph):**
-We work with founders and crypto-native teams who need a technical partner that ships, not just consults. DeFi protocols, agentic AI pipelines, SaaS platforms — built with product thinking, not just code.
+**AEO Extraction Block** *(blockquote — AI engines extract this; doubles as the de-facto subhead, no separate subheading ships)*:
+> Metaborong is a Web3 development company and AI agent studio — a remote-first team of senior engineers, globally distributed. We ship DeFi protocols on Ethereum and Solana, production AI agents with RAG, and full-stack SaaS for founders and early-stage startups. Spec to production, fast.
 
 **CTAs:**
-- Primary: `Start a Project →`
-- Secondary: `See Our Work`
+- Primary: `Get a scope →`
+- Secondary: `Open recent work`
 
-**Right panel (visual — TBD):**
-*[Video loop / ASCII / isometric art — to be decided at visual design stage]*
+**Right panel (visual — shipped, locked):**
+*ASCII-art video loop (`/hero-ascii.mp4`) + 3 glassmorphic pillar-proof overlay cards (AI weights · web3 tx hash · deploy path). IO-gated, reduced-motion safe. Locked per `docs/superpowers/specs/2026-05-10-section-hero.md`.*
 
-**Trust micro-copy below CTAs:**
-`No pitch decks. No retainers. Direct from founders.`
+<!-- WHY (A3 copy reconcile, 2026-05-17)
+  - Doc was stale vs shipped JSX (old H1, eyebrow, CTAs, plus a subheading + trust line that never shipped). Reconciled doc → shipped reality.
+  - H1 kept verbatim per user + keyword research: hub /services/web3/ owns "web3 development company"; homepage hard-targeting it too = cannibalization. H1 stays voice-led; primary keyword recovered in the blockquote's first 6 words + the title tag.
+  - Geo unified to remote-first/global (user decision 2026-05-16) — replaces every "US and Europe" mention site-wide (FAQ ×2, llms.txt ×2, schema areaServed → Worldwide).
+  - Blockquote sentence 2 was a 29-word 7-item colon dump → tightened to a parallel 3-pillar clause (equal Web3/AI: "DeFi on Ethereum and Solana" balanced by "AI agents with RAG"). 43 words, in the 40–60 AEO band.
+  - Trust line "No pitch decks. No retainers. Direct from founders." dropped — never shipped; read as poetic/unprofessional. Eyebrow carries the trust signal.
+-->
+
+**Pre-existing drift noted, not fixed (out of scope):** the AEO checklist below still says "FAQ: 8 Q&As" but the doc body has 7 (post 2026-05-14 cut). Flag only.
 
 ---
 
@@ -395,7 +399,7 @@ If you're choosing between us, a large agency, or a freelance team — here's th
   Goal: handle the last objections before Contact CTA + give AI engines clean extractable answers.
   Audience state: warmed; objections remaining are timeline, cost shape, location, scope-fit.
   One idea per Q: one self-contained answer that doesn't repeat the rest of the page.
-  Proof: concrete ranges where honest (4–12 weeks, US/Europe).
+  Proof: concrete ranges where honest (4–12 weeks, remote-first/global).
   CTA: none — funnels into Contact CTA below.
 
   Cut 2 entries per user decision (2026-05-14): old Q2 (Web3 service list) + Q3 (AI service list) — both duplicated Services section.
@@ -414,7 +418,7 @@ If you're choosing between us, a large agency, or a freelance team — here's th
 *Each answer ≤50 words, self-contained for AI extraction, varied sentence subjects.*
 
 **Q: What is Metaborong?**
-A: A Web3 and AI development studio run by three technical co-founders. We build DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams across the US and Europe.
+A: A Web3 and AI development studio run by three technical co-founders. We build DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams. The team is remote-first and globally distributed.
 
 **Q: How long does a typical project take?**
 A: Four to twelve weeks depending on scope. Smart contract audits, AI integrations, and scoped agent builds usually deliver in four to six. DeFi protocols and full SaaS platforms take longer.
@@ -429,7 +433,7 @@ A: No. The first call is just to understand what you're building and whether we'
 A: Smaller, senior, faster. Founders communicate directly with the engineers writing code. Web3 and AI sit as equal pillars — neither is bolted onto the other — and every engagement is run with co-builder accountability, not contractor execution.
 
 **Q: Where are you based?**
-A: Across the US and Europe. The founding team is reachable at contact@metaborong.com for any first conversation.
+A: Remote-first and globally distributed, with no single head office. The founding team is reachable at contact@metaborong.com for any first conversation.
 
 **Q: Do you work outside Web3 and AI?**
 A: Yes. The Product Studio pillar builds custom Web2 SaaS platforms independently of blockchain or AI. Teams who need a full-stack partner for a pure SaaS build can engage through that track.
@@ -504,7 +508,7 @@ Most teams hear back within 12 hours.
 
 ## AEO / GEO Compliance Checklist
 
-- [x] AEO extraction sentence in blockquote after H1 (38 words, self-contained)
+- [x] AEO extraction sentence in blockquote after H1 (43 words, self-contained)
 - [x] Definition of Metaborong within first 60 words of page body
 - [x] 134+ word answer block in Services section (134 words)
 - [x] Question-based H2s present (FAQ section)

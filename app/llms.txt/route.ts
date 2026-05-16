@@ -26,12 +26,12 @@ export async function GET(): Promise<Response> {
 
   lines.push('# Metaborong')
   lines.push('')
-  lines.push('> Metaborong is a Web3 development company and AI agent studio that builds DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams across the US and Europe.')
+  lines.push('> Metaborong is a Web3 development company and AI agent studio — a remote-first team of senior engineers, globally distributed. We ship DeFi protocols on Ethereum and Solana, production AI agents with RAG, and full-stack SaaS for founders and early-stage startups. Spec to production, fast.')
   lines.push('')
 
   lines.push('## Key facts')
   lines.push('- Founded by three technical co-founders: Arnab Ray (CEO), Anik Ghosh (COO), Soumojit Ash (CTO).')
-  lines.push('- Operates across the US and European markets.')
+  lines.push('- Remote-first and globally distributed; no single head office.')
   lines.push('- Direct contact: contact@metaborong.com — no account managers, no pitch decks.')
   lines.push('- Typical project duration: 4–12 weeks; smart contract audits and AI integrations deliver in 4–6 weeks.')
   lines.push('- 8+ products shipped in production across DeFi, gaming, AI, and SaaS.')

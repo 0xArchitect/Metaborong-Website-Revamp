@@ -172,6 +172,6 @@ Three groups of decisions need user input before rewrite:
 ## Out-of-scope reminders
 
 - Problem section is **above** Services in live page order → already in the "optimised" bucket per user.
-- Hero, Trust Bar, Services lede + pillars unchanged.
+- Hero, Trust Bar, Services lede + pillars unchanged. **[SUPERSEDED 2026-05-17]** — Hero copy was re-opened and reconciled via the A3 chain; see CHANGELOG Session 14. This audit's "Hero already optimised" no longer holds.
 - Nav, Footer untouched.
 - Service hub pages (`/services/web3/` etc.) have empty content folders — separate workstream.

@@ -4,6 +4,31 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-17 — Session 14: Context A3 codified + Hero copy reconcile (first A3 run)
+
+### Decision log
+- **Context A3 ("the copy chain") codified in `SESSIONS.md`.** Copy-only changes were only *implied* via the cheat-sheet ("Copy change → SEO chain"), never a first-class context. Named it: `seo-content-auditor + copywriting` (audit first) → edit `docs/content/homepage.md` → `seo-aeo-landing-page-writer` (scoped) → `seo-content-auditor` (re-score) → `seo-authority-builder` (trust-heavy only) → `copywriting` gate → `writing-guardrails.md` vet → sync JSX → verify → graduate. Added the two missing cheat-sheet rows (`copywriting`, `writing-guardrails.md`); header bumped Four→Five contexts. Memory pointer `workflow-copy-chain-a3` added (mirrors the A2 pointer). Committed separately as `8782c9a`.
+- **Hero copy re-opened (was locked/"already-optimised").** User explicitly re-opened it as a copy-only change; routed through the new A3 chain. The visual system (typewriter, ASCII video, overlay cards) stayed untouched and locked per `2026-05-10-section-hero.md`.
+- **H1 kept verbatim, grounded in keyword research.** `seo-aeo-keyword-research` (scoped) surfaced a homepage↔hub cannibalization risk: `/services/web3/` is purpose-built for the head term "web3 development company"; the homepage hard-targeting it too splits traffic. Resolution: H1 stays voice-led ("Web3 protocols. / AI agents. / Shipped."); the primary keyword is recovered in the blockquote's first 6 words ("Metaborong is a Web3 development company and AI agent studio") + the existing title tag. Voice-vs-SEO was a false binary.
+- **Blockquote rewritten.** Sentence 2 was a 29-word 7-item colon dump; tightened to a parallel 3-pillar clause with equal Web3/AI specificity ("DeFi on Ethereum and Solana" balanced by "production AI agents with RAG"). 43 words, in the 40–60 AEO band. Re-score beat baseline on all axes (E-E-A-T 5→8, AEO 5→9, readability 6→8, keyword fail→pass). `seo-authority-builder` skipped per A3 gating (Hero is not an E-E-A-T anchor).
+- **Geo unified to remote-first/global, site-wide.** User decision (2026-05-16): "remote-first / globally distributed" is canonical, replacing every "US and Europe" mention rather than changing Hero to match FAQ. Reconciled across `hero.tsx`, `faq-data.ts` (×2), `app/llms.txt/route.ts` (×2), and `lib/schema.ts` `areaServed` (×3 → `'Worldwide'`). Verified 0 "US and Europe" leftovers in rendered homepage HTML.
+- **`docs/content/homepage.md` was stale vs shipped JSX.** The Hero block documented an old H1, old eyebrow, old CTAs, plus a subheading and a trust line ("No pitch decks. No retainers. Direct from founders.") that never shipped. Reconciled doc → shipped reality; trust line dropped per user (read as poetic/unprofessional); AEO checklist word-count corrected 38→43. WHY block added to the Hero section for traceability.
+
+### Build state changes
+- **UPDATED:** `docs/superpowers/SESSIONS.md` — new Context A3 block + cheat-sheet rows + header (commit `8782c9a`).
+- **UPDATED:** `docs/content/homepage.md` — Hero block reconciled to shipped + new blockquote + WHY; 2 FAQ answers + 1 brief-comment geo unified; AEO checklist word-count fixed; status/date bumped.
+- **UPDATED:** `components/sections/hero.tsx` — blockquote rewritten (keyword-front-loaded, tightened, equal-pillar).
+- **UPDATED:** `components/sections/faq-data.ts` — "What is Metaborong?" + "Where are you based?" geo → remote-first/global.
+- **UPDATED:** `app/llms.txt/route.ts` — intro definition + key-fact line geo-unified (static strings only; route still 500s locally on the known MONGODB_URI gate — pre-existing, not a regression).
+- **UPDATED:** `lib/schema.ts` — `areaServed: ['US','EU']` → `'Worldwide'` (Organization, contactPoint, Service ×3 all covered by the shared literal).
+
+### Known follow-ups
+- `/llms.txt` static-string edits are unverifiable locally (DB-gated 500, expected). Confirm render on the first preview deploy where `MONGODB_URI` is set (the env work that PR #26 is held on).
+- Pre-existing drift, flagged not fixed: `homepage.md` AEO checklist says "FAQ: 8 Q&As" but the doc body + `faq-data.ts` have 7 (post 2026-05-14 cut). Out of scope for this copy change.
+- The 2026-05-14 copy-audit spec scoped Hero out as "already optimised"; that statement is now superseded by this entry (audit doc annotated with a pointer, not rewritten — per the SESSIONS.md no-contradicting-versions rule).
+
+---
+
 ## 2026-05-13 — Session 13: Parallel section redesigns + C1 SEO baseline (graduate)
 
 ### Decision log
