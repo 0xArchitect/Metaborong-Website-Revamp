@@ -22,7 +22,7 @@ export const organizationSchema = {
   description:
     'Metaborong is a Web3 development company and AI agent studio that builds DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams.',
   email: 'contact@metaborong.com',
-  areaServed: ['US', 'EU'],
+  areaServed: 'Worldwide',
   knowsAbout: [
     'DeFi Protocol Development',
     'Smart Contract Security',
@@ -35,7 +35,7 @@ export const organizationSchema = {
     '@type': 'ContactPoint',
     contactType: 'customer support',
     email: 'contact@metaborong.com',
-    areaServed: ['US', 'EU'],
+    areaServed: 'Worldwide',
     availableLanguage: ['English'],
   },
   sameAs: [
@@ -104,7 +104,7 @@ export const serviceSchemas = pillars.map((p) => ({
   serviceType: p.headline,
   description: p.body,
   provider: { '@id': ORG_ID },
-  areaServed: ['US', 'EU'],
+  areaServed: 'Worldwide',
   url: `${BASE}${p.hubHref}`,
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
