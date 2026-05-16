@@ -1,4 +1,4 @@
-const clutchProfileUrl = 'https://clutch.co/profile/metaborong-technologies-private'
+import { clutchProfileUrl } from '@/lib/links'
 
 const projectLinkStyle: React.CSSProperties = {
   color: '#296ff0',
