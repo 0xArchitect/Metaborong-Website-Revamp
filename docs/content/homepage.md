@@ -1,7 +1,7 @@
 # Homepage Content
 **URL:** `/`
-**Last updated:** 2026-05-14
-**Status:** Draft v2 — below-services copy refresh, pending JSX sync
+**Last updated:** 2026-05-16
+**Status:** Below-services copy refresh synced to JSX (live on `design-revamp`). Open placeholders: Clutch quotes/rating/count in testimonials.tsx; founder-bio specifics in founders.tsx.
 
 ---
 

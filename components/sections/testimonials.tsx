@@ -2,7 +2,8 @@
 //   - rating + reviewCount: current aggregate values
 //   - quotes[]: 3 best Clutch reviews with verbatim quote, reviewer name, company, and deep-link to the specific review
 
-const clutchProfileUrl = 'https://clutch.co/profile/metaborong-technologies-private'
+import { clutchProfileUrl } from '@/lib/links'
+
 const rating = '[TODO: 4.9]'
 const reviewCount = '[TODO: 12]'
 
