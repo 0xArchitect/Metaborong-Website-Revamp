@@ -10,7 +10,7 @@ const FAQ_JSONLD = {
       name: 'What does Metaborong build?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Metaborong is a boutique engineering studio that builds three product categories: Web3 protocols including DeFi systems, NFT marketplaces, and DAOs; AI agents including agentic pipelines and RAG systems; and full-stack SaaS products. The studio ships across EVM, Solana, and Cosmos with one senior team owning architecture, engineering, security, and deployment.',
+        text: 'Metaborong is a boutique engineering studio building three product categories: Web3 protocols (DeFi, NFT marketplaces, DAOs); AI agents (agentic pipelines, RAG, voice); and full-stack SaaS products (MVP and B2B builds). One senior team owns architecture, engineering, security, and deployment across EVM, Solana, and Cosmos.',
       },
     },
     {
@@ -48,7 +48,7 @@ export function ServicesSection() {
               A small, senior team.<br />Three pillars. End to end.
             </h2>
             <p className="mt-[20px] text-[16px] text-gray leading-[1.65] tracking-[-0.01em]">
-              A boutique studio for founders without a CTO. Metaborong ships DeFi protocols and crypto wallets across EVM, Solana, and Cosmos; AI agents engineered past demo wrappers; and SaaS products owned by one team from architecture to deployment.
+              A boutique studio for founders without a CTO. We ship Web3 protocols, production AI agents, and full SaaS products with one senior team that owns the work from architecture to deployment. Every build is engineered for production, not stopped at a demo.
             </p>
           </div>
         </div>
