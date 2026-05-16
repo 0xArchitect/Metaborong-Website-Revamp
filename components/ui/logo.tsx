@@ -3,7 +3,7 @@ interface MMarkProps {
   color?: string
 }
 
-export function MMark({ className = '', color = 'currentColor' }: MMarkProps) {
+function MMark({ className = '', color = 'currentColor' }: MMarkProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

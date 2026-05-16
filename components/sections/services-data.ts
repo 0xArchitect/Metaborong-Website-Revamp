@@ -1,6 +1,6 @@
 export type PillarId = 'web3' | 'ai-agents' | 'product-studio'
 
-export type ChildService = {
+type ChildService = {
   name: string
   description: string
   slug: string
