@@ -96,37 +96,13 @@ Left-anchored dark scrim, copy off-white. No box.
 | Ghost CTA | border + dark text | light outline `border-white/45 text-white`, hover `bg-white/10`, flat/no-shadow (Bauhaus button rule preserved) |
 | Scroll cue | `text-gray-light` | `text-white/70` |
 
-## ASCII render (background treatment) — added 2026-05-18 (user feedback)
-
-**Supersedes the original "background is a static image" decision.** User clarification:
-*"the image doesn't animate like an ASCII art"* — the brief's "keep the ASCII effect, do
-away with the glitch" means the background must render as a **live ASCII-art treatment of
-the provided image**, just without the old turbulence/displacement glitch. A static photo
-is not acceptable.
-
-- The full-bleed background is a `<canvas>` ASCII renderer driven by the source image
-  (`public/hero-bg.jpg`): downsample to a monospace glyph grid, map per-cell luminance to
-  an ASCII ramp, draw glyphs filling the aspect-locked stage. Per-cell color sampled from
-  the source but slightly desaturated so it reads as ASCII art, not a photo.
-- **Motion = gentle, non-positional.** A slow luminance/scan shimmer or low-rate per-cell
-  flicker. **No positional displacement** (that was the rejected glitch).
-- Performance + grammar: render on a low-res grid, rAF-throttled; IntersectionObserver
-  pauses it when the hero scrolls out of view; `prefers-reduced-motion: reduce` renders a
-  single static ASCII frame and never animates.
-- The source image element is retained (hidden, decorative) as the canvas sample source so
-  the structural test's `data-testid="hero-bg"` invariant and SSR/SEO posture hold; the
-  `<canvas>` is `aria-hidden`. No `<video>`.
-- The exact technique (canvas vs WebGL, glyph ramp, color vs mono, shimmer style) is a
-  design fork to confirm with the user before implementing this task.
-
 ## Motion
 
-- Background: the ASCII canvas above — **one controlled infinite**, IO-gated,
-  reduced-motion-static. This re-logs the retired §1a as a deliberate clean effect (D4);
-  the turbulence glitch stays gone.
+- Background is a **static image**. The ASCII-video turbulence ("glitch") is gone with the
+  video. Net: one fewer infinite-animation deviation (compliance gain).
 - Copy keeps the existing one-shot `<Reveal>`.
 - Cards keep their existing cycle + IO-gate + reduced-motion behavior, unchanged.
-- No *uncontrolled* infinite animations; the ASCII infinite is gated + reduced-motion-safe.
+- No new infinite animations introduced.
 
 ## Removed (dead after this change)
 
@@ -141,8 +117,7 @@ is not acceptable.
 - Cards remain `aria-hidden`, non-interactive — focus order unaffected.
 - Contrast: scrim tuned so eyebrow + H1 + blockquote meet AA (body ≥4.5:1, large ≥3:1)
   against the real image, desktop and 375px. This is an acceptance gate, not a guess.
-- `prefers-reduced-motion`: ASCII canvas renders a single static frame (no animation);
-  card behavior unchanged.
+- `prefers-reduced-motion`: static bg is inherently safe; card behavior unchanged.
 
 ## Deviations from `DESIGN.md` (to log at graduation)
 
@@ -155,10 +130,8 @@ section) + `CHANGELOG.md`:
 - **D2 — On-dark hero copy on a light site.** Off-white over a dark scrim. Rationale:
   legibility over full-bleed imagery; uses the existing `--color-off-white` token.
 - **D3 — Left-anchored scrim gradient.** New section-level treatment; justified by AA.
-- **D4 — ASCII-render canvas infinite.** Replaces §1a: a clean, IO-gated,
-  reduced-motion-static ASCII animation (not the retired turbulence glitch). Logged as a
-  controlled section-level infinite, same framework as the old §1. §1b (card cycle)
-  unchanged.
+- **Compliance gain:** §1a (ASCII shimmer/turbulence infinite) is retired entirely.
+  §1b (card cycle) unchanged.
 - Supersedes the 2026-05-04 "Hero unchanged" memory lock (user re-opened explicitly).
 
 ## Out of scope
@@ -172,13 +145,13 @@ section) + `CHANGELOG.md`:
 1. Hero is one full-bleed image stage; no `57fr/43fr` grid; no ASCII video/poster refs.
 2. The 3 cards visually sit on the same bloom groups at 1280, 1440, 1920, 2560 widths and
    at 1024/768/375 — verified, no drift off the flowers.
-3. Eyebrow, H1, blockquote all pass WCAG AA against the real rendered pixels (the ASCII
-   canvas output + scrim) at desktop and 375px (measured, not assumed; re-measured after
-   the ASCII render lands).
-4. Shipped image asset ≤ ~250 KB WebP; hero LCP not regressed vs current.
-5. Background reads as a live ASCII-art treatment of the image (not a static photo, not
-   the old positional glitch); the ASCII infinite is IO-gated and renders static under
-   `prefers-reduced-motion`; cards behave as before.
+3. Eyebrow, H1, blockquote all pass WCAG AA against the real rendered pixels at desktop
+   and 375px (measured, not assumed).
+4. Shipped `public/hero-bg.jpg` ≤ ~0.8 MB; **delivered** bytes (Next-optimized
+   AVIF/WebP, responsive) ≤ ~250 KB; hero LCP not regressed vs current. (No local WebP
+   encoder; `next/image` handles modern-format delivery. A `sharp` build-step can be
+   added later if a smaller committed source is wanted.)
+5. No new infinite animations; `prefers-reduced-motion` honored; cards behave as before.
 6. Copy still present in server-rendered HTML (view-source check).
 7. Deviations D1–D3 logged; §1a retired; CHANGELOG entry written.
 8. `pnpm tsc --noEmit` clean. Dev verified via `pnpm dev` (no clean build).

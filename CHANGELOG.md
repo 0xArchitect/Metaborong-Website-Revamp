@@ -4,6 +4,26 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-18 — Session 15: Hero full-bleed landscape redesign (static image, final)
+
+### Decision log
+- **Hero re-opened as a visual change (user-directed).** The 2026-05-04 "Hero unchanged" memory lock was explicitly re-opened. Replaced the two-column ASCII-*video* hero with a single **full-bleed static landscape image** stage (`public/hero-bg.jpg` via `next/image fill priority` — the LCP element). Copy wording untouched (A3-locked); treatment/color only.
+- **Aspect-locked cover stage = pure-CSS card registration.** The image and the three glass proof-cards are children of one absolutely-centered, aspect-ratio-locked stage scaled to cover the viewport (`STAGE_W/STAGE_H` `max()` expressions), so the cards stay on the same flower cluster at every viewport size with no tracking JS. Copy is section-anchored (tracks the viewport-relative left scrim), not stage-anchored.
+- **On-dark copy over a left-anchored scrim.** Off-white copy + eyebrow chip recolor + light ghost-CTA, over a two-layer scrim (mobile veil 0.62 + L1 left gradient 0.94/0.88/0.18/0) tuned and AA-verified against the real image pixels (Button primitive untouched; on-dark overrides are hero-local `!` utilities).
+- **Live-ASCII-canvas variant built, then reverted to the static image (user decision).** An in-session pivot (spec commit `47d314c`) added a color-tinted live ASCII `<canvas>` render (Task 4b, `hero-ascii-canvas.tsx`, review-hardened over two rounds). User then chose the **static image** instead. The ASCII canvas + the **D4** deviation are removed entirely; spec/plan/deviation-log reconciled to the static-image truth. **No D4.**
+- **§1a retired entirely (net compliance gain).** The old ASCII shimmer/turbulence infinite — and the MP4 video it had become — is gone with no replacement infinite. One fewer infinite vs the prior hero (not a glitch→clean swap). §1b (glassmorphic card loading/result cycle) unchanged. New deviations **D1–D3** (full-bleed decorative imagery; on-dark copy on a light site; left-anchored scrim gradient) logged in the spec, `2026-05-10-section-hero.md`, and here. Supersedes the 2026-05-04 "Hero unchanged" lock.
+- **Asset policy.** The 7.5 MB source PNG (`docs/Gemini_Generated_Image_*.png`) is git-ignored and kept locally only; ships the optimized `public/hero-bg.jpg` (724 KB); `next/image` delivers responsive AVIF/WebP. Spec acceptance criterion #4 reconciled to this reality (committed-source vs delivered-bytes split) to keep spec ↔ implementation consistent.
+
+### Build state changes
+- **UPDATED:** `components/sections/hero.tsx` — full-bleed stage rewrite; ASCII video + `asciiBoxRef`/`videoRef`/playback `useEffect` + 57fr/43fr grid removed; copy recolored on-dark; 3 cards → stage-% over the flowers, `hidden lg:block` + `data-hero-card`; ASCII-canvas wiring added then removed on the static-image revert.
+- **CREATED:** `public/hero-bg.jpg` (optimized full-bleed bg); `components/sections/hero.test.tsx` (structural/SSR regression guard — 3 tests green); `docs/superpowers/specs/2026-05-18-section-hero-fullbleed-design.md` (design doc).
+- **DELETED:** `public/hero-ascii.mp4`, `public/hero-ascii-poster.png` (dead after the redesign); `components/sections/hero-ascii-canvas.tsx` (the reverted live-ASCII variant); `docs/superpowers/plans/2026-05-18-hero-fullbleed-redesign.md` (graduated — removed at finish per the superpowers convention).
+- **UPDATED:** `.gitignore` (ignore the 7.5 MB source PNG); `docs/superpowers/specs/2026-05-10-section-hero.md` (deviation log annotated: §1a retired, D1–D3 pointer, no D4); `docs/superpowers/specs/2026-05-18-section-hero-fullbleed-design.md` (reverted to static-image truth; criterion #4 reconciled).
+
+### Known follow-ups
+- Pre-existing, flagged not fixed: `app/globals.css` line 5 comment labels the `JetBrains Mono` `@import` "(ASCII canvas renderer)" — a mislabel (the reverted canvas used `Menlo`); the JetBrains Mono webfont may now be unused. Out of scope for this revert (a webfont/HUD-font reconcile is its own pass).
+- Deferred reconciles unchanged: site-wide chain count, DESIGN.md approved-infinite count.
+
 ## 2026-05-17 — Session 14: Context A3 codified + Hero copy reconcile (first A3 run)
 
 ### Decision log
