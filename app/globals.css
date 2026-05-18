@@ -98,8 +98,8 @@
   --section-px: 24px;
 }
 @media (min-width: 768px)  { :root { --section-px: 48px; } }
-@media (min-width: 1024px) { :root { --section-px: 96px; } }
-@media (min-width: 1280px) { :root { --section-px: 128px; } }
+@media (min-width: 1024px) { :root { --section-px: 72px; } }
+@media (min-width: 1280px) { :root { --section-px: 96px; } }
 
 /* Mobile nav <details>/<summary> — hide native disclosure marker so the
    custom rotating chevron carries the open/closed signal. */

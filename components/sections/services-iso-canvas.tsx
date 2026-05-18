@@ -127,7 +127,7 @@ function ScopedStyle() {
         grid-template-rows: repeat(14, 100px);
         width: 1400px;
         height: 1400px;
-        transform: translate(-50%, -50%) rotate(-30deg) skewX(30deg) scaleY(0.866);
+        transform: translate(-50%, calc(-50% + 18px)) rotate(-30deg) skewX(30deg) scaleY(0.866);
       }
       .iso-grid-cell {
         width: 100px;
@@ -141,7 +141,7 @@ function ScopedStyle() {
       .iso-stage {
         position: absolute;
         inset: 0;
-        transform: translateY(14px);
+        transform: translateY(18px);
       }
       .iso-pillar {
         position: absolute;
