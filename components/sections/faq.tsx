@@ -7,7 +7,7 @@ import { faqs } from '@/components/sections/faq-data'
 export function FaqSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section className="bg-bg px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+    <section className="bg-bg px-[16px] py-[56px] sm:px-[24px] md:px-[48px] md:py-[72px] lg:px-[96px] lg:py-[80px] xl:px-[128px]">
       <div className="mx-auto max-w-[760px]">
         <div className="mb-[36px] md:mb-[48px]">
           <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">FAQ</p>

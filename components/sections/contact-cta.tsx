@@ -1,6 +1,6 @@
 export function ContactCtaSection() {
   return (
-    <section className="bg-canvas px-[16px] py-[72px] text-center sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+    <section className="bg-canvas px-[16px] py-[56px] text-center sm:px-[24px] md:px-[48px] md:py-[72px] lg:px-[96px] lg:py-[80px] xl:px-[128px]">
       <div className="mx-auto max-w-[600px]">
         <h2 className="mb-[18px] text-[clamp(34px,5vw,64px)] font-bold leading-[1.03] tracking-[-0.04em] text-white">
           Tell us the build. We&apos;ll send the approach.
