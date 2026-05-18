@@ -144,9 +144,9 @@ export function HeroAsciiCanvas() {
     }
 
     function start() {
+      // running-guard above means raf is already 0/cancelled here
       if (reduce || running) return
       running = true
-      cancelAnimationFrame(raf)
       raf = requestAnimationFrame(frame)
     }
     function stop() {
@@ -177,6 +177,7 @@ export function HeroAsciiCanvas() {
     const onResize = () => {
       window.clearTimeout(resizeTimer)
       resizeTimer = window.setTimeout(() => {
+        base = null
         buildBase()
         paintStatic()
       }, 200)
@@ -184,6 +185,7 @@ export function HeroAsciiCanvas() {
     window.addEventListener('resize', onResize)
 
     return () => {
+      img.onload = null
       stop()
       io.disconnect()
       window.removeEventListener('resize', onResize)
