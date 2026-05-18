@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 
-import { describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { cleanup, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 
 // next/image → plain <img> in happy-dom. Strip Next-only props (fill/priority/
@@ -18,6 +18,11 @@ vi.mock('next/image', () => ({
 import { HeroSection } from './hero'
 
 describe('HeroSection — full-bleed structure', () => {
+  // Repo convention (matches every components/**/*.test.tsx): explicit
+  // cleanup between cases. The vitest config does NOT set globals:true,
+  // so RTL auto-cleanup is not registered — do not add globals:true.
+  afterEach(() => cleanup())
+
   it('renders the SSR copy verbatim (A3-locked)', () => {
     render(<HeroSection />)
     // Eyebrow + blockquote are static text → verbatim A3 copy is pinned here.
