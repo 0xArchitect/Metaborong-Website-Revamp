@@ -46,14 +46,13 @@ export function HeroSection() {
       <div className="max-w-[1600px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
         {/* Left: copy */}
         <Reveal className="flex flex-col justify-center pt-[104px] pb-[48px] lg:pt-[120px] lg:pb-[64px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
-          {/* Eyebrow chip — live availability signal */}
-          <div className="inline-flex items-center gap-2 mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
-            <span className="hero-live-dot relative w-2 h-2 shrink-0 inline-block">
-              <span className="absolute inset-0 bg-[#10b981] rounded-sm" />
-              <span aria-hidden="true" className="hero-live-pulse absolute inset-0 bg-[#10b981] rounded-sm" />
-            </span>
-            <Eyebrow className="text-[12px]! tracking-[0.12em]!">
-              Accepting new work · Reply in 12h
+          {/* Eyebrow — static brand hairline + category-identity line.
+             No motion (retires the live-dot pulse deviation); no box —
+             flush-left with the H1 for vertical rhythm. */}
+          <div className="inline-flex items-center gap-2 mb-7 w-fit">
+            <span aria-hidden="true" className="h-3 w-px bg-brand shrink-0" />
+            <Eyebrow className="text-[12px]! tracking-[0.14em]!">
+              Web3 &amp; AI development studio
             </Eyebrow>
           </div>
 
