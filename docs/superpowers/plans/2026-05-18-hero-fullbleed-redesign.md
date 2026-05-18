@@ -504,6 +504,287 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 ---
 
+### Task 4b: Live ASCII canvas engine (color-tinted)
+
+**Added 2026-05-18 after user feedback + an approved static POC.** The full-bleed
+background must read as a *live* ASCII render of `public/hero-bg.jpg` (color-tinted glyphs
+on `#0a0e1a`), not a static photo, with gentle non-positional motion. Algorithm is ported
+verbatim from the approved POC (`/tmp/ascii_poc.py`): brightness ×1.28, saturation ×1.42,
+contrast ×1.06, luminance min/max stretch, gamma 0.72, per-cell brightness normalize to
+`86 + 150·t`, ramp `" .:-=+*#%@"`. The static ASCII is drawn once to an offscreen canvas;
+each frame only composites a cheap moving scanline (no glyph recompute). IO-gated;
+`prefers-reduced-motion` → one static frame, no rAF.
+
+**Files:**
+- Create: `components/sections/hero-ascii-canvas.tsx`
+- Modify: `components/sections/hero.tsx` (insert `<HeroAsciiCanvas />` in the stage)
+
+- [ ] **Step 1: Create `components/sections/hero-ascii-canvas.tsx` with EXACTLY:**
+
+```tsx
+'use client'
+
+import { useEffect, useRef } from 'react'
+
+// Ported from the approved static POC. Color-tinted ASCII of /hero-bg.jpg on
+// #0a0e1a. Static base drawn once to an offscreen canvas; the rAF loop only
+// composites a cheap moving scanline (no per-frame glyph recompute).
+const RAMP = ' .:-=+*#%@'
+const BG = '#0a0e1a'
+const SRC = '/hero-bg.jpg'
+const FONT_PX = 8
+
+const clamp = (v: number) => (v < 0 ? 0 : v > 255 ? 255 : v)
+
+export function HeroAsciiCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const wrap = wrapRef.current
+    if (!canvas || !wrap) return
+    const cx = canvas.getContext('2d')
+    if (!cx) return
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let raf = 0
+    let running = false
+    let base: HTMLCanvasElement | null = null
+    let phase = 0
+    let resizeTimer: number | undefined
+
+    const img = new Image()
+    img.decoding = 'async'
+
+    const sample = document.createElement('canvas')
+    const sctx = sample.getContext('2d', { willReadFrequently: true })
+
+    function buildBase() {
+      if (!sctx || !img.complete || img.naturalWidth === 0) return
+      const rect = wrap!.getBoundingClientRect()
+      const W = Math.max(1, Math.round(rect.width))
+      const H = Math.max(1, Math.round(rect.height))
+      const dpr = Math.min(1.75, window.devicePixelRatio || 1)
+
+      const probe = sctx
+      probe.font = FONT_PX + 'px Menlo, ui-monospace, monospace'
+      const cw = Math.max(3, Math.round(probe.measureText('M').width))
+      const chh = FONT_PX + 1
+      const cols = Math.ceil(W / cw)
+      const rows = Math.ceil(H / chh)
+
+      sample.width = cols
+      sample.height = rows
+      sctx.drawImage(img, 0, 0, cols, rows)
+      const d = sctx.getImageData(0, 0, cols, rows).data
+
+      const n = cols * rows
+      const rr = new Float32Array(n)
+      const gg = new Float32Array(n)
+      const bb = new Float32Array(n)
+      const lum = new Float32Array(n)
+      let lo = 255
+      let hi = 0
+      for (let p = 0; p < n; p++) {
+        let r = d[p * 4] * 1.28
+        let g = d[p * 4 + 1] * 1.28
+        let b = d[p * 4 + 2] * 1.28
+        const m = (r + g + b) / 3
+        r = m + (r - m) * 1.42
+        g = m + (g - m) * 1.42
+        b = m + (b - m) * 1.42
+        r = clamp((r - 128) * 1.06 + 128)
+        g = clamp((g - 128) * 1.06 + 128)
+        b = clamp((b - 128) * 1.06 + 128)
+        rr[p] = r
+        gg[p] = g
+        bb[p] = b
+        const L = 0.299 * r + 0.587 * g + 0.114 * b
+        lum[p] = L
+        if (L < lo) lo = L
+        if (L > hi) hi = L
+      }
+      const span = Math.max(1, hi - lo)
+
+      const b2 = document.createElement('canvas')
+      b2.width = W * dpr
+      b2.height = H * dpr
+      const bctx = b2.getContext('2d')
+      if (!bctx) return
+      bctx.scale(dpr, dpr)
+      bctx.fillStyle = BG
+      bctx.fillRect(0, 0, W, H)
+      bctx.font = FONT_PX + 'px Menlo, ui-monospace, monospace'
+      bctx.textBaseline = 'top'
+      for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) {
+          const p = j * cols + i
+          const t = Math.pow((lum[p] - lo) / span, 0.72)
+          let idx = Math.round(t * (RAMP.length - 1))
+          let ch = RAMP[idx]
+          if (ch === ' ') {
+            if (lum[p] < 14) continue
+            ch = '.'
+          }
+          const cl = Math.max(1, 0.299 * rr[p] + 0.587 * gg[p] + 0.114 * bb[p])
+          const k = (86 + 150 * t) / cl
+          const R = clamp(rr[p] * k + 10) | 0
+          const G = clamp(gg[p] * k + 12) | 0
+          const B = clamp(bb[p] * k + 16) | 0
+          bctx.fillStyle = 'rgb(' + R + ',' + G + ',' + B + ')'
+          bctx.fillText(ch, i * cw, j * chh)
+        }
+      }
+      base = b2
+      canvas!.width = W * dpr
+      canvas!.height = H * dpr
+      canvas!.style.width = W + 'px'
+      canvas!.style.height = H + 'px'
+    }
+
+    function paintStatic() {
+      if (!base || !cx) return
+      cx.setTransform(1, 0, 0, 1, 0, 0)
+      cx.drawImage(base, 0, 0)
+    }
+
+    function frame() {
+      if (!running) return
+      if (base && cx) {
+        cx.setTransform(1, 0, 0, 1, 0, 0)
+        cx.drawImage(base, 0, 0)
+        const h = canvas!.height
+        const band = (Math.sin(phase) * 0.5 + 0.5) * h
+        const g = cx.createLinearGradient(0, band - h * 0.16, 0, band + h * 0.16)
+        g.addColorStop(0, 'rgba(150,190,255,0)')
+        g.addColorStop(0.5, 'rgba(150,190,255,0.05)')
+        g.addColorStop(1, 'rgba(150,190,255,0)')
+        cx.fillStyle = g
+        cx.fillRect(0, 0, canvas!.width, canvas!.height)
+        phase += 0.012
+      }
+      raf = requestAnimationFrame(frame)
+    }
+
+    function start() {
+      if (reduce || running) return
+      running = true
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(frame)
+    }
+    function stop() {
+      running = false
+      cancelAnimationFrame(raf)
+    }
+
+    function init() {
+      buildBase()
+      paintStatic()
+      if (!reduce) start()
+    }
+
+    img.src = SRC
+    if (img.complete && img.naturalWidth) init()
+    else img.onload = init
+
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (reduce) return
+        if (e.isIntersecting) start()
+        else stop()
+      },
+      { threshold: 0 },
+    )
+    io.observe(wrap)
+
+    const onResize = () => {
+      window.clearTimeout(resizeTimer)
+      resizeTimer = window.setTimeout(() => {
+        buildBase()
+        paintStatic()
+      }, 200)
+    }
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      stop()
+      io.disconnect()
+      window.removeEventListener('resize', onResize)
+      window.clearTimeout(resizeTimer)
+    }
+  }, [])
+
+  return (
+    <div ref={wrapRef} aria-hidden="true" className="absolute inset-0">
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+    </div>
+  )
+}
+```
+
+- [ ] **Step 2: Wire it into `components/sections/hero.tsx`.** Add the import after the `next/image` import:
+
+```tsx
+import { HeroAsciiCanvas } from '@/components/sections/hero-ascii-canvas'
+```
+
+Then, inside the stage `div`, insert `<HeroAsciiCanvas />` immediately AFTER the `<Image …/>` and BEFORE the first scrim div. Replace:
+
+```tsx
+        <Image
+          src="/hero-bg.jpg"
+          alt=""
+          data-testid="hero-bg"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover select-none"
+        />
+
+        {/* Scrim: base veil (mobile legibility, gone at lg) + L1 left gradient.
+```
+
+with:
+
+```tsx
+        <Image
+          src="/hero-bg.jpg"
+          alt=""
+          data-testid="hero-bg"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover select-none"
+        />
+
+        {/* Live ASCII render of the bg; covers the <Image> (kept as SSR/first-
+            paint fallback + sample source + structural-test anchor). */}
+        <HeroAsciiCanvas />
+
+        {/* Scrim: base veil (mobile legibility, gone at lg) + L1 left gradient.
+```
+
+(The `<Image>` stays — it is the SSR/first-paint fallback under the canvas and the `data-testid="hero-bg"` anchor the structural test asserts. The canvas samples `/hero-bg.jpg` via its own `new Image()`.)
+
+- [ ] **Step 3: Typecheck + structural test.**
+
+Run: `pnpm typecheck` → PASS.
+Run: `pnpm vitest run components/sections/hero.test.tsx` → 3/3 (canvas is `aria-hidden`, adds no `<video>`/testid/`[data-hero-card]`; the `<Image>` is unchanged so the test holds).
+
+- [ ] **Step 4: Visual verify via the `agent-browser` skill.** Dev server already running at http://localhost:3000 (do NOT restart/clean). Screenshot `/` at 1440×900 and 2560/1920/1280/1024: confirm the bg renders as the color-tinted ASCII landscape (matches the approved POC look — clouds/tree/lake/hills/blue-bloom meadow), the scanline animates subtly (capture two frames ~1s apart and diff), copy stays legible, the 3 cards still sit on the (now ASCII) blue blooms — re-nudge the 3 card coords in `hero.tsx` if the ASCII shifts their read (this is the "finalize card-on-bloom against ASCII" step). At 375: ASCII still fills, cards hidden. Emulate `prefers-reduced-motion: reduce` → ASCII paints one static frame, no animation, no console errors. Save shots to /tmp only.
+
+- [ ] **Step 5: Commit.**
+
+```bash
+git add components/sections/hero-ascii-canvas.tsx components/sections/hero.tsx
+git commit -m "feat(hero): live color-tinted ASCII canvas render of the bg
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
+```
+
+---
+
 ### Task 5: Cleanup + graduation
 
 **Files:**
@@ -522,7 +803,7 @@ git rm public/hero-ascii.mp4 public/hero-ascii-poster.png
 
 - [ ] **Step 2: Update the hero deviation log**
 
-In `docs/superpowers/specs/2026-05-10-section-hero.md`, under `## Deviations from master plan`: mark §1a (ASCII shimmer) **RETIRED 2026-05-18 — replaced by a static full-bleed image; the infinite is gone (motion-rule compliance gain)**. Add a one-line pointer: *"Visual structure superseded by `2026-05-18-section-hero-fullbleed-design.md`; D1–D3 (full-bleed imagery, on-dark copy, left scrim) recorded there. §1b (card cycle) unchanged."* Do not delete the historical text — annotate (SESSIONS.md no-contradicting-versions rule).
+In `docs/superpowers/specs/2026-05-10-section-hero.md`, under `## Deviations from master plan`: mark §1a (ASCII turbulence/shimmer) **SUPERSEDED 2026-05-18 — the positional glitch is gone; replaced by D4, a controlled color-tinted ASCII canvas infinite (IO-gated, reduced-motion-static)**. Add a one-line pointer: *"Visual structure superseded by `2026-05-18-section-hero-fullbleed-design.md`; D1–D4 (full-bleed imagery, on-dark copy, left scrim, ASCII-canvas infinite) recorded there. §1b (card cycle) unchanged."* Do not delete the historical text — annotate (SESSIONS.md no-contradicting-versions rule). Note: this is NOT a net infinite-count reduction (the old glitch infinite is replaced, not removed) — frame it as a glitch→clean swap, not a compliance gain.
 
 - [ ] **Step 3: Reconcile spec criterion #4 with reality**
 
@@ -530,7 +811,7 @@ In `docs/superpowers/specs/2026-05-18-section-hero-fullbleed-design.md`, accepta
 
 - [ ] **Step 4: CHANGELOG entry**
 
-Prepend a Session entry to `CHANGELOG.md` (match the existing format/voice) recording: hero full-bleed redesign; ASCII video removed (one fewer infinite — compliance gain); D1–D3 deviations; copy wording untouched (A3); source PNG gitignored, JPEG shipped; supersedes the 2026-05-04 "Hero unchanged" memory lock (user-directed). List changed/created/deleted files.
+Prepend a Session entry to `CHANGELOG.md` (match the existing format/voice) recording: hero full-bleed redesign; ASCII *video* removed, replaced by a live color-tinted ASCII *canvas* render (glitch → clean swap, not an infinite-count reduction); D1–D4 deviations (incl. D4 ASCII-canvas infinite); copy wording untouched (A3); source PNG gitignored, JPEG shipped; supersedes the 2026-05-04 "Hero unchanged" memory lock and the in-session "static bg" decision (both user-directed). List changed/created/deleted files (incl. new `components/sections/hero-ascii-canvas.tsx`).
 
 - [ ] **Step 5: Commit**
 
@@ -560,11 +841,11 @@ Run: `curl -s http://localhost:3000/ | grep -c "hero-ascii"` → expect `0`.
 
 - [ ] **Step 3: Reduced-motion check**
 
-In devtools, emulate `prefers-reduced-motion: reduce`, reload. Expected: copy visible (Reveal short-circuits), cards show their result label and do not cycle, scroll cue does not bounce, background static. No console errors.
+In devtools, emulate `prefers-reduced-motion: reduce`, reload. Expected: copy visible (Reveal short-circuits), cards show their result label and do not cycle, scroll cue does not bounce, the ASCII canvas paints ONE static frame and never animates (no rAF loop). No console errors. Also re-confirm AA: re-measure eyebrow/H1/blockquote contrast against the **ASCII canvas output** (not the photo) at 1440 + 375; if the ASCII shifted left-zone luminance enough to fail, re-tune the scrim per Task 3's method and note it.
 
 - [ ] **Step 4: Map results to spec acceptance criteria**
 
-Walk the 8 acceptance criteria in `2026-05-18-section-hero-fullbleed-design.md` and confirm each is satisfied by the work above (1 structure, 2 card registration across widths, 3 AA measured, 4 asset/LCP per the reconciled wording, 5 motion/reduced-motion, 6 SSR copy, 7 deviations logged, 8 tsc+dev). Report any unmet criterion explicitly rather than claiming done.
+Walk the 8 acceptance criteria in `2026-05-18-section-hero-fullbleed-design.md` and confirm each is satisfied (1 structure, 2 card registration across widths — on the ASCII blooms, 3 AA measured **against the ASCII output**, 4 asset/LCP per the reconciled wording, 5 background reads as a live ASCII render + ASCII infinite is IO-gated + reduced-motion-static + cards behave as before, 6 SSR copy, 7 D1–D4 logged, 8 tsc+dev). Report any unmet criterion explicitly rather than claiming done.
 
 - [ ] **Step 5: Final state report**
 
@@ -574,7 +855,7 @@ Report: commits made (local, unpushed), criteria status, and anything deferred. 
 
 ## Self-Review
 
-**Spec coverage:** asset pipeline → Task 0; aspect-locked stage + structure + removed video/grid → Task 2; card image-space registration → Task 2 + Task 4; L1 scrim + AA → Task 2 + Task 3; copy recolor (eyebrow chip/H1/blockquote/ghost CTA/scroll cue) → Task 2; motion (static bg, cards unchanged, reduced-motion) → Task 2 + Task 6; responsive/mobile scrim + `hidden lg:block` cards → Task 2 + Task 3 + Task 4; SSR/a11y → Task 1 + Task 6; deviations D1–D3 + §1a retire + CHANGELOG → Task 5; out-of-scope (copy wording) enforced by Task 1 verbatim copy assertions. All 8 acceptance criteria mapped in Task 6 Step 4. No gaps.
+**Spec coverage:** asset pipeline → Task 0; aspect-locked stage + structure + removed video/grid → Task 2; **live ASCII-canvas render (D4) → Task 4b**; card image-space registration → Task 2 + Task 4, finalized vs ASCII in Task 4b; L1 scrim + AA → Task 2 + Task 3, re-verified vs ASCII in Task 6; copy recolor (eyebrow chip/H1/blockquote/ghost CTA/scroll cue) → Task 2; motion (ASCII infinite IO-gated + reduced-motion-static, cards unchanged) → Task 4b + Task 6; responsive/mobile scrim + `hidden lg:block` cards → Task 2 + Task 3 + Task 4; SSR/a11y → Task 1 + Task 6; deviations D1–D4 + §1a superseded + CHANGELOG → Task 5; out-of-scope (copy wording) enforced by Task 1 verbatim copy assertions. All 8 acceptance criteria mapped in Task 6 Step 4. No gaps.
 
 **Placeholder scan:** none — every code step shows full content; coordinates/scrim are explicitly "starting values" with measured tuning tasks (3, 4), not vague TODOs.
 
