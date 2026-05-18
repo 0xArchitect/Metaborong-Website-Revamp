@@ -42,16 +42,12 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-screen bg-bg-subtle">
-      <div className="max-w-[1600px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
+    <section className="relative min-h-screen bg-bg-subtle px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
+      <div className="max-w-[1280px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
         {/* Left: copy */}
-        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-[96px] lg:pb-[48px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
-          {/* Eyebrow chip — live availability signal */}
-          <div className="inline-flex items-center gap-2 mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
-            <span className="hero-live-dot relative w-2 h-2 shrink-0 inline-block">
-              <span className="absolute inset-0 bg-[#10b981] rounded-sm" />
-              <span aria-hidden="true" className="hero-live-pulse absolute inset-0 bg-[#10b981] rounded-sm" />
-            </span>
+        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-[96px] lg:pb-[48px]">
+          {/* Eyebrow chip — entity-category line */}
+          <div className="inline-flex items-center mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
             <Eyebrow className="text-[12px]! tracking-[0.12em]!">
               Web3 &amp; AI development studio
             </Eyebrow>
@@ -121,7 +117,7 @@ export function HeroSection() {
             <HeroOverlayCard
               loadingLabels={['Deploying…', 'Building…', 'Migrating…', 'Scaling…']}
               resultLabel="/v1/deploy"
-              style={{ left: '74.0%', top: '34.8%' }}
+              style={{ left: '66%', top: '34%' }}
             />
           </div>
         </div>
