@@ -50,7 +50,7 @@ const reasons = [
 
 export function WhyUsSection() {
   return (
-    <section className="bg-bg-subtle px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+    <section className="bg-bg-subtle px-[16px] py-[56px] sm:px-[24px] md:px-[48px] md:py-[72px] lg:px-[96px] lg:py-[80px] xl:px-[128px]">
       <div className="mx-auto max-w-[1280px]">
         <div className="mb-[40px] max-w-[720px] md:mb-[56px]">
           <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Why us</p>
