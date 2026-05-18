@@ -9,7 +9,7 @@ const rows = [
 
 export function ComparisonSection() {
   return (
-    <section className="bg-bg-subtle px-[16px] py-[72px] sm:px-[24px] md:px-[48px] md:py-[88px] lg:px-[96px] lg:py-[96px] xl:px-[128px]">
+    <section className="bg-bg-subtle px-[16px] py-[56px] sm:px-[24px] md:px-[48px] md:py-[72px] lg:px-[96px] lg:py-[80px] xl:px-[128px]">
       <div className="mx-auto max-w-[960px]">
         <div className="mb-[24px] md:mb-[32px]">
           <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Comparison</p>
