@@ -1,4 +1,6 @@
 import { clutchProfileUrl } from '@/lib/links'
+import { Section } from '@/components/ui/section'
+import { Zap, CalendarDays } from 'lucide-react'
 
 const projectLinkStyle: React.CSSProperties = {
   color: '#296ff0',
@@ -19,6 +21,7 @@ const reasons = [
   {
     tag: 'Speed',
     color: '#296ff0',
+    image: '/whyus/speed.webp',
     title: 'First working version in weeks',
     body: (
       <>
@@ -29,6 +32,7 @@ const reasons = [
   {
     tag: 'Product thinking',
     color: '#296ff0',
+    image: '/whyus/product-thinking.webp',
     title: 'We stress-test the brief before we build',
     body: (
       <>
@@ -39,6 +43,7 @@ const reasons = [
   {
     tag: 'Niche depth',
     color: '#296ff0',
+    image: '/whyus/niche-depth.webp',
     title: 'Multichain Web3 and production-grade AI agents',
     body: (
       <>
@@ -50,42 +55,67 @@ const reasons = [
 
 export function WhyUsSection() {
   return (
-    <section className="bg-bg-subtle px-[16px] py-[56px] sm:px-[24px] md:px-[48px] md:py-[72px] lg:px-[96px] lg:py-[80px] xl:px-[128px]">
-      <div className="mx-auto max-w-[1280px]">
-        <div className="mb-[40px] max-w-[720px] md:mb-[56px]">
-          <p className="mb-[12px] text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-light">Why us</p>
-          <h2 className="mb-[20px] text-[clamp(32px,4vw,52px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">Why founders choose Metaborong</h2>
-          <p className="mb-[24px] max-w-[640px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
+    <Section bg="subtle" maxWidth="xwide">
+      <div className="flex flex-col gap-[40px] lg:flex-row lg:items-start lg:justify-between lg:gap-[48px]">
+        <div className="flex max-w-[720px] flex-col gap-[20px]">
+          <span className="inline-flex w-fit items-center border border-border bg-bg px-[10px] py-[7px] font-mono text-[12px] font-medium uppercase leading-none tracking-[0.1em] text-gray">
+            Why us
+          </span>
+          <h2 className="text-[clamp(32px,4vw,52px)] font-bold uppercase leading-[1.05] tracking-[-0.035em] text-dark">
+            Why founders choose <span className="text-brand">Metaborong</span>
+          </h2>
+          <p className="max-w-[640px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
             Founders pick Metaborong over larger Web3 and AI agencies for three reasons: shorter time to a first working version, sharper push-back on the brief, and the specialist depth — multichain protocols and AI agent orchestration — most studios don&apos;t have.
           </p>
-
-          <div className="flex flex-wrap items-center gap-[14px] text-[13px] tracking-[-0.005em]">
-            <a
-              href={clutchProfileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-[6px] font-semibold text-dark no-underline"
-            >
-              <span>4.9</span>
-              <span aria-label="5 out of 5 stars" className="text-[12px] leading-none tracking-[1px] text-[#F6851B]">★★★★★</span>
-              <span className="font-medium text-gray">on Clutch</span>
-            </a>
-            <span aria-hidden="true" className="text-[#d4d4d8]">·</span>
-            <span className="font-semibold text-dark">Reply within 12h</span>
-            <span aria-hidden="true" className="text-[#d4d4d8]">·</span>
-            <span className="font-semibold text-dark">4–12 weeks to ship</span>
-          </div>
         </div>
-        <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-3 lg:gap-[24px]">
-          {reasons.map(r => (
-            <div key={r.tag} className="rounded-[12px] border border-border bg-white px-[20px] py-[24px] sm:px-[24px] sm:py-[28px] lg:px-[32px] lg:py-[36px]">
-              <div className="mb-[18px] text-[11px] font-bold uppercase tracking-[0.08em]" style={{ color: r.color }}>{r.tag}</div>
-              <h3 className="mb-[14px] text-[22px] font-bold leading-[1.2] tracking-[-0.025em] text-dark">{r.title}</h3>
-              <p className="text-[14px] leading-[1.75] tracking-[-0.005em] text-gray">{r.body}</p>
-            </div>
-          ))}
+
+        <div className="flex flex-col gap-[12px] sm:flex-row sm:flex-wrap lg:flex-col lg:items-end lg:gap-[14px]">
+          <a
+            href={clutchProfileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[44px] items-center gap-[6px] border border-border bg-bg px-[14px] text-[14px] tracking-[-0.005em] no-underline lg:translate-x-[-40px]"
+          >
+            <span className="font-semibold text-dark tabular-nums">4.9</span>
+            <span aria-label="5 out of 5 stars" className="text-[12px] leading-none tracking-[1px] text-[#F6851B]">★★★★★</span>
+            <span className="font-medium text-gray">on Clutch</span>
+          </a>
+          <span className="inline-flex min-h-[44px] items-center gap-[8px] border border-border bg-bg px-[14px] text-[14px] font-semibold tracking-[-0.005em] text-dark">
+            <Zap aria-hidden="true" className="size-[16px] shrink-0 text-gray" strokeWidth={2} />
+            Reply within 12h
+          </span>
+          <span className="inline-flex min-h-[44px] items-center gap-[8px] border border-border bg-bg px-[14px] text-[14px] font-semibold tracking-[-0.005em] text-dark lg:translate-x-[-20px]">
+            <CalendarDays aria-hidden="true" className="size-[16px] shrink-0 text-gray" strokeWidth={2} />
+            4–12 weeks to ship
+          </span>
         </div>
       </div>
-    </section>
+
+      <div className="mt-[40px] grid grid-cols-1 border border-border md:mt-[56px] md:grid-cols-3">
+        {reasons.map((r, i) => (
+          <div
+            key={r.tag}
+            className={`relative flex flex-col bg-bg ${i > 0 ? 'border-t border-border md:border-l md:border-t-0' : ''}`}
+          >
+            <div className="relative aspect-square w-full">
+              <img
+                src={r.image}
+                alt=""
+                loading="lazy"
+                width={800}
+                height={800}
+                className="absolute inset-0 size-full object-contain p-[28px]"
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-bg to-transparent" />
+            </div>
+            <div className="flex flex-col gap-[14px] px-[24px] pb-[36px] sm:px-[28px] lg:px-[32px]">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-gray">{r.tag}</span>
+              <h3 className="text-[clamp(20px,1.6vw,24px)] font-bold uppercase leading-[1.15] tracking-[-0.025em] text-dark">{r.title}</h3>
+              <p className="text-[14px] leading-[1.7] tracking-[-0.005em] text-gray">{r.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
   )
 }
