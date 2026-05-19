@@ -76,9 +76,9 @@ duplicate the ID). The Section renders with no `id`.
 - **Eyebrow:** `The team`  (renders `THE TEAM`)
 - **H2:** `The team behind the work`  (emphasis span: `the work` → `--color-brand`)
 - **Lede:** `Metaborong's three co-founders are hands-on in every Web3 and AI engagement. The work in our portfolio was built by us, not by a contracting layer we manage. You'll be in Slack with the people writing your code.`
-- **Arnab Ray** · `CEO & Co-Founder` · `Co-founded Metaborong and sets its direction across Web3 and AI engagements.` · `https://linkedin.com/in/arnab-ray`
-- **Anik Ghosh** · `COO & Co-Founder` · `Co-founded the studio; owns delivery and the scope discipline that keeps timelines honest.` · `https://www.linkedin.com/in/anik-ghosh-01a985208/`
-- **Soumojit Ash** · `CTO & Co-Founder` · `Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships.` · LinkedIn **pending** (no verified URL → no button on this card until provided)
+- **Arnab Ray** · `CEO & Co-Founder` · `Co-founded Metaborong and sets its direction across Web3 and AI engagements.` · LinkedIn `https://linkedin.com/in/arnab-ray` · X `https://x.com/Arnab_Alfa_Ray`
+- **Anik Ghosh** · `COO & Co-Founder` · `Co-founded the studio; owns delivery and the scope discipline that keeps timelines honest.` · LinkedIn `https://www.linkedin.com/in/anik-ghosh-01a985208/` · X `https://x.com/0x_Zeph`
+- **Soumojit Ash** · `CTO & Co-Founder` · `Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships.` · LinkedIn `https://www.linkedin.com/in/soumojit-ash/` · X `https://x.com/SoumojitAsh` (provided by user 2026-05-19; no longer pending)
 
 Source of truth = `docs/content/homepage.md` Founders block. Bios are **generic-but-true
 placeholders** (user decision 2026-05-19: build generic now, swap real specifics later);
@@ -148,12 +148,18 @@ Arnab & Soumojit render a **monogram/initials tile inside the same blueprint fra
 code) are removed as they undercut an E-E-A-T trust section. One data-field swap moves
 a founder to a real photo later.
 
-### 6. LinkedIn graceful degradation; X affordance dropped
+### 6. Social buttons (LinkedIn + X) with graceful degradation
 
-Figma is LinkedIn-only. Current code's `x` field (mostly `'#'`) is dropped. A card with
-no verified LinkedIn URL (Soumojit) renders **no** LinkedIn button rather than a `#`
-anchor or guessed profile — a 404/dead profile link is a negative Trust signal
-(`copy-audit` step e).
+Figma was LinkedIn-only and the original draft dropped X. **Reversed 2026-05-19 by
+user instruction:** X re-added, and Soumojit's LinkedIn provided
+(`https://www.linkedin.com/in/soumojit-ash/`). Each card renders a social row of
+brand-blue **square Bauhaus** buttons — LinkedIn + X — each shown **only when its URL
+exists** (the graceful no-button degrade is kept for correctness; a 404/guessed
+profile link is a negative Trust signal, `copy-audit` step e). X uses the **same
+`bg-brand` square** as LinkedIn (no X-black — DESIGN.md brand-color discipline; no
+one-off color). Shared `SocialButton` component (DRY: one button, two icons). All
+three founders now have both URLs (Arnab `x.com/Arnab_Alfa_Ray`, Anik
+`x.com/0x_Zeph`, Soumojit `x.com/SoumojitAsh`).
 
 ### 7. [DEFERRED — out of worktree scope] per-founder schema `sameAs`
 
@@ -246,7 +252,8 @@ Site-global chrome, not introduced by this redesign — handed to the main sessi
 ## Notes / open items
 
 - **Pending USER_INPUT** (does not block this redesign; tracked in `homepage.md`):
-  real per-founder proof specifics; Soumojit's verified LinkedIn URL.
+  real per-founder proof specifics. (Soumojit's LinkedIn + all X URLs were provided
+  by the user 2026-05-19 — no longer pending.)
 - **Deferred to main session:** `lib/schema.ts` per-founder `sameAs` (Deviation 7).
 - **Graduation:** canonical `DESIGN.md` Decisions-Log + `CHANGELOG.md` entries +
   copy-audit scorecard row are written **once in the main session at merge** — only a
@@ -266,7 +273,7 @@ Site-global chrome, not introduced by this redesign — handed to the main sessi
 
 ### → `DESIGN.md` Decisions Log (new row, date 2026-05-19)
 
-| 2026-05-19 | Founders section redesigned (Figma `mQsbMuw0spVgIu7jXirr3o` / `142:516`): black placeholder → light team E-E-A-T anchor on the canonical `<Section bg=default maxWidth=xwide>` grid. Hero-consistent eyebrow chip; H2 with brand-blue "the work"; A3 lede kept; 3 founder cards = square portrait/monogram in a pure-CSS dashed **blueprint frame** + name + bordered role chip + bio + brand-blue **square (radius-0)** LinkedIn button with graceful no-URL degrade. DiceBear avatars removed; monogram fallback (`role="img"`) for founders without a photo. Deviations 1–7 logged in `docs/superpowers/specs/2026-05-19-section-founders.md` (Figma→token map; bordered chip vs canonical Eyebrow; raster texture dropped; lede kept vs Figma; monogram fallback; LinkedIn degrade + X dropped; per-founder schema `sameAs` deferred). | Founders now follows the same Section grammar as nav/hero/every section (edges measured 128/1312 @1440, 128/1152 @1280, 16/359 @375, no overflow). The team/trust section finally carries real E-E-A-T (named, reachable, technical co-founders) instead of placeholder copy. |
+| 2026-05-19 | Founders section redesigned (Figma `mQsbMuw0spVgIu7jXirr3o` / `142:516`): black placeholder → light team E-E-A-T anchor on the canonical `<Section bg=default maxWidth=xwide>` grid. Hero-consistent eyebrow chip; H2 with brand-blue "the work"; A3 lede kept; 3 founder cards = square portrait/monogram in a pure-CSS dashed **blueprint frame** + name + bordered role chip + bio + a social row of brand-blue **square (radius-0)** LinkedIn + X buttons (shared `SocialButton`; X uses the same `bg-brand`, no X-black; per-button graceful no-URL degrade). DiceBear avatars removed; monogram fallback (`role="img"`) for founders without a photo. Deviations 1–7 logged in `docs/superpowers/specs/2026-05-19-section-founders.md` (Figma→token map; bordered chip vs canonical Eyebrow; raster texture dropped; lede kept vs Figma; monogram fallback; Deviation 6 social: Figma was LinkedIn-only, **user re-added X 2026-05-19** + provided Soumojit LinkedIn; per-founder schema `sameAs` deferred). | Founders now follows the same Section grammar as nav/hero/every section (edges measured 128/1312 @1440, 128/1152 @1280, 16/359 @375, no overflow). The team/trust section finally carries real E-E-A-T (named, reachable, technical co-founders) instead of placeholder copy. |
 
 ### → `CHANGELOG.md` (Session 16 entry — consolidate with Why-Us per master-plan merge-back step 4)
 
@@ -275,14 +282,15 @@ Site-global chrome, not introduced by this redesign — handed to the main sessi
 - components/sections/founders.tsx rebuilt on the canonical <Section> grid:
   light section, hero-consistent eyebrow chip, H2 "The team behind the work"
   ("the work" in brand), kept A3 lede, 3 blueprint-framed founder cards
-  (portrait/monogram + role chip + bio + square LinkedIn button).
+  (portrait/monogram + role chip + bio + brand-blue square LinkedIn + X buttons).
+- Per-founder LinkedIn + X (user-provided 2026-05-19; Figma was LinkedIn-only —
+  X re-added at user request, same bg-brand square, shared SocialButton).
 - Copy refreshed via the A3 chain (homepage.md Founders block): score 2.7 → 8.0/10,
   claim-discipline + anti-AI guardrails passed. Bios are generic-but-true
   placeholders (real specifics pending USER_INPUT).
 - a11y: monogram role="img", comma (not em-dash) alt, focus-visible via global
-  rule, ≥44px LinkedIn target, Soumojit degrades to no link (no 404).
-- Deferred to follow-up: lib/schema.ts per-founder sameAs; real proof specifics +
-  Soumojit LinkedIn URL.
+  rule, ≥44px social targets, per-button graceful no-URL degrade.
+- Deferred to follow-up: lib/schema.ts per-founder sameAs; real proof specifics.
 ```
 
 ### → copy-audit scorecard row (wherever the project tracks A3 section scores)

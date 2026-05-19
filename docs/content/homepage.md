@@ -314,17 +314,17 @@ Metaborong's three co-founders are hands-on in every Web3 and AI engagement. The
 #### Arnab Ray
 **Role:** CEO & Co-Founder
 **Bio:** Co-founded Metaborong and sets its direction across Web3 and AI engagements. <!-- USER_INPUT (pending — generic-but-true placeholder shipped 2026-05-19): swap in one specific Web3-ecosystem credential or project Arnab personally led (12–14 words). -->
-**Link:** `LinkedIn →` → `https://linkedin.com/in/arnab-ray`
+**Links:** `LinkedIn` → `https://linkedin.com/in/arnab-ray` · `X` → `https://x.com/Arnab_Alfa_Ray`
 
 #### Anik Ghosh
 **Role:** COO & Co-Founder
 **Bio:** Co-founded the studio; owns delivery and the scope discipline that keeps timelines honest. <!-- USER_INPUT (pending — generic-but-true placeholder shipped 2026-05-19): swap in one specific operational signal — background, prior company, or a delivery-record line (12–14 words). -->
-**Link:** `LinkedIn →` → `https://www.linkedin.com/in/anik-ghosh-01a985208/`
+**Links:** `LinkedIn` → `https://www.linkedin.com/in/anik-ghosh-01a985208/` · `X` → `https://x.com/0x_Zeph`
 
 #### Soumojit Ash
 **Role:** CTO & Co-Founder
-**Bio:** Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships. <!-- USER_INPUT (pending — generic-but-true placeholder shipped 2026-05-19): swap in chains or frameworks Soumojit has shipped on (12–16 words). LinkedIn URL also pending — JSX currently has none. -->
-**Link:** `LinkedIn →` → `https://linkedin.com/in/soumojit-ash` <!-- USER_INPUT (pending): verify Soumojit's real LinkedIn URL; JSX previously had no link. -->
+**Bio:** Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships. <!-- USER_INPUT (pending — generic-but-true placeholder shipped 2026-05-19): swap in chains or frameworks Soumojit has shipped on (12–16 words). -->
+**Links:** `LinkedIn` → `https://www.linkedin.com/in/soumojit-ash/` · `X` → `https://x.com/SoumojitAsh`
 
 <!-- WHY
   - Killed "Leads strategy, client relationships, and business direction" — the most agency-template line on the page (still banned).
@@ -332,7 +332,7 @@ Metaborong's three co-founders are hands-on in every Web3 and AI engagement. The
   - Bios: [role verb] + generic-but-true proof. User chose "build with generic data now, supply real specifics later" — proof clauses assert only verifiable facts (co-founder status, role ownership): no numbers, no named projects, no fabricated chains. USER_INPUT markers retained for the real-specifics swap.
   - Each bio carries Web3 AND AI with equal weight (positioning lock — never Web3-first).
   - Lede kept (33 words, user decision 2026-05-19) — Figma has no lede, but Founders is the E-E-A-T anchor and this is its strongest trust statement. Logged as a deviation in the section spec.
-  - LinkedIn: Anik = verified full URL from JSX. Arnab = JSX URL. Soumojit = pending (JSX had no link; placeholder URL unverified — must not ship a broken/guessed profile link).
+  - [2026-05-19 update] Soumojit's LinkedIn provided by user (https://www.linkedin.com/in/soumojit-ash/) — no longer pending. Per-founder X profiles added at user request (Arnab https://x.com/Arnab_Alfa_Ray, Anik https://x.com/0x_Zeph confirmed, Soumojit https://x.com/SoumojitAsh) — this reverses spec Deviation 6 (Figma was LinkedIn-only); X uses the same brand-blue square button as LinkedIn (no X-black — DESIGN.md brand-color discipline). All three now have both links; conditional render retained for correctness.
 -->
 
 

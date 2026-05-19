@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react'
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Reveal } from '@/components/ui/reveal'
@@ -10,6 +11,9 @@ type Founder = {
   image: string | null
   /** Verified LinkedIn URL, or null → no button (spec Deviation 6). */
   linkedin: string | null
+  /** Verified X profile URL, or null → no button. Added 2026-05-19 (user override
+   *  of Deviation 6's "LinkedIn-only"). Same brand-blue square button as LinkedIn. */
+  x: string | null
 }
 
 // Copy synced verbatim from the A3-locked block in
@@ -22,6 +26,7 @@ const founders: Founder[] = [
     bio: 'Co-founded Metaborong and sets its direction across Web3 and AI engagements.',
     image: null,
     linkedin: 'https://linkedin.com/in/arnab-ray',
+    x: 'https://x.com/Arnab_Alfa_Ray',
   },
   {
     name: 'Anik Ghosh',
@@ -29,13 +34,15 @@ const founders: Founder[] = [
     bio: 'Co-founded the studio; owns delivery and the scope discipline that keeps timelines honest.',
     image: '/anikfounderimage.png',
     linkedin: 'https://www.linkedin.com/in/anik-ghosh-01a985208/',
+    x: 'https://x.com/0x_Zeph',
   },
   {
     name: 'Soumojit Ash',
     role: 'CTO & Co-Founder',
     bio: 'Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships.',
     image: null,
-    linkedin: null,
+    linkedin: 'https://www.linkedin.com/in/soumojit-ash/',
+    x: 'https://x.com/SoumojitAsh',
   },
 ]
 
@@ -46,6 +53,33 @@ function initials(name: string): string {
     .slice(0, 2)
     .join('')
     .toUpperCase()
+}
+
+// Shared brand-blue square social button (LinkedIn + X use the same Bauhaus mark —
+// no X-black, per DESIGN.md brand-color discipline). 7 states; focus-visible ring
+// comes from the global :where(a,…):focus-visible rule in globals.css (2px brand
+// outline, 2px offset → lands on the white section bg, not the blue fill). Do not
+// add outline-none here.
+function SocialButton({
+  href,
+  label,
+  children,
+}: {
+  href: string
+  label: string
+  children: ReactNode
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="inline-flex h-[44px] w-[44px] items-center justify-center border border-white bg-brand text-white transition-colors duration-[150ms] hover:bg-[#1f5fd0] active:bg-[#1a52b8]"
+    >
+      {children}
+    </a>
+  )
 }
 
 function FounderCard({ founder }: { founder: Founder }) {
@@ -99,22 +133,25 @@ function FounderCard({ founder }: { founder: Founder }) {
         {founder.bio}
       </p>
 
-      {/* LinkedIn — brand-blue square button, 7 states. No URL → no button.
-          focus-visible ring comes from the global :where(a,…):focus-visible rule
-          in globals.css (2px brand outline, 2px offset → lands on the white
-          section bg, not the blue fill). Do not add outline-none here. */}
-      {founder.linkedin && (
-        <a
-          href={founder.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${founder.name} on LinkedIn`}
-          className="mt-[16px] inline-flex h-[44px] w-[44px] items-center justify-center border border-white bg-brand text-white transition-colors duration-[150ms] hover:bg-[#1f5fd0] active:bg-[#1a52b8]"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
-            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.94H5.56v8.4h2.78zM6.95 8.7a1.61 1.61 0 1 0 0-3.22 1.61 1.61 0 0 0 0 3.22zm11.39 9.64v-4.6c0-2.47-1.32-3.62-3.08-3.62a2.66 2.66 0 0 0-2.41 1.33h-.04V9.94H9.95c.04.79 0 8.4 0 8.4h2.78v-4.69c0-.25.02-.5.09-.68.2-.5.66-1.02 1.42-1.02 1 0 1.4.76 1.4 1.88v4.51h2.78z" />
-          </svg>
-        </a>
+      {/* Social row — LinkedIn + X, each rendered only when its URL exists
+          (graceful no-button degrade kept for correctness). */}
+      {(founder.linkedin || founder.x) && (
+        <div className="mt-[16px] flex items-center gap-[12px]">
+          {founder.linkedin && (
+            <SocialButton href={founder.linkedin} label={`${founder.name} on LinkedIn`}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V9.94H5.56v8.4h2.78zM6.95 8.7a1.61 1.61 0 1 0 0-3.22 1.61 1.61 0 0 0 0 3.22zm11.39 9.64v-4.6c0-2.47-1.32-3.62-3.08-3.62a2.66 2.66 0 0 0-2.41 1.33h-.04V9.94H9.95c.04.79 0 8.4 0 8.4h2.78v-4.69c0-.25.02-.5.09-.68.2-.5.66-1.02 1.42-1.02 1 0 1.4.76 1.4 1.88v4.51h2.78z" />
+              </svg>
+            </SocialButton>
+          )}
+          {founder.x && (
+            <SocialButton href={founder.x} label={`${founder.name} on X`}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </SocialButton>
+          )}
+        </div>
       )}
     </div>
   )
