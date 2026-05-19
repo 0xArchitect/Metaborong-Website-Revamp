@@ -24,7 +24,15 @@ export function FoundersSection() {
               <div className="rounded-[24px] bg-[#0f0f0f] p-[16px] shadow-[0_18px_40px_rgba(0,0,0,0.28)] border border-[rgba(255,255,255,0.08)]">
                 <div className="overflow-hidden rounded-[16px]" style={{ height: 330, background: '#296ff0' }}>
                   <a href={founder.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`Open ${founder.name} on LinkedIn`}>
-                    <img src={founder.image} alt={`${founder.name} — ${founder.role}`} className="h-full w-full object-cover" />
+                    <img
+                      src={founder.image}
+                      alt={`${founder.name} — ${founder.role}`}
+                      loading="lazy"
+                      decoding="async"
+                      width={330}
+                      height={330}
+                      className="h-full w-full object-cover"
+                    />
                   </a>
                 </div>
               </div>
