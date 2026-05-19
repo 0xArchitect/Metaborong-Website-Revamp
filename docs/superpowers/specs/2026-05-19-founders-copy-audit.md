@@ -168,7 +168,7 @@ honest.") — clarity per copywriting; no em-dash (project treats em-dash as a t
 - **Eyebrow:** `The team` → renders `THE TEAM`
 - **H2:** `The team behind the work` (visual: "the work" in `--color-brand`, per spec)
 - **Lede:** `Metaborong's three co-founders are hands-on in every Web3 and AI engagement. The work in our portfolio was built by us, not by a contracting layer we manage. You'll be in Slack with the people writing your code.`
-- **Arnab Ray** — `CEO & Co-Founder` — `Co-founded Metaborong and sets its direction across Web3 and AI engagements.` — LinkedIn `https://linkedin.com/in/arnab-ray`
+- **Arnab Ray** — `CEO & Co-Founder` — `Co-founded Metaborong and sets its direction across Web3 and AI engagements.` — LinkedIn `https://www.linkedin.com/in/arnab-ray-682111192/` · X `https://x.com/Arnab_Alfa_Ray`
 - **Anik Ghosh** — `COO & Co-Founder` — `Co-founded the studio; owns delivery and the scope discipline that keeps timelines honest.` — LinkedIn `https://www.linkedin.com/in/anik-ghosh-01a985208/`
 - **Soumojit Ash** — `CTO & Co-Founder` — `Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships.` — LinkedIn `https://www.linkedin.com/in/soumojit-ash/` · X `https://x.com/SoumojitAsh` (user-provided 2026-05-19)
 

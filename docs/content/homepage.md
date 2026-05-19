@@ -314,7 +314,7 @@ Metaborong's three co-founders are hands-on in every Web3 and AI engagement. The
 #### Arnab Ray
 **Role:** CEO & Co-Founder
 **Bio:** Co-founded Metaborong and sets its direction across Web3 and AI engagements. <!-- USER_INPUT (pending — generic-but-true placeholder shipped 2026-05-19): swap in one specific Web3-ecosystem credential or project Arnab personally led (12–14 words). -->
-**Links:** `LinkedIn` → `https://linkedin.com/in/arnab-ray` · `X` → `https://x.com/Arnab_Alfa_Ray`
+**Links:** `LinkedIn` → `https://www.linkedin.com/in/arnab-ray-682111192/` · `X` → `https://x.com/Arnab_Alfa_Ray`
 
 #### Anik Ghosh
 **Role:** COO & Co-Founder
