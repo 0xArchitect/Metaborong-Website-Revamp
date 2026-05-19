@@ -180,6 +180,16 @@ which was a card-specific affordance not needed in a flat strip).
    shadow/elevation we explicitly dropped. A flush full-width strip preserves the
    Bauhaus restraint and gives the dropdown more room to expose child links (better SEO
    visibility in DOM than the current sub/icon row).
+4. **Content capped to `max-w-[1280px]` + 16px mobile base (2026-05-19 graduate).**
+   Supersedes this spec's full-width-content / 24px-mobile-base detail. The nav bar,
+   the mega-menu columns, and the mobile menu now sit inside the canonical `<Section>`
+   grid: `max-w-[1280px]` within the `px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px]
+   xl:px-[128px]` chain. The `<header>` background/borders and the mega-menu **strip
+   surface** stay full-bleed (`absolute inset-x-0`), so the "full-width strip, not a
+   floating card" signature (#3) is preserved — only the *content* is constrained.
+   Rationale: left/right negative space is now identical across nav, hero, and every
+   page section at 1440/1280/375; mobile gutter unified to 16px. Shipped on
+   `design-revamp`.
 
 Both will be folded into `DESIGN.md` after the section ships, per the Graduate step in
 `SESSIONS.md`.

@@ -4,6 +4,29 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-19 — Session 15: Hero + Nav grid alignment, eyebrow dot, card reseat, cleanup
+
+### Decision log
+- **Hero + Nav adopt the canonical `<Section>` grid.** Both were bespoke: hero `max-w-[1600px]` with a self-padded left column + a centered ASCII column; nav full-viewport-width content (`px-[24px]…`, no `max-w`, no 16px base). At ≥1280px the hero copy hung ~160px left of every section and the ASCII never reached the right grid line; the nav logo/CTA sat outside the section content edges. Both now cap content to `max-w-[1280px]` inside the `px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]` chain — identical left/right negative space across nav, hero, and every section at 1440/1280/375. `<header>` bg/borders and the mega-menu **strip surface** stay full-bleed (signature preserved); only content is capped. Hero ASCII right-pinned with `lg:justify-end` so its right edge meets the grid line (= nav CTA = section content). Mobile gutter unified 24→16px. Supersedes the 2026-05-14 DESIGN.md hero rows (`var(--section-px)` / `xl:px-[144px]→128` / inset-from-right) and the nav greptile spec's full-width-content/24px-base detail (logged as that spec's deviation #4).
+- **Hero eyebrow green dot removed in code.** Session-14 Addendum-2 graduated this, but the dot was still present on `design-revamp` (doc↔branch drift). Now actually removed from `hero.tsx` (the `hero-live-dot`/`hero-live-pulse` hooks; globals.css already carried no matching CSS). Copy unchanged: `Web3 & AI development studio`.
+- **Hero overlay card 3 reseated.** Was parked off-plant at the right edge (`74%/34.8%`); user picked `66%/34%` from a 4-candidate montage — now on the rightmost ASCII bloom, matching how cards 1 & 2 sit on theirs. (Pixel auto-detection on the bloomed ASCII proved unreliable; memory pointer added.)
+- **Codebase cleanup.** Removed stray `./ign-revamp` (an accidental `less`/man help-text dump, untracked). Reindented `nav.tsx` children under the new wrapper `<div>`s (whitespace-only; the surgical grid-align edits had left them at the old depth).
+
+### Build state changes
+- **UPDATED:** `components/sections/hero.tsx` — grid-align (max-w-1280 + padding chain, mobile 16px), eyebrow dot hooks removed, overlay card 3 → 66%/34%, ASCII `lg:justify-end`. (Grid+eyebrow+card3 shipped earlier as `d3787d9`; `lg:justify-end` is the follow-up.)
+- **UPDATED:** `components/layout/nav.tsx` — content capped to max-w-1280 + padding chain (bar, mega columns, mobile menu); header/strip surfaces full-bleed; children reindented.
+- **UPDATED:** `DESIGN.md` — Decisions Log entry (this).
+- **UPDATED:** `docs/superpowers/specs/2026-05-10-section-nav-greptile-restyle.md` — deviation #4 logged.
+- **UPDATED:** `CLAUDE.md` — rewritten by `/init` (overview/architecture/commands now reflect the MongoDB CMS; was stale "single-page marketing site"). Committed separately.
+- **REMOVED:** `./ign-revamp` (stray artifact).
+
+### Known follow-ups
+- `npm run build` still fails at `/blog/rss.xml` export — the documented MONGODB_URI-at-build / PR-#26 env hold; verification posture stays `tsc` + dev-server QA (pre-existing, not a regression).
+- Carried from Session 14, still open: DESIGN.md approved-infinite count inconsistency (lines ~229-231 vs 275 vs 385); `2026-05-10-section-hero.md` §1a stale (PNG+SVG-filter vs the shipped MP4); site-wide chain inconsistency (`services-data.ts` 3 / Comparison+Why-Us 7 / hero 0). Each wants a dedicated reconcile session.
+- `docs/Gemini_Generated_Image_i6ni71i6ni71i6ni.png` is untracked and predates this session — left as-is (not this session's to triage).
+
+---
+
 ## 2026-05-17 — Session 14: Context A3 codified + Hero copy reconcile (first A3 run)
 
 ### Decision log
