@@ -108,11 +108,11 @@ export function Footer() {
         </div>
 
         {/* Row 3 — bottom bar */}
-        <div className="mt-[32px] flex flex-col gap-[12px] text-[13px] tracking-[-0.01em] text-gray-light sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-[32px] flex flex-col gap-[12px] text-[13px] tracking-[-0.01em] text-gray sm:flex-row sm:items-center sm:justify-between">
           <span>© {year} Metaborong Technologies</span>
           <div className="flex gap-[20px]">
-            <a href="https://linkedin.com/company/metaborong-technologies" target="_blank" rel="me noopener noreferrer" className="no-underline text-gray-light transition-[color] duration-[var(--duration-instant)] hover:text-dark">LinkedIn</a>
-            <a href="https://x.com/Metaborong" target="_blank" rel="me noopener noreferrer" className="no-underline text-gray-light transition-[color] duration-[var(--duration-instant)] hover:text-dark">X</a>
+            <a href="https://linkedin.com/company/metaborong-technologies" target="_blank" rel="me noopener noreferrer" className="no-underline text-gray transition-[color] duration-[var(--duration-instant)] hover:text-dark">LinkedIn</a>
+            <a href="https://x.com/Metaborong" target="_blank" rel="me noopener noreferrer" className="no-underline text-gray transition-[color] duration-[var(--duration-instant)] hover:text-dark">X</a>
           </div>
         </div>
       </div>
