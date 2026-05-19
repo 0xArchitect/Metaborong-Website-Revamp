@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Eyebrow } from '@/components/ui/eyebrow'
 
 const companyLinks = [
   { label: 'Work', href: '/#work' },
@@ -36,6 +37,11 @@ const socials: { label: string; href: string; me: boolean; icon: ReactNode }[] =
     icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4.4A19 19 0 0 0 15.3 3l-.3.5a14 14 0 0 0-6 0L8.7 3A19 19 0 0 0 4 4.4 19.7 19.7 0 0 0 .5 17.8a19 19 0 0 0 5.8 2.9l.8-1.3c-.6-.2-1.2-.5-1.7-.8l.4-.3a13.6 13.6 0 0 0 11.6 0l.4.3c-.5.3-1.1.6-1.7.8l.8 1.3a19 19 0 0 0 5.8-2.9A19.7 19.7 0 0 0 20 4.4zM8.7 14.7c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3zm6.6 0c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3z"/></svg> },
 ]
 
+// Repeated 4x (3 nav columns + the contact email). Constant, not abstraction —
+// one string to keep the columns in lockstep.
+const linkCls =
+  'inline-flex min-h-[44px] items-center text-[15px] tracking-[-0.01em] text-gray no-underline transition-[color] duration-[var(--duration-instant)] hover:text-dark'
+
 export function Footer() {
   const year = new Date().getFullYear()
   return (
@@ -57,27 +63,27 @@ export function Footer() {
         {/* Row 2 — sitemap grid */}
         <div className="grid grid-cols-1 gap-[1px] border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
           <nav aria-label="Company" className="bg-bg p-[24px]">
-            <p className="mb-[16px] font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-dark">Company</p>
+            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Company</Eyebrow>
             <ul className="space-y-[12px]">
               {companyLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className="inline-flex min-h-[44px] items-center text-[15px] tracking-[-0.01em] text-gray no-underline transition-[color] duration-[var(--duration-instant)] hover:text-dark">{label}</a>
+                  <a href={href} className={linkCls}>{label}</a>
                 </li>
               ))}
             </ul>
           </nav>
           <nav aria-label="Services" className="bg-bg p-[24px]">
-            <p className="mb-[16px] font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-dark">Services</p>
+            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Services</Eyebrow>
             <ul className="space-y-[12px]">
               {serviceLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className="inline-flex min-h-[44px] items-center text-[15px] tracking-[-0.01em] text-gray no-underline transition-[color] duration-[var(--duration-instant)] hover:text-dark">{label}</a>
+                  <a href={href} className={linkCls}>{label}</a>
                 </li>
               ))}
             </ul>
           </nav>
           <div className="bg-bg p-[24px]">
-            <p className="mb-[16px] font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-dark">Offices</p>
+            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Offices</Eyebrow>
             <div className="space-y-[16px]">
               {offices.map(({ country, address }) => (
                 <address key={country} className="not-italic">
@@ -88,8 +94,8 @@ export function Footer() {
             </div>
           </div>
           <nav aria-label="Contact and social" className="bg-bg p-[24px]">
-            <p className="mb-[16px] font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-dark">Get in touch</p>
-            <a href="mailto:contact@metaborong.com" className="inline-flex min-h-[44px] items-center text-[15px] tracking-[-0.01em] text-gray no-underline transition-[color] duration-[var(--duration-instant)] hover:text-dark">contact@metaborong.com</a>
+            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Get in touch</Eyebrow>
+            <a href="mailto:contact@metaborong.com" className={linkCls}>contact@metaborong.com</a>
             <div className="mt-[16px] flex flex-wrap gap-[12px]">
               {socials.map(({ label, href, me, icon }) => (
                 <a
