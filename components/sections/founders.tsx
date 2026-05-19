@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react'
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
-import { Reveal } from '@/components/ui/reveal'
 
 type Founder = {
   name: string
@@ -75,7 +74,7 @@ function SocialButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex h-[44px] w-[44px] items-center justify-center border border-white bg-brand text-white transition-colors duration-[150ms] hover:bg-[#1f5fd0] active:bg-[#1a52b8]"
+      className="inline-flex h-[44px] w-[44px] items-center justify-center border border-white bg-brand text-white transition-[background-color,border-color,color] duration-[150ms] hover:bg-[#1f5fd0] active:bg-[#1a52b8]"
     >
       {children}
     </a>
@@ -85,7 +84,7 @@ function SocialButton({
 function FounderCard({ founder }: { founder: Founder }) {
   return (
     <div className="flex flex-col">
-      {/* Photo tile is non-interactive by design — only the LinkedIn button links. */}
+      {/* Photo tile is non-interactive by design — only the social-row buttons link. */}
       <div className="relative aspect-square border border-border bg-white shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12),0_6px_16px_-4px_rgba(0,0,0,0.06)]">
         {/* 4 dashed edge accents (Figma blueprint ticks) */}
         <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] top-0 border-t border-dashed border-gray" />
@@ -146,7 +145,7 @@ function FounderCard({ founder }: { founder: Founder }) {
           )}
           {founder.x && (
             <SocialButton href={founder.x} label={`${founder.name} on X`}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
             </SocialButton>
@@ -180,12 +179,11 @@ export function FoundersSection() {
         </p>
       </div>
 
-      {/* Card row */}
+      {/* Card row — the single <Section> Reveal carries the section (matches the
+          why-us/comparison card-grid precedent; no nested Reveal-in-Reveal). */}
       <div className="mt-[48px] grid grid-cols-1 lg:grid-cols-3 gap-[48px]">
-        {founders.map((founder, i) => (
-          <Reveal key={founder.name} delay={i * 80}>
-            <FounderCard founder={founder} />
-          </Reveal>
+        {founders.map((founder) => (
+          <FounderCard key={founder.name} founder={founder} />
         ))}
       </div>
     </Section>

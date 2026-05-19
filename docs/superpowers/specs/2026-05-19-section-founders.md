@@ -249,6 +249,35 @@ the global consent banner (`proxy.ts`/consent) is a fixed overlay that covers
 section content on mobile; the sticky `<header>` overlaps mid-scroll content.
 Site-global chrome, not introduced by this redesign — handed to the main session.
 
+## Pre-merge 10/10 audit (2026-05-19)
+
+Isolated deep audit of the **current** `founders.tsx` (post social-row + URL
+changes). Detector `[]`, tsc 0, eslint 0 errors. Scored **9.4/10**; the 4 nits
+fixed and **verified live** on :3102:
+
+- **P2 nested `<Reveal>` removed** — `<Section>` already auto-wraps one Reveal; the
+  per-card `<Reveal delay>` was a redundant Reveal-in-Reveal. Now plain `.map`
+  (matches the why-us/comparison card-grid precedent); unused `Reveal` import
+  dropped. Verified: section reveals correctly (h2 opacity 1, visible).
+- **P2 icon pair unified to 18/18** — was an arbitrary LinkedIn 18 / X 16. Both
+  18px now (one principled value); verified live as a balanced matched pair.
+- **P3 stale comment** — "only the LinkedIn button links" → "only the social-row
+  buttons link".
+- **P3 transition exactness** — `transition-colors` → explicit
+  `transition-[background-color,border-color,color]` (matches DESIGN.md Button
+  signature allowlist exactly; behaviorally identical).
+
+Re-verified live: grid 128/1152 @1280 no overflow, all 6 links correct (incl.
+Arnab's verified LinkedIn + 3 X), 44×44 targets, tab order LinkedIn→X, seven
+states, AA contrast (computed), no em dash in rendered copy, no duplicate `id`.
+
+**`founders.tsx` implementation (design + code + a11y): 10/10.** The remaining gap
+to a true *section* 10/10 is **content/cross-file, not this component**: (1) bios
+are generic-but-true placeholders (copy 8.0/10, real specifics pending USER_INPUT —
+user's earlier "generic now" choice); (2) `lib/schema.ts` per-founder `sameAs`
+(now fully unblocked — all 6 URLs verified — but a shared file → coordinator
+applies at merge, Deviation 7). Both correctly handed off; neither is a code defect.
+
 ## Notes / open items
 
 - **Pending USER_INPUT** (does not block this redesign; tracked in `homepage.md`):
