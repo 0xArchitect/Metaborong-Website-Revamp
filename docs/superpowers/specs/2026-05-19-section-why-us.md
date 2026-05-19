@@ -301,6 +301,22 @@ Everything else stays frozen and unchanged.
    graceful wrap below `lg` (no 375 overflow). The translate cascade (candidate B)
    is removed.
 
+## Amendment 2 — 2026-05-19 (user-directed)
+
+1. **FROZEN-copy constraint fully lifted for this section (section-wide).** Per
+   explicit user instruction, why-us copy is **no longer frozen** — the original
+   plan's "zero text changes / copy-diff assertion" hard constraint is retired for
+   `why-us.tsx`. (No further text was changed in this amendment; recorded so future
+   edits are not gated by the frozen contract or the copy-diff baseline.)
+2. **Trust set repositioned.** The Clutch widget + `Reply within 12h` +
+   `4–12 weeks to ship` block now **bottom-aligns with the lede** (header flex
+   `lg:items-start` → `lg:items-end`), staying far-right via `lg:justify-between`,
+   so it sits **above the rightmost card (Niche Depth)**, parallel to the lede.
+   Verified (`/agent-browser` + gstack browse for 375): lede bottom == trust-column
+   bottom (363 == 363); trust-column right (1152) ≈ Niche-Depth card right (1151);
+   widget iframe renders desktop + 375; no horizontal overflow; sr-only proof still
+   in SSR; clean `tsc --noEmit` exit 0 (dev-server-stopped run).
+
 ### Verification (amendment, via `/agent-browser` per user instruction + gstack browse for the 375 viewport, which agent-browser could not set in this sandbox)
 
 - `npx tsc --noEmit` → exit 0.
