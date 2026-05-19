@@ -74,17 +74,17 @@ export function WhyUsSection() {
             href={clutchProfileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-[44px] items-center gap-[6px] border border-border bg-bg px-[14px] text-[14px] tracking-[-0.005em] no-underline lg:translate-x-[-40px]"
+            className="inline-flex min-h-[44px] items-center gap-[6px] border border-border bg-bg px-[14px] text-[14px] tracking-[-0.005em] no-underline lg:translate-x-[-64px]"
           >
             <span className="font-semibold text-dark tabular-nums">4.9</span>
             <span aria-label="5 out of 5 stars" className="text-[12px] leading-none tracking-[1px] text-[#F6851B]">★★★★★</span>
             <span className="font-medium text-gray">on Clutch</span>
           </a>
-          <span className="inline-flex min-h-[44px] items-center gap-[8px] border border-border bg-bg px-[14px] text-[14px] font-semibold tracking-[-0.005em] text-dark">
+          <span className="inline-flex min-h-[44px] items-center gap-[8px] border border-border bg-bg px-[14px] text-[14px] font-semibold tracking-[-0.005em] text-dark lg:translate-x-[-24px]">
             <Zap aria-hidden="true" className="size-[16px] shrink-0 text-gray" strokeWidth={2} />
             Reply within 12h
           </span>
-          <span className="inline-flex min-h-[44px] items-center gap-[8px] border border-border bg-bg px-[14px] text-[14px] font-semibold tracking-[-0.005em] text-dark lg:translate-x-[-20px]">
+          <span className="inline-flex min-h-[44px] items-center gap-[8px] border border-border bg-bg px-[14px] text-[14px] font-semibold tracking-[-0.005em] text-dark lg:translate-x-[-12px]">
             <CalendarDays aria-hidden="true" className="size-[16px] shrink-0 text-gray" strokeWidth={2} />
             4–12 weeks to ship
           </span>
