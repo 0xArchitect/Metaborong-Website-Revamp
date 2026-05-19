@@ -3,8 +3,26 @@ import { Button } from '@/components/ui/button'
 
 export function ContactCtaSection() {
   return (
-    <Section bg="default" maxWidth="xwide">
-      <div className="mx-auto max-w-[640px] text-center">
+    <Section
+      bg="default"
+      maxWidth="xwide"
+      className="relative isolate overflow-hidden"
+    >
+      {/* Decorative grassy-hills band (Figma 233:261 / asset 237:341):
+          full-bleed, anchored flush to the section's bottom edge, behind
+          the content. The asset's feathered, transparent hilltops blend
+          into bg-bg; the content column reserves enough bottom space that
+          every line of copy sits on white (AA-safe — keeps the FINDING-001
+          fix while restoring the Figma composition). */}
+      <img
+        src="/contact/ascii-hills.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="pointer-events-none absolute -bottom-[48px] left-1/2 -z-10 h-[clamp(240px,44vw,580px)] w-screen max-w-none -translate-x-1/2 select-none object-cover object-top md:-bottom-[64px] lg:-bottom-[72px]"
+      />
+      <div className="relative mx-auto max-w-[640px] pb-[clamp(180px,32vw,400px)] text-center">
         <h2 className="text-[clamp(34px,5vw,56px)] font-black uppercase leading-[1.03] tracking-[-0.03em] text-dark">
           Tell us the build. We&apos;ll send the approach.
         </h2>
@@ -32,19 +50,6 @@ export function ContactCtaSection() {
           contact@metaborong.com
         </a>
       </div>
-
-      {/* Decorative ASCII-hills band (Figma 233:261). Normal-flow BELOW the
-          content so it can never sit behind the headline (the desktop
-          contrast defect found in live QA). object-bottom shows the dense
-          hills; static; aria-hidden. */}
-      <img
-        src="/contact/ascii-hills.webp"
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        className="pointer-events-none mt-[48px] h-[clamp(150px,26vw,360px)] w-full select-none object-cover object-bottom md:mt-[64px]"
-      />
     </Section>
   )
 }
