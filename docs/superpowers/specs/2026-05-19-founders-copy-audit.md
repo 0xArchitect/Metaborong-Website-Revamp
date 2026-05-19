@@ -80,7 +80,8 @@ Source: `homepage.md` Founders block after steps b–c.
 
 **New content-quality score: 8.0 / 10** (vs **2.7** baseline → **+5.3**, gate passed).
 Ceiling held below 9 by the deliberate generic-but-true proof (user chose to ship
-generic now, swap real specifics later) and Soumojit's pending LinkedIn URL.
+generic now, swap real specifics later). [2026-05-19: Soumojit's LinkedIn + all
+three X URLs since provided by the user — no longer pending.]
 
 ---
 
@@ -169,6 +170,6 @@ honest.") — clarity per copywriting; no em-dash (project treats em-dash as a t
 - **Lede:** `Metaborong's three co-founders are hands-on in every Web3 and AI engagement. The work in our portfolio was built by us, not by a contracting layer we manage. You'll be in Slack with the people writing your code.`
 - **Arnab Ray** — `CEO & Co-Founder` — `Co-founded Metaborong and sets its direction across Web3 and AI engagements.` — LinkedIn `https://linkedin.com/in/arnab-ray`
 - **Anik Ghosh** — `COO & Co-Founder` — `Co-founded the studio; owns delivery and the scope discipline that keeps timelines honest.` — LinkedIn `https://www.linkedin.com/in/anik-ghosh-01a985208/`
-- **Soumojit Ash** — `CTO & Co-Founder` — `Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships.` — LinkedIn **pending** (no verified URL; card must degrade gracefully, no 404)
+- **Soumojit Ash** — `CTO & Co-Founder` — `Co-founded the studio and owns the architecture under every Web3 protocol and AI system it ships.` — LinkedIn `https://www.linkedin.com/in/soumojit-ash/` · X `https://x.com/SoumojitAsh` (user-provided 2026-05-19)
 
 Final score **8.0/10** (baseline 2.7) · claim gate PASS · guardrails PASS.
