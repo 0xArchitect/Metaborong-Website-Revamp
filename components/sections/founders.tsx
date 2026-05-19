@@ -25,7 +25,7 @@ const founders: Founder[] = [
     role: 'CEO & Co-Founder',
     bio: 'Co-founded Metaborong and sets its direction across Web3 and AI engagements.',
     image: null,
-    linkedin: 'https://linkedin.com/in/arnab-ray',
+    linkedin: 'https://www.linkedin.com/in/arnab-ray-682111192/',
     x: 'https://x.com/Arnab_Alfa_Ray',
   },
   {
