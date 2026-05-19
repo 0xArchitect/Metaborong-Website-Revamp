@@ -42,6 +42,7 @@ export function ContactCtaSection() {
         alt=""
         aria-hidden="true"
         loading="lazy"
+        decoding="async"
         className="pointer-events-none mt-[48px] h-[clamp(150px,26vw,360px)] w-full select-none object-cover object-bottom md:mt-[64px]"
       />
     </Section>
