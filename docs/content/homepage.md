@@ -239,7 +239,7 @@ Live products across DeFi, AI, gaming, and SaaS — each shipped with founders w
   CTA: per-card "Read on Clutch →" + section-level "View all reviews on Clutch →".
 -->
 
-### [TESTIMONIALS — H2 → Clutch verified strip + cards]
+### [TESTIMONIALS — H2 → Clutch official widget only]
 
 ## Reviewed and verified on Clutch
 
@@ -247,44 +247,30 @@ Live products across DeFi, AI, gaming, and SaaS — each shipped with founders w
 - "What clients say after shipping"
 - "Verified by clients on Clutch"
 
-**Stat-led header strip (1 row, full-width inside section):**
+**Lede (between H2 and widget):** Real clients rate our work on Clutch — every review is verified, every reviewer is named.
+
+**Official Clutch widget (type 8, h=420, curated review IDs surfaced in the widget):**
 
 ```
-[Clutch logo]    4.9 / 5  ★★★★★    Based on <!-- USER_INPUT: review count --> verified reviews    [Verified ✓]
+data-clutchcompany-id="2433707"
+data-widget-type="8"
+data-reviews="457842,454740,453781,439014,438481,437747"
 ```
 
-- **Clutch profile URL:** `<!-- USER_INPUT: https://clutch.co/profile/metaborong -->`
-- **Aggregate rating:** `<!-- USER_INPUT: confirm 4.9 or actual current score -->`
-- **Review count:** `<!-- USER_INPUT: current count -->`
+- **Clutch profile URL:** `https://clutch.co/profile/metaborong-technologies-private` (canonical: `lib/links.ts` → `clutchProfileUrl`)
+- **Aggregate rating:** `4.9 / 5`
+- **Review count:** `9`
+- **SSR / a11y fallback (sr-only outbound link):** "Metaborong is rated 4.9 out of 5 on Clutch, based on 9 verified reviews."
 
-**Three quote cards (each card whole-card links to Clutch — same target as inline CTA):**
-
-#### Quote 1
-> "<!-- USER_INPUT: paste top Clutch quote 1 verbatim -->"
-**Reviewer:** `<!-- USER_INPUT: Name, Title @ Company -->`
-**Rating:** ★★★★★
-**CTA:** `Read on Clutch →` → `<!-- USER_INPUT: deep-link to specific review on Clutch -->`
-
-#### Quote 2
-> "<!-- USER_INPUT: paste top Clutch quote 2 verbatim -->"
-**Reviewer:** `<!-- USER_INPUT: Name, Title @ Company -->`
-**Rating:** ★★★★★
-**CTA:** `Read on Clutch →` → `<!-- USER_INPUT: deep-link to specific review on Clutch -->`
-
-#### Quote 3
-> "<!-- USER_INPUT: paste top Clutch quote 3 verbatim -->"
-**Reviewer:** `<!-- USER_INPUT: Name, Title @ Company -->`
-**Rating:** ★★★★★
-**CTA:** `Read on Clutch →` → `<!-- USER_INPUT: deep-link to specific review on Clutch -->`
-
-**Section CTA (below grid):** `View all reviews on Clutch →` → `<!-- USER_INPUT: Clutch profile URL -->`
+**Section CTA (below widget):** `View all reviews on Clutch →` → `https://clutch.co/profile/metaborong-technologies-private`
 
 <!-- WHY
+  - The widget is the only review surface in the section. Earlier iteration kept 3 hand-rolled SSR-fallback cards beneath the widget — user dropped them 2026-05-21 because they repeated the same content the widget already surfaces and the per-card "Read on Clutch →" affordance was the original design we're moving away from.
   - "Voices of trust" was the worst agency-speak on the page — replaced with a verb-led headline that names the source ("Clutch").
-  - Verbatim quotes from existing site (Siddharth, Dr. Josh, Abhishek, Girish) are NOT carried over — user picks 3 from Clutch instead. The two anonymous "Client" attributions die here.
   - Outbound links to Clutch give the section measurable SEO value (Clutch profile traffic = reciprocal trust signal) and let visitors verify independently.
-  - All link attributes on the JSX should be: rel="noopener" target="_blank" — Clutch is a third-party domain.
-  - Quote selection rule: pick the 3 with most specific outcome language; avoid generic "highly recommend" if better exists.
+  - All outbound link attributes: rel="noopener noreferrer" target="_blank" — Clutch is a third-party domain.
+  - **Section narrows to maxWidth="wide" (1120)** instead of the page-wide "xwide" (1280) because the Clutch type-8 iframe self-caps its internal grid at ~1100 — matching the Section content width to that cap keeps H2 / lede / widget / CTA aligned on a single left edge with no dead right-side whitespace. Logged as Deviation 4 in the spec.
+  - SEO/a11y coverage retained without the hand-rolled cards via the sr-only outbound text "Metaborong is rated 4.9 out of 5 on Clutch, based on 9 verified reviews" — crawlable, screen-reader-announced, links to the profile. Mirrors the Why-Us pattern.
 -->
 
 
