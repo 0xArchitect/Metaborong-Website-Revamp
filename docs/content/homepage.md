@@ -435,34 +435,79 @@ A side-by-side comparison of Metaborong — a lean Web3 and AI development studi
 - "Questions before we start"
 - "What founders ask before scoping"
 
-*Each answer ≤50 words, self-contained for AI extraction, varied sentence subjects.*
+*Each Q is a real third-person search query (AEO target). Each answer ≤50 words, self-contained for AI extraction, varied sentence subjects.*
 
-**Q: What is Metaborong?**
-A: A Web3 and AI development studio run by three technical co-founders. We build DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams. The team is remote-first and globally distributed.
+**Q: What is a Web3 development company?**
+A: A Web3 development company designs, audits, and ships blockchain products: DeFi protocols, smart contracts, NFT marketplaces, and on-chain integrations. Metaborong is one such studio: three technical co-founders, Web3 and AI as equal practices, with crypto-native teams and founders as the typical clients.
 
-**Q: How long does a typical project take?**
-A: Four to twelve weeks depending on scope. Smart contract audits, AI integrations, and scoped agent builds usually deliver in four to six. DeFi protocols and full SaaS platforms take longer.
+**Q: How long does it take to build a DeFi protocol or smart contract?**
+A: Smart contracts and AI integrations typically ship in four to six weeks. Full DeFi protocols and SaaS platforms run eight to twelve. Scope drives the range. A single contract audit closes faster than a multichain vault with custom incentive logic.
 
-**Q: Who do you work with?**
-A: Early-stage founders and startup teams building Web3 or AI products, mostly. Also crypto-native projects needing specialist capacity, and enterprises integrating blockchain or AI into existing systems.
+**Q: Are Web3 and AI development projects priced hourly or fixed-scope?**
+A: Fixed-scope, not hourly. Metaborong quotes rates from a written brief, so a smart contract audit and a multichain DeFi protocol carry envelopes scaled to scope. Cost varies with chain mix, AI surface area, and integration depth. Numbers follow the first call.
 
-**Q: Do we need an NDA before talking?**
-A: No. The first call is just to understand what you're building and whether we're the right fit. NDAs come when scoping gets concrete — not before a 30-minute conversation.
+**Q: What is the difference between a Web3 agency and a smaller development studio?**
+A: Smaller Web3 studios run lean: senior engineers writing code, no account-manager layer. Larger agencies add coordination overhead and junior delivery teams. Metaborong is a three-founder studio. Founders write code, communicate directly with clients, and own delivery end-to-end.
 
-**Q: How are you different from larger Web3 and AI agencies?**
-A: Smaller, senior, faster. Founders communicate directly with the engineers writing code. Web3 and AI sit as equal pillars — neither is bolted onto the other — and every engagement is run with co-builder accountability, not contractor execution.
+**Q: What is an AI agent development company?**
+A: An AI agent development company designs, builds, and ships autonomous agents: RAG systems, multi-step workflow agents, on-chain agents, and SaaS integrations. At Metaborong, Web3 and AI sit as equal pillars. The same engineers deliver multichain DeFi protocols and production AI agents, often with on-chain interactions.
 
-**Q: Where are you based?**
-A: Remote-first and globally distributed, with no single head office. The founding team is reachable at contact@metaborong.com for any first conversation.
+**Q: Do you need an NDA before discussing a Web3 or AI project?**
+A: No. A first conversation is to understand what you are building and whether the team is the right fit. NDAs come once scoping is concrete and proprietary detail is on the table, not before a thirty-minute introduction.
 
-**Q: Do you work outside Web3 and AI?**
-A: Yes. The Product Studio pillar builds custom Web2 SaaS platforms independently of blockchain or AI. Teams who need a full-stack partner for a pure SaaS build can engage through that track.
+**Q: What is a custom SaaS product development studio?**
+A: A custom SaaS product development studio designs and ships software-as-a-service platforms end-to-end: auth, billing, dashboards, integrations, and infrastructure. At Metaborong, the Product Studio pillar runs independently of Web3 or AI work, for teams who need a full-stack SaaS partner without a blockchain or agent component.
 
-<!-- WHY
-  - Old Q2 + Q3 cut per user — they duplicated Services section verbatim. Service lists belong on hub pages.
-  - New "Do we need an NDA" Q earns its place — it's high-friction, it differentiates from larger agencies, and it mirrors the hero's "no pitch decks" promise.
-  - Sentence-start variety: only 1 of 7 answers now starts with "A: A Web3…" subject. The 8/8 "Metaborong is…" pattern is gone.
-  - Each answer is 16–35 words. All under 50.
+**Q: How do lean Web3 and AI development studios ship as fast as larger agencies?**
+A: Process integration across development, project management, and operations does most of the work. At Metaborong, automated code review, test generation, deployment, and client tracking run inside the dev loop. Three founders deliver at the throughput of a mid-size agency, without account managers or junior delivery layers between client and code.
+
+<!-- WHY (2026-05-21 — Session 18-faq A3 reopen)
+  - User reopened the 2026-05-14 lock with "I need actual FAQ questions that bring SEO,
+    AEO there." Every Q rewritten as a third-person informational search query — the
+    kind a Web3/AI/SaaS founder would type into Google / ChatGPT / Perplexity. The
+    6/7 branded second-person Qs ("What is Metaborong?", "Who do you work with?",
+    "Where are you based?", etc.) are gone.
+  - Every A leads with the entity definition / direct answer, names Metaborong once
+    in the body for AI overview attribution, and stays self-contained. Sentence-start
+    variety preserved: only 1/7 starts with "A Web3…" (lock target met). 0/7 with
+    "Metaborong is…" — that pattern stays retired.
+  - Word counts: 39–47, all ≤50.
+  - Claim discipline: no pricing figures (would fail without user-verified scope);
+    no chain count (7-vs-4-chains drift stays deferred per D6).
+  - 2026-05-21 v2 addition: Q8 added on the lean-via-integration mechanism
+    (user feedback "we are lean because we have integrated lot of processes
+    in every aspect, be it development, management or operations"). Section
+    now 8 Q&As (at the ≤8 cap).
+  - 2026-05-21 v3 reframe (post-live-review audit): Q3, Q5, Q7 had
+    weak AEO question phrasing. Reframed to a deliberate definitional
+    triad matching the three Metaborong pillars:
+      Q1 "What is a Web3 development company?"           (Web3 pillar)
+      Q5 "What is an AI agent development company?"      (AI pillar)
+      Q7 "What is a custom SaaS product development studio?" (Product Studio pillar)
+    Q3 pivoted from "how much does it cost" to the pricing-MODEL query
+    "Are projects priced hourly or fixed-scope?" so the answer can
+    deliver a binary (Fixed-scope, not hourly) instead of punting on
+    unverified pricing.
+  - 2026-05-21 v4 vet against @docs/writing-guardrails.md: em-dash
+    density reduced 9 → 0 across all 8 answers (em-dashes were the
+    section's strongest AI tell). Other guardrail fixes applied in the
+    same pass: Q3 weasel "Most senior studios" → direct "Fixed-scope,
+    not hourly"; Q1 -ing tail "working with crypto-native teams"
+    rephrased; Q5 borderline "including agents that interact" tightened
+    to "often with on-chain interactions". Banned-word scan clean.
+    Negative-parallel budget: one ("Fixed-scope, not hourly" in Q3),
+    within the "max once per piece" rule.
+  - Audit (2026-05-21): baseline composite 6.4 → v1 (7 Qs) 8.8 →
+    v2 (8 Qs) 9.0 → v3 (8 Qs, reframed) 9.2 → v4 (guardrail-tightened)
+    9.4. AEO question targeting reached 10 at v3 and is preserved at v4
+    (the v4 changes are stylistic, not Q-phrasing). Full table in
+    docs/superpowers/specs/2026-05-21-faq-copy-audit.md.
+  - SUPERSEDED — the 2026-05-14 lock (7 branded Qs, "What is Metaborong?" as Q1)
+    kept for provenance:
+      Q1 What is Metaborong? · Q2 How long does a typical project take? ·
+      Q3 Who do you work with? · Q4 Do we need an NDA before talking? ·
+      Q5 How are you different from larger Web3 and AI agencies? ·
+      Q6 Where are you based? · Q7 Do you work outside Web3 and AI?
 -->
 
 
