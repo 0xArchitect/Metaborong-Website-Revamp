@@ -4,6 +4,43 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-21 — Session 18: Comparison + FAQ + Testimonials redesigned in parallel (orchestrator + 3 section-sessions)
+
+### Decision log
+
+Three homepage sections re-shipped through a Session-17-style chain run in parallel across three worktrees (`section/comparison-redesign`, `section/faq-redesign`, `section/testimonials-redesign`), coordinated by a single orchestrator session. Pattern: orchestrator drafts a section-scoped brief per worker, workers run their A2 / A3 / A2+A3 chains end-to-end (impeccable critique → spec → plan → execute → design-review → simplify), report merge-ready, orchestrator merges in order (Comparison → FAQ → Testimonials) with `tsc --noEmit` between merges, then writes this single graduation commit. Scales the Session-16 two-terminal parallel pattern to three.
+
+- **Comparison** — A2 + two-pass A3. Migrated to canonical `<Section bg="default" maxWidth="xwide">` grid; table gains a11y (`scope` + `<caption>` + sr-only Dimension header). First-pass A3 cleaned the 2026-05-14 "too aggressive" tone (5.2 → 8.4); second-pass (user-direction angle shift) reframed every column around the lean / integrated-delivery positioning (8.4 → **8.8**). New row label `Process and project management`; new cells `Founder-led, no account-manager layer`, `Production AI agents and RAG systems`, `Integrated across engineering, PM, and operations`, `25+ products in production`. 7-chain string + `4–12 weeks per engagement` preserved verbatim. **Drift flagged for future session:** `8+ products` in TRUST SIGNALS (homepage.md) vs `25+` in Comparison. D6 (7-vs-4-chains site-wide drift) kept deferred per user direction.
+
+- **FAQ** — A2 two-column redesign + full A3 AEO rewrite. Single-column accordion → sticky title rail (md+) + helper card with founders' email + accordion right column with first item default-open. All 7 Q&As rewritten as real third-person AEO search queries; every A ≤50w self-contained. A11y: focus-visible ring, full ARIA disclosure quartet (`aria-controls`/`aria-labelledby`/`role="region"` + `hidden` attr panels with all 7 answers in SSR HTML for AEO extraction), tap target 56px. Component split into `faq.tsx` (server, `<Section>`) + `faq-accordion.tsx` (client). Schema mirror auto-honored via existing `faqs.map()` derivation in `lib/schema.ts:1` (no manual mirror edit needed). `homepage.md:558` AEO-checklist count corrected 8 → 7. Baseline 6.4 → **8.8**.
+
+- **Testimonials** — A2 (migrate to `<Section bg="subtle" maxWidth="wide">`) + A3 (Clutch widget integration, content via user). Seven `[TODO:]` placeholders eliminated. Official Clutch type-8 reviews widget (h=420, 6 curated review IDs) in a white card is the **only** review surface; `sr-only` outbound link carries the SSR rating/count fallback (Why-Us pattern). `<ClutchWidget>` parameterised (`widgetType`, `height`, `reviews`, `className`); Why-Us defaults preserved. Section narrowed to `wide` (1120) to match the iframe's natural ~1100 content cap and avoid dead right-side whitespace at ≥xl. Mid-session 3 SSR-fallback quote cards + drag-scroll lane dropped per user direction (duplicated widget content + reintroduced the per-card "Read on Clutch →" idiom). Padding chain migrated from hand-rolled 4-step to canonical 6-step. Baseline 3.4 → **8.0**.
+
+### A3 copy-audit scorecard
+
+| Section                   | Baseline | Final   | Δ        | Audit doc                                                      |
+|---------------------------|----------|---------|----------|----------------------------------------------------------------|
+| Comparison (Session 18)   | 5.2      | **8.8** | **+3.6** | `docs/superpowers/specs/2026-05-21-comparison-copy-audit.md`   |
+| FAQ (Session 18)          | 6.4      | **8.8** | **+2.4** | `docs/superpowers/specs/2026-05-21-faq-copy-audit.md`          |
+| Testimonials (Session 18) | 3.4      | **8.0** | **+4.6** | `docs/superpowers/specs/2026-05-21-testimonials-copy-audit.md` |
+
+### Files
+
+- **MODIFIED:** `components/sections/comparison.tsx`, `components/sections/faq.tsx`, `components/sections/faq-data.ts`, `components/sections/testimonials.tsx`, `components/sections/clutch-widget.tsx`, `docs/content/homepage.md` (§COMPARISON + §FAQ + §TESTIMONIALS + AEO checklist).
+- **NEW:** `components/sections/faq-accordion.tsx`, `docs/superpowers/assets/2026-05-20-faq-reference.jpeg`.
+- **SPECS / PLANS / AUDITS (NEW):** `docs/superpowers/specs/2026-05-21-section-comparison.md`, `docs/superpowers/specs/2026-05-21-comparison-copy-audit.md`, `docs/superpowers/plans/2026-05-21-section-comparison.md`, `docs/superpowers/specs/2026-05-21-section-faq.md`, `docs/superpowers/specs/2026-05-21-faq-copy-audit.md`, `docs/superpowers/plans/2026-05-21-section-faq.md`, `docs/superpowers/specs/2026-05-21-section-testimonials.md`, `docs/superpowers/specs/2026-05-21-testimonials-copy-audit.md`, `docs/superpowers/plans/2026-05-21-section-testimonials.md`.
+- **BRIEFS (Session-18 orchestrator artifacts, committed `3fa4e68` earlier in the session):** `docs/superpowers/specs/2026-05-20-session-18-comparison-brief.md`, `docs/superpowers/specs/2026-05-20-session-18-faq-brief.md`, `docs/superpowers/specs/2026-05-20-session-18-testimonials-brief.md`.
+- **UPDATED (this graduation commit):** `DESIGN.md` (three new 2026-05-21 Decisions Log rows), `CHANGELOG.md` (this entry).
+
+### Verification
+
+- `npx tsc --noEmit` exit 0 after each of the three merges and after this graduation commit.
+- Merge commits (no-ff): Comparison → FAQ → Testimonials, against `design-revamp`.
+- Deferred per D6: 7-vs-4-chains drift (Hero blockquote `EVM chains and Solana` vs Comparison's 7-chain string vs TRUST SIGNALS' 4 chains). Workers preserved existing copy in their sections; cross-cutting fix gets its own focused future session.
+- Deferred (new flag, raised by Comparison A3 rewrite): `8+ products` in TRUST SIGNALS vs `25+ products in production` in Comparison.
+
+---
+
 ## 2026-05-20 — PR #33 merged: mobile-resp pass (Section padding chain re-tuned, founder portraits, scrollable lanes)
 
 ### Decision log
