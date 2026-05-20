@@ -221,3 +221,25 @@ Diff-aware live QA, desktop 1440 + mobile 375.
 ### → copy-audit scorecard row
 
 `| 2026-05-19 | Footer | create (was 3.0) → complete IA | claim-gate PASS · guardrails PASS · authority-builder skipped (utility, per A3 gating) · schema NAP deferred |`
+
+---
+
+## 2026-05-20 revision — wordmark moved below grid
+
+**Trigger:** user, viewing the shipped footer, noted the giant `METABORONG`
+faded wordmark was rendered **above** the grid; Figma `237:359` shows it
+**below** the grid, sitting just above the bottom bar.
+
+### What changed
+
+- Footer row order now matches Figma (top → bottom):
+  1. Positioning paragraph (`Metaborong builds and ships…` — unchanged copy).
+  2. Sitemap grid (Company / Services / Offices / Get-in-touch — unchanged).
+  3. Giant faded `METABORONG` live-text wordmark (`text-gray-light/40`,
+     `aria-hidden`, same `clamp(40px,15vw,200px)` sizing).
+  4. Bottom bar (© line + LinkedIn / X — unchanged).
+- All UX copy unchanged per explicit user instruction.
+
+### Decisions Log row to add (2026-05-20)
+
+| 2026-05-20 | Footer row order corrected to match Figma `237:359` — giant `METABORONG` faded live-text wordmark moved from above the sitemap grid to between the grid and the bottom bar. No copy or component changes. | Order now mirrors Figma exactly; the wordmark closes the footer visually rather than competing with the positioning paragraph at the top. |
