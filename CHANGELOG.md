@@ -4,6 +4,30 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-20 — Session 17 follow-up: ContactCta refit to Figma + footer wordmark reorder
+
+### Decision log
+- **ContactCta — Figma fidelity over the A3 score (user call).** Viewing the live section, the user reverted the section to the Figma `233:261` copy verbatim and replaced the bottom-band ASCII-hills raster with a different Figma asset — a painterly ASCII-textured landscape (file `VE5DrIc8bHVLyW618jQUGp`, node `1:19`) — overlaying the copy on top of it. Specifically:
+  - **Copy:** H2 `Got a project in mind?`, sub verbatim from Figma (the mid-word edit accident "…protocols, ATell us…" reconstructed to "AI agents, and SaaS products. Tell us…" per user-confirmed reconstruction matching site-wide Web3 + AI + SaaS positioning), CTA `Start a conversation →`. Session-17 A3 sub ("…straight from a founder."), 12h risk reducer, and secondary email link **removed** (not in Figma).
+  - **Button:** kept the project's `<Button arrow="→">` split-arrow primitive (radius-0 Bauhaus signature kept over Figma's plain rounded blue button — DESIGN.md primitive lock).
+  - **Background:** `public/contact/landscape.webp` (2400×1707, q=84, 491 KB) exported via `sharp` from the 4096×2914 Figma asset. Old `public/contact/ascii-hills.webp` (and the normal-flow bottom-band layout) **decommissioned and deleted**.
+  - **Layout:** 16:9 `aspect-[16/9] min-h-[440px] overflow-hidden` container; image fills via `object-cover`.
+  - **AA:** centered radial dark vignette behind the text only (`rgba(0,0,0,0.62) → 0.32 → 0`) + white H2/sub with text-shadow safety — image edges stay pristine while white text clears AA over bright cloud clusters.
+- **Footer — wordmark moved below the grid.** User noted the giant faded `METABORONG` live-text wordmark was rendered above the sitemap grid; Figma `237:359` shows it between the grid and the bottom bar. Row order corrected to match Figma; **all UX copy unchanged** per explicit user instruction.
+- **Supersession recorded.** Session-17 A3 result for ContactCta (7.6 → 8.1) is now superseded by Figma fidelity. The A3 history is kept in `homepage.md` (as a SUPERSEDED comment block) and in the copy-audit scorecard (a 2026-05-20 row marks the departure).
+
+### Files
+- **UPDATED:** `components/sections/contact-cta.tsx` (full rewrite — Figma copy + landscape background + radial vignette + white text); `components/layout/footer.tsx` (wordmark moved from above grid to between grid and bottom bar); `docs/content/homepage.md` (ContactCta block reverted to Figma copy, A3 rewrite preserved as a SUPERSEDED block); `docs/superpowers/specs/2026-05-19-section-{contact-cta,footer}.md` (2026-05-20 revision addenda); `docs/superpowers/specs/2026-05-19-contact-footer-copy-audit.md` (scorecard +2 rows for 2026-05-20); `DESIGN.md` (Decisions Log +2 rows for 2026-05-20).
+- **NEW:** `public/contact/landscape.webp`.
+- **DELETED:** `public/contact/ascii-hills.webp` (now unreferenced after the bottom-band layout was replaced).
+
+### Verification
+- `npx tsc --noEmit` exit 0.
+- SSR-verified the new copy + the asset served at `/contact/landscape.webp` (HTTP 200) on the running dev server.
+- `npm run build` still expected to fail at `/blog/rss.xml` (PR-#26 env hold, not a regression).
+
+---
+
 ## 2026-05-19 — Session 17: ContactCta + Footer Figma redesigns (sequential, direct on design-revamp)
 
 ### Decision log

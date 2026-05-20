@@ -254,3 +254,54 @@ relies on that row's "contact CTA" wording.
 ### → copy-audit scorecard row
 
 `| 2026-05-19 | ContactCta | 7.6 → 8.1 / 10 | claim-gate PASS · guardrails PASS · authority-builder skipped (CTA, per A3 gating) |`
+
+---
+
+## 2026-05-20 revision — Figma copy reversion + landscape image overlay
+
+**Trigger:** user, viewing the shipped section, asked for (a) the ASCII hills to
+match Figma quality, then (b) UX copy reverted to the Figma 233:261 verbatim,
+then (c) the ASCII hills replaced entirely with a different Figma asset
+(file `VE5DrIc8bHVLyW618jQUGp`, node `1:19` — a 4096×2914 painterly
+ASCII-textured landscape) and the copy moved **on top of** it.
+
+**Supersedes** the Session-17 A3 result for ContactCta. The Session-17 record
+above stays for provenance.
+
+### What shipped (2026-05-20)
+
+- **Background:** `public/contact/landscape.webp` (2400×1707, q=84, 491 KB)
+  exported via `sharp` from the Figma asset. Old
+  `public/contact/ascii-hills.webp` decommissioned and deleted.
+- **Layout:** `<Section bg=default maxWidth=xwide>` → 16:9 `aspect-[16/9]
+  min-h-[440px] overflow-hidden` container; image fills via `object-cover`.
+- **Scrim:** centered radial vignette (`rgba(0,0,0,0.62) → 0.32 → 0`) behind
+  the text only — leaves image edges pristine while giving white text a
+  workable contrast over the bright sky + cloud zones.
+- **Text:** white H2 + sub with `text-shadow: 0 2px 12px rgba(0,0,0,0.45)` /
+  `0 1px 6px rgba(0,0,0,0.50)` as AA safety on bright cloud clusters.
+- **Copy:** Figma 233:261 reverted verbatim:
+  - H2: `Got a project in mind?` (Session-17 "Tell us the build…" superseded).
+  - Sub: `We build what large agencies under-deliver and freelancers can't
+    architect, across Web3 protocols, AI agents, and SaaS products. Tell us
+    what you are building. We will tell you how we would approach it — no
+    pitch deck, no fluff, no commitment required.` (Figma had a mid-word
+    edit accident "…protocols, ATell us…"; user-confirmed reconstruction to
+    "AI agents, and SaaS products. Tell us…" — matches site-wide Web3 + AI
+    + SaaS positioning.)
+  - CTA: `Start a conversation →` via the project's `<Button arrow="→">`
+    primitive (Figma's rounded button NOT adopted — radius-0 Bauhaus signature
+    kept per DESIGN.md).
+  - Risk reducer + secondary email link **removed** (not in Figma).
+
+### Why the A3 result was superseded
+
+A3 (the copy chain) scored the Session-17 rewrite 7.6 → 8.1 vs. the older
+Figma copy. The user explicitly chose Figma fidelity over the A3 win — a
+visual-vision call (the painterly landscape framing changes what the section
+*is*, from a tight conversion CTA to a brand-moment closer). Recorded as a
+deliberate departure from the A3 gate, not a process failure.
+
+### Decisions Log row to add (2026-05-20)
+
+| 2026-05-20 | ContactCta visual + copy reverted to Figma (`233:261` copy, plus a painterly ASCII-textured landscape from Figma `VE5DrIc8bHVLyW618jQUGp/1:19` as the section background). 16:9 image container, centered radial dark vignette behind the text only for AA, white H2/sub with text-shadow, brand-blue `<Button arrow="→">Start a conversation</Button>` (split-arrow primitive kept). Session-17 A3 result (8.1/10) **superseded** by explicit user choice; ASCII-hills bottom-band asset decommissioned. | Page tail becomes a brand-moment closer instead of a tight CTA; Figma fidelity wins over the A3 score per user call. |

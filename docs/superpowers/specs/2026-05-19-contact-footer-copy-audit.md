@@ -114,3 +114,5 @@ office labels. Everything else is links/addresses, not prose.
 |------|---------|-------|-------|
 | 2026-05-19 | ContactCta | 7.6 → 8.1 / 10 | claim-gate PASS · guardrails PASS · authority-builder skipped (CTA, per A3 gating) |
 | 2026-05-19 | Footer | create (was 3.0) → complete IA | claim-gate PASS · guardrails PASS · authority-builder skipped (utility, per A3 gating) · schema NAP deferred |
+| 2026-05-20 | ContactCta | A3 result SUPERSEDED → Figma `233:261` copy verbatim (sub typo reconstructed: "AI agents, and SaaS products. Tell us…") | claim-gate PASS · guardrails PASS · deliberate departure from A3 8.1 per user visual-vision call (painterly landscape closer) |
+| 2026-05-20 | Footer | UX copy unchanged; wordmark row order fixed to Figma `237:359` (above → below grid) | n/a — visual reorder only |
