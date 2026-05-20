@@ -20,7 +20,7 @@ export function TestimonialsSection() {
   // left edge with no dead right-side whitespace.
   return (
     <Section bg="subtle" maxWidth="wide">
-      <div className="mb-[24px] md:mb-[32px]">
+      <div className="mb-[24px] flex flex-col items-center text-center md:mb-[32px]">
         <Eyebrow as="p" className="mb-[12px]">Social proof</Eyebrow>
         <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">Reviewed and verified on Clutch</h2>
         <p className="mt-[16px] max-w-[640px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
@@ -32,9 +32,10 @@ export function TestimonialsSection() {
           always-rendered trust content. The official Clutch widget loads on top
           (its iframe is opaque), so when Clutch's CDN serves the live carousel
           this badge is hidden behind it; when the widget fails (CDN bot-challenge,
-          ad-blocker, no-JS), the badge remains visible. SSR-friendly. Mirrors the
-          Why-Us SEO-fallback pattern but visible instead of sr-only. */}
-      <div className="relative rounded-[12px] border border-border bg-white">
+          ad-blocker, no-JS), the badge remains visible. Container has no
+          background of its own — the section's subtle bg shows through so widget
+          + section read as a single block. */}
+      <div className="relative">
         <a
           href={clutchProfileUrl}
           target="_blank"
@@ -49,7 +50,7 @@ export function TestimonialsSection() {
           </span>
           <span className="text-[14px] leading-[1.5] text-gray">Based on {reviewCount} verified Clutch reviews</span>
         </a>
-        <ClutchWidget widgetType="8" height={420} reviews={clutchReviewIds} className="relative w-full" />
+        <ClutchWidget widgetType="8" height={220} reviews={clutchReviewIds} className="relative mx-auto w-full" />
       </div>
 
       <div className="mt-[24px] text-center">
