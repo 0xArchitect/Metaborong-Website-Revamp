@@ -1,16 +1,29 @@
-# Session 18 — Handoff Brief
+# Session 18 — Orchestrator Handoff Brief
 
 **Date:** 2026-05-20
-**Scope:** Comparison + FAQ + Social-Proof (Testimonials) sections, **redesigned in parallel**.
+**Scope:** Comparison + FAQ + Social-Proof (Testimonials) sections, **redesigned in three parallel section-sessions coordinated by an orchestrator session**.
 **Branch state:** `design-revamp` @ `8a870ca` (pushed to origin). Tree clean except untracked `docs/FAQReference.jpeg` (visual ref for FAQ; not yet committed).
 **Predecessors:** Session 17 (ContactCta + Footer Figma redesigns, graduated 2026-05-19) → Session 17 follow-up (2026-05-20 ContactCta refit to Figma landscape + footer wordmark reorder + PR #33 mobile-resp pass graduated).
-**This doc is the source-of-truth seed for the next session — read first, before anything else.**
+**This doc is the source-of-truth seed for the orchestrator — read first, before anything else.**
+
+---
+
+## Architecture — orchestrator + 3 section-sessions
+
+Session 18 is **not** one long session. It splits into:
+
+- **Session 18-orchestrator** (this prompt opens here) — reads this handoff, asks D1–D8 via AskUserQuestion, sets up three worktrees, drafts a per-section mini-brief for each worker, hands off the launch prompts, waits for each section's merge-ready report, merges in order, runs the single end-of-session graduation.
+- **Session 18-comparison** (terminal #2, `../mb-website-comparison`, port 3099) — runs the Comparison chain end-to-end.
+- **Session 18-faq** (terminal #3, `../mb-website-faq`, port 3098) — runs the FAQ chain.
+- **Session 18-testimonials** (terminal #4, `../mb-website-testimonials`, port 3097) — runs the Testimonials chain (gated on D4 Clutch content).
+
+Why this shape: per-section context isolation, AskUserQuestion gates inside each section's own scratchpad, failure isolation (Testimonials blocked on Clutch doesn't stall the others), Session-16's proven parallel-worktree pattern scaled from 2 to 3 with an explicit orchestrator/worker split.
 
 ---
 
 ## 0. TL;DR
 
-Three homepage sections need a Session-17-style redesign + copy pass, **in parallel** (three worktrees, three contexts). Each section gets the same gstack chain we've now run six times in a row: A1 (redesign) and/or A3 (copy chain), then plan-design-review → writing-plans → executing-plans → impeccable critique → design-review → simplify → graduate.
+Three homepage sections need a Session-17-style redesign + copy pass, **in parallel** (three worktrees, three section-sessions, one orchestrator session). Each section gets the same gstack chain we've now run six times in a row: A1 (redesign) and/or A3 (copy chain), then plan-design-review → writing-plans → executing-plans → impeccable critique → design-review → simplify → report-ready-for-merge. Orchestrator merges all three at the end, runs the single Session-18 graduation.
 
 **Sections:**
 1. **Comparison** (`components/sections/comparison.tsx`, 47 lines) — user kept it after explicit pushback (Session 17 close). Most likely an A1 visual redesign + light A3 polish on one row (Track record).
@@ -106,52 +119,119 @@ seo-content-auditor (audit FIRST) → write to `homepage.md` → seo-aeo-landing
 
 ---
 
-## 4. Parallel execution model (three worktrees)
+## 4. Orchestrator workflow + 3 section-sessions
 
-Memory `feedback-coordinator-preview-and-verify` says the parallel-worktree merge-back pattern worked in Session 16 (Why-Us + Founders in parallel). Reuse it.
+Memory `feedback-coordinator-preview-and-verify` says the parallel-worktree merge-back pattern worked in Session 16 (Why-Us + Founders in parallel). Session 18 scales it to 3 with an explicit orchestrator/worker split.
 
-### Setup
+### 4.1 Orchestrator's job (in order)
+
+1. **Read this handoff + the §6 reference set.** Don't skim.
+2. **Ask D1–D8 (§8) via AskUserQuestion** with decision briefs (ELI10, recommendation, pros/cons per option per the gstack AskUserQuestion format). One question per call, in the order listed in §8 — earlier answers shape later questions (e.g. D1 "no Figma" makes D5 fall to the Comparison worker's spec instead of being a pre-emptive call).
+3. **Set up three worktrees** with the commands in §4.3.
+4. **Write three section-scoped mini-briefs** to `docs/superpowers/specs/2026-05-20-session-18-<section>-brief.md` (template in §4.4). Each mini-brief is the section-session's input — it inherits this handoff's hard constraints (§5) by reference + adds the section-specific Figma node id, A1/A2/A3 chain pick, and any user-resolved decisions from D1–D8.
+5. **Hand off the launch prompts** (§4.5) — give the user one paste-ready prompt per terminal.
+6. **Wait for section-session reports.** Each section-session runs its chain, finishes with `tsc 0 + design-review PASS + simplify done`, commits to its branch, and reports "merge-ready on `section/<name>-redesign`@`<sha>`" back to the user. Orchestrator does not poll — the user relays each report into the orchestrator session.
+7. **Merge in order** (§4.6) once each section reports ready.
+8. **Single end-of-session graduation** (§4.7).
+
+### 4.2 What the orchestrator does NOT do
+
+- **Does not run the section chains itself.** No specs, no plans, no impeccable critiques, no design-review live QA for the three sections. That's section-session work.
+- **Does not host a dev server.** Section-sessions run their own `pnpm dev` on their port. Orchestrator only does git ops + reads merged state via `curl` after each merge.
+- **Does not push.** Default = end-of-session push per `feedback-no-push-after-every-change` (unless D8 says otherwise).
+- **Does not modify DESIGN.md / CHANGELOG.md / docs/content/homepage.md** before all three sections are merged. Graduation is one commit, not three.
+
+### 4.3 Worktree setup
 
 ```bash
-# From /Users/zephyr/Claude-Workspace/projects/mb-website (main checkout)
+# Orchestrator terminal, from /Users/zephyr/Claude-Workspace/projects/mb-website (main checkout, on design-revamp)
 git fetch origin
-git worktree add ../mb-website-comparison  -b section/comparison-redesign  design-revamp
-git worktree add ../mb-website-faq         -b section/faq-redesign         design-revamp
-git worktree add ../mb-website-testimonials -b section/testimonials-redesign design-revamp
+git worktree add ../mb-website-comparison    -b section/comparison-redesign    design-revamp
+git worktree add ../mb-website-faq           -b section/faq-redesign           design-revamp
+git worktree add ../mb-website-testimonials  -b section/testimonials-redesign  design-revamp
 ```
 
-### Dev ports (memory `feedback-parallel-worktree-dev-ports`)
+### 4.4 Section-brief template (one per section, written by orchestrator after D1–D8)
 
-`:3000` / `:3001` are taken by other terminals. Each worktree starts its dev server on a **free** port:
+```markdown
+# Session 18-<section> — Section Brief
+
+**Worktree:** ../mb-website-<section>
+**Branch:** section/<section>-redesign
+**Dev port:** PORT=30XX pnpm dev    (comparison=3099, faq=3098, testimonials=3097)
+**Chain:** <A1 | A2 | A3 | A1+A3 | A2+A3>   (per §3 of the handoff; orchestrator picks based on D1–D3)
+**Figma node:** <id from D1/D2/D3, or "no Figma — use existing JSX as baseline">
+
+## Inherits (read in order, don't re-derive)
+1. docs/superpowers/specs/2026-05-20-session-18-handoff.md (§5 hard constraints, §6 references, §7 deliverable shape)
+2. DESIGN.md (full)
+3. docs/superpowers/SESSIONS.md (the chain definitions for your context)
+4. docs/content/homepage.md §[<SECTION>] (current locked copy)
+
+## This section's specifics
+- Current JSX state: <paths + line counts from §2.<n>>
+- Locked claims to preserve: <e.g. 7-chains list for Comparison>
+- Drift to fix in passing: <e.g. FAQ AEO-checklist 8→7, testimonials padding chain migration>
+- Pre-resolved decisions from D1–D8: <copy in whatever D# applies>
+- Hard blocker: <e.g. Testimonials needs D4 Clutch content before A3 step 3>
+
+## Deliverables (per §7)
+- docs/superpowers/specs/2026-05-21-section-<section>.md
+- docs/superpowers/plans/2026-05-21-section-<section>.md
+- (if A3) docs/superpowers/specs/2026-05-21-<section>-copy-audit.md
+- (if Figma asset) docs/superpowers/assets/2026-05-21-<section>-figma.png + optimized public/<section>/<asset>.webp
+
+## Definition of done (report back to orchestrator)
+- npx tsc --noEmit exit 0
+- SSR smoke green on PORT=30XX for the section's content
+- impeccable critique applied
+- design-review entry in spec
+- simplify pass committed
+- final commit SHA on section/<section>-redesign branch
+- one-line PR-style summary: "<section>: <what changed in 1 sentence>"
+- list of any cross-file edits (e.g. lib/schema.ts for FAQ, app/page.tsx if render order changed)
+
+## Do NOT
+- Touch DESIGN.md, CHANGELOG.md, or any other section's files
+- Push your branch
+- Graduate (orchestrator does this once for all three)
+```
+
+### 4.5 Launch prompt template (orchestrator gives the user one of these per terminal)
+
+> Open Session 18-<section>. Read `docs/superpowers/specs/2026-05-20-session-18-<section>-brief.md` first, then the inherited docs it points to. Run the `<A1|A2|A3|A1+A3|A2+A3>` chain end-to-end against the section listed in the brief. Dev server: `PORT=30XX pnpm dev` (port in the brief). When done, commit to `section/<section>-redesign` and reply with the final SHA + the merge-ready report described in §"Definition of done" of the brief. Do not push. Do not touch DESIGN.md/CHANGELOG.md/homepage.md outside your section's block.
+
+### 4.6 Merge-back (orchestrator does this, in order)
+
+When a section reports merge-ready:
 
 ```bash
-PORT=3099 pnpm dev    # comparison worktree
-PORT=3098 pnpm dev    # faq worktree
-PORT=3097 pnpm dev    # testimonials worktree
+# Orchestrator terminal, on design-revamp
+git fetch . section/<section>-redesign     # picks up the worker's commits via the worktree
+git merge --no-ff section/<section>-redesign -m "Merge section/<section>: <one-line summary from the report>"
+npx tsc --noEmit
+# SSR smoke on the merged tree (start orchestrator's own dev server on a free port if needed, OR rely on user's terminal)
 ```
 
-Confirm served HTML contains your changes before calling QA done (memory: don't trust the file edit — verify SSR).
+**Merge order:** Comparison first (smallest surface) → FAQ second (data file + schema mirror) → Testimonials last (largest surface + Clutch wiring + potential `app/page.tsx` render-order touch). Each merge gets a `tsc --noEmit` + SSR string-grep before the next. If a merge conflict appears (unlikely since the three sections don't overlap), resolve and re-tsc before continuing.
 
-### Merge-back (Session 16 proven pattern)
+### 4.7 Single end-of-session graduation
 
-When each worktree's chain is green (tsc 0, design-review PASS, simplify done):
+After all three are merged, orchestrator writes one graduation commit:
+- **DESIGN.md** Decisions Log: 3 rows (one per section) for 2026-05-21 (or whatever the merge date is).
+- **CHANGELOG.md:** one `## 2026-05-21 — Session 18` entry covering all three (sub-bullets per section, mirrors the Session-17 entry shape).
+- **Copy-audit scorecard:** rows for sections that ran A3 (likely Testimonials + maybe Comparison's Track-record row if D5 picked B).
+- Each section's spec + plan + (if A3) copy-audit was committed in its worktree before merge — already in the tree.
+- Push only if D8 says push-at-end. Otherwise hand off the final SHA to the user.
+
+### 4.8 Worktree teardown (after graduation merges)
 
 ```bash
-# In main checkout, on design-revamp
-git fetch . section/<branch>
-git merge --no-ff section/<branch> -m "Merge section/<branch>: <one-line>"
-# Run tsc + curl SSR smoke against the merged tree before moving to the next branch
+git worktree remove ../mb-website-comparison
+git worktree remove ../mb-website-faq
+git worktree remove ../mb-website-testimonials
+git branch -d section/comparison-redesign section/faq-redesign section/testimonials-redesign   # only if all merged into design-revamp
 ```
-
-Merge order suggestion: **Comparison first** (smallest surface), **FAQ second** (data file + schema mirror), **Testimonials last** (largest surface + cross-file Clutch wiring). Each merge gets a `tsc --noEmit` + SSR string-grep before the next.
-
-### Graduate once at the end
-
-Don't graduate three times. After all three are merged into `design-revamp`, write a **single Session-18 graduation commit**:
-- DESIGN.md Decisions Log: 3 rows (one per section) for 2026-05-21 (or whatever the merge date is).
-- CHANGELOG.md: one `## 2026-05-21 — Session 18` entry covering all three.
-- Copy-audit scorecard: rows for sections that ran A3 (likely Testimonials + maybe one Comparison row).
-- Each section's spec + plan + (if A3) copy-audit committed in its worktree before merge.
 
 ---
 
@@ -257,18 +337,20 @@ Optimized assets (webp from raw PNG via `sharp`) go to `public/<section>/<asset>
 
 ---
 
-## 8. Open decisions for the user (resolve before Session 18 opens)
+## 8. Decisions the orchestrator asks the user at session open (NOT pre-filled)
 
-| # | Decision | Why it matters |
-|---|---|---|
-| D1 | **Comparison Figma node id** (or `no Figma`) | Determines A1 vs A2 chain. |
-| D2 | **FAQ Figma node id** (the `docs/FAQReference.jpeg` source) | Same. |
-| D3 | **Testimonials Figma node id** (or `keep current layout`) | Same. |
-| D4 | **Clutch content** (rating, review count, 3 quotes verbatim + reviewer names + deep-links) | Blocks Testimonials. |
-| D5 | **Comparison "Track record" row** — drop / replace with `8+ products` / keep | Pre-empts a mid-A3 question. |
-| D6 | **7-vs-4-chains site-wide drift** — resolve in Session 18 (touches `lib/schema.ts` + Hero blockquote + FAQ + TRUST SIGNALS) OR keep deferred | Cross-cutting; affects Comparison + FAQ + maybe Testimonials simultaneously. |
-| D7 | **Execution model** — three parallel worktrees (Session 16 pattern) vs. sequential like Session 17 | Parallel is faster + isolates conflicts; sequential is simpler if scope shifts mid-session. Memory `feedback-coordinator-preview-and-verify` flags coordinator gotchas. Recommend parallel since the three sections are non-overlapping. |
-| D8 | **Push cadence** — push per merge or push once at end-of-session | Default = end-of-session per `feedback-no-push-after-every-change`. |
+These are AskUserQuestion gates inside the orchestrator session, **not paste-line answers in the opening message**. Each gets a decision brief (ELI10, recommendation, pros/cons per option). Order matters — earlier answers shape later questions.
+
+| # | Decision | Asked when | Why it matters |
+|---|---|---|---|
+| D1 | **Comparison Figma node id** (or `no Figma — use existing JSX as baseline`) | Step 2, first question | Determines A1 vs A2 chain for the Comparison section-session. |
+| D2 | **FAQ Figma node id** (the source of `docs/FAQReference.jpeg`) | Step 2 | Same for FAQ. |
+| D3 | **Testimonials Figma node id** (or `keep current Clutch-strip + 3-card layout`) | Step 2 | Same for Testimonials. |
+| D4 | **Clutch content delivery** — paste now / I'll deliver mid-session / Testimonials waits until I have it | Step 2 | Blocks Testimonials section-session. If "wait", orchestrator launches only Comparison + FAQ workers now and queues Testimonials. |
+| D5 | **Comparison "Track record" row** — drop / replace with `8+ products` / keep as-is | Step 2, only if D1 != `no Figma` (if it is `no Figma`, push this into the Comparison worker's spec instead) | Pre-empts a mid-A3 question in the Comparison section-session. |
+| D6 | **7-vs-4-chains site-wide drift** — resolve in Session 18 (cross-cutting: `lib/schema.ts` + Hero blockquote + FAQ + TRUST SIGNALS) OR keep deferred | Step 2, before launching workers | If "resolve", orchestrator owns the cross-cutting edit (it touches files outside any one section's brief); workers are told the canonical chain count. If "deferred", workers preserve the existing inconsistency. Recommend keep deferred for Session 18 — the cross-cutting fix wants its own context. |
+| D7 | **Execution sub-pattern** — (a) three actual terminal sessions / (b) one orchestrator session dispatching `general-purpose` subagents | Step 2 | Recommend (a) — Session 16 ran 2 terminals successfully; subagents can't AskUserQuestion the user mid-task or host dev servers, so (a) is the safer scale-up. |
+| D8 | **Push cadence** — push per merge or once at end-of-session | Step 2 | Default = end-of-session per `feedback-no-push-after-every-change`. |
 
 ---
 
@@ -294,6 +376,12 @@ Don't let these sneak into Session 18:
 
 ---
 
-## 11. Session-open command (suggested first message to paste into the new session)
+## 11. Session-open commands
 
-> Start Session 18 — Comparison + FAQ + Testimonials redesign in parallel. Read `docs/superpowers/specs/2026-05-20-session-18-handoff.md` first, then check the open decisions in §8. My answers to §8: [D1=…, D2=…, D3=…, D4=…, D5=…, D6=…, D7=…, D8=…]. Begin with the parallel-worktree setup in §4, then Figma pulls for the three frames, then per-section chains per §3. Don't push until I ask.
+### 11.1 Orchestrator session (paste into the first new terminal)
+
+> Start Session 18 — you are the orchestrator. Read `docs/superpowers/specs/2026-05-20-session-18-handoff.md` end-to-end, then `DESIGN.md` and `docs/superpowers/SESSIONS.md`. Follow §4 (orchestrator workflow): ask D1–D8 via AskUserQuestion in the order in §8, set up the three worktrees, write the three section briefs from the §4.4 template using my D1–D8 answers, then hand me the launch prompts for the section terminals. Do not run the section chains yourself. Do not push.
+
+### 11.2 Section session launch prompts
+
+The orchestrator generates one per terminal after §11.1 — see the §4.5 template. Each is a one-paragraph paste-ready prompt that points the section-session at its `2026-05-20-session-18-<section>-brief.md`.
