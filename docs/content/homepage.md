@@ -441,6 +441,9 @@ A: No. A first conversation is to understand what you are building and whether t
 **Q: Do Web3 development studios also build Web2 SaaS products?**
 A: Some do. At Metaborong, the Product Studio pillar builds custom Web2 SaaS platforms independently of blockchain or AI — for teams who need a full-stack partner without a Web3 component. The three studio practices carry equal weight.
 
+**Q: How do lean Web3 and AI development studios ship as fast as larger agencies?**
+A: Process integration across development, project management, and operations does most of the work. At Metaborong, automated code review, test generation, deployment, and client tracking run inside the dev loop — so three founders deliver at the throughput of a mid-size agency, without account managers or junior delivery layers between client and code.
+
 <!-- WHY (2026-05-21 — Session 18-faq A3 reopen)
   - User reopened the 2026-05-14 lock with "I need actual FAQ questions that bring SEO,
     AEO there." Every Q rewritten as a third-person informational search query — the
@@ -454,9 +457,15 @@ A: Some do. At Metaborong, the Product Studio pillar builds custom Web2 SaaS pla
   - Word counts: 39–47, all ≤50.
   - Claim discipline: no pricing figures (would fail without user-verified scope);
     no chain count (7-vs-4-chains drift stays deferred per D6).
-  - Audit (2026-05-21): baseline composite 6.4 → rewrite 8.8 (AEO question
-    targeting 3 → 9 is the primary win). Full table in
-    docs/superpowers/specs/2026-05-21-faq-copy-audit.md.
+  - 2026-05-21 v2 addition: Q8 added on the lean-via-integration mechanism
+    (user feedback "we are lean because we have integrated lot of processes
+    in every aspect, be it development, management or operations"). Covers
+    the AEO query "how do lean dev studios ship as fast as larger agencies"
+    — a high-volume mechanism question none of the original 7 answered.
+    Section now 8 Q&As (back at the ≤8 cap).
+  - Audit (2026-05-21): baseline composite 6.4 → rewrite v1 (7 Qs) 8.8 →
+    v2 (8 Qs) 9.0. AEO question targeting 3 → 9 → 9.5 is the primary win.
+    Full table in docs/superpowers/specs/2026-05-21-faq-copy-audit.md.
   - SUPERSEDED — the 2026-05-14 lock (7 branded Qs, "What is Metaborong?" as Q1)
     kept for provenance:
       Q1 What is Metaborong? · Q2 How long does a typical project take? ·
@@ -572,7 +581,7 @@ Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a s
 - [x] Definition of Metaborong within first 60 words of page body
 - [x] 134+ word answer block in Services section (134 words)
 - [x] Question-based H2s present (FAQ section)
-- [x] FAQ: 7 Q&As, all under 50 words, all self-contained
+- [x] FAQ: 8 Q&As, all under 50 words, all self-contained
 - [x] E-E-A-T signals: named founders + LinkedIn, testimonials with names, portfolio projects
 - [x] Comparison table with honest competitor acknowledgement
 - [x] Single H1 with primary keyword (`web3 development company` contained)

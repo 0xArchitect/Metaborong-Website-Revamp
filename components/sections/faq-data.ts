@@ -29,4 +29,8 @@ export const faqs: Faq[] = [
     q: 'Do Web3 development studios also build Web2 SaaS products?',
     a: 'Some do. At Metaborong, the Product Studio pillar builds custom Web2 SaaS platforms independently of blockchain or AI — for teams who need a full-stack partner without a Web3 component. The three studio practices carry equal weight.',
   },
+  {
+    q: 'How do lean Web3 and AI development studios ship as fast as larger agencies?',
+    a: 'Process integration across development, project management, and operations does most of the work. At Metaborong, automated code review, test generation, deployment, and client tracking run inside the dev loop — so three founders deliver at the throughput of a mid-size agency, without account managers or junior delivery layers between client and code.',
+  },
 ]
