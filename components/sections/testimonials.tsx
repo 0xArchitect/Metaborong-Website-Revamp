@@ -25,7 +25,7 @@ export function TestimonialsSection() {
           <Eyebrow as="p" className="mb-[12px]">Social proof</Eyebrow>
           <h2 className="max-w-[440px] text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">Reviewed and verified on Clutch</h2>
           <p className="mt-[16px] max-w-[480px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
-            Nine verified clients have rated our work on Clutch.
+            Real clients rate our work on Clutch — every review is verified, every reviewer is named.
           </p>
           <div className="mt-[24px] flex items-center gap-[16px]">
             <span className="text-[36px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
@@ -46,22 +46,22 @@ export function TestimonialsSection() {
             always-rendered trust content. The official Clutch widget loads on top
             (its iframe is opaque), so when Clutch's CDN serves the live carousel
             this badge is hidden behind it; when the widget fails (CDN bot-challenge,
-            ad-blocker, no-JS), the badge remains visible. */}
+            ad-blocker, no-JS), the badge remains visible. pointer-events-none
+            ensures the fallback never intercepts clicks meant for the iframe (the
+            iframe carries its own per-review carousel arrows + outbound CTAs);
+            the left column's "View all reviews on Clutch →" is the explicit link. */}
         <div className="relative w-full">
-          <a
-            href={clutchProfileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute inset-0 flex flex-col items-center justify-center gap-[12px] p-[24px] text-center no-underline text-inherit"
-            aria-label={`Metaborong is rated ${rating} out of 5 on Clutch, based on ${reviewCount} verified reviews. View all reviews on Clutch.`}
+          <div
+            className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-[12px] p-[24px] text-center"
+            aria-hidden="true"
           >
             <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-gray-light">Verified · Clutch</span>
             <span className="flex items-center gap-[12px]">
               <span className="text-[44px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
-              <span aria-hidden="true" className="text-[20px] leading-none text-[#F6851B]">{'★★★★★'}</span>
+              <span className="text-[20px] leading-none text-[#F6851B]">{'★★★★★'}</span>
             </span>
             <span className="text-[14px] leading-[1.5] text-gray">Based on {reviewCount} verified Clutch reviews</span>
-          </a>
+          </div>
           <ClutchWidget widgetType="8" height={220} reviews={clutchReviewIds} className="relative w-full" />
         </div>
       </div>

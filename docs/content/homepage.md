@@ -247,7 +247,7 @@ Live products across DeFi, AI, gaming, and SaaS — each shipped with founders w
 - "What clients say after shipping"
 - "Verified by clients on Clutch"
 
-**Lede (between H2 and widget):** Nine verified clients have rated our work on Clutch.
+**Lede (between H2 and widget):** Real clients rate our work on Clutch — every review is verified, every reviewer is named.
 
 **Official Clutch widget (type 8, h=420, curated review IDs surfaced in the widget):**
 

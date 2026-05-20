@@ -30,7 +30,6 @@ export function ClutchWidget({
   return (
     <div
       aria-hidden="true"
-      inert
       className={className ?? 'w-[300px] max-w-full'}
       style={{ minHeight: height }}
     >
