@@ -4,6 +4,25 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-20 — PR #33 merged: mobile-resp pass (Section padding chain re-tuned, founder portraits, scrollable lanes)
+
+### Decision log
+- **Merged `Mobile-resp` (PR #33 by SwapnilDey-git) into `design-revamp`** as commit `3160fcf`. One conflict in `components/layout/footer.tsx` (their `items-center` on the bottom bar vs. our new wordmark row from `800c037`) — resolved by keeping the wordmark row and applying their `items-center` (and dropping `sm:items-center`) on the bottom-bar div. A second small merge with `origin/design-revamp` was needed (PR #32 — Safari hero followups — landed upstream during the conflict resolution); auto-merged cleanly on `hero.tsx`.
+- **Canonical Section padding chain re-tuned (deviates from the 2026-05-19 lock).** `px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]` → `px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]` (six steps; tighter at md/lg/xl, full 128 only at 2xl ≥1536px). Applied in `components/ui/section.tsx`, `components/sections/hero.tsx`, and `components/layout/footer.tsx`. DESIGN.md re-graduated (Section primitive doc + new Decisions Log row 2026-05-20 supersedes the 2026-05-19 four-step lock).
+- **Other surface changes from the PR.** Footer grid mobile `1-col → 2-col` (now `grid-cols-2 lg:grid-cols-4`). Hero content cap widened from `max-w-[1280px]` to `max-w-[1600px]`. Nav locks `document.body.style.overflow = 'hidden'` while the mobile menu is open. `services-pillars` swap fixed 560/600 heights for `70vh min-h-[500px] max-h-[700px]` (`xl:75vh max-h-[800px]`) + adds a `ChevronDown` indicator. `testimonials` + `work-preview` add `'use client'` and `useRef` scroll lanes (drag/swipe). Founder portraits render real SVGs from `public/founders/{anik,arnab,soumojit}.svg` instead of monogram fallback.
+- **Drift flag.** `--section-px` in `app/globals.css` still resolves to the older 24/48/72/96 chain at sm/md/lg/xl and was NOT migrated to the new six-step chain. The Tailwind class chain is the source of truth; CSS-variable consumers will under-pad at 2xl until that variable is re-aligned. Recorded in DESIGN.md Layout section.
+
+### Files
+- **MERGED:** `components/layout/footer.tsx` (resolved with wordmark row + their `items-center`); `components/sections/hero.tsx` (auto-merged with PR #32 Safari fixes); `components/layout/nav.tsx`, `components/sections/{founders,services-pillars,testimonials,work-preview}.tsx`, `components/ui/section.tsx` (clean fast-forward of PR #33 changes).
+- **NEW:** `public/founders/anik.svg`, `public/founders/arnab.svg`, `public/founders/soumojit.svg`.
+- **UPDATED (graduation):** `DESIGN.md` (Section primitive doc + Decisions Log row 2026-05-20 + drift flag on `--section-px`).
+
+### Verification
+- `npx tsc --noEmit` exit 0 (after merge + after graduation edit).
+- Merge commits: `3160fcf` (PR #33), `be6d2b6` (second merge w/ origin/design-revamp post-PR #32).
+
+---
+
 ## 2026-05-20 — Session 17 follow-up: ContactCta refit to Figma + footer wordmark reorder
 
 ### Decision log
