@@ -25,7 +25,7 @@ export function TestimonialsSection() {
           <Eyebrow as="p" className="mb-[12px]">Social proof</Eyebrow>
           <h2 className="max-w-[440px] text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">Reviewed and verified on Clutch</h2>
           <p className="mt-[16px] max-w-[480px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
-            Nine verified clients have rated our work on Clutch — read each review on our profile.
+            Nine verified clients have rated our work on Clutch.
           </p>
           <div className="mt-[24px] flex items-center gap-[16px]">
             <span className="text-[36px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
