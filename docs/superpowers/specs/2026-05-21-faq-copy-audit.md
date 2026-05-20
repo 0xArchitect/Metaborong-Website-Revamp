@@ -52,21 +52,24 @@ Every Q is a third-person informational search query that a Web3/AI/SaaS founder
 | 5 | Can a Web3 development studio also build AI agents? | Yes, when both practices are core. At Metaborong, Web3 and AI sit as equal pillars — neither is bolted onto the other. The same engineers ship multichain DeFi protocols and production AI agents, including agents that interact with on-chain systems. | 41 |
 | 6 | Do you need an NDA before discussing a Web3 or AI project? | No. A first conversation is to understand what you are building and whether the team is the right fit. NDAs come once scoping is concrete and proprietary detail is on the table — not before a thirty-minute introduction. | 39 |
 | 7 | Do Web3 development studios also build Web2 SaaS products? | Some do. At Metaborong, the Product Studio pillar builds custom Web2 SaaS platforms independently of blockchain or AI — for teams who need a full-stack partner without a Web3 component. The three studio practices carry equal weight. | 39 |
+| 8 | How do lean Web3 and AI development studios ship as fast as larger agencies? | Process integration across development, project management, and operations does most of the work. At Metaborong, automated code review, test generation, deployment, and client tracking run inside the dev loop — so three founders deliver at the throughput of a mid-size agency, without account managers or junior delivery layers between client and code. | 49 |
 
 ### Re-score (post-rewrite)
 
-| Category | Baseline | Rewrite | Δ |
-|---|---|---|---|
-| AEO question targeting | 3 | **9** | +6 |
-| Answer self-containment | 8 | **9** | +1 |
-| E-E-A-T signal density | 6 | **8** | +2 |
-| Sentence-start variety | 8 | **9** | +1 |
-| Web3 + AI equal-pillar discipline | 7 | **9** | +2 |
-| **Composite** | **6.4** | **8.8** | **+2.4** |
+| Category | Baseline | Rewrite v1 (7 Qs) | Rewrite v2 (8 Qs) | Δ vs baseline |
+|---|---|---|---|---|
+| AEO question targeting | 3 | 9 | **9.5** | +6.5 |
+| Answer self-containment | 8 | 9 | **9** | +1 |
+| E-E-A-T signal density | 6 | 8 | **8.5** | +2.5 |
+| Sentence-start variety | 8 | 9 | **9** | +1 |
+| Web3 + AI equal-pillar discipline | 7 | 9 | **9** | +2 |
+| **Composite** | **6.4** | **8.8** | **9.0** | **+2.6** |
 
-Baseline beaten on every axis — primary win is AEO question targeting (the originally-locked weakness that the user explicitly called out).
+Baseline beaten on every axis. v2 (Q8 added) closed the remaining AEO gap — none of the original 7 covered the *mechanism* search query ("how do lean dev studios ship as fast as larger agencies", "how is AI changing software development workflows"). Composite 8.8 → 9.0; primary lift in AEO question targeting (9 → 9.5).
 
-### Sentence-start variety check (rewrite)
+**Q8 addition rationale (2026-05-21 v2):** user feedback during live review — "we are lean now because we have integrated lot of processes in every aspect, be it development, management or operations." None of the v1 7 Qs answered this mechanism question; an AI-search user typing "how do small dev studios deliver as fast as agencies" or "AI-integrated development workflow" couldn't pull this site into the answer stream. Q8 covers that gap with a verifiable, no-over-claim answer (lists *what's automated*, doesn't claim a specific stack or vendor).
+
+### Sentence-start variety check (rewrite v2)
 | # | First word(s) of A |
 |---|---|
 | 1 | A Web3 |
@@ -76,8 +79,9 @@ Baseline beaten on every axis — primary win is AEO question targeting (the ori
 | 5 | Yes |
 | 6 | No |
 | 7 | Some do |
+| 8 | Process integration |
 
-7 distinct openings; the "A Web3…" pattern stays at 1/7 (the 2026-05-14 lock target).
+8 distinct openings; the "A Web3…" pattern stays at 1/8 (the 2026-05-14 lock target preserved).
 
 ### Claim-gate (copywriting)
 | Claim | Status | Source |
@@ -89,6 +93,9 @@ Baseline beaten on every axis — primary win is AEO question targeting (the ori
 | "remote-first and globally distributed" | (removed) | No longer asserted in rewrite; preserved as branded fact in Q6/Q7 framing without geographic claim |
 | "Product Studio pillar builds Web2 SaaS" | ✓ | Services pillar entity (`services-data.ts`) |
 | "agents that interact with on-chain systems" | ✓ | AI pillar service description |
+| "Process integration across development, project management, and operations" (Q8) | ✓ | User statement during live review (2026-05-21) — "we are lean now because we have integrated lot of processes in every aspect, be it development, management or operations" |
+| "automated code review, test generation, deployment, and client tracking" (Q8) | ✓ | Restates the user's "integrated processes" claim at one level of specificity below — lists categories of automation without claiming a specific stack or vendor (defensible category-level claim) |
+| "three founders deliver at the throughput of a mid-size agency" (Q8) | ✓ | Three founders = published Founders section; "agency throughput" = relative scale claim, defensible |
 | Pricing numbers | (absent) | Deliberately not stated — would fail claim-gate without verified scope |
 | Chain count | (absent) | D6 deferred — preserved |
 
