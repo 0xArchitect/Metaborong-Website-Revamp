@@ -27,7 +27,7 @@ const faqPageJsonLd = {
 
 export function ProblemSection() {
   return (
-    <Section bg="default" maxWidth="xwide" id="problem">
+    <Section bg="default" maxWidth="xwide" id="problem" label="The problem">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermJsonLd) }}
@@ -52,7 +52,6 @@ export function ProblemSection() {
             </figcaption>
           </figure>
           <div className="problem-content">
-            <span className="problem-chip">THE PROBLEM</span>
             <h2 className="problem-h2">
               The window opens fast. Most teams aren&apos;t built to move through it.
             </h2>
