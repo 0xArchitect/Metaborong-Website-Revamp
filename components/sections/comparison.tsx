@@ -19,7 +19,7 @@ export function ComparisonSection() {
     <Section bg="default" maxWidth="xwide" reveal={false}>
       <div className="mb-[24px] md:mb-[32px]">
         <Pill className="mb-[16px]">Comparison</Pill>
-        <h2 className="mb-[16px] text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">
+        <h2 className="mb-[16px] text-balance text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">
           Metaborong vs. large Web3/AI agencies and freelancers
         </h2>
         <p className="max-w-[760px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
