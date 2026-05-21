@@ -143,8 +143,9 @@ export function HeroSection() {
                 { text: 'AI agents.' },
                 { text: 'Shipped.', className: 'text-brand' },
               ]}
-              durationMs={650}
-              startDelayMs={150}
+              durationMs={520}
+              startDelayMs={120}
+              staggerMs={150}
             />
           </h1>
 

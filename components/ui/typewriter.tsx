@@ -8,6 +8,9 @@ type Props = {
   durationMs?: number
   /** Delay before the first line starts revealing in ms. Default 200. */
   startDelayMs?: number
+  /** Gap between successive line starts. Default = durationMs (sequential). Set
+   *  smaller than durationMs for an overlapping cascade that resolves faster. */
+  staggerMs?: number
   className?: string
 }
 
@@ -19,12 +22,14 @@ export function Typewriter({
   lines,
   durationMs = 700,
   startDelayMs = 200,
+  staggerMs,
   className = '',
 }: Props) {
+  const step = staggerMs ?? durationMs
   return (
     <span className={`typewriter ${className}`}>
       {lines.map((line, i) => {
-        const delay = startDelayMs + i * durationMs
+        const delay = startDelayMs + i * step
         return (
           <span key={i} className="typewriter-line">
             <span
