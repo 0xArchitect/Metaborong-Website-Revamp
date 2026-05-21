@@ -85,24 +85,27 @@ function SocialButton({
 
 function FounderCard({ founder }: { founder: Founder }) {
   return (
-    <div className="flex flex-col">
-      {/* Photo tile is non-interactive by design — only the social-row buttons link. */}
-      <div className="relative aspect-square border border-border bg-white shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12),0_6px_16px_-4px_rgba(0,0,0,0.06)]">
+    <div className="group flex flex-col">
+      {/* Photo tile is non-interactive by design — only the social-row buttons link.
+          Hover/focus-within (Session 19): blueprint ticks + frame tint to brand,
+          portrait zooms within its inset frame, tile lifts. transform/color only,
+          250ms; the zoom is motion-safe-gated. */}
+      <div className="relative aspect-square border border-border bg-white shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12),0_6px_16px_-4px_rgba(0,0,0,0.06)] transition-[border-color,transform,box-shadow] duration-[250ms] ease-out group-hover:border-brand/50 group-focus-within:border-brand/50 motion-safe:group-hover:-translate-y-[3px] motion-safe:group-focus-within:-translate-y-[3px]">
         {/* 4 dashed edge accents (Figma blueprint ticks) */}
-        <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] top-0 border-t border-dashed border-gray" />
-        <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] bottom-0 border-b border-dashed border-gray" />
-        <span aria-hidden className="pointer-events-none absolute top-[8%] bottom-[8%] left-0 border-l border-dashed border-gray" />
-        <span aria-hidden className="pointer-events-none absolute top-[8%] bottom-[8%] right-0 border-r border-dashed border-gray" />
+        <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] top-0 border-t border-dashed border-gray transition-colors duration-[250ms] group-hover:border-brand group-focus-within:border-brand" />
+        <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] bottom-0 border-b border-dashed border-gray transition-colors duration-[250ms] group-hover:border-brand group-focus-within:border-brand" />
+        <span aria-hidden className="pointer-events-none absolute top-[8%] bottom-[8%] left-0 border-l border-dashed border-gray transition-colors duration-[250ms] group-hover:border-brand group-focus-within:border-brand" />
+        <span aria-hidden className="pointer-events-none absolute top-[8%] bottom-[8%] right-0 border-r border-dashed border-gray transition-colors duration-[250ms] group-hover:border-brand group-focus-within:border-brand" />
 
         {/* Inset dashed frame holding the portrait/monogram */}
-        <div className="absolute inset-[8%] border border-dashed border-gray overflow-hidden">
+        <div className="absolute inset-[8%] border border-dashed border-gray overflow-hidden transition-colors duration-[250ms] group-hover:border-brand/70 group-focus-within:border-brand/70">
           {founder.image ? (
             <img
               src={founder.image}
               alt={`${founder.name}, ${founder.role}`}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-[400ms] ease-out motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
             />
           ) : (
             <div
@@ -185,14 +188,9 @@ export function FoundersSection() {
   const repeatedFounders = Array(9).fill(founders).flat()
 
   return (
-    <Section bg="default" maxWidth="xwide">
+    <Section bg="default" maxWidth="xwide" label="The team">
       {/* Header */}
       <div className="flex flex-col gap-[24px] items-start">
-        {/* Eyebrow chip — matched token-for-token to hero.tsx:50-54 (spec Deviation 2) */}
-        <div className="inline-flex items-center bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
-          <Eyebrow className="text-[12px]! tracking-[0.12em]!">The team</Eyebrow>
-        </div>
-
         {/* H2 — "the work" in brand blue (Figma) */}
         <h2 className="text-[clamp(30px,4vw,56px)] font-bold tracking-[-0.03em] leading-[1.05] text-dark uppercase">
           The team behind <span className="text-brand">the work</span>
@@ -207,7 +205,7 @@ export function FoundersSection() {
       </div>
 
       {/* Card row wrapper */}
-      <div className="relative mt-[48px] [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)] md:[--cw:calc(100vw-80px)]">
+      <div className="relative mt-[48px]">
         <div 
           ref={scrollRef}
           className="flex overflow-x-auto snap-x snap-mandatory gap-[24px] lg:grid lg:grid-cols-3 lg:gap-[48px] pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] md:-mx-[48px] md:px-[48px] lg:mx-0 lg:px-0 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -217,40 +215,12 @@ export function FoundersSection() {
             return (
               <div 
                 key={`${founder.name}-${idx}`} 
-                className={`snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-[calc(100vw-80px)] lg:w-auto lg:max-w-none ${!isOriginal ? 'lg:hidden' : ''}`}
+                className={`snap-center snap-always shrink-0 w-[74vw] max-w-[300px] sm:w-[58vw] sm:max-w-[340px] md:w-[42vw] md:max-w-[380px] lg:w-auto lg:max-w-none ${!isOriginal ? 'lg:hidden' : ''}`}
               >
                 <FounderCard founder={founder} />
               </div>
             )
           })}
-        </div>
-
-        {/* Floating swipe hint arrow (Left) */}
-        <div 
-          className="pointer-events-none absolute lg:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
-          style={{
-            top: 'calc(var(--cw) / 2)',
-            left: 'calc(var(--cw) * 0.04)',
-            transform: 'translate(-50%, -50%)'
-          }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </div>
-
-        {/* Floating swipe hint arrow (Right) */}
-        <div 
-          className="pointer-events-none absolute lg:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
-          style={{
-            top: 'calc(var(--cw) / 2)',
-            right: 'calc(var(--cw) * 0.04)',
-            transform: 'translate(50%, -50%)'
-          }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
         </div>
       </div>
     </Section>
