@@ -4,6 +4,104 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-21 — Session 18: Comparison + FAQ + Testimonials redesigned in parallel (orchestrator + 3 section-sessions)
+
+### Decision log
+
+Three homepage sections re-shipped through a Session-17-style chain run in parallel across three worktrees (`section/comparison-redesign`, `section/faq-redesign`, `section/testimonials-redesign`), coordinated by a single orchestrator session. Pattern: orchestrator drafts a section-scoped brief per worker, workers run their A2 / A3 / A2+A3 chains end-to-end (impeccable critique → spec → plan → execute → design-review → simplify), report merge-ready, orchestrator merges in order (Comparison → FAQ → Testimonials) with `tsc --noEmit` between merges, then writes this single graduation commit. Scales the Session-16 two-terminal parallel pattern to three.
+
+- **Comparison** — A2 + two-pass A3. Migrated to canonical `<Section bg="default" maxWidth="xwide">` grid; table gains a11y (`scope` + `<caption>` + sr-only Dimension header). First-pass A3 cleaned the 2026-05-14 "too aggressive" tone (5.2 → 8.4); second-pass (user-direction angle shift) reframed every column around the lean / integrated-delivery positioning (8.4 → **8.8**). New row label `Process and project management`; new cells `Founder-led, no account-manager layer`, `Production AI agents and RAG systems`, `Integrated across engineering, PM, and operations`, `25+ products in production`. 7-chain string + `4–12 weeks per engagement` preserved verbatim. **Drift flagged for future session:** `8+ products` in TRUST SIGNALS (homepage.md) vs `25+` in Comparison. D6 (7-vs-4-chains site-wide drift) kept deferred per user direction.
+
+- **FAQ** — A2 two-column redesign + full A3 AEO rewrite. Single-column accordion → sticky title rail (md+) + helper card with founders' email + accordion right column with first item default-open. All 7 Q&As rewritten as real third-person AEO search queries; every A ≤50w self-contained. A11y: focus-visible ring, full ARIA disclosure quartet (`aria-controls`/`aria-labelledby`/`role="region"` + `hidden` attr panels with all 7 answers in SSR HTML for AEO extraction), tap target 56px. Component split into `faq.tsx` (server, `<Section>`) + `faq-accordion.tsx` (client). Schema mirror auto-honored via existing `faqs.map()` derivation in `lib/schema.ts:1` (no manual mirror edit needed). `homepage.md:558` AEO-checklist count corrected 8 → 7. Baseline 6.4 → **8.8**.
+
+- **Testimonials** — A2 (migrate to `<Section bg="subtle" maxWidth="wide">`) + A3 (Clutch widget integration, content via user). Seven `[TODO:]` placeholders eliminated. Official Clutch type-8 reviews widget (h=420, 6 curated review IDs) in a white card is the **only** review surface; `sr-only` outbound link carries the SSR rating/count fallback (Why-Us pattern). `<ClutchWidget>` parameterised (`widgetType`, `height`, `reviews`, `className`); Why-Us defaults preserved. Section narrowed to `wide` (1120) to match the iframe's natural ~1100 content cap and avoid dead right-side whitespace at ≥xl. Mid-session 3 SSR-fallback quote cards + drag-scroll lane dropped per user direction (duplicated widget content + reintroduced the per-card "Read on Clutch →" idiom). Padding chain migrated from hand-rolled 4-step to canonical 6-step. Baseline 3.4 → **8.0**.
+
+### A3 copy-audit scorecard
+
+| Section                   | Baseline | Final   | Δ        | Audit doc                                                      |
+|---------------------------|----------|---------|----------|----------------------------------------------------------------|
+| Comparison (Session 18)   | 5.2      | **8.8** | **+3.6** | `docs/superpowers/specs/2026-05-21-comparison-copy-audit.md`   |
+| FAQ (Session 18)          | 6.4      | **8.8** | **+2.4** | `docs/superpowers/specs/2026-05-21-faq-copy-audit.md`          |
+| Testimonials (Session 18) | 3.4      | **8.0** | **+4.6** | `docs/superpowers/specs/2026-05-21-testimonials-copy-audit.md` |
+
+### Files
+
+- **MODIFIED:** `components/sections/comparison.tsx`, `components/sections/faq.tsx`, `components/sections/faq-data.ts`, `components/sections/testimonials.tsx`, `components/sections/clutch-widget.tsx`, `docs/content/homepage.md` (§COMPARISON + §FAQ + §TESTIMONIALS + AEO checklist).
+- **NEW:** `components/sections/faq-accordion.tsx`, `docs/superpowers/assets/2026-05-20-faq-reference.jpeg`.
+- **SPECS / PLANS / AUDITS (NEW):** `docs/superpowers/specs/2026-05-21-section-comparison.md`, `docs/superpowers/specs/2026-05-21-comparison-copy-audit.md`, `docs/superpowers/plans/2026-05-21-section-comparison.md`, `docs/superpowers/specs/2026-05-21-section-faq.md`, `docs/superpowers/specs/2026-05-21-faq-copy-audit.md`, `docs/superpowers/plans/2026-05-21-section-faq.md`, `docs/superpowers/specs/2026-05-21-section-testimonials.md`, `docs/superpowers/specs/2026-05-21-testimonials-copy-audit.md`, `docs/superpowers/plans/2026-05-21-section-testimonials.md`.
+- **BRIEFS (Session-18 orchestrator artifacts, committed `3fa4e68` earlier in the session):** `docs/superpowers/specs/2026-05-20-session-18-comparison-brief.md`, `docs/superpowers/specs/2026-05-20-session-18-faq-brief.md`, `docs/superpowers/specs/2026-05-20-session-18-testimonials-brief.md`.
+- **UPDATED (this graduation commit):** `DESIGN.md` (three new 2026-05-21 Decisions Log rows), `CHANGELOG.md` (this entry).
+
+### Verification
+
+- `npx tsc --noEmit` exit 0 after each of the three merges and after this graduation commit.
+- Merge commits (no-ff): Comparison → FAQ → Testimonials, against `design-revamp`.
+- Deferred per D6: 7-vs-4-chains drift (Hero blockquote `EVM chains and Solana` vs Comparison's 7-chain string vs TRUST SIGNALS' 4 chains). Workers preserved existing copy in their sections; cross-cutting fix gets its own focused future session.
+- Deferred (new flag, raised by Comparison A3 rewrite): `8+ products` in TRUST SIGNALS vs `25+ products in production` in Comparison.
+
+---
+
+## 2026-05-20 — PR #33 merged: mobile-resp pass (Section padding chain re-tuned, founder portraits, scrollable lanes)
+
+### Decision log
+- **Merged `Mobile-resp` (PR #33 by SwapnilDey-git) into `design-revamp`** as commit `3160fcf`. One conflict in `components/layout/footer.tsx` (their `items-center` on the bottom bar vs. our new wordmark row from `800c037`) — resolved by keeping the wordmark row and applying their `items-center` (and dropping `sm:items-center`) on the bottom-bar div. A second small merge with `origin/design-revamp` was needed (PR #32 — Safari hero followups — landed upstream during the conflict resolution); auto-merged cleanly on `hero.tsx`.
+- **Canonical Section padding chain re-tuned (deviates from the 2026-05-19 lock).** `px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]` → `px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]` (six steps; tighter at md/lg/xl, full 128 only at 2xl ≥1536px). Applied in `components/ui/section.tsx`, `components/sections/hero.tsx`, and `components/layout/footer.tsx`. DESIGN.md re-graduated (Section primitive doc + new Decisions Log row 2026-05-20 supersedes the 2026-05-19 four-step lock).
+- **Other surface changes from the PR.** Footer grid mobile `1-col → 2-col` (now `grid-cols-2 lg:grid-cols-4`). Hero content cap widened from `max-w-[1280px]` to `max-w-[1600px]`. Nav locks `document.body.style.overflow = 'hidden'` while the mobile menu is open. `services-pillars` swap fixed 560/600 heights for `70vh min-h-[500px] max-h-[700px]` (`xl:75vh max-h-[800px]`) + adds a `ChevronDown` indicator. `testimonials` + `work-preview` add `'use client'` and `useRef` scroll lanes (drag/swipe). Founder portraits render real SVGs from `public/founders/{anik,arnab,soumojit}.svg` instead of monogram fallback.
+- **Drift flag.** `--section-px` in `app/globals.css` still resolves to the older 24/48/72/96 chain at sm/md/lg/xl and was NOT migrated to the new six-step chain. The Tailwind class chain is the source of truth; CSS-variable consumers will under-pad at 2xl until that variable is re-aligned. Recorded in DESIGN.md Layout section.
+
+### Files
+- **MERGED:** `components/layout/footer.tsx` (resolved with wordmark row + their `items-center`); `components/sections/hero.tsx` (auto-merged with PR #32 Safari fixes); `components/layout/nav.tsx`, `components/sections/{founders,services-pillars,testimonials,work-preview}.tsx`, `components/ui/section.tsx` (clean fast-forward of PR #33 changes).
+- **NEW:** `public/founders/anik.svg`, `public/founders/arnab.svg`, `public/founders/soumojit.svg`.
+- **UPDATED (graduation):** `DESIGN.md` (Section primitive doc + Decisions Log row 2026-05-20 + drift flag on `--section-px`).
+
+### Verification
+- `npx tsc --noEmit` exit 0 (after merge + after graduation edit).
+- Merge commits: `3160fcf` (PR #33), `be6d2b6` (second merge w/ origin/design-revamp post-PR #32).
+
+---
+
+## 2026-05-20 — Session 17 follow-up: ContactCta refit to Figma + footer wordmark reorder
+
+### Decision log
+- **ContactCta — Figma fidelity over the A3 score (user call).** Viewing the live section, the user reverted the section to the Figma `233:261` copy verbatim and replaced the bottom-band ASCII-hills raster with a different Figma asset — a painterly ASCII-textured landscape (file `VE5DrIc8bHVLyW618jQUGp`, node `1:19`) — overlaying the copy on top of it. Specifically:
+  - **Copy:** H2 `Got a project in mind?`, sub verbatim from Figma (the mid-word edit accident "…protocols, ATell us…" reconstructed to "AI agents, and SaaS products. Tell us…" per user-confirmed reconstruction matching site-wide Web3 + AI + SaaS positioning), CTA `Start a conversation →`. Session-17 A3 sub ("…straight from a founder."), 12h risk reducer, and secondary email link **removed** (not in Figma).
+  - **Button:** kept the project's `<Button arrow="→">` split-arrow primitive (radius-0 Bauhaus signature kept over Figma's plain rounded blue button — DESIGN.md primitive lock).
+  - **Background:** `public/contact/landscape.webp` (2400×1707, q=84, 491 KB) exported via `sharp` from the 4096×2914 Figma asset. Old `public/contact/ascii-hills.webp` (and the normal-flow bottom-band layout) **decommissioned and deleted**.
+  - **Layout:** 16:9 `aspect-[16/9] min-h-[440px] overflow-hidden` container; image fills via `object-cover`.
+  - **AA:** centered radial dark vignette behind the text only (`rgba(0,0,0,0.62) → 0.32 → 0`) + white H2/sub with text-shadow safety — image edges stay pristine while white text clears AA over bright cloud clusters.
+- **Footer — wordmark moved below the grid.** User noted the giant faded `METABORONG` live-text wordmark was rendered above the sitemap grid; Figma `237:359` shows it between the grid and the bottom bar. Row order corrected to match Figma; **all UX copy unchanged** per explicit user instruction.
+- **Supersession recorded.** Session-17 A3 result for ContactCta (7.6 → 8.1) is now superseded by Figma fidelity. The A3 history is kept in `homepage.md` (as a SUPERSEDED comment block) and in the copy-audit scorecard (a 2026-05-20 row marks the departure).
+
+### Files
+- **UPDATED:** `components/sections/contact-cta.tsx` (full rewrite — Figma copy + landscape background + radial vignette + white text); `components/layout/footer.tsx` (wordmark moved from above grid to between grid and bottom bar); `docs/content/homepage.md` (ContactCta block reverted to Figma copy, A3 rewrite preserved as a SUPERSEDED block); `docs/superpowers/specs/2026-05-19-section-{contact-cta,footer}.md` (2026-05-20 revision addenda); `docs/superpowers/specs/2026-05-19-contact-footer-copy-audit.md` (scorecard +2 rows for 2026-05-20); `DESIGN.md` (Decisions Log +2 rows for 2026-05-20).
+- **NEW:** `public/contact/landscape.webp`.
+- **DELETED:** `public/contact/ascii-hills.webp` (now unreferenced after the bottom-band layout was replaced).
+
+### Verification
+- `npx tsc --noEmit` exit 0.
+- SSR-verified the new copy + the asset served at `/contact/landscape.webp` (HTTP 200) on the running dev server.
+- `npm run build` still expected to fail at `/blog/rss.xml` (PR-#26 env hold, not a regression).
+
+---
+
+## 2026-05-19 — Session 17: ContactCta + Footer Figma redesigns (sequential, direct on design-revamp)
+
+### Decision log
+- **Execution model.** ContactCta then Footer redesigned sequentially in one session directly on `design-revamp` (two adjacent, non-overlapping components — no parallel worktrees needed). Both copy treatments = full A3 chain (user choice).
+- **ContactCta — Figma `233:261`, dark → light.** Rebuilt on the canonical `<Section bg=default maxWidth=xwide>` grid. H2 + 3-word "Email us" CTA kept (Figma's generic "Got a project in mind?" / 4-word "Start a conversation" rejected — DESIGN.md ≤3-word cap + the Session-15 WHY). Brand-blue **split-arrow `<Button>` primitive** (replaced a hand-rolled split-arrow that had a hover-direction + transition bug). A3 copy re-run **7.6 → 8.1 / 10** (added founder-reachability E-E-A-T + Web3/AI topical; "straight from a founder" user-verified literally true 2026-05-19); claim-gate + guardrails PASS. ASCII-hills signature = Figma raster exported → 204KB webp; rendered as a **normal-flow bottom band** after a live-QA P1 (an absolute backdrop blanketed the H2 at desktop → dark-on-green, failed AA). `homepage.md` "[dark section]"/`#0a0a0a` notes + `DESIGN.md` surface.dark table reconciled to light; `section.tsx` doc gains `xwide`.
+- **Footer — Figma `237:359`, single row → expanded sitemap.** Light footer on the site edge grid: Company / Services / Offices / Get-in-touch columns (canonical `<Eyebrow>` headings, `linkCls` const), 16-word positioning line, giant `METABORONG` as live text (not raster), dynamic-year bottom bar. Figma placeholder "ARNAB RAY ×4" card grid **dropped** (user — Founders already carries the team; avoids personal-mobile exposure); Dribbble dropped; offices = user-verified NAP (verbatim); LinkedIn/X real (`rel=me`), Behance/Medium/Discord → `/` temp redirect (no `rel=me`, follow-up to swap). Footer copy = A3 *create*; claim-gate + guardrails PASS. Small `<Logo>` M-mark dropped (Figma frame has only the text wordmark).
+- **Review chain.** plan-design-review **9.0 (ContactCta) / 8.8 (Footer)**; impeccable critique fixed a11y (#999 → text-gray on load-bearing copy) + the `<Button>` primitive + raster bleed; design-review live QA found+fixed FINDING-001 (desktop raster contrast) and confirmed the footer clean at 1440/375; simplify adopted the `Eyebrow` primitive + `linkCls` const + `decoding=async`. Verification posture: `tsc` exit 0 + dev QA (no Vitest for presentational sections); `npm run build` still expected to fail at `/blog/rss.xml` (PR-#26 env hold, not a regression).
+- **Deferred follow-ups.** `lib/schema.ts` Organization `PostalAddress` ×3 (NAP consistency — shared surface, mirrors Founders `sameAs` deferral); real Behance/Medium/Discord URLs. SEO advisory (noindex service pages are the real lever, not footer links) recorded in the copy-audit doc.
+- **Pre-existing flag (not fixed, REPO_MODE collaborative).** The site-global privacy/consent banner is a fixed overlay covering bottom content — same item the Session-16 design-review handed to the main session; not introduced by this redesign.
+
+### Build state changes
+- **NEW:** `public/contact/ascii-hills.webp` (1600×900, 204KB; raw 9.7MB Figma capture kept local-only, not committed).
+- **UPDATED:** `components/sections/contact-cta.tsx` (Figma redesign + A3 + `<Button>` primitive + normal-flow raster); `components/layout/footer.tsx` (expanded sitemap, `Eyebrow`/`linkCls`); `docs/content/homepage.md` (ContactCta + Footer blocks, A3-synced; dark→light notes reconciled).
+- **NEW:** `docs/superpowers/specs/2026-05-19-section-{contact-cta,footer}.md`, `…/2026-05-19-contact-footer-copy-audit.md`; `docs/superpowers/plans/2026-05-19-section-{contact-cta,footer}.md`.
+- **UPDATED:** `DESIGN.md` — two Decisions Log rows + `section.tsx` `xwide` doc + `--color-canvas` surface usage (contact CTA removed); `CHANGELOG.md` — this entry.
+
+---
+
 ## 2026-05-19 — Session 16: Why-Us + Founders Figma redesigns (parallel worktrees)
 
 ### Decision log
