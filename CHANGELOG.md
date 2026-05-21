@@ -4,6 +4,33 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-21 — Session 19 (REDO): Homepage beautification, smooth-scroll & premiumness pass
+
+### Decision log
+
+Redo of the reverted `ca604ea` (reverted in `b8339c9` for **process** — it skipped sign-off and altered/removed the section pills). Built from a remote-session implementation patch as a baseline, then every subjective fork (pill style, section seam, Work-Preview tiles, the three motion moments) was rendered as live candidates and **picked by the user on the running page** — not decided up front. Copy additions ran through a no-fabrication audit. Transform/opacity-only motion shape reused from the prior attempt.
+
+- **Unified label pill** — new `components/ui/pill.tsx` (bordered mono, sharp/squared `rounded-[2px]` corners — picked live over rounded-md and a dot/rounded-full variant; `default` + `inverse` tones) replaces five divergent eyebrow treatments. Applied to Hero, Problem (`inverse`, replaces the `.problem-chip` CSS which was deleted), Services, Why-Us, Founders, Testimonials, Comparison, FAQ, Work-Preview. `eyebrow.tsx` kept for sub-labels (footer headings, founder role chip).
+- **Lenis smooth-scroll** — `components/providers/smooth-scroll.tsx` mounted in `app/layout.tsx` (`lerp: 0.1`). **Not initialized** under `prefers-reduced-motion`. Removed the global `html { scroll-behavior: smooth }` (fought Lenis); in-page anchors delegated to `lenis.scrollTo(target, { offset: -64 })`; horizontal lanes carry `data-lenis-prevent`. **No scroll-snap.** Services 260vh scrolltelling (sticky + IntersectionObserver) is Lenis-compatible and preserved.
+- **Section seams** — `Section` gains a `divider` prop (edge-to-edge `border-t border-border` — the subtle hairline, picked live over a sharper `border-gray-subtle` line so sections read as one continuous scroll), applied to Why-Us, Work-Preview, Testimonials, Founders, Comparison, FAQ, Contact-CTA (skipped where a separator already exists: Problem, Services).
+- **Whitespace / width** — Section vertical rhythm `py-[48/64/72]` → `py-[56/72/96]`. Work-Preview routed back through `<Section maxWidth="xwide" divider>` (its no-op `'use client'`/`scrollRef`/`useEffect` removed). Trust-bar `px` aligned to the canonical 6-step chain.
+- **Three motion moments** (transform/opacity only, reduced-motion-gated) — Founders card hover (lift + `border-brand/30` + portrait `scale-[1.03]`) + narrowed mobile card widths for a peek; Comparison IO-staggered row-reveal (new `comparison-rows.tsx` client island, row text stays in SSR DOM); Work-Preview blueprint-hairline tiles (faint diagonal pillar-hue panel + corner monogram, picked live over a ghost-monogram and a badge variant) + card hover. Removed the undocumented infinite `animate-[pulse]` swipe-arrow animations (DESIGN.md violation) — arrows are now static.
+- **Copy** — the patch's 4 invented Work-Preview blurbs were **removed**: `docs/content/homepage.md` explicitly defers per-card one-liners until case studies land ("do not render fake outcomes"), so they failed the no-fabrication bar. One true AEO sentence was added to Testimonials stating the 4.9/9 verified-review figures in prose (kept in sync with the existing `rating`/`reviewCount` constants). No locked copy edited.
+
+### Files
+
+- **NEW:** `components/ui/pill.tsx`, `components/providers/smooth-scroll.tsx`, `components/sections/comparison-rows.tsx`.
+- **MODIFIED:** `app/layout.tsx`, `app/globals.css` (removed `scroll-behavior` + `.problem-chip`; added Lenis CSS), `components/ui/section.tsx`, `package.json` (+`lenis`), and sections `hero.tsx`, `problem.tsx`, `services.tsx`, `why-us.tsx`, `testimonials.tsx`, `comparison.tsx`, `faq.tsx`, `founders.tsx`, `work-preview.tsx`, `trust-bar.tsx`.
+- **UPDATED:** `DESIGN.md` (Pill primitive, Layout py rhythm + `divider`, Motion patterns, Decisions Log), `CHANGELOG.md` (this entry).
+
+### Verification
+
+- `npx tsc --noEmit` exit 0 (the gate; `npm run build` still fails only at `/blog/rss.xml` per the PR #26 env hold).
+- Dev server renders homepage 200; all 9 sharp pills, subtle section seams, blueprint-hairline tiles, and the Testimonials AEO sentence present in SSR HTML; Lenis initializes (`html.lenis`) and `<Reveal>` still fires under it; in-page anchors land with the `-64` nav offset; no runtime errors.
+- `npm run lint` has a pre-existing repo-wide baseline of React-Compiler `setState-in-effect` errors (nav, consent-banner, reveal, admin, …); the new `comparison-rows.tsx` follows the same established `reveal.tsx` pattern and introduces no new error category; `smooth-scroll.tsx` is lint-clean.
+
+---
+
 ## 2026-05-21 — Session 18: Comparison + FAQ + Testimonials redesigned in parallel (orchestrator + 3 section-sessions)
 
 ### Decision log

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Eyebrow } from '@/components/ui/eyebrow'
+import { Pill } from '@/components/ui/pill'
 import { Reveal } from '@/components/ui/reveal'
 import { Typewriter } from '@/components/ui/typewriter'
 
@@ -133,11 +133,7 @@ export function HeroSection() {
         {/* Left: copy */}
         <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-[96px] lg:pb-[48px]">
           {/* Eyebrow chip — entity-category line */}
-          <div className="inline-flex items-center mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
-            <Eyebrow className="text-[12px]! tracking-[0.12em]!">
-              Web3 &amp; AI development studio
-            </Eyebrow>
-          </div>
+          <Pill className="mb-7">Web3 &amp; AI development studio</Pill>
 
           {/* H1 */}
           <h1 className="text-[clamp(32px,4.8vw,72px)] font-black tracking-[-0.04em] leading-[1.02] text-dark mb-6">

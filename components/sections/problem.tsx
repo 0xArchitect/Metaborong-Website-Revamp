@@ -1,4 +1,5 @@
 import { Section } from '@/components/ui/section'
+import { Pill } from '@/components/ui/pill'
 import { ProblemTrendChart } from './problem-trend-chart'
 import { ProblemAEOAccordion } from './problem-aeo-accordion'
 import { PROBLEM_QA } from './problem-qa-data'
@@ -52,7 +53,7 @@ export function ProblemSection() {
             </figcaption>
           </figure>
           <div className="problem-content">
-            <span className="problem-chip">THE PROBLEM</span>
+            <Pill tone="inverse">The problem</Pill>
             <h2 className="problem-h2">
               The window opens fast. Most teams aren&apos;t built to move through it.
             </h2>

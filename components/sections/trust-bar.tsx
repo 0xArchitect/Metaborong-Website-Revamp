@@ -31,7 +31,7 @@ export function TrustBar() {
   return (
     <section
       aria-label="Selected clients"
-      className="relative overflow-hidden border-y border-border bg-bg py-4 md:py-6 px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
+      className="relative overflow-hidden border-y border-border bg-bg py-4 md:py-6 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]"
     >
       <Reveal>
       <ul className="flex w-max items-center gap-[48px] md:gap-[64px] lg:gap-[96px] animate-marquee m-0 p-0 list-none will-change-transform">
