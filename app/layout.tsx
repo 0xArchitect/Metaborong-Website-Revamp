@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
+import { SmoothScroll } from '@/components/providers/smooth-scroll'
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +38,7 @@ export default function RootLayout({
           React hydrates. The flag suppresses *only* the body element's
           attribute mismatch, not anything inside it. */}
       <body suppressHydrationWarning>
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
         <ConsentBanner />
         <ConsentRevokePill />
       </body>

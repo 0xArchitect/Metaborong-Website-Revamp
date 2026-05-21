@@ -124,7 +124,8 @@
   html {
     font-family: var(--font-brand);
     -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
+    /* No `scroll-behavior: smooth` — it fights Lenis (components/providers/smooth-scroll.tsx).
+       Reduced-motion users get native instant jumps (Lenis is not initialized for them). */
   }
 
   body {
@@ -133,6 +134,18 @@
     line-height: 1.5;
     letter-spacing: -0.01em;
   }
+}
+
+/* ── Lenis smooth-scroll (components/providers/smooth-scroll.tsx) ─────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* ── Focus ring (DESIGN.md mandate, applies to interactive elements) ─────── */
@@ -677,19 +690,6 @@ video.hero-ascii-image::-webkit-media-controls-container {
   gap: 20px;
   padding-left: 8px;
 }
-.problem-chip {
-  display: inline-flex;
-  align-self: flex-start;
-  background: rgba(255, 255, 252, 0.1);
-  padding: 7px 10px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #fffffc;
-  line-height: 1;
-}
 .problem-h2 {
   font-family: 'Space Grotesk', var(--font-brand);
   font-weight: 700;
@@ -860,7 +860,6 @@ video.hero-ascii-image::-webkit-media-controls-container {
   .problem-h2,
   .problem-body,
   .problem-bridge,
-  .problem-chip,
   .problem-aeo-q,
   .problem-aeo-a,
   .problem-aeo > summary {

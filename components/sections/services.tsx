@@ -1,4 +1,5 @@
 import { Section } from '@/components/ui/section'
+import { Pill } from '@/components/ui/pill'
 import { ServicesPillarsLazy } from '@/components/sections/services-pillars-lazy'
 
 const FAQ_JSONLD = {
@@ -38,9 +39,7 @@ export function ServicesSection() {
       <div className="lg:rounded-lg lg:border lg:border-border lg:bg-white">
         <div className="lg:border-b lg:border-border lg:pt-[64px] lg:pb-[48px] lg:px-[48px]">
           <div className="max-w-[720px] mx-auto text-center">
-            <span className="inline-block border border-border bg-white rounded-md px-[12px] py-[6px] text-[11px] font-bold uppercase tracking-[0.1em] leading-none text-dark font-mono">
-              What we build
-            </span>
+            <Pill>What we build</Pill>
             <h2
               id="services-heading"
               className="mt-[24px] text-[clamp(32px,4.4vw,56px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark"

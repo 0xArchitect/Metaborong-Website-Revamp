@@ -1,5 +1,6 @@
-import { Eyebrow } from '@/components/ui/eyebrow'
+import { Pill } from '@/components/ui/pill'
 import { Section } from '@/components/ui/section'
+import { ComparisonRows } from '@/components/sections/comparison-rows'
 
 type Row = { label: string; mb: string; large: string; free: string }
 
@@ -15,9 +16,9 @@ const rows: Row[] = [
 
 export function ComparisonSection() {
   return (
-    <Section bg="default" maxWidth="xwide">
+    <Section bg="default" maxWidth="xwide" divider>
       <div className="mb-[24px] md:mb-[32px]">
-        <Eyebrow as="p" className="mb-[12px] block">Comparison</Eyebrow>
+        <Pill className="mb-[16px]">Comparison</Pill>
         <h2 className="mb-[16px] text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">
           Metaborong vs. large Web3/AI agencies and freelancers
         </h2>
@@ -40,16 +41,7 @@ export function ComparisonSection() {
               <th scope="col" className="w-[26%] px-[16px] py-[12px] text-left text-[13px] font-bold text-gray">Freelance Team</th>
             </tr>
           </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={r.label} className={`border-b border-border-subtle ${i % 2 === 0 ? 'bg-bg-subtle/60' : 'bg-transparent'}`}>
-                <th scope="row" className="px-[16px] py-[14px] text-left text-[13px] font-medium text-gray">{r.label}</th>
-                <td className="px-[16px] py-[14px] font-semibold text-dark">{r.mb}</td>
-                <td className="px-[16px] py-[14px] text-gray">{r.large}</td>
-                <td className="px-[16px] py-[14px] text-gray">{r.free}</td>
-              </tr>
-            ))}
-          </tbody>
+          <ComparisonRows rows={rows} />
         </table>
       </div>
       <p className="mt-[16px] max-w-[920px] text-[12px] leading-[1.6] text-gray">

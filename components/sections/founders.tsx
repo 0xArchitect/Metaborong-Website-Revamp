@@ -3,6 +3,7 @@
 import { type ReactNode, useEffect, useRef } from 'react'
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
+import { Pill } from '@/components/ui/pill'
 
 type Founder = {
   name: string
@@ -85,9 +86,9 @@ function SocialButton({
 
 function FounderCard({ founder }: { founder: Founder }) {
   return (
-    <div className="flex flex-col">
+    <div className="group flex flex-col">
       {/* Photo tile is non-interactive by design — only the social-row buttons link. */}
-      <div className="relative aspect-square border border-border bg-white shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12),0_6px_16px_-4px_rgba(0,0,0,0.06)]">
+      <div className="relative aspect-square overflow-hidden border border-border bg-white shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12),0_6px_16px_-4px_rgba(0,0,0,0.06)] transition-[transform,border-color] duration-[250ms] group-hover:-translate-y-[2px] group-hover:border-brand/30 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
         {/* 4 dashed edge accents (Figma blueprint ticks) */}
         <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] top-0 border-t border-dashed border-gray" />
         <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] bottom-0 border-b border-dashed border-gray" />
@@ -102,7 +103,7 @@ function FounderCard({ founder }: { founder: Founder }) {
               alt={`${founder.name}, ${founder.role}`}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-[250ms] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
           ) : (
             <div
@@ -185,13 +186,11 @@ export function FoundersSection() {
   const repeatedFounders = Array(9).fill(founders).flat()
 
   return (
-    <Section bg="default" maxWidth="xwide">
+    <Section bg="default" maxWidth="xwide" divider>
       {/* Header */}
       <div className="flex flex-col gap-[24px] items-start">
-        {/* Eyebrow chip — matched token-for-token to hero.tsx:50-54 (spec Deviation 2) */}
-        <div className="inline-flex items-center bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
-          <Eyebrow className="text-[12px]! tracking-[0.12em]!">The team</Eyebrow>
-        </div>
+        {/* Eyebrow chip — unified Pill primitive (Session 19 redo) */}
+        <Pill>The team</Pill>
 
         {/* H2 — "the work" in brand blue (Figma) */}
         <h2 className="text-[clamp(30px,4vw,56px)] font-bold tracking-[-0.03em] leading-[1.05] text-dark uppercase">
@@ -207,9 +206,10 @@ export function FoundersSection() {
       </div>
 
       {/* Card row wrapper */}
-      <div className="relative mt-[48px] [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)] md:[--cw:calc(100vw-80px)]">
-        <div 
+      <div className="relative mt-[48px] [--cw:82vw] sm:[--cw:78vw] md:[--cw:56vw]">
+        <div
           ref={scrollRef}
+          data-lenis-prevent
           className="flex overflow-x-auto snap-x snap-mandatory gap-[24px] lg:grid lg:grid-cols-3 lg:gap-[48px] pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] md:-mx-[48px] md:px-[48px] lg:mx-0 lg:px-0 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {repeatedFounders.map((founder, idx) => {
@@ -217,7 +217,7 @@ export function FoundersSection() {
             return (
               <div 
                 key={`${founder.name}-${idx}`} 
-                className={`snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-[calc(100vw-80px)] lg:w-auto lg:max-w-none ${!isOriginal ? 'lg:hidden' : ''}`}
+                className={`snap-center snap-always shrink-0 w-[82vw] sm:w-[78vw] md:w-[56vw] lg:w-auto lg:max-w-none ${!isOriginal ? 'lg:hidden' : ''}`}
               >
                 <FounderCard founder={founder} />
               </div>
@@ -225,9 +225,10 @@ export function FoundersSection() {
           })}
         </div>
 
-        {/* Floating swipe hint arrow (Left) */}
-        <div 
-          className="pointer-events-none absolute lg:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+        {/* Static swipe affordance (Left) — no infinite animation per DESIGN.md. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute lg:hidden text-gray opacity-70"
           style={{
             top: 'calc(var(--cw) / 2)',
             left: 'calc(var(--cw) * 0.04)',
@@ -239,9 +240,10 @@ export function FoundersSection() {
           </svg>
         </div>
 
-        {/* Floating swipe hint arrow (Right) */}
-        <div 
-          className="pointer-events-none absolute lg:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+        {/* Static swipe affordance (Right) — no infinite animation per DESIGN.md. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute lg:hidden text-gray opacity-70"
           style={{
             top: 'calc(var(--cw) / 2)',
             right: 'calc(var(--cw) * 0.04)',

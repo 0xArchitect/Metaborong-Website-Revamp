@@ -1,5 +1,6 @@
 import { clutchProfileUrl } from '@/lib/links'
 import { Section } from '@/components/ui/section'
+import { Pill } from '@/components/ui/pill'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { Zap, CalendarDays } from 'lucide-react'
 
@@ -57,12 +58,10 @@ const stats = [
 
 export function WhyUsSection() {
   return (
-    <Section bg="subtle" maxWidth="xwide">
+    <Section bg="subtle" maxWidth="xwide" divider>
       <div className="flex flex-col gap-[48px] lg:flex-row lg:items-end lg:justify-between lg:gap-[48px]">
         <div className="flex max-w-[720px] flex-col gap-[24px]">
-          <span className="inline-flex w-fit items-center border border-border bg-bg px-[12px] py-[8px] font-mono text-[12px] font-medium uppercase leading-none tracking-[0.1em] text-gray">
-            Why us
-          </span>
+          <Pill>Why us</Pill>
           <h2 className="text-[clamp(32px,4vw,52px)] font-bold uppercase leading-[1.05] tracking-[-0.035em] text-dark">
             Why founders choose <span className="text-brand">Metaborong</span>
           </h2>
