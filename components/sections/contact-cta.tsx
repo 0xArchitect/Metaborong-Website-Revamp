@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 
 export function ContactCtaSection() {
   return (
-    <Section bg="default" maxWidth="xwide" label="Get in touch">
+    <Section bg="default" maxWidth="xwide">
       <div className="relative isolate aspect-[16/9] min-h-[440px] w-full overflow-hidden">
         {/* Background image (Figma Super-Visuals node 1:19) */}
         <img

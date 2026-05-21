@@ -1,6 +1,7 @@
 'use client'
 
 import { Section } from '@/components/ui/section'
+import { Eyebrow } from '@/components/ui/eyebrow'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { clutchProfileUrl } from '@/lib/links'
 
@@ -18,9 +19,10 @@ export function TestimonialsSection() {
   // section bg (matches Founders below + the iframe's internal bg) so the widget
   // reads as a continuation of the section, not a separate card.
   return (
-    <Section bg="default" maxWidth="xwide" label="Social proof">
+    <Section bg="default" maxWidth="xwide">
       <div className="grid grid-cols-1 gap-[40px] lg:grid-cols-2 lg:items-start lg:gap-[64px]">
         <div className="flex flex-col">
+          <Eyebrow as="p" className="mb-[12px]">Social proof</Eyebrow>
           <h2 className="max-w-[440px] text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">Reviewed and verified on Clutch</h2>
           <p className="mt-[16px] max-w-[480px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
             Real clients rate our work on Clutch — every review is verified, every reviewer is named.

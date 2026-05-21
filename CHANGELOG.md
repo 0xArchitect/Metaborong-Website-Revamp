@@ -4,41 +4,6 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
-## 2026-05-21 — Session 19: Whole-page beautification + motion pass (framing system + 3 signature moments)
-
-### Decision log
-
-Single-session sequential pass per the Session-19 handoff: benchmark baseline → whole-page audit → user-gated brainstorm → per-section polish → verify → graduate. **No copy or structural changes** — motion, visual sharpness, and section framing only. The audit found the page structurally strong but with a front-loaded motion gradient (Hero/Problem/Services rich; tail fade-up only) and one real visual weakness (empty Work-Preview card panels). User added five framing requests on top of the three approved motion moments.
-
-- **Seam-band `SectionLabel` framing system (user #2/#5/#6).** Added a `label` prop to `<Section>` rendering a full-width `border-y` band with a left-aligned mono-uppercase title at each section's top edge — one canonical device replacing five divergent eyebrow treatments (plain `<Eyebrow>`, services rounded-mono pill, why-us square-mono pill, `problem-chip`, work-preview semibold `<p>`). Emulates supermemory.ai's section-seam device so the page reads as one continuous document with consistent storytelling labels and sharp seams. Applied to Problem/Services/Why-Us/Work/Testimonials/Founders/Comparison/FAQ/Contact-CTA; Trust-bar keeps its existing marquee band; Hero stays label-less. Section content padding 48/64/72 → **56/72/88** for consistent, more generous whitespace (#1). Chose Direction B (labeled bands, no counter) over the full blueprint side-rail frame after a candidate gate.
-
-- **New signature moment — Founders card hover.** Hover/`focus-within`: blueprint dashed ticks + inset frame tint to `--color-brand`, portrait zooms `scale(1.04)` within its `overflow-hidden` frame, tile lifts `-3px`. 250ms (zoom 400ms); transform + lift `motion-safe:`-gated; keyboard-reachable.
-
-- **New signature moment — Comparison staggered row-reveal.** Table extracted to client island `comparison-table.tsx`; IO-gated rows cascade `opacity 0→1` + `translateY(10px→0)` at `i*55ms`, 450ms out-expo. Reduced-motion short-circuits to visible. Table a11y (scope/caption/sr-only Dimension) unchanged.
-
-- **New signature moment — Work-Preview monogram tiles + lane.** Empty `bg-bg-subtle` placeholder panels → pillar-keyed ghost-wordmark tiles (footer idiom: tinted tile + bleeding wordmark + logo-square accent). Card hover matches the DESIGN.md card spec (`-2px` lift + pillar-tint border + `shadow.sm`). Mobile cards narrowed to `78vw` to show a peek (the lane affordance). Migrated from hand-rolled `<section>` to `<Section>` (fixes a whitespace inconsistency). Empty panels were the page's one slop-adjacent element; now intentional brand chrome.
-
-- **Founder mobile image fix (user #3).** Cards `100vw-32px` → `74vw max-w-300` (sm/md scaled) so the square portraits shrink ~24% and adjacent cards peek instead of one giant photo per viewport.
-
-- **Native smooth-scroll (user #4).** Kept native `scroll-behavior: smooth` (already present) and **added a `prefers-reduced-motion` guard**. Pushed back on and declined GSAP / Lenis / full scroll-snap (variable section heights make one-section-per-viewport unviable + a11y/INP liability) — user agreed.
-
-- **Grammar cleanup.** Removed undocumented infinite-pulse swipe arrows from Founders + Work-Preview (the new card peek replaces them); fixed raw-hex token bypasses in `eyebrow.tsx` and `work-preview.tsx` → `--color-ai`/`--color-accent`/`--color-brand`.
-
-### Files
-
-- **MODIFIED:** `components/ui/section.tsx` (new `label` seam-band + padding bump), `components/ui/eyebrow.tsx` (token fix), `app/globals.css` (reduced-motion scroll guard), `components/sections/{problem,services,why-us,work-preview,testimonials,founders,comparison,faq,contact-cta}.tsx`.
-- **NEW:** `components/sections/comparison-table.tsx` (client row-reveal island), `docs/superpowers/specs/2026-05-21-session-19-polish-audit.md` (audit + locked decisions + deviation log), `.gstack/benchmark-reports/baselines/baseline.json`.
-- **UPDATED (graduation):** `DESIGN.md` (Session-19 Decisions Log row, two new Motion patterns, Section `label` primitive note), `CHANGELOG.md` (this entry).
-
-### Verification
-
-- `npx tsc --noEmit` exit 0.
-- **CLS 0.0000 (baseline) → 0.0000 (post-motion)** — no layout-shift regression; all new motion is transform/opacity only.
-- Visual QA at 1440 + 375. Reduced-motion short-circuits by construction (matchMedia gates + `motion-safe:` prefixes + the new `scroll-behavior` guard).
-- No copy changed; no section restructured. Deferred copy-level drifts (7-vs-4 chains, 8+/25+ products) untouched, as scoped.
-
----
-
 ## 2026-05-21 — Session 18: Comparison + FAQ + Testimonials redesigned in parallel (orchestrator + 3 section-sessions)
 
 ### Decision log
