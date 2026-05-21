@@ -19,7 +19,7 @@ export function TestimonialsSection() {
   // section bg (matches Founders below + the iframe's internal bg) so the widget
   // reads as a continuation of the section, not a separate card.
   return (
-    <Section bg="default" maxWidth="xwide" divider>
+    <Section bg="default" maxWidth="xwide" divider reveal={false}>
       <div className="grid grid-cols-1 gap-[40px] lg:grid-cols-2 lg:items-start lg:gap-[64px]">
         <div className="flex flex-col">
           <Pill className="mb-[16px]">Social proof</Pill>

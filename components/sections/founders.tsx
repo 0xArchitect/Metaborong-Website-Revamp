@@ -193,7 +193,7 @@ export function FoundersSection() {
         <Pill>The team</Pill>
 
         {/* H2 — "the work" in brand blue (Figma) */}
-        <h2 className="text-[clamp(30px,4vw,56px)] font-bold tracking-[-0.03em] leading-[1.05] text-dark uppercase">
+        <h2 className="text-[clamp(32px,4vw,56px)] font-bold tracking-[-0.03em] leading-[1.05] text-dark">
           The team behind <span className="text-brand">the work</span>
         </h2>
 

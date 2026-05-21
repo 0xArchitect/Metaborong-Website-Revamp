@@ -4,6 +4,56 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-22 — Session 20 (cont.): Design-review audit fixes
+
+Acted on a `/design-review` audit (graded B+) of the homepage. Audit-only first, then fixed one finding at a time with live before/after.
+
+- **Space Grotesk leak → Satoshi.** `.problem-h2`, `.problem-chart-lane-label`, `.problem-chart-status` (globals.css) and the services iso-canvas `.iso-label` specified Space Grotesk (or an undefined `--font-grotesk`) as the *primary* face, so they rendered in Grotesk while every other heading was Satoshi. All repointed to `var(--font-brand)` — Grotesk stays the fallback inside the token. The page now reads as one heading typeface.
+- **H2 casing unified to sentence case.** Removed the `uppercase` transform from Why-Us, Founders, Contact-CTA (and `.problem-h2`); they were the only UPPERCASE headings against five sentence-case ones. Underlying JSX text was already sentence case, so no copy changed. DESIGN.md H2-tiers + Decisions Log updated (supersedes the 2026-05-19 Figma-uppercase notes).
+- **Problem AEO question 14px → 16px.** The collapsed "Common questions about the trend window" accordion (`.problem-aeo-q`) had questions at 14px (below the 16px body); bumped to the `base` token for a clearer Q/A hierarchy. The primary FAQ accordion questions were already 16–17px — no change (the audit's "14px FAQ" premise was corrected on inspection).
+- **Consent banner — compact + details.** On mobile the full-text card covered both hero CTAs on first load. Restructured to a one-line summary + `<details>` "How it works" expander holding the full disclosure verbatim, and bumped Accept/Reject to ≥44px. Applied on all viewports (cleaner card everywhere; no divergent markup). Consent copy is still marked NEED LEGAL REVIEW and was kept verbatim in the expander — nothing removed.
+
+### Files
+
+- **MODIFIED:** `app/globals.css` (`.problem-h2` font + casing, chart-label fonts, `.problem-aeo-q` size), `components/sections/services-iso-canvas.tsx` (`.iso-label` font), `components/sections/{why-us,founders,contact-cta}.tsx` (casing), `components/consent/consent-banner.tsx` (compact + details + tap targets), `DESIGN.md`, `CHANGELOG.md`.
+
+### Verification
+
+- `npx tsc --noEmit` exit 0. No console errors. Live-verified each fix at 1440/375 via the browse daemon (Space Grotesk count → 0; all H2 `text-transform` → none; AEO Q → 16px; consent card 258px on mobile with hero readable, buttons 44px, expander reveals full text).
+- Dev `globals.css` HMR was flaky on this server (needed a forced recompile twice); source is correct so a fresh `next dev`/build always reflects it.
+
+---
+
+## 2026-05-21 — Session 20: Homepage A+ pass — intentionality + earned richness
+
+### Decision log
+
+Pushes the Session-19-redo B+ toward A in two deliberate movements: first remove uniformity so what remains reads as designed, then add one restrained signature motif. Brainstormed up front; the pill-reduction lever was **dropped** by user choice (keep all 9 unified pills — de-risks the prior pill revert), so the A+ gain comes from type hierarchy + selective motion + the ASCII motif.
+
+**Movement 1 — subtractive intentionality**
+
+- **H2 size tiers** — section H2 now encodes narrative importance via a 3-tier clamp scale instead of the prior ad-hoc 44–56 spread. **T1** `clamp(36px,4.6vw,64px)` = Services + Contact-CTA (the core offer + the close); **T2** `clamp(32px,4vw,56px)` = Why-Us + Founders; **T3** `clamp(28px,3.5vw,44px)` = Work-Preview (demoted from 52), Testimonials, Comparison, FAQ. Problem exempt (its heading is the blue card's internal `.problem-h2`, 32px, not a section banner). Applied as inline clamps per the existing convention — no new class.
+- **Selective Reveal** — new `Section reveal={false}` prop opts a section out of the auto-wrap `<Reveal>`. Off on **Comparison** (it was double-animating over its own `comparison-rows.tsx` per-row reveal) and **Testimonials** (the async Clutch widget reads better static). On everywhere else by default. Reduced-motion behaviour unchanged.
+
+**Movement 2 — earned richness**
+
+- **ASCII connective seam** — new `components/ui/ascii-seam.tsx`: a decorative `aria-hidden` texture band in the space between sections. Glyph field is a deterministic smooth function of (row, col) — identical SSR/client (no hydration mismatch), ramp ` ·∙•`, mono, `--color-gray-light` @ 0.5 opacity, vertical density falloff + horizontal edge-fade mask — so it reads as designed topographic texture, not noise. On IO entry it stamps in **once** via a left-to-right `mask-position` wipe (1100ms out-expo) + opacity fade, then holds static. Fixed 88px height (no CLS). `prefers-reduced-motion` → static texture, no wipe. Placed at 4 rhythmic seams: Problem→Services, Why-Us→Work, Founders→Comparison, FAQ→Contact; those four followers (Work-Preview, Comparison, Contact-CTA — Services already had none) dropped their `divider` hairline so the band is the sole seam.
+- **Count-up — evaluated and rejected.** The only standalone numeric display on the page is the Testimonials 4.9 rating; a lone decimal count-up on a non-accumulating metric read as gimmick rather than an earned moment, and the Why-Us "stats" are numbers embedded in phrases (not count-up targets). The ASCII seam carries the earned-animation appetite alone.
+
+### Files
+
+- **NEW:** `components/ui/ascii-seam.tsx`.
+- **MODIFIED:** `components/ui/section.tsx` (`reveal` prop), `app/globals.css` (`.ascii-seam` styles), `app/page.tsx` (4 `<AsciiSeam>` placements), and sections `services.tsx`, `contact-cta.tsx`, `why-us.tsx`, `founders.tsx`, `work-preview.tsx` (H2 tiers; Work-Preview + Contact-CTA also dropped `divider`), `comparison.tsx` + `testimonials.tsx` (`reveal={false}`; Comparison dropped `divider`).
+- **UPDATED:** `DESIGN.md` (H2 tiers, Motion patterns, Components table, Decisions Log), `CHANGELOG.md` (this entry).
+
+### Verification
+
+- `npx tsc --noEmit` exit 0 (the gate; `npm run build` still fails only at `/blog/rss.xml` per the PR #26 env hold).
+- Dev server renders homepage 200; 4 `.ascii-seam` bands present (88px each), no console errors; computed H2 sizes confirm the 64/56/44 tiers; no CWV-measurable risk (fixed-height bands + IO + GPU mask transitions). True benchmark comparison not run — no Session-19 baseline captured and prod build is blocked, so CWV safety is reasoned, not measured.
+- Subjective forks (H2 tier sizes, seam glyph/opacity/height, which sections go instant, seam placement) are open to live candidate-picks; this session shipped a principled starting candidate under auto-mode.
+
+---
+
 ## 2026-05-21 — Session 19 (REDO): Homepage beautification, smooth-scroll & premiumness pass
 
 ### Decision log

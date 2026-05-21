@@ -14,11 +14,11 @@ const projects: Project[] = [
 
 export function WorkPreviewSection() {
   return (
-    <Section bg="default" maxWidth="xwide" divider>
+    <Section bg="default" maxWidth="xwide">
       <div className="mb-[20px] flex flex-col gap-[18px] sm:mb-[24px] sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-[16px]">
           <Pill>Our work</Pill>
-          <h2 className="text-[clamp(32px,4vw,52px)] font-bold tracking-[-0.035em] text-dark">What we&apos;ve built</h2>
+          <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">What we&apos;ve built</h2>
         </div>
         <a href="/#contact" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-brand no-underline">Talk to us →</a>
       </div>
