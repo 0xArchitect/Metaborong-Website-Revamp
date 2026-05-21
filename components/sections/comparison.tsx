@@ -16,7 +16,7 @@ const rows: Row[] = [
 
 export function ComparisonSection() {
   return (
-    <Section bg="default" maxWidth="xwide" divider>
+    <Section bg="default" maxWidth="xwide" reveal={false}>
       <div className="mb-[24px] md:mb-[32px]">
         <Pill className="mb-[16px]">Comparison</Pill>
         <h2 className="mb-[16px] text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">

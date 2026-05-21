@@ -10,6 +10,12 @@ interface SectionProps extends HTMLAttributes<HTMLElement> {
   as?: 'section' | 'div'
   /** Edge-to-edge 1px top hairline — the section-seam idiom (Session 19 redo). */
   divider?: boolean
+  /**
+   * Auto-wrap children in the IO fade-up `<Reveal>` (default true). Set false for
+   * sections that own their own entry motion (e.g. Comparison's per-row reveal) or
+   * read better static — the selective-Reveal lever (Session 20).
+   */
+  reveal?: boolean
 }
 
 const bgClass: Record<SectionBg, string> = {
@@ -30,6 +36,7 @@ export function Section({
   maxWidth = 'wide',
   as: Tag = 'section',
   divider = false,
+  reveal = true,
   className = '',
   children,
   ...props
@@ -40,7 +47,7 @@ export function Section({
       {...props}
     >
       <div className={`${maxWidthClass[maxWidth]} mx-auto`}>
-        <Reveal>{children}</Reveal>
+        {reveal ? <Reveal>{children}</Reveal> : children}
       </div>
     </Tag>
   )

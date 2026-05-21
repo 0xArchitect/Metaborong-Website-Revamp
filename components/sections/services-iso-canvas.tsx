@@ -237,7 +237,7 @@ function ScopedStyle() {
       /* ---------------- LABEL ---------------- */
       .iso-label {
         position: absolute;
-        font-family: var(--font-grotesk, 'Space Grotesk', system-ui, sans-serif);
+        font-family: var(--font-brand);
         font-weight: 700;
         font-size: 22px;
         line-height: 1;

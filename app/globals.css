@@ -619,7 +619,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
 }
 
 .problem-chart-lane-label {
-  font-family: 'Space Grotesk', var(--font-brand);
+  font-family: var(--font-brand);
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.04em;
@@ -642,7 +642,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
   letter-spacing: 0.06em;
 }
 .problem-chart-status {
-  font-family: 'Space Grotesk', var(--font-brand);
+  font-family: var(--font-brand);
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -691,12 +691,11 @@ video.hero-ascii-image::-webkit-media-controls-container {
   padding-left: 8px;
 }
 .problem-h2 {
-  font-family: 'Space Grotesk', var(--font-brand);
+  font-family: var(--font-brand);
   font-weight: 700;
   font-size: 32px;
   line-height: 1.05;
   letter-spacing: -0.014em;
-  text-transform: uppercase;
   color: #fffffc;
   margin: 0;
 }
@@ -770,7 +769,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
 }
 .problem-aeo-q {
   font-family: var(--font-brand);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   margin: 0 0 6px 0;
   color: #fffffc;
@@ -874,4 +873,51 @@ video.hero-ascii-image::-webkit-media-controls-container {
   .problem-chart text {
     fill: CanvasText;
   }
+}
+
+/* ── Connective ASCII seam (Session 20) ───────────────────────────────────── */
+/* Decorative texture band between sections. One-shot left-to-right mask wipe on
+   viewport entry (the `.is-on` class is toggled by the IO in ascii-seam.tsx),
+   then static. Edge-faded at the horizontal extremes so it dissolves into the
+   page gutters. Reduced-motion: static texture, no wipe. */
+.ascii-seam {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 88px;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+}
+.ascii-seam__grid {
+  margin: 0;
+  white-space: pre;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 2px;
+  color: var(--color-gray-light);
+  opacity: 0;
+  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 75%);
+  mask-image: linear-gradient(90deg, #000 40%, transparent 75%);
+  -webkit-mask-size: 260% 100%;
+  mask-size: 260% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-mask-position 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+    mask-position 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ascii-seam.is-on .ascii-seam__grid {
+  opacity: 0.5;
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+}
+.ascii-seam.is-reduced .ascii-seam__grid {
+  transition: none;
 }
