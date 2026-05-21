@@ -57,9 +57,12 @@ const stats = [
 
 export function WhyUsSection() {
   return (
-    <Section bg="subtle" maxWidth="xwide" label="Why us">
+    <Section bg="subtle" maxWidth="xwide">
       <div className="flex flex-col gap-[48px] lg:flex-row lg:items-end lg:justify-between lg:gap-[48px]">
         <div className="flex max-w-[720px] flex-col gap-[24px]">
+          <span className="inline-flex w-fit items-center border border-border bg-bg px-[12px] py-[8px] font-mono text-[12px] font-medium uppercase leading-none tracking-[0.1em] text-gray">
+            Why us
+          </span>
           <h2 className="text-[clamp(32px,4vw,52px)] font-bold uppercase leading-[1.05] tracking-[-0.035em] text-dark">
             Why founders choose <span className="text-brand">Metaborong</span>
           </h2>

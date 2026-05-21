@@ -34,13 +34,16 @@ const FAQ_JSONLD = {
 
 export function ServicesSection() {
   return (
-    <Section bg="subtle" maxWidth="xwide" className="services-section-bridge" id="services" aria-labelledby="services-heading" label="What we build">
+    <Section bg="subtle" maxWidth="xwide" className="services-section-bridge" id="services" aria-labelledby="services-heading">
       <div className="lg:rounded-lg lg:border lg:border-border lg:bg-white">
         <div className="lg:border-b lg:border-border lg:pt-[64px] lg:pb-[48px] lg:px-[48px]">
           <div className="max-w-[720px] mx-auto text-center">
+            <span className="inline-block border border-border bg-white rounded-md px-[12px] py-[6px] text-[11px] font-bold uppercase tracking-[0.1em] leading-none text-dark font-mono">
+              What we build
+            </span>
             <h2
               id="services-heading"
-              className="text-[clamp(32px,4.4vw,56px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark"
+              className="mt-[24px] text-[clamp(32px,4.4vw,56px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark"
             >
               A small, senior team.<br />Three pillars. End to end.
             </h2>
