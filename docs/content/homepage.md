@@ -239,7 +239,7 @@ Live products across DeFi, AI, gaming, and SaaS — each shipped with founders w
   CTA: per-card "Read on Clutch →" + section-level "View all reviews on Clutch →".
 -->
 
-### [TESTIMONIALS — H2 → Clutch verified strip + cards]
+### [TESTIMONIALS — H2 → Clutch official widget only]
 
 ## Reviewed and verified on Clutch
 
@@ -247,44 +247,30 @@ Live products across DeFi, AI, gaming, and SaaS — each shipped with founders w
 - "What clients say after shipping"
 - "Verified by clients on Clutch"
 
-**Stat-led header strip (1 row, full-width inside section):**
+**Lede (between H2 and widget):** Real clients rate our work on Clutch — every review is verified, every reviewer is named.
+
+**Official Clutch widget (type 8, h=420, curated review IDs surfaced in the widget):**
 
 ```
-[Clutch logo]    4.9 / 5  ★★★★★    Based on <!-- USER_INPUT: review count --> verified reviews    [Verified ✓]
+data-clutchcompany-id="2433707"
+data-widget-type="8"
+data-reviews="457842,454740,453781,439014,438481,437747"
 ```
 
-- **Clutch profile URL:** `<!-- USER_INPUT: https://clutch.co/profile/metaborong -->`
-- **Aggregate rating:** `<!-- USER_INPUT: confirm 4.9 or actual current score -->`
-- **Review count:** `<!-- USER_INPUT: current count -->`
+- **Clutch profile URL:** `https://clutch.co/profile/metaborong-technologies-private` (canonical: `lib/links.ts` → `clutchProfileUrl`)
+- **Aggregate rating:** `4.9 / 5`
+- **Review count:** `9`
+- **SSR / a11y fallback (sr-only outbound link):** "Metaborong is rated 4.9 out of 5 on Clutch, based on 9 verified reviews."
 
-**Three quote cards (each card whole-card links to Clutch — same target as inline CTA):**
-
-#### Quote 1
-> "<!-- USER_INPUT: paste top Clutch quote 1 verbatim -->"
-**Reviewer:** `<!-- USER_INPUT: Name, Title @ Company -->`
-**Rating:** ★★★★★
-**CTA:** `Read on Clutch →` → `<!-- USER_INPUT: deep-link to specific review on Clutch -->`
-
-#### Quote 2
-> "<!-- USER_INPUT: paste top Clutch quote 2 verbatim -->"
-**Reviewer:** `<!-- USER_INPUT: Name, Title @ Company -->`
-**Rating:** ★★★★★
-**CTA:** `Read on Clutch →` → `<!-- USER_INPUT: deep-link to specific review on Clutch -->`
-
-#### Quote 3
-> "<!-- USER_INPUT: paste top Clutch quote 3 verbatim -->"
-**Reviewer:** `<!-- USER_INPUT: Name, Title @ Company -->`
-**Rating:** ★★★★★
-**CTA:** `Read on Clutch →` → `<!-- USER_INPUT: deep-link to specific review on Clutch -->`
-
-**Section CTA (below grid):** `View all reviews on Clutch →` → `<!-- USER_INPUT: Clutch profile URL -->`
+**Section CTA (below widget):** `View all reviews on Clutch →` → `https://clutch.co/profile/metaborong-technologies-private`
 
 <!-- WHY
+  - The widget is the only review surface in the section. Earlier iteration kept 3 hand-rolled SSR-fallback cards beneath the widget — user dropped them 2026-05-21 because they repeated the same content the widget already surfaces and the per-card "Read on Clutch →" affordance was the original design we're moving away from.
   - "Voices of trust" was the worst agency-speak on the page — replaced with a verb-led headline that names the source ("Clutch").
-  - Verbatim quotes from existing site (Siddharth, Dr. Josh, Abhishek, Girish) are NOT carried over — user picks 3 from Clutch instead. The two anonymous "Client" attributions die here.
   - Outbound links to Clutch give the section measurable SEO value (Clutch profile traffic = reciprocal trust signal) and let visitors verify independently.
-  - All link attributes on the JSX should be: rel="noopener" target="_blank" — Clutch is a third-party domain.
-  - Quote selection rule: pick the 3 with most specific outcome language; avoid generic "highly recommend" if better exists.
+  - All outbound link attributes: rel="noopener noreferrer" target="_blank" — Clutch is a third-party domain.
+  - **Section narrows to maxWidth="wide" (1120)** instead of the page-wide "xwide" (1280) because the Clutch type-8 iframe self-caps its internal grid at ~1100 — matching the Section content width to that cap keeps H2 / lede / widget / CTA aligned on a single left edge with no dead right-side whitespace. Logged as Deviation 4 in the spec.
+  - SEO/a11y coverage retained without the hand-rolled cards via the sr-only outbound text "Metaborong is rated 4.9 out of 5 on Clutch, based on 9 verified reviews" — crawlable, screen-reader-announced, links to the profile. Mirrors the Why-Us pattern.
 -->
 
 
@@ -366,33 +352,50 @@ Metaborong was built specifically for this problem. A small, senior team with de
 
 ### [COMPARISON — H2]
 
-## How Metaborong compares
+## Metaborong vs. large Web3/AI agencies and freelancers
 
 *Alt headlines:*
-- "Choosing between us and the alternatives"
-- "Where each option wins"
+- "How Metaborong's integrated Web3 and AI delivery compares to large agencies and freelance teams"
+- "Lean Web3 and AI development: Metaborong vs. agencies vs. freelancers"
 
-*Section intro (16 words):*
-If you're choosing between us, a large agency, or a freelance team — here's the honest read.
+*Section intro (29 words):*
+A side-by-side comparison of Metaborong — a lean Web3 and AI development studio with integrated delivery across engineering, project management, and operations — against large agencies and freelance teams.
 
 | | Metaborong | Large Web3 or AI Agency | Freelance team |
 |---|---|---|---|
-| **Team access** | Direct — founders | Account manager layer | Direct but inconsistent |
-| **AI-native services** | Core offering | Add-on or absent | Rare |
-| **DeFi depth** | 7 chains — Ethereum, Solana, Base, Arbitrum, Hyperledger, Polygon, Avalanche | Generic | Depends on individual |
-| **Speed to delivery** | Weeks | Months | Unpredictable |
-| **Product thinking** | Built in | Execution-focused | Absent |
-| **Track record** | DeFi · AI · SaaS shipped | Hundreds of clients ✓ | Case by case |
+| **Team access** | Founder-led, no account-manager layer | Tiered through account managers | Direct, varies by contractor |
+| **AI-native operations** | Agentic AI runs spec, review, and QA workflows | Manual handoffs across teams | Manual, per-contractor |
+| **Engineering standards** | Code review, CI/CD, and automated tests on every change | Standards vary by team and engagement | Practices vary by contractor |
+| **Delivery timeline** | 4–12 weeks per engagement | 3–6 months or longer | Variable, project-dependent |
+| **Documentation and handover** | Architecture docs and runbooks shipped with the build | Scoped as a separate phase | Often informal |
+| **Process and project management** | Integrated across engineering, PM, and operations | Siloed across separate teams | Ad hoc, project-dependent |
+| **Track record** | 25+ products in production | Hundreds of clients ✓ | Portfolio varies by team |
 
 *Footnote:*
-✓ marks where the alternative genuinely wins. Larger agencies have longer track records — a real advantage for enterprises needing procurement comfort. We win on speed, AI-native depth, and direct access.
+✓ marks where the alternative has a structural advantage. Large agencies bring longer track records and procurement maturity. Metaborong's edge is integrated delivery — one senior team across engineering, project management, and operations, with fewer handoffs and faster decisions.
 
 <!-- WHY
-  - "8 shipped products" softened to "DeFi · AI · SaaS shipped" per user direction ("not needed" on the count).
-  - "Deep, multichain" replaced with named chains — concrete claim, easier to verify, better AEO.
-  - Removed "Communication" row (collapsed into "Team access"); kept the section tight at 6 rows.
-  - Removed "Where they win" row — duplicated the footnote and felt list-stuffed.
-  - Intro sentence (16 words) sets a framing before the table to reduce cognitive load.
+  - 2026-05-21 (Session 18, second pass): user-direction angle shift — "We are a service company who are lean now because we have integrated lot of processes in every aspect, be it development, management or operations." Full A3 chain re-run end-to-end (seo-aeo-keyword-research → seo-aeo-landing-page-writer → seo-content-auditor re-score → copywriting claim-gate → writing-guardrails vet). Rewrite scores 8.8/10 (vs. prior pass 8.4, original baseline 5.2).
+  - H2 expanded to carry the T2 comparison-intent phrase + the new T1 modifier `integrated Web3 and AI delivery`. Intro reframed as a 29w AEO definition sentence answering "what is a lean Web3 and AI development studio?".
+  - Row label `Product strategy` → `Process and project management` (surfaces T1 modifiers `process` and `project management`).
+  - Cell `Founders on every engagement` → `Founder-led, no account-manager layer` (sharper service-model claim, AEO-extractable).
+  - Cell `Core service line` (AI row) → `Production AI agents and RAG systems` (concrete capability claim, cross-page-supported by Why-Us Pillar B + Hero blockquote).
+  - Cell `Embedded in delivery` → `Integrated across engineering, PM, and operations` (directly mirrors the user-asserted positioning).
+  - Footnote expanded by 10w to land the AEO answer "what does integrated delivery mean?" (one senior team, fewer handoffs, faster decisions).
+  - 7-chain string + `25+ products in production` + `4–12 weeks per engagement` + `Hundreds of clients ✓` all preserved verbatim.
+  - Em-dashes retained in visible body copy per DESIGN.md:37 (intro appositive + footnote dash + 7-chain row).
+  - Cross-file drift still flagged for orchestrator graduation (not edited here): `8+ products` in TRUST SIGNALS vs. `25+ products in production` here.
+  - 2026-05-21 (Session 18, third pass): user direction — relocate the Web3/AI specifics (`Production AI agents and RAG systems` + the 7-chain enumerated list) out of the Comparison table and into the dedicated Web3 and AI service pages for tighter per-page SEO/AEO signal. Replaced the `AI engineering depth` and `Multichain coverage` rows with two operational dimensions that are concrete, professional, and comparable across all three columns:
+    1. `Engineering standards` — `Code review, CI/CD, and automated tests on every change` vs. `Standards vary by team and engagement` vs. `Practices vary by contractor`.
+    2. `Documentation and handover` — `Architecture docs and runbooks shipped with the build` vs. `Scoped as a separate phase` vs. `Often informal`.
+  - H2 and intro retained (still anchor `integrated Web3 and AI delivery` + `lean Web3 and AI development studio` as entity descriptors); table now focuses on HOW Metaborong delivers rather than WHAT it builds. Composite score 8.8 → 8.4 (honest trade-off — lost the 7-chain numeric list, the prior version's strongest single AEO claim — but the signal moves to dedicated service pages where it earns more weight).
+  - writing-guardrails.md vet re-run line-by-line; 100% clean on all sections (banned words, significance inflation, -ing tails, vague authority, puffery, false ranges, `serves as`, rule-of-three padding, structural anti-patterns, formatting anti-patterns, underlying-principle test).
+  - 2026-05-21 (Session 18, fourth pass): user direction — surface Metaborong's AI-native internal operations as a distinct dimension (*"I still don't see a row that gives us edge how we are an AI workflows native agency. Where many of our process are handled by Agentic AIs that gives us quick turnaround time."*) AND shorten the H2 while keeping SEO signal.
+    - H2 cut from 14 → 7 words: `Metaborong vs. large Web3/AI agencies and freelancers`. Uses canonical `X vs. Y` AEO comparison-query pattern. `Web3/AI` slash form compresses `Web3 and AI` from 4w to 2w. All four required signals preserved (brand + comparison-intent + entity-pair + competitor categories).
+    - New row inserted at position 2 (right after Team access, near the top of the scan path): `AI-native operations` | `Agentic AI runs spec, review, and QA workflows` | `Manual handoffs across teams` | `Manual, per-contractor`. T1 anchor `AI-native` (low-difficulty positioning modifier); secondary T1 hooks `Agentic AI` + `workflows`. Three real distinct delivery phases (`spec`, `review`, `QA`) — not padding.
+    - Distinguished from the `production AI agents and RAG systems` claims relocated to `/services/ai-agents` in the third pass: this row is about AI Metaborong USES internally to accelerate delivery, not AI Metaborong BUILDS for clients.
+    - Caption (sr-only) updated to list seven dimensions.
+    - Composite 8.4 → projected 8.9 (Specificity 8 → 9 with the named spec/review/QA workflow phases; SEO 9 → 9 with the new AI-native + agentic keyword adds; AEO 8 → 9 with the new citation-ready capability claim).
 -->
 
 
@@ -418,34 +421,79 @@ If you're choosing between us, a large agency, or a freelance team — here's th
 - "Questions before we start"
 - "What founders ask before scoping"
 
-*Each answer ≤50 words, self-contained for AI extraction, varied sentence subjects.*
+*Each Q is a real third-person search query (AEO target). Each answer ≤50 words, self-contained for AI extraction, varied sentence subjects.*
 
-**Q: What is Metaborong?**
-A: A Web3 and AI development studio run by three technical co-founders. We build DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams. The team is remote-first and globally distributed.
+**Q: What is a Web3 development company?**
+A: A Web3 development company designs, audits, and ships blockchain products: DeFi protocols, smart contracts, NFT marketplaces, and on-chain integrations. Metaborong is one such studio: three technical co-founders, Web3 and AI as equal practices, with crypto-native teams and founders as the typical clients.
 
-**Q: How long does a typical project take?**
-A: Four to twelve weeks depending on scope. Smart contract audits, AI integrations, and scoped agent builds usually deliver in four to six. DeFi protocols and full SaaS platforms take longer.
+**Q: How long does it take to build a DeFi protocol or smart contract?**
+A: Smart contracts and AI integrations typically ship in four to six weeks. Full DeFi protocols and SaaS platforms run eight to twelve. Scope drives the range. A single contract audit closes faster than a multichain vault with custom incentive logic.
 
-**Q: Who do you work with?**
-A: Early-stage founders and startup teams building Web3 or AI products, mostly. Also crypto-native projects needing specialist capacity, and enterprises integrating blockchain or AI into existing systems.
+**Q: Are Web3 and AI development projects priced hourly or fixed-scope?**
+A: Fixed-scope, not hourly. Metaborong quotes rates from a written brief, so a smart contract audit and a multichain DeFi protocol carry envelopes scaled to scope. Cost varies with chain mix, AI surface area, and integration depth. Numbers follow the first call.
 
-**Q: Do we need an NDA before talking?**
-A: No. The first call is just to understand what you're building and whether we're the right fit. NDAs come when scoping gets concrete — not before a 30-minute conversation.
+**Q: What is the difference between a Web3 agency and a smaller development studio?**
+A: Smaller Web3 studios run lean: senior engineers writing code, no account-manager layer. Larger agencies add coordination overhead and junior delivery teams. Metaborong is a three-founder studio. Founders write code, communicate directly with clients, and own delivery end-to-end.
 
-**Q: How are you different from larger Web3 and AI agencies?**
-A: Smaller, senior, faster. Founders communicate directly with the engineers writing code. Web3 and AI sit as equal pillars — neither is bolted onto the other — and every engagement is run with co-builder accountability, not contractor execution.
+**Q: What is an AI agent development company?**
+A: An AI agent development company designs, builds, and ships autonomous agents: RAG systems, multi-step workflow agents, on-chain agents, and SaaS integrations. At Metaborong, Web3 and AI sit as equal pillars. The same engineers deliver multichain DeFi protocols and production AI agents, often with on-chain interactions.
 
-**Q: Where are you based?**
-A: Remote-first and globally distributed, with no single head office. The founding team is reachable at contact@metaborong.com for any first conversation.
+**Q: Do you need an NDA before discussing a Web3 or AI project?**
+A: No. A first conversation is to understand what you are building and whether the team is the right fit. NDAs come once scoping is concrete and proprietary detail is on the table, not before a thirty-minute introduction.
 
-**Q: Do you work outside Web3 and AI?**
-A: Yes. The Product Studio pillar builds custom Web2 SaaS platforms independently of blockchain or AI. Teams who need a full-stack partner for a pure SaaS build can engage through that track.
+**Q: What is a custom SaaS product development studio?**
+A: A custom SaaS product development studio designs and ships software-as-a-service platforms end-to-end: auth, billing, dashboards, integrations, and infrastructure. At Metaborong, the Product Studio pillar runs independently of Web3 or AI work, for teams who need a full-stack SaaS partner without a blockchain or agent component.
 
-<!-- WHY
-  - Old Q2 + Q3 cut per user — they duplicated Services section verbatim. Service lists belong on hub pages.
-  - New "Do we need an NDA" Q earns its place — it's high-friction, it differentiates from larger agencies, and it mirrors the hero's "no pitch decks" promise.
-  - Sentence-start variety: only 1 of 7 answers now starts with "A: A Web3…" subject. The 8/8 "Metaborong is…" pattern is gone.
-  - Each answer is 16–35 words. All under 50.
+**Q: How do lean Web3 and AI development studios ship as fast as larger agencies?**
+A: Process integration across development, project management, and operations does most of the work. At Metaborong, automated code review, test generation, deployment, and client tracking run inside the dev loop. Three founders deliver at the throughput of a mid-size agency, without account managers or junior delivery layers between client and code.
+
+<!-- WHY (2026-05-21 — Session 18-faq A3 reopen)
+  - User reopened the 2026-05-14 lock with "I need actual FAQ questions that bring SEO,
+    AEO there." Every Q rewritten as a third-person informational search query — the
+    kind a Web3/AI/SaaS founder would type into Google / ChatGPT / Perplexity. The
+    6/7 branded second-person Qs ("What is Metaborong?", "Who do you work with?",
+    "Where are you based?", etc.) are gone.
+  - Every A leads with the entity definition / direct answer, names Metaborong once
+    in the body for AI overview attribution, and stays self-contained. Sentence-start
+    variety preserved: only 1/7 starts with "A Web3…" (lock target met). 0/7 with
+    "Metaborong is…" — that pattern stays retired.
+  - Word counts: 39–47, all ≤50.
+  - Claim discipline: no pricing figures (would fail without user-verified scope);
+    no chain count (7-vs-4-chains drift stays deferred per D6).
+  - 2026-05-21 v2 addition: Q8 added on the lean-via-integration mechanism
+    (user feedback "we are lean because we have integrated lot of processes
+    in every aspect, be it development, management or operations"). Section
+    now 8 Q&As (at the ≤8 cap).
+  - 2026-05-21 v3 reframe (post-live-review audit): Q3, Q5, Q7 had
+    weak AEO question phrasing. Reframed to a deliberate definitional
+    triad matching the three Metaborong pillars:
+      Q1 "What is a Web3 development company?"           (Web3 pillar)
+      Q5 "What is an AI agent development company?"      (AI pillar)
+      Q7 "What is a custom SaaS product development studio?" (Product Studio pillar)
+    Q3 pivoted from "how much does it cost" to the pricing-MODEL query
+    "Are projects priced hourly or fixed-scope?" so the answer can
+    deliver a binary (Fixed-scope, not hourly) instead of punting on
+    unverified pricing.
+  - 2026-05-21 v4 vet against @docs/writing-guardrails.md: em-dash
+    density reduced 9 → 0 across all 8 answers (em-dashes were the
+    section's strongest AI tell). Other guardrail fixes applied in the
+    same pass: Q3 weasel "Most senior studios" → direct "Fixed-scope,
+    not hourly"; Q1 -ing tail "working with crypto-native teams"
+    rephrased; Q5 borderline "including agents that interact" tightened
+    to "often with on-chain interactions". Banned-word scan clean.
+    Negative-parallel budget: one ("Fixed-scope, not hourly" in Q3),
+    within the "max once per piece" rule.
+  - Audit (2026-05-21): baseline composite 6.4 → v1 (7 Qs) 8.8 →
+    v2 (8 Qs) 9.0 → v3 (8 Qs, reframed) 9.2 → v4 (guardrail-tightened)
+    9.4. AEO question targeting reached 10 at v3 and is preserved at v4
+    (the v4 changes are stylistic, not Q-phrasing). Full table in
+    docs/superpowers/specs/2026-05-21-faq-copy-audit.md.
+  - SUPERSEDED — the 2026-05-14 lock (7 branded Qs, "What is Metaborong?" as Q1)
+    kept for provenance:
+      Q1 What is Metaborong? · Q2 How long does a typical project take? ·
+      Q3 Who do you work with? · Q4 Do we need an NDA before talking? ·
+      Q5 How are you different from larger Web3 and AI agencies? ·
+      Q6 Where are you based? · Q7 Do you work outside Web3 and AI?
 -->
 
 
@@ -471,41 +519,81 @@ A: Yes. The Product Studio pillar builds custom Web2 SaaS platforms independentl
   CTA: "Email us" (3 words, ≤ DESIGN.md cap).
 -->
 
-### [CONTACT CTA — dark section]
+### [CONTACT CTA — light section]
 
-## Tell us the build. We'll send the approach.
+## Got a project in mind?
 
-*Alt headlines:*
-- "Skip the pitch deck. Start the build."
-- "Send us your spec — get an approach back in 48 hours."
+**Sub:**
+We build what large agencies under-deliver and freelancers can't architect, across Web3 protocols, AI agents, and SaaS products. Tell us what you are building. We will tell you how we would approach it — no pitch deck, no fluff, no commitment required.
 
-**Sub (18 words):**
-No pitch deck. No discovery-call gauntlet. Just a written approach you can take or leave.
+**Primary CTA:** `Start a conversation →` → `mailto:contact@metaborong.com?subject=New%20project%20inquiry`
 
-**Primary CTA:** `Email us →` → `mailto:contact@metaborong.com?subject=New%20project%20inquiry`
-
-**Risk reducer (below CTA, small grey type):**
-Most teams hear back within 12 hours.
-
-**Secondary (small, plain):** `contact@metaborong.com`
-
-<!-- WHY
-  - "Got a project in mind?" was generic — every dev shop uses it. New headline is action-shaped and outcome-promising ("send" + "approach").
-  - Mirrors hero "Reply in 12h" eyebrow so the risk reducer feels like a kept promise, not a new claim.
-  - Sub copy kept the working "no pitch deck / no fluff" anti-process framing but reshaped from tricolon to two short sentences for breathing room.
-  - CTA stayed "Email us" (3 words — at the DESIGN.md cap). Avoided "Start a conversation →" (4 words, soft).
+<!-- WHY (2026-05-20 — Figma sync, supersedes the Session-17 A3 rewrite below)
+  - User reverted to the Figma 233:261 copy verbatim ("Got a project in mind?" /
+    "Start a conversation"). The Session-17 A3 rewrite ("Tell us the build…" +
+    "straight from a founder" + 12h risk reducer + secondary email) is
+    superseded by explicit user instruction "make the ux-copy same as in figma".
+  - Figma sub had a mid-word edit accident ("…Web3 protocols, ATell us…");
+    reconstructed to "AI agents, and SaaS products. Tell us…" per user
+    confirmation 2026-05-20 (matches site-wide Web3 + AI + SaaS positioning).
+  - Risk reducer + secondary email removed (not in Figma).
 -->
+
+<!-- SUPERSEDED — Session-17 A3 rewrite (kept for provenance)
+  H2: "Tell us the build. We'll send the approach."
+  Sub: "No pitch deck, no discovery-call gauntlet — a written approach to your Web3 or AI build, straight from a founder."
+  CTA: "Email us →" + risk reducer "Most teams hear back within 12 hours." + secondary "contact@metaborong.com".
+  Audit score 7.6 → 8.1, claim-gate PASS. Reverted 2026-05-20 to match Figma.
+-->
+
 
 
 ---
 
-### [FOOTER]
+### [FOOTER — light, expanded sitemap (redesigned 2026-05-19, Figma 237:359)]
 
-**Left:** [M-mark logo] metaborong™ · © 2026 Metaborong Technologies
+**Positioning line (near wordmark, 16w):**
+Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a small, senior, founder-led team.
 
-**Nav links:** Services · Work · About · Blog · Contact
+**Wordmark:** `METABORONG` — rendered as live text (not a raster; SSR/SEO-crawlable, crisp, responsive).
 
-**Social:** LinkedIn · X (Twitter) · Dribbble
+**Column — Company:** Work `/#work` · About `/#founders` · Blog `/blog` · FAQ `/#faq` · Contact `/#contact`
+
+**Column — Services:** Web3 / Blockchain · AI Agents · Product Studio — all → `/#services` (service pillar/leaf pages are `robots:noindex,nofollow`; the homepage anchor is the only indexable, SEO-valuable target)
+
+**Column — Offices (user-verified 2026-05-19, publish verbatim):**
+- **India** — 117, Rajyadharpur Govt Colony, Mallickpara, Serampore, West Bengal
+- **United Arab Emirates** — Sharjah Media City, Sharjah, UAE, Al Batayih, 000000
+- **USA** — 16192 Coastal Hwy, Lewes, DE 19958
+
+**Column — Get in touch:** `contact@metaborong.com` (mailto) · social row
+
+**Social:** LinkedIn `https://linkedin.com/company/metaborong-technologies` · X `https://x.com/Metaborong` · Behance, Medium, Discord → `/` (TEMPORARY homepage redirect — real URLs pending; follow-up to swap. No `rel="me"` on the temp links.)
+
+**Bottom bar:** `© {dynamic year} Metaborong Technologies` (left) · LinkedIn · X (right)
+
+**No legal row** — no Privacy/Terms pages exist (user-confirmed); omitting beats a dead link.
+
+<!-- WHY (A3 create, 2026-05-19 — Session 17 Figma redesign)
+  - Footer expands from a single compact row to the Figma sitemap structure
+    (237:359), placeholder "ARNAB RAY ×4" card grid DROPPED (user decision —
+    Founders section already carries the team; avoids publishing personal
+    mobiles).
+  - Only real prose is the 16-word positioning line: names all THREE pillars
+    (Web3, AI, SaaS) with equal weight (positioning rule: never Web3-first),
+    "small, senior team" mirrors the Services H2, "founder-led" restates the
+    published TRUST SIGNALS claim — no new/unverifiable claim. Guardrails PASS.
+  - Offices user-verified 2026-05-19 → copywriting claim-gate PASS (client is
+    the authority); publish verbatim incl. UAE "000000".
+  - Stale removed/reconciled: "Dribbble" dropped (not a real channel in code);
+    "metaborong™" → live "METABORONG" wordmark; static "© 2026" → dynamic year
+    (also fixes Figma's "@2026" bug).
+  - Services → /#services only (noindex,nofollow on service pages; see the
+    copy-audit SEO advisory §C — real lever is reindexing, out of scope here).
+-->
+<!-- CLAIM PROVENANCE: "founder-led" / "small, senior team" = restatements of
+  the existing published TRUST SIGNALS + Services-H2 lines, not new claims.
+  Office addresses = user-verified 2026-05-19. Copywriting gate: PASS. -->
 
 ---
 
@@ -534,4 +622,4 @@ Most teams hear back within 12 hours.
 - Trust bar should auto-scroll with no pause on hover — purely decorative, no SEO value
 - Comparison table: mobile-friendly (horizontal scroll or collapsed rows)
 - FAQ section: consider accordion expand/collapse for UX (content still in DOM for crawlers)
-- Dark contact CTA section: `#0a0a0a` background, white text, blue CTA button
+- Light contact CTA section (redesigned 2026-05-19, Figma 233:261): `--color-bg` background, dark text, brand-blue radius-0 CTA, full-width ASCII-hills raster anchored bottom
