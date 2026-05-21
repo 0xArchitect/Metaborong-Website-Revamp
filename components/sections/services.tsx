@@ -42,7 +42,7 @@ export function ServicesSection() {
             <Pill>What we build</Pill>
             <h2
               id="services-heading"
-              className="mt-[24px] text-[clamp(36px,4.6vw,64px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark"
+              className="mt-[24px] text-balance text-[clamp(36px,4.6vw,64px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark"
             >
               A small, senior team.<br />Three pillars. End to end.
             </h2>

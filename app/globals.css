@@ -696,6 +696,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
   font-size: 32px;
   line-height: 1.05;
   letter-spacing: -0.014em;
+  text-wrap: balance;
   color: #fffffc;
   margin: 0;
 }

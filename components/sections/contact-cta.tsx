@@ -28,7 +28,7 @@ export function ContactCtaSection() {
         <div className="flex h-full flex-col items-center justify-center px-[16px] text-center">
           <div className="max-w-[640px]">
             <h2
-              className="text-[clamp(36px,4.6vw,64px)] font-black leading-[1.03] tracking-[-0.03em] text-white"
+              className="text-balance text-[clamp(36px,4.6vw,64px)] font-black leading-[1.03] tracking-[-0.03em] text-white"
               style={{ textShadow: '0 2px 12px rgba(0,0,0,0.45)' }}
             >
               Got a project in mind?

@@ -8,7 +8,7 @@ export function FaqSection() {
       <div className="grid gap-[40px] md:grid-cols-[minmax(0,360px)_1fr] md:gap-[64px] lg:gap-[96px]">
         <div className="md:sticky md:top-[96px] md:self-start">
           <Pill className="mb-[16px]">FAQ</Pill>
-          <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
+          <h2 className="text-balance text-[clamp(28px,3.5vw,44px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
             Frequently asked questions
           </h2>
           <div className="mt-[32px] hidden border border-border p-[24px] md:block">

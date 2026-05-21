@@ -62,7 +62,7 @@ export function WhyUsSection() {
       <div className="flex flex-col gap-[48px] lg:flex-row lg:items-end lg:justify-between lg:gap-[48px]">
         <div className="flex max-w-[720px] flex-col gap-[24px]">
           <Pill>Why us</Pill>
-          <h2 className="text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
+          <h2 className="text-balance text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
             Why founders choose <span className="text-brand">Metaborong</span>
           </h2>
           <p className="max-w-[640px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
