@@ -63,7 +63,7 @@ export function ServicesPillars() {
           className="sticky overflow-hidden flex flex-col border-t border-b border-border"
           style={{ top: NAV_OFFSET, height: `calc(100svh - ${NAV_OFFSET}px)` }}
         >
-          <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
+          <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[40px] xl:px-[72px] 2xl:px-[112px]">
             {/* Bar */}
             <div className="flex flex-shrink-0 items-center gap-[14px] pt-[clamp(18px,2.6svh,28px)] pb-[clamp(14px,2svh,22px)] font-mono text-[clamp(11px,1.4svh,13px)] font-bold uppercase tracking-[0.14em] text-gray-light">
               <span aria-hidden="true" className="h-[6px] w-[6px] shrink-0 bg-brand" />
@@ -76,10 +76,10 @@ export function ServicesPillars() {
             </div>
 
             {/* Content */}
-            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-[40px] pb-[12px] xl:gap-[56px]">
+            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] gap-[32px] pb-[12px] xl:gap-[56px] 2xl:gap-[72px]">
               {/* LEFT: H2 + handoff-style blocks */}
               <div className="flex min-h-0 flex-col">
-                <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(25px,3.6svh,42px)] font-bold leading-[1.06] tracking-[-0.03em] text-dark">
+                <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(27px,min(4.2svh,3.5vw),44px)] font-bold leading-[1.05] tracking-[-0.03em] text-dark">
                   A small, senior team.{' '}
                   <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
                     {H2_PHRASE[active.id]}
@@ -121,13 +121,14 @@ export function ServicesPillars() {
                           <div className="svc-panel-inner">
                             <p className="svc-body">{pillar.body}</p>
                             <ul className="svc-sublist">
-                              {children.map((child) => (
+                              {children.map((child, ci) => (
                                 <li key={child.slug}>
                                   <Link
                                     href={`${pillar.hubHref}${child.slug}/`}
                                     className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
                                   >
-                                    <span>{child.name}</span>
+                                    <span className="svc-sub-idx" aria-hidden="true">{String(ci + 1).padStart(2, '0')}</span>
+                                    <span className="svc-sub-name">{child.name}</span>
                                   </Link>
                                 </li>
                               ))}
@@ -250,7 +251,7 @@ function ScopedStyle() {
 
       .svc-block-head {
         display: grid; grid-template-columns: 44px 1fr; gap: 14px;
-        width: 100%; text-align: left; padding: clamp(11px, 1.7svh, 18px) 0;
+        width: 100%; text-align: left; padding: clamp(10px, min(1.7svh, 1.5vw), 18px) 0;
         background: transparent; cursor: pointer;
       }
       .svc-num {
@@ -268,7 +269,7 @@ function ScopedStyle() {
       .svc-block[data-active="true"] .svc-cat { color: var(--cat); }
       .svc-h3 {
         font-family: var(--font-brand); font-weight: 700;
-        font-size: clamp(18px, 2.7svh, 27px); letter-spacing: -0.025em;
+        font-size: clamp(17px, min(2.7svh, 2.4vw), 27px); letter-spacing: -0.025em;
         line-height: 1.16; color: var(--color-dark, #303030);
       }
 
@@ -284,7 +285,7 @@ function ScopedStyle() {
         display: flex; flex-direction: column; gap: clamp(9px, 1.5svh, 15px);
         padding-left: 58px; padding-bottom: clamp(10px, 1.7svh, 16px);
       }
-      .svc-body { font-size: clamp(13px, 1.85svh, 16.5px); line-height: 1.5; color: var(--color-gray, #676767); max-width: 56ch; }
+      .svc-body { font-size: clamp(13px, min(1.85svh, 1.5vw), 16.5px); line-height: 1.5; color: var(--color-gray, #676767); max-width: 56ch; }
 
       .svc-sublist {
         list-style: none; margin: 0; padding: 0;
@@ -298,16 +299,29 @@ function ScopedStyle() {
       .svc-sublist li:nth-child(odd)  { border-right: 1px solid var(--color-border-subtle, #f3f4f6); padding-right: 12px; }
       .svc-sublist li:nth-child(even) { padding-left: 12px; }
       .svc-sublist a {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px;
-        min-height: clamp(38px, 5.4svh, 52px); padding: 8px 0; font-size: clamp(13px, 1.85svh, 16px); font-weight: 500;
+        display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px;
+        min-height: clamp(34px, min(5.4svh, 4.2vw), 50px); padding: 7px 9px;
+        font-size: clamp(12.5px, min(1.85svh, 1.45vw), 16px); font-weight: 500;
         color: var(--color-dark, #303030); letter-spacing: -0.005em; text-decoration: none;
-        transition: color var(--duration-instant, 150ms), padding-left var(--duration-instant, 150ms);
+        border-radius: 3px;
+        transition: background-color var(--duration-instant, 150ms), color var(--duration-instant, 150ms);
       }
+      .svc-sub-idx {
+        font-family: var(--font-mono); font-size: clamp(10px, 1.2svh, 11.5px); font-weight: 700;
+        letter-spacing: 0.06em; color: var(--color-gray-light, #9ca3af);
+        font-variant-numeric: tabular-nums; transition: color var(--duration-instant, 150ms);
+      }
+      .svc-sub-name { transition: transform var(--duration-instant, 150ms); }
       .svc-sublist a::after {
         content: '→'; font-family: var(--font-mono); color: var(--color-gray-light, #9ca3af);
         font-size: 12px; transition: transform var(--duration-instant, 150ms), color var(--duration-instant, 150ms);
       }
-      .svc-sublist a:hover { color: var(--cat); padding-left: 4px; }
+      .svc-sublist a:hover {
+        background-color: color-mix(in oklab, var(--cat) 9%, transparent);
+        color: var(--cat);
+      }
+      .svc-sublist a:hover .svc-sub-idx { color: var(--cat); }
+      .svc-sublist a:hover .svc-sub-name { transform: translateX(2px); }
       .svc-sublist a:hover::after { color: var(--cat); transform: translateX(3px); }
       .svc-sublist li:hover { border-bottom-color: var(--cat); }
 
@@ -328,6 +342,7 @@ function ScopedStyle() {
       }
       @media (prefers-reduced-motion: reduce) {
         .svc-block, .svc-panel, .svc-block-rule, .svc-num, .svc-cat,
+        .svc-sub-idx, .svc-sub-name,
         .svc-sublist a, .svc-sublist a::after, .svc-foot, .svc-foot::after {
           transition: none !important;
         }
