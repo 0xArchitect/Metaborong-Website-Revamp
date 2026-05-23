@@ -733,8 +733,8 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-h2 {
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: 32px;
-  line-height: 1.05;
+  font-size: clamp(32px, 3vw, 46px);
+  line-height: 1.08;
   letter-spacing: -0.014em;
   text-wrap: balance;
   color: #fffffc;
@@ -762,8 +762,8 @@ video.hero-ascii-image::-webkit-media-controls-container {
   padding: 24px 32px;
   border-top: 1px solid rgba(255, 255, 252, 0.18);
   font-family: var(--font-brand);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.6;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 252, 0.92);
   font-style: normal;
@@ -851,9 +851,6 @@ video.hero-ascii-image::-webkit-media-controls-container {
   .problem-content {
     padding-left: 0;
   }
-  .problem-h2 {
-    font-size: 28px;
-  }
 }
 
 /* Responsive: mobile — flat chart */
@@ -873,9 +870,6 @@ video.hero-ascii-image::-webkit-media-controls-container {
   }
   .problem-aeo {
     padding: 8px 16px 24px;
-  }
-  .problem-h2 {
-    font-size: 24px;
   }
   .problem-chrome-label {
     font-size: 9px;
