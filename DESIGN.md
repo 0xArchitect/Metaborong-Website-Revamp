@@ -284,6 +284,15 @@ card-slide), `stack.sticky` max 1. Hard constraints: each pin must degrade to a 
 stack under `prefers-reduced-motion` and below the mobile breakpoint, must not collide with
 the sticky nav (offset by nav height), and must keep INP healthy.
 
+**Pin 1 — Services (shipped 2026-05-24).** Package is **`motion`** (`motion/react`), the
+current name for framer-motion — not the legacy `framer-motion`. `useScroll` over a 260vh
+container drives per-cube `rise` 0→1 (continuous, applied imperatively to the SVG so scroll
+causes no React re-render); active-pillar (H2 phrase+colour, open accordion row, cube fill)
+is discrete React state off the same progress. Cubes are **grounded** — they extrude up out
+of the shared iso grid, bottom edge pinned (no floating baseplate). Whole section sits in one
+`calc(100svh - 56px)` frame. Gotcha logged: an `overflow:hidden` ancestor becomes the sticky
+containing block and breaks the `top:56` seat — keep the pinned frame free of such ancestors.
+
 ### Duration tokens
 
 | Alias                         | Value    | Use                                  |
