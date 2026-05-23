@@ -35,7 +35,7 @@ const FAQ_JSONLD = {
 export function ServicesSection() {
   return (
     <Section bg="subtle" maxWidth="xwide" className="services-section-bridge" id="services" aria-labelledby="services-heading">
-      <div className="lg:rounded-lg lg:border lg:border-border lg:bg-white lg:overflow-hidden">
+      <div className="lg:rounded-lg lg:border lg:border-border lg:bg-white">
         <h2 id="services-heading" className="sr-only">What we build — a small, senior team across three pillars</h2>
         <ServicesPillarsLazy />
       </div>
