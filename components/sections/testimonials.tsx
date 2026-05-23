@@ -29,7 +29,7 @@ export function TestimonialsSection() {
           </p>
           <div className="mt-[24px] flex items-center gap-[16px]">
             <span className="text-[36px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
-            <span aria-hidden="true" className="text-[18px] leading-none text-[#F6851B]">{'★★★★★'}</span>
+            <span aria-hidden="true" className="text-[18px] leading-none text-[#C2410C]">{'★★★★★'}</span>
             <span className="text-[13px] leading-[1.4] text-gray">{reviewCount} verified<br />Clutch reviews</span>
           </div>
           <a
@@ -58,7 +58,7 @@ export function TestimonialsSection() {
             <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-gray-light">Verified · Clutch</span>
             <span className="flex items-center gap-[12px]">
               <span className="text-[44px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
-              <span className="text-[20px] leading-none text-[#F6851B]">{'★★★★★'}</span>
+              <span className="text-[20px] leading-none text-[#C2410C]">{'★★★★★'}</span>
             </span>
             <span className="text-[14px] leading-[1.5] text-gray">Based on {reviewCount} verified Clutch reviews</span>
           </div>

@@ -6,6 +6,12 @@ from shipped state, optimized for consistency across sections built session-by-s
 Read this file before any UI change. If a section deviates, log it under
 `docs/superpowers/specs/<date>-<section>.md` per the override rule below.
 
+> **Foundation source (2026-05-23):** the homepage revamp adopts the design-system v1.0
+> handoff (`docs/design_handoff_homepage_revamp/design-system.html`). This DESIGN.md is the
+> **operational** authority and is kept in sync; the handoff doc is historical reference
+> **but wins on any value conflict** (it is the newer revision). See the 2026-05-23
+> Decisions Log entry.
+
 ## Brand
 - **Product:** Metaborong (metaborong.com)
 - **Audience:** Web3 / AI / SaaS founders evaluating a senior dev studio
@@ -67,20 +73,22 @@ Applied via `:focus-visible` only — never `:focus`. Mandatory on `<Button>`, `
 
 ## Typography
 
-Loaded via Fontshare + Google Fonts in `app/globals.css:2-6`.
+Switzer is **self-hosted** as `.woff2` from `/public/fonts` via `@font-face` (six weights)
+in `app/globals.css`. JetBrains Mono still loads from the Google Fonts CDN.
 
-- **Display + Body:** Satoshi (300, 400, 500, 700, 900) — `--font-brand`.
+- **Display + Body:** Switzer (300, 400, 500, 600, 700, 900) — `--font-brand`. Humanist
+  grotesque, Indian Type Foundry. *(Replaces Satoshi as of 2026-05-23, design-system v1.0.)*
 - **Mono / data / eyebrows:** JetBrains Mono 400 — `--font-mono`.
-- **Fallback:** Space Grotesk (system fallback only — never specify directly).
+- **Fallback:** Inter, Helvetica Neue (system fallback only — never specify directly).
 
-CSS vars (`globals.css:40-41`):
+CSS vars:
 ```css
---font-brand: 'Satoshi', 'Space Grotesk', sans-serif;
+--font-brand: 'Switzer', 'Inter', 'Helvetica Neue', sans-serif;
 --font-mono:  'JetBrains Mono', 'Courier New', monospace;
 ```
 
-Applied globally on `html` (`globals.css:79`). Must not add a second
-`html { @apply font-sans }` elsewhere — Tailwind's default sans stack overrides Satoshi.
+Applied globally on `html`. Must not add a second
+`html { @apply font-sans }` elsewhere — Tailwind's default sans stack overrides Switzer.
 
 ### Type scale
 
@@ -134,8 +142,8 @@ canonical.
 | Alias                 | CSS var          | Hex       | Use                                          |
 |-----------------------|------------------|-----------|----------------------------------------------|
 | `color.brand.primary` | `--color-brand`  | `#296ff0` | Web3 pillar, primary CTA, hub                |
-| `color.brand.accent`  | `--color-accent` | `#F6851B` | Product Studio pillar, HUD                   |
-| `color.brand.ai`      | `--color-ai`     | `#10b981` | AI Agents pillar (only)                      |
+| `color.brand.accent`  | `--color-accent` | `#C2410C` | Product Studio pillar, HUD — burnt orange (avoids MetaMask wallet-orange) |
+| `color.brand.ai`      | `--color-ai`     | `#0F766E` | AI Agents pillar (only) — institutional teal (replaces Tailwind emerald) |
 
 #### Text
 | Alias                  | CSS var               | Hex       | Use                                       |
@@ -161,8 +169,8 @@ canonical.
 | `color.border.subtle`   | `--color-border-subtle` | `#f3f4f6` | Internal dividers, hover backgrounds    |
 
 ### Pillar color rule
-Pillars own their color globally — Web3 is brand-blue, AI is `#10b981`, Product Studio
-is `#F6851B`. Must not introduce new pillar-tinted UI without updating `services-data.ts`.
+Pillars own their color globally — Web3 is brand-blue, AI is `#0F766E`, Product Studio
+is `#C2410C`. Must not introduce new pillar-tinted UI without updating `services-data.ts`.
 
 ### Inactive / structural slate
 Used for inactive glyphs and dashed spokes in `services-glyphs.tsx`. Component-local,
@@ -180,9 +188,10 @@ namespace). Sanctioned uses:
   for a **separate data-viz token pass** — out of scope for the homepage token-discipline check.
 
 ### Dark mode
-A `.dark` token block exists (`globals.css:303-335`) but is not currently activated. The
+A `.dark` token block exists in `globals.css` but is not currently activated. The
 site ships light-only. If reintroduced, surfaces must be redesigned — must not just
-invert.
+invert. **Note:** design-system v1.0 (2026-05-23) specs a full dark-mode token map +
+nav toggle, but it is **deferred** — out of scope for the current homepage revamp.
 
 ---
 
@@ -265,6 +274,15 @@ Locked grammar. Originally specified in (now archived)
    `@media (prefers-reduced-motion: reduce)`.
 4. **CSS over JS for media queries.** Must not use `matchMedia` if a CSS query suffices.
    SVG sections use inline `<style precedence="default">` blocks to avoid hydration cost.
+
+### Scroll-driven layer (design-system v1.0, 2026-05-23)
+A second motion layer is sanctioned: **scroll-scrubbed pinned sections** (scroll *plays*
+the animation, never replays it — consistent with the one-shot rule). **Framer Motion** is
+adopted **only** for these (Lenis + the IO `Reveal` auto-wrap stay everywhere else).
+Budget: `section.pin` **max 2 per page** (Services vertical iso-cubes, Why-Us horizontal
+card-slide), `stack.sticky` max 1. Hard constraints: each pin must degrade to a static
+stack under `prefers-reduced-motion` and below the mobile breakpoint, must not collide with
+the sticky nav (offset by nav height), and must keep INP healthy.
 
 ### Duration tokens
 
@@ -515,6 +533,7 @@ Run before marking a section shipped.
 
 | Date       | Decision                                                                                                                                                  | Rationale                                                                                  |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| 2026-05-23 | **Adopt design-system v1.0 foundations (homepage revamp Phase 0).** Font Satoshi → Switzer (self-hosted .woff2, 6 weights, fallback Inter/Helvetica); Product-Studio accent #F6851B → #C2410C (burnt orange, avoids MetaMask wallet-orange); AI pillar #10b981 → #0F766E (institutional teal, replaces Tailwind emerald-500); brand #296ff0 unchanged. Token swaps in `globals.css` (`--font-brand`, `--color-accent`, `--color-ai`) + literal usages in `services-data.ts`, `services-iso-canvas.tsx`, `work-preview.tsx`, `testimonials.tsx`, and the orb-label HUD corners/cat. Admin AI-readiness PASS/WARN palettes left as independent status colors (green=pass / amber=warn, not brand). `framer-motion` added, scoped to the two new pinned sections only (Lenis + IO `Reveal` retained everywhere else). Dark mode spec'd in v1.0 but **deferred**. Contact-CTA to adopt the **dark** treatment (supersedes the 2026-05-20 painterly-light lock). `design-system.html` = historical reference but **wins on value conflict**. | One foundation aligned to the v1.0 handoff before section-by-section rework; brand colors now read as owned (distinct from MetaMask wallet-orange and Tailwind emerald defaults); motion stack ready for the two pins without ripping out the working Reveal. |
 | 2026-05-22 | **Audit polish — P2 token discipline + P3 seam contrast.** (P3) ASCII seams darkened from `--color-gray-light` @ 0.5 (near-invisible on white) to `--color-gray` @ 0.6 — picked from four live candidates. (P2) The token-discipline check surfaced a real collision: the shadcn `@theme inline` block (`globals.css`) redefined `--color-accent` as `var(--accent)` (a near-white `oklch(0.97)`), silently overriding the brand `@theme` `--color-accent: #F6851B` and leaving every `bg/text/border-accent` (blog/admin "Warning" callouts) rendering near-white. Removed the colliding alias so the brand orange is authoritative again (verified computed `--color-accent` → `#f6851b`). Status/window-chrome colors (`#d90429`/`#ffba08`/`#38b000`) documented as sanctioned local hex (see "Status / window-chrome colors") rather than promoted to brand tokens. **Flagged, not fixed:** the same inline block also shadows `--color-border` with `oklch(0.922)` (≈`#e4e4e4` vs DESIGN.md `#e5e7eb`) — visually identical, left alone; and `problem-trend-chart.tsx`'s `#296ff0`/`#fffffc` raw hex remains a separate data-viz token pass. | The Product Studio accent token resolves to its intended orange again (un-breaks blog/admin warn callouts) and the connective seams are legible as designed texture. Traffic-light semantics stay out of the brand namespace by intent. |
 | 2026-05-22 | **Design-review audit fixes (Session 20 cont.).** Acted on a `/design-review` audit (B+). (1) **Space Grotesk leak removed** — `.problem-h2`, `.problem-chart-lane-label`, `.problem-chart-status`, and the services iso-canvas `.iso-label` specified `'Space Grotesk'` (or an undefined `--font-grotesk`) as the *primary* face, rendering in Grotesk while every other heading was Satoshi; all repointed to `var(--font-brand)` (Grotesk stays the fallback inside the token). (2) **H2 casing unified to sentence case** (see Typography → H2 size tiers). (3) **Problem AEO accordion question** (`.problem-aeo-q`) 14px → 16px (the `base` token) for a clearer Q/A hierarchy in the collapsed disclosure; the primary FAQ questions were already 16–17px (no change). (4) **Consent banner** restructured to a compact summary + `<details>` "How it works" expander (full disclosure verbatim, progressively disclosed) with Accept/Reject bumped to ≥44px tap targets — fixes the mobile case where the full-text card buried both hero CTAs. `tsc` clean; no copy removed (consent text marked NEED LEGAL REVIEW kept verbatim in the expander). | Page now reads as one typographic system (single heading face + casing), the collapsed AEO block has correct hierarchy, and the mobile first impression is the hero (not a wall of legal text) while the legal disclosure stays one tap away. |
 | 2026-05-21 | **Homepage A+ pass — intentionality + earned richness (Session 20).** Pushes the Session-19-redo B+ toward A in two movements. **Movement 1 (subtractive intentionality):** (1a) **H2 size tiers** — section H2 now encodes narrative importance via a 3-tier clamp scale (T1 64 / T2 56 / T3 44) instead of the prior ad-hoc 44–56 spread: Services + Contact-CTA → 64 (peaks), Why-Us + Founders → 56, Work-Preview demoted 52→44 to join Testimonials/Comparison/FAQ (utility); Problem exempt (card-internal 32). (1b) **Selective Reveal** — new `Section reveal={false}` prop; turned off on Comparison (was double-animating over its own `comparison-rows` per-row reveal) and Testimonials (async Clutch widget reads better static). The **pill-reduction lever was deliberately dropped** — all 9 unified pills kept (de-risks the prior pill revert). **Movement 2 (earned richness):** new `components/ui/ascii-seam.tsx` connective ASCII texture band placed at 4 rhythmic seams (Problem→Services, Why-Us→Work, Founders→Comparison, FAQ→Contact); deterministic smooth glyph field (no hydration mismatch), one-shot left-to-right mask-wipe stamp-in then static, `aria-hidden`, fixed 88px (CLS-safe), reduced-motion static; those four followers dropped their `divider` hairline so the band is the sole seam. A **count-up** on figures was evaluated and **rejected** — the only standalone numeric display is the Testimonials 4.9 rating, and a lone decimal count-up on a non-accumulating metric read as gimmick, not earned. All motion transform/opacity/mask-only + reduced-motion-gated; `tsc --noEmit` clean; no CWV-measurable risk (fixed-height bands, IO + GPU transitions). | Section hierarchy now reads as designed (clear 64/56/44 rhythm), first-paint motion is deliberate rather than applied to every block, and the page gains a single restrained signature motif — the ASCII connective tissue — without the pill regression or a weak template flourish. |
