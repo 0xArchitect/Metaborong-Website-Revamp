@@ -4,6 +4,36 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-23 — Homepage revamp (design-system v1.0): Phase 0 + Hero
+
+Adopting the Claude-Design v1.0 handoff (`docs/design_handoff_homepage_revamp/`) section by section. The handoff HTML is a wireframe/reference, not a pixel target. Plan: `~/.claude/plans/so-i-don-t-intend-robust-spring.md`.
+
+**Phase 0 — global foundation (commit `5608ba9`).** Token/font conformance before any section work:
+- Font **Satoshi → Switzer** (self-hosted `.woff2`, 6 weights, `@font-face`; fallback Inter/Helvetica). Dropped the Fontshare/Space-Grotesk CDN imports; JetBrains Mono unchanged.
+- **`--color-accent` `#F6851B` → `#C2410C`** (burnt orange; avoids MetaMask wallet-orange). **`--color-ai` `#10b981` → `#0F766E`** (institutional teal; replaces Tailwind emerald). Brand `#296ff0` unchanged. Literal swaps in `services-data.ts`, `services-iso-canvas.tsx`, `work-preview.tsx`, `testimonials.tsx` stars, and the orb-label HUD. Admin AI-readiness PASS/WARN palettes left as independent status colors (not brand).
+- DESIGN.md updated (typography, color table, scroll-motion note, dark-mode-deferred). Dark mode **deferred**; Contact-CTA will go **dark** (supersedes the 2026-05-20 painterly-light lock); `design-system.html` = historical reference but wins on value conflict.
+
+**Section 1 — Hero (commit `e85c334`).**
+- White bg; **nav whitened** (`bg-bg-subtle` → `bg-bg`) to remove the shade-seam at the nav/hero boundary.
+- Content capped to `max-w-[1280px]` to match the nav's content edges (was `1600` — overshot the bar) + `64px` column gap; closes the wide-screen "panels too far apart" gap without moving the video.
+- Eyebrow: unified `Pill` → hero-only square + mono `// WEB3 & AI DEVELOPMENT STUDIO` (handoff treatment; logged as a Pill-rule exception in DESIGN.md).
+- Content now centers in the area **below** the fixed nav (was centered ignoring it → eyebrow sat ~1px under the bar) → comfortable nav→eyebrow gap.
+- Left column **brackets the video frame**: three zones (eyebrow+H1 / lede / CTAs) over a height-matched block (`lg:h-[80%] max-h-[700px]`, `justify-between`), so the lede sits equidistant and eyebrow∥video-top + CTA∥video-bottom. Two height-base bugs fixed in the process (video cell forced `100vh` vs grid `100vh-56`; video `80%` vs copy block `82%`) — bottoms now align Δ0 at 720/768/800/900.
+- H1 `clamp(32px,4.8vw,72px)` → `clamp(40px,6vw,84px)`; lede `text-base` → `text-lg`.
+
+### Files
+
+- **Phase 0:** `app/globals.css`, `DESIGN.md`, `components/sections/{services-data.ts,services-iso-canvas.tsx,work-preview.tsx,testimonials.tsx}`, `public/fonts/Switzer-*.woff2`.
+- **Hero:** `components/sections/hero.tsx`, `components/layout/nav.tsx`, `DESIGN.md` (pill exception), `CHANGELOG.md`.
+
+### Verification
+
+- `npx tsc --noEmit` clean after each step (not `npm run build` — rss.xml env hold).
+- Phase 0: live computed `--font-brand`/`--color-accent`/`--color-ai` confirmed on `:3000`; `/blog`, `/services`, a service page → 200; `/admin` → 307.
+- Hero: alignment measured Δ0 (top + bottom) at 720/768/800/900; responsive screenshots at 390/768/1366/1440 (Playwright, since the agent-browser daemon is viewport-locked).
+
+---
+
 ## 2026-05-22 — Session 20 (cont.): Design-review audit fixes
 
 Acted on a `/design-review` audit (graded B+) of the homepage. Audit-only first, then fixed one finding at a time with live before/after.
