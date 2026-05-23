@@ -71,14 +71,14 @@ export function ServicesPillars() {
 
           <div className="flex-1 grid grid-cols-[minmax(300px,42%)_1fr] min-h-0">
             <div className="flex flex-col min-h-0 border-r border-border-subtle px-[28px] py-[24px]">
-              <h2 className="services-h2 text-[clamp(26px,2.6vw,38px)] font-bold tracking-[-0.03em] leading-[1.1] text-dark flex-shrink-0">
+              <h2 className="services-h2 text-[clamp(24px,2.4vw,33px)] font-bold tracking-[-0.03em] leading-[1.08] text-dark flex-shrink-0">
                 A small, senior team.{' '}
                 <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
                   {H2_PHRASE[active.id]}
                 </span>
               </h2>
 
-              <ol className="mt-[20px] flex-1 min-h-0 overflow-y-auto">
+              <ol className="mt-[14px] flex-1 min-h-0 overflow-y-auto">
                 {pillars.map((pillar, idx) => {
                   const isActive = idx === activeIndex
                   const isLast = idx === pillars.length - 1
@@ -100,7 +100,7 @@ export function ServicesPillars() {
                         onClick={() => { setActiveIndex(idx); scrollToPillar(idx) }}
                         aria-expanded={isActive}
                         aria-controls={`pillar-body-${pillar.id}`}
-                        className="services-row-button w-full text-left py-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                        className="services-row-button w-full text-left py-[11px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
                         data-active={isActive}
                       >
                         <span
@@ -122,7 +122,7 @@ export function ServicesPillars() {
                         role="region"
                       >
                         <div className="services-row-body-inner">
-                          <ul role="list" className="pb-[16px] space-y-[2px]">
+                          <ul role="list" className="pb-[8px] space-y-[2px]">
                             {visibleChildren.map((child) => (
                               <li key={child.slug}>
                                 <Link
@@ -137,7 +137,7 @@ export function ServicesPillars() {
                               </li>
                             ))}
                           </ul>
-                          <div className="pb-[14px]">
+                          <div className="pb-[10px]">
                             <Link
                               href={pillar.hubHref}
                               className="inline-flex items-center gap-[8px] text-[13px] font-medium hover:opacity-80 transition-opacity duration-[var(--duration-instant)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
