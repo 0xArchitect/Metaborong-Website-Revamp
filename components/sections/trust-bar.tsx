@@ -18,6 +18,7 @@ const clients: Client[] = [
   { name: 'GetSmart',   src: '/clients/getsmart.png',   href: 'https://get-smart.net/',     scale: 1.2, softMute: true },
   { name: 'Nero',       src: '/clients/nero.svg',       href: 'https://nerochain.io/',      keepSilhouette: true, scale: 1.4 },
   { name: 'Sedax',      src: '/clients/sedax.svg',      href: 'https://www.sedax.in/',      scale: 0.8 },
+  { name: 'SunsetML',   src: '/clients/sunset.svg',     href: 'https://www.sunsetml.com/',  keepSilhouette: true, scale: 1.0 },
   { name: 'DDAF',       src: '/clients/ddaf.svg',       href: 'https://www.ddaf.io/',       scale: 1.2 },
   { name: 'Near',       src: '/clients/near.svg',       href: 'https://near.org/',          scale: 1.3 },
   { name: 'Diamante',   src: '/clients/diamante.webp',  href: 'https://www.diamante.io/',   scale: 1.3, customColor: '#B026FF' },
@@ -34,6 +35,18 @@ export function TrustBar() {
       className="relative overflow-hidden border-y border-border bg-bg py-4 md:py-6 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]"
     >
       <Reveal>
+      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-[16px] md:grid-cols-[200px_1fr] md:gap-[32px]">
+        {/* Label column (handoff trust-bar pattern) */}
+        <div className="flex flex-col gap-[4px]">
+          <div className="flex items-baseline gap-[8px]">
+            <span className="text-[22px] font-bold leading-none tracking-[-0.025em] text-dark tabular-nums">25+</span>
+            <span className="font-mono text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-gray-light">In production</span>
+          </div>
+          <span className="font-mono text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-gray">Shipped for</span>
+        </div>
+
+        {/* Masked marquee — edges fade so logos enter/exit softly */}
+        <div className="overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]">
       <ul className="flex w-max items-center gap-[48px] md:gap-[64px] lg:gap-[96px] animate-marquee m-0 p-0 list-none will-change-transform">
         {doubled.map((c, i) => {
           const cap = `calc(${c.scale ?? 1} * clamp(20px, 3.5vw, 32px))`
@@ -115,6 +128,8 @@ export function TrustBar() {
           )
         })}
       </ul>
+        </div>
+      </div>
       </Reveal>
     </section>
   )
