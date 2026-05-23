@@ -179,7 +179,7 @@ export function Nav() {
       ref={headerRef}
       onMouseEnter={cancelClose}
       onMouseLeave={scheduleClose}
-      className={`fixed inset-x-0 top-0 z-50 bg-bg-subtle border-t border-t-gray-subtle border-b border-b-border ${scrolled ? '' : '[border-bottom-style:dashed]'}`}
+      className={`fixed inset-x-0 top-0 z-50 bg-bg border-t border-t-gray-subtle border-b border-b-border ${scrolled ? '' : '[border-bottom-style:dashed]'}`}
     >
       {/* Nav bar row.
           Polish pass: cell-grid hairlines (desktop) slice the bar into measured
@@ -330,7 +330,7 @@ export function Nav() {
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden absolute top-14 left-0 right-0 h-[calc(100dvh-56px)] overflow-y-auto bg-bg-subtle px-[16px] sm:px-[24px] md:px-[40px] pt-[32px] pb-[40px] flex flex-col gap-[8px]"
+          className="lg:hidden absolute top-14 left-0 right-0 h-[calc(100dvh-56px)] overflow-y-auto bg-bg px-[16px] sm:px-[24px] md:px-[40px] pt-[32px] pb-[40px] flex flex-col gap-[8px]"
         >
           {/* Pillar blocks — collapsed by default. Children stay in DOM for SEO. */}
           {pillars.map((p, i) => (

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Pill } from '@/components/ui/pill'
 import { Reveal } from '@/components/ui/reveal'
 import { Typewriter } from '@/components/ui/typewriter'
 
@@ -118,7 +117,7 @@ export function HeroSection() {
   }, [mountVideo])
 
   return (
-    <section className="relative min-h-screen bg-bg-subtle px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
+    <section className="relative min-h-screen bg-bg px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
       {/* Preload the AVIF poster — React 19 hoists this to <head> so it
           races ahead of the bundle and wins the LCP slot. fetchPriority high
           marks it as critical-path. */}
@@ -129,47 +128,61 @@ export function HeroSection() {
         type="image/avif"
         fetchPriority="high"
       />
-      <div className="w-full max-w-[1600px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
+      <div className="w-full max-w-[1280px] mx-auto min-h-screen lg:min-h-[calc(100svh-56px)] lg:mt-[56px] grid grid-cols-1 lg:grid-cols-[57fr_43fr] lg:gap-[64px]">
         {/* Left: copy */}
-        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-[96px] lg:pb-[48px]">
-          {/* Eyebrow chip — entity-category line */}
-          <Pill className="mb-7">Web3 &amp; AI development studio</Pill>
+        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-0 lg:pb-0">
+          {/* Inner block mirrors the ASCII video frame's vertical extent (h-[82%], centered)
+              so the eyebrow top aligns with the video top and the CTAs bottom with the video
+              bottom on lg+. Three zones (eyebrow+H1 / lede / CTAs) spread by justify-between
+              so the lede sits equidistant between the headline and the buttons. On mobile/tablet
+              they stack with a fixed 28px gap. */}
+          <div className="flex flex-col gap-[28px] lg:h-[80%] lg:max-h-[700px] lg:justify-between lg:gap-0">
+            {/* Eyebrow + H1 */}
+            <div>
+              {/* Eyebrow — square + mono entity-category line (hero-only treatment) */}
+              <div className="mb-7 flex items-center gap-[10px]">
+                <span aria-hidden="true" className="h-[8px] w-[8px] shrink-0 bg-brand" />
+                <span className="font-mono text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-gray-light">
+                  // Web3 &amp; AI development studio
+                </span>
+              </div>
 
-          {/* H1 */}
-          <h1 className="text-[clamp(32px,4.8vw,72px)] font-black tracking-[-0.04em] leading-[1.02] text-dark mb-6">
-            <Typewriter
-              lines={[
-                { text: 'Web3 protocols.' },
-                { text: 'AI agents.' },
-                { text: 'Shipped.', className: 'text-brand' },
-              ]}
-              durationMs={520}
-              startDelayMs={120}
-              staggerMs={150}
-            />
-          </h1>
+              <h1 className="text-[clamp(40px,6vw,84px)] font-black tracking-[-0.04em] leading-[1.02] text-dark">
+                <Typewriter
+                  lines={[
+                    { text: 'Web3 protocols.' },
+                    { text: 'AI agents.' },
+                    { text: 'Shipped.', className: 'text-brand' },
+                  ]}
+                  durationMs={520}
+                  startDelayMs={120}
+                  staggerMs={150}
+                />
+              </h1>
+            </div>
 
-          {/* AEO extraction blockquote */}
-          <blockquote cite="/#services" className="mb-6">
-            <p className="text-base text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
-              Metaborong is a Web3 development company and AI agent studio. A
-              remote-first team of senior engineers, globally distributed. We ship
-              DeFi protocols and smart contract audits across EVM chains and Solana,
-              AI agents spanning RAG, agentic workflows, and generative systems, and
-              full-stack SaaS for founders and early-stage startups. Spec to
-              production, fast.
-            </p>
-          </blockquote>
+            {/* AEO extraction blockquote / lede — own zone so it sits equidistant on lg+ */}
+            <blockquote cite="/#services">
+              <p className="text-lg text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
+                Metaborong is a Web3 development company and AI agent studio. A
+                remote-first team of senior engineers, globally distributed. We ship
+                DeFi protocols and smart contract audits across EVM chains and Solana,
+                AI agents spanning RAG, agentic workflows, and generative systems, and
+                full-stack SaaS for founders and early-stage startups. Spec to
+                production, fast.
+              </p>
+            </blockquote>
 
-          {/* CTAs */}
-          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-            <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
-            <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
+            {/* CTAs */}
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
+              <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
+            </div>
           </div>
         </Reveal>
 
         {/* Right: ASCII-art still — replaces the orb */}
-        <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-screen flex items-center justify-center lg:justify-end">
+        <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-0 flex items-center justify-center lg:justify-end">
           {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
           <div ref={asciiBoxRef} className="relative w-[92%] h-[82%] max-w-[520px] max-h-[700px] sm:w-[86%] sm:h-[80%]">
             {mountVideo && (
