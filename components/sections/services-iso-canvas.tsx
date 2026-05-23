@@ -7,8 +7,8 @@ import { type PillarId } from '@/components/sections/services-data'
 // inset white shine reads correctly.
 const PILLAR_COLOR: Record<PillarId, string> = {
   'web3': '#296ff0',
-  'ai': '#10b981',
-  'product-studio': '#F6851B',
+  'ai': '#0F766E',
+  'product-studio': '#C2410C',
 }
 
 const PILLAR_LABEL: Record<PillarId, string> = {

@@ -7,9 +7,9 @@ type Project = { name: string; category: string; color: string }
 // no fabricated outcomes. Names + categories only.
 const projects: Project[] = [
   { name: 'KGeN',               category: 'Web3 · Gaming', color: '#296ff0' },
-  { name: 'DATA3 AI',           category: 'AI · Data',     color: '#10b981' },
+  { name: 'DATA3 AI',           category: 'AI · Data',     color: '#0F766E' },
   { name: 'Bionic',             category: 'Web3 · DeFi',   color: '#296ff0' },
-  { name: 'Bayan — AI Chatbot', category: 'AI · Voice',    color: '#10b981' },
+  { name: 'Bayan — AI Chatbot', category: 'AI · Voice',    color: '#0F766E' },
 ]
 
 export function WorkPreviewSection() {
