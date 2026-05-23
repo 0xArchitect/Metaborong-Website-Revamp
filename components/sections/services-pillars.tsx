@@ -1,233 +1,174 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react'
 import { pillars, getPublishedLeaves, type PillarId } from '@/components/sections/services-data'
-import { ServicesIsoCanvas } from '@/components/sections/services-iso-canvas'
+import { ServicesIsoStage } from '@/components/sections/services-iso-stage'
+import { activeIndexFromProgress, riseForCube } from '@/components/sections/services-scroll'
 
 const TOP_N = 5
+const NAV_OFFSET = 56
+
+const H2_PHRASE: Record<PillarId, string> = {
+  'web3': 'Web3 protocols.',
+  'ai': 'Production AI.',
+  'product-studio': 'End-to-end products.',
+}
 
 export function ServicesPillars() {
-  const [activeId, setActiveId] = useState<PillarId>(pillars[0].id)
   const wrapRef = useRef<HTMLDivElement>(null)
-  const anchorRefs = useRef<Map<PillarId, HTMLDivElement>>(new Map())
+  const { scrollYProgress } = useScroll({
+    target: wrapRef,
+    offset: ['start start', 'end end'],
+  })
 
-  // Scroll-driven active pillar (lg+ via tall sticky-pinned section).
-  useEffect(() => {
-    const refsMap = anchorRefs.current
-    if (refsMap.size === 0) return
+  const rise0 = useTransform(scrollYProgress, (p) => riseForCube(0, p, pillars.length))
+  const rise1 = useTransform(scrollYProgress, (p) => riseForCube(1, p, pillars.length))
+  const rise2 = useTransform(scrollYProgress, (p) => riseForCube(2, p, pillars.length))
+  const rises = [rise0, rise1, rise2]
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible[0]) {
-          const id = (visible[0].target as HTMLElement).dataset.pillar as PillarId
-          if (id) setActiveId(id)
-        }
-      },
-      {
-        // Crop the viewport to a 2vh-tall band straddling the vertical
-        // midline. An anchor "is intersecting" only while its midpoint
-        // is in that band — so the active pillar flips exactly when its
-        // assigned third of the 260vh scroll range crosses center-screen.
-        rootMargin: '-49% 0px -49% 0px',
-        threshold: 0,
-      },
-    )
+  const [activeIndex, setActiveIndex] = useState(0)
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    const next = activeIndexFromProgress(p, pillars.length)
+    setActiveIndex((cur) => (cur === next ? cur : next))
+  })
 
-    refsMap.forEach((el) => io.observe(el))
-    return () => io.disconnect()
-  }, [])
+  const active = pillars[activeIndex]
 
-  const active = pillars.find((p) => p.id === activeId)!
+  const scrollToPillar = (i: number) => {
+    const wrap = wrapRef.current
+    if (!wrap) return
+    const rect = wrap.getBoundingClientRect()
+    const sectionTop = rect.top + window.scrollY
+    const target = sectionTop + (wrap.offsetHeight / pillars.length) * (i + 0.5) - window.innerHeight / 2
+    window.scrollTo({ top: target, behavior: 'smooth' })
+  }
 
   return (
     <>
       <ScopedStyle />
 
-      {/* Mobile (lg-): compact stack, no pinning. */}
       <div className="lg:hidden mt-[48px]">
         <MobileStack />
       </div>
 
-      {/* Desktop (lg+): scrolltelling. */}
-      <div ref={wrapRef} className="hidden lg:block relative h-[260vh]">
-        {pillars.map((p, i) => (
-          <div
-            key={p.id}
-            ref={(el) => {
-              if (el) anchorRefs.current.set(p.id, el)
-              else anchorRefs.current.delete(p.id)
-            }}
-            data-pillar={p.id}
-            aria-hidden="true"
-            className="absolute left-0 w-px pointer-events-none"
-            style={{
-              top: `${(i * 100) / 3}%`,
-              height: `${100 / 3}%`,
-            }}
-          />
-        ))}
+      <div ref={wrapRef} data-services-anchor-wrap className="hidden lg:block relative h-[260vh]">
+        <div
+          className="sticky overflow-hidden flex flex-col"
+          style={{ top: NAV_OFFSET, height: `calc(100svh - ${NAV_OFFSET}px)` }}
+        >
+          <div className="flex items-center justify-between px-[24px] py-[12px] border-b border-border-subtle flex-shrink-0">
+            <span className="section-h-eyebrow-inline font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray-light">
+              What we build
+            </span>
+            <span className="font-mono text-[11px] font-bold tracking-[0.06em]">
+              <span style={{ color: active.color }}>{active.num}</span>
+              <span className="text-gray-light"> / 03</span>
+            </span>
+          </div>
 
-        <div className="sticky top-0 h-screen flex items-center">
-          <div className="w-full grid grid-cols-[minmax(280px,360px)_1fr] xl:grid-cols-[minmax(320px,380px)_1fr] items-stretch">
-            <LeftAccordion activeId={activeId} setActiveId={setActiveId} active={active} />
-            <RightCanvas active={active} activeId={activeId} />
+          <div className="flex-1 grid grid-cols-[minmax(300px,42%)_1fr] min-h-0">
+            <div className="flex flex-col min-h-0 border-r border-border-subtle px-[28px] py-[24px]">
+              <h2 className="services-h2 text-[clamp(26px,2.6vw,38px)] font-bold tracking-[-0.03em] leading-[1.1] text-dark flex-shrink-0">
+                A small, senior team.{' '}
+                <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
+                  {H2_PHRASE[active.id]}
+                </span>
+              </h2>
+
+              <ol className="mt-[20px] flex-1 min-h-0 overflow-y-auto">
+                {pillars.map((pillar, idx) => {
+                  const isActive = idx === activeIndex
+                  const isLast = idx === pillars.length - 1
+                  const visibleChildren = getPublishedLeaves(pillar).slice(0, TOP_N)
+                  return (
+                    <li
+                      key={pillar.id}
+                      className={`relative ${isLast ? '' : 'border-b border-border-subtle'}`}
+                      style={{ '--pillar-color': pillar.color } as React.CSSProperties}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="services-row-bar absolute left-0 top-0 bottom-0 w-[3px]"
+                        data-active={isActive}
+                        style={{ backgroundColor: pillar.color }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => { setActiveIndex(idx); scrollToPillar(idx) }}
+                        aria-expanded={isActive}
+                        aria-controls={`pillar-body-${pillar.id}`}
+                        className="services-row-button w-full text-left py-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                        data-active={isActive}
+                      >
+                        <span
+                          className="font-mono text-[12px] font-bold tracking-[0.06em] block services-row-num"
+                          data-active={isActive}
+                          style={isActive ? { color: pillar.color } : undefined}
+                        >
+                          [{pillar.num}]
+                        </span>
+                        <span className="block mt-[6px] text-[16px] font-bold tracking-[-0.005em] uppercase services-row-label">
+                          {pillar.label}
+                        </span>
+                      </button>
+
+                      <div
+                        id={`pillar-body-${pillar.id}`}
+                        className="services-row-body"
+                        data-active={isActive}
+                        role="region"
+                      >
+                        <div className="services-row-body-inner">
+                          <ul role="list" className="pb-[16px] space-y-[2px]">
+                            {visibleChildren.map((child) => (
+                              <li key={child.slug}>
+                                <Link
+                                  href={`${pillar.hubHref}${child.slug}/`}
+                                  className="group flex items-center justify-between gap-[12px] min-h-[44px] -mx-[8px] px-[10px] rounded-sm hover:bg-bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand transition-colors duration-[var(--duration-instant)]"
+                                >
+                                  <span className="text-[14px] font-medium tracking-[-0.005em] text-dark">
+                                    {child.name}
+                                  </span>
+                                  <ArrowUpRight className="shrink-0 text-gray-light group-hover:text-[var(--pillar-color)] transition-colors duration-[var(--duration-instant)]" />
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="pb-[14px]">
+                            <Link
+                              href={pillar.hubHref}
+                              className="inline-flex items-center gap-[8px] text-[13px] font-medium hover:opacity-80 transition-opacity duration-[var(--duration-instant)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                              style={{ color: pillar.color }}
+                            >
+                              <span>See all {pillar.label} services</span>
+                              <ArrowRight />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
+            </div>
+
+            <div className="relative min-h-0">
+              <ServicesIsoStage rises={rises} activeIndex={activeIndex} />
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-[8px] py-[8px] border-t border-border-subtle flex-shrink-0 text-gray-light">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em]">Scroll</span>
+            <ChevronDown size={14} aria-hidden="true" />
           </div>
         </div>
       </div>
     </>
   )
 }
-
-/* ---------- LEFT ACCORDION ---------- */
-
-function LeftAccordion({
-  activeId,
-  setActiveId,
-  active,
-}: {
-  activeId: PillarId
-  setActiveId: (id: PillarId) => void
-  active: (typeof pillars)[number]
-}) {
-  return (
-    <div className="border-r border-border-subtle bg-white overflow-hidden flex flex-col h-[70vh] min-h-[500px] max-h-[700px] xl:h-[75vh] xl:max-h-[800px]">
-      <div className="px-[20px] py-[14px] border-b border-border-subtle flex items-center justify-between flex-shrink-0">
-        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-gray-light">
-          Three pillars
-        </span>
-        <span className="font-mono text-[11px] font-bold tracking-[0.06em]">
-          <span style={{ color: active.color }}>{active.num}</span>
-          <span className="text-gray-light"> / 03</span>
-        </span>
-      </div>
-
-      <ol className="overflow-y-auto flex-1">
-        {pillars.map((pillar, idx) => {
-          const isActive = pillar.id === activeId
-          const isLast = idx === pillars.length - 1
-          // v1 published leaves only — coming-soon stubs are filtered out of
-          // the homepage accordion per SERVICES_PLAN.md § Risk 3.
-          const visibleChildren = getPublishedLeaves(pillar).slice(0, TOP_N)
-          return (
-            <li
-              key={pillar.id}
-              className={`relative ${isLast ? '' : 'border-b border-border-subtle'}`}
-              style={{ '--pillar-color': pillar.color } as React.CSSProperties}
-            >
-              <span
-                aria-hidden="true"
-                className="services-row-bar absolute left-0 top-0 bottom-0 w-[3px]"
-                data-active={isActive}
-                style={{ backgroundColor: pillar.color }}
-              />
-
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveId(pillar.id)
-                  const wrap = document.querySelector('[data-services-anchor-wrap]') as HTMLElement | null
-                  if (wrap) {
-                    const i = pillars.findIndex((p) => p.id === pillar.id)
-                    const rect = wrap.getBoundingClientRect()
-                    const sectionTop = rect.top + window.scrollY
-                    const target =
-                      sectionTop + (wrap.offsetHeight / pillars.length) * (i + 0.5) - window.innerHeight / 2
-                    window.scrollTo({ top: target, behavior: 'smooth' })
-                  }
-                }}
-                aria-expanded={isActive}
-                aria-controls={`pillar-body-${pillar.id}`}
-                className="services-row-button w-full text-left px-[24px] py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-                data-active={isActive}
-              >
-                <span
-                  className="font-mono text-[12px] font-bold tracking-[0.06em] block services-row-num"
-                  data-active={isActive}
-                  style={isActive ? { color: pillar.color } : undefined}
-                >
-                  [{pillar.num}]
-                </span>
-                <span className="block mt-[6px] text-[15px] font-bold tracking-[-0.005em] uppercase services-row-label">
-                  {pillar.label}
-                </span>
-              </button>
-
-              <div
-                id={`pillar-body-${pillar.id}`}
-                className="services-row-body"
-                data-active={isActive}
-                role="region"
-              >
-                <div className="services-row-body-inner">
-                  <div className="px-[24px] pb-[20px]">
-                    <ul role="list" className="space-y-[4px]">
-                      {visibleChildren.map((child) => (
-                        <li key={child.slug}>
-                          <Link
-                            href={`${pillar.hubHref}${child.slug}/`}
-                            className="group flex items-center justify-between gap-[12px] min-h-[44px] -mx-[8px] px-[10px] py-[8px] rounded-sm hover:bg-bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-colors duration-[var(--duration-instant)]"
-                          >
-                            <span className="text-[13px] font-medium tracking-[-0.005em] text-dark">
-                              {child.name}
-                            </span>
-                            <ArrowUpRight className="shrink-0 text-gray-light group-hover:text-[var(--pillar-color)] transition-colors duration-[var(--duration-instant)]" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-[12px] pt-[12px] border-t border-border-subtle">
-                      <Link
-                        href={pillar.hubHref}
-                        className="inline-flex items-center gap-[8px] text-[13px] font-medium hover:opacity-80 transition-opacity duration-[var(--duration-instant)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-                        style={{ color: pillar.color }}
-                      >
-                        <span>See all {pillar.label} services</span>
-                        <ArrowRight />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          )
-        })}
-      </ol>
-    </div>
-  )
-}
-
-/* ---------- RIGHT CANVAS (now powered by R3F) ---------- */
-
-function RightCanvas({ active, activeId }: { active: (typeof pillars)[number]; activeId: PillarId }) {
-  return (
-    <div className="bg-white overflow-hidden h-[70vh] min-h-[500px] max-h-[700px] xl:h-[75vh] xl:max-h-[800px] flex flex-col">
-      <div className="px-[24px] pt-[20px] pb-[12px] flex-shrink-0">
-        <p
-          key={`hl-${active.id}`}
-          className="services-canvas-headline font-mono text-[11px] font-bold uppercase tracking-[0.14em]"
-          style={{ color: active.color }}
-        >
-          {active.headline}
-        </p>
-      </div>
-      <div className="relative flex-1">
-        <ServicesIsoCanvas activeId={activeId} />
-      </div>
-      <div className="px-[24px] py-[20px] border-t border-border-subtle flex-shrink-0">
-        <p key={`b-${active.id}`} className="services-canvas-body text-[14px] leading-[1.65] text-gray max-w-[640px]">
-          {active.body}
-        </p>
-      </div>
-    </div>
-  )
-}
-
-/* ---------- MOBILE STACK ---------- */
 
 function MobileStack() {
   return (
@@ -253,7 +194,6 @@ function MobileStack() {
             </div>
             <ChevronDown size={18} className="shrink-0 text-gray transition-transform duration-[var(--duration-instant)] group-open:rotate-180" />
           </summary>
-
           <div className="mt-[24px]">
             <h4
               id={`pillar-${pillar.id}-mobile-heading`}
@@ -294,43 +234,32 @@ function MobileStack() {
   )
 }
 
-/* ---------- SCOPED STYLES ---------- */
-
 function ScopedStyle() {
   return (
     <style precedence="default">{`
-      .services-row-button {
-        background-color: transparent;
-        transition: background-color var(--duration-fast, 250ms);
-        cursor: pointer;
-      }
-      .services-row-button[data-active="true"] { background-color: #f5f7ff; }
-      .services-row-button[data-active="false"]:hover { background-color: #fafbff; }
-      .services-row-num { color: #999999; transition: color var(--duration-fast, 250ms); }
+      .services-row-button { background: transparent; cursor: pointer; padding-left: 16px; }
+      .services-row-num { color: #999; transition: color var(--duration-fast, 250ms); }
       .services-row-label { color: #676767; transition: color var(--duration-fast, 250ms); }
       .services-row-button[data-active="true"] .services-row-label { color: #303030; }
       .services-row-bar { opacity: 0; transition: opacity var(--duration-fast, 250ms); }
       .services-row-bar[data-active="true"] { opacity: 1; }
       .services-row-body {
-        display: grid;
-        grid-template-rows: 1fr;
-        transition: grid-template-rows var(--duration-base, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
-                    opacity var(--duration-base, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
+        display: grid; grid-template-rows: 1fr; padding-left: 16px;
+        transition: grid-template-rows var(--duration-base, 400ms) cubic-bezier(0.16,1,0.3,1),
+                    opacity var(--duration-base, 400ms) cubic-bezier(0.16,1,0.3,1);
         opacity: 1;
       }
       .services-row-body[data-active="false"] { grid-template-rows: 0fr; opacity: 0; }
       .services-row-body-inner { min-height: 0; overflow: hidden; }
-      .services-canvas-headline, .services-canvas-body {
-        animation: services-fade-in var(--duration-fast, 250ms) ease-out;
-      }
+      .services-h2-phrase { display: inline-block; animation: services-fade-in var(--duration-fast, 250ms) ease-out; }
       @keyframes services-fade-in {
-        from { opacity: 0; transform: translateY(4px); }
+        from { opacity: 0; transform: translateY(3px); }
         to   { opacity: 1; transform: translateY(0); }
       }
       @media (prefers-reduced-motion: reduce) {
         .services-row-button, .services-row-num, .services-row-label,
         .services-row-bar, .services-row-body { transition: none !important; }
-        .services-canvas-headline, .services-canvas-body { animation: none !important; }
+        .services-h2-phrase { animation: none !important; }
       }
     `}</style>
   )
