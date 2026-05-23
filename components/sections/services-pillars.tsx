@@ -65,7 +65,7 @@ export function ServicesPillars() {
         >
           <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
             {/* Bar */}
-            <div className="flex flex-shrink-0 items-center gap-[14px] pt-[24px] pb-[18px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray-light">
+            <div className="flex flex-shrink-0 items-center gap-[14px] pt-[clamp(18px,2.6svh,28px)] pb-[clamp(14px,2svh,22px)] font-mono text-[clamp(11px,1.4svh,13px)] font-bold uppercase tracking-[0.14em] text-gray-light">
               <span aria-hidden="true" className="h-[6px] w-[6px] shrink-0 bg-brand" />
               <span>What we build</span>
               <span aria-hidden="true" className="h-px flex-1 bg-border" />
@@ -79,14 +79,14 @@ export function ServicesPillars() {
             <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-[40px] pb-[12px] xl:gap-[56px]">
               {/* LEFT: H2 + handoff-style blocks */}
               <div className="flex min-h-0 flex-col">
-                <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(24px,2.4vw,33px)] font-bold leading-[1.08] tracking-[-0.03em] text-dark">
+                <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(25px,3.6svh,42px)] font-bold leading-[1.06] tracking-[-0.03em] text-dark">
                   A small, senior team.{' '}
                   <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
                     {H2_PHRASE[active.id]}
                   </span>
                 </h2>
 
-                <div className="mt-[20px] flex min-h-0 flex-col overflow-y-auto">
+                <div className="mt-[clamp(12px,2.4svh,28px)] flex min-h-0 flex-col overflow-y-auto">
                   {pillars.map((pillar, idx) => {
                     const isActive = idx === activeIndex
                     const children = getPublishedLeaves(pillar)
@@ -250,26 +250,26 @@ function ScopedStyle() {
 
       .svc-block-head {
         display: grid; grid-template-columns: 44px 1fr; gap: 14px;
-        width: 100%; text-align: left; padding: 16px 0;
+        width: 100%; text-align: left; padding: clamp(11px, 1.7svh, 18px) 0;
         background: transparent; cursor: pointer;
       }
       .svc-num {
-        font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+        font-family: var(--font-mono); font-size: clamp(11px, 1.35svh, 13px); font-weight: 700;
         letter-spacing: 0.14em; color: var(--color-gray-light, #9ca3af);
-        padding-top: 3px; transition: color var(--duration-fast, 250ms);
+        padding-top: 4px; transition: color var(--duration-fast, 250ms);
       }
       .svc-block[data-active="true"] .svc-num { color: var(--cat); }
       .svc-block-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
       .svc-cat {
-        font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+        font-family: var(--font-mono); font-size: clamp(11px, 1.35svh, 13px); font-weight: 700;
         letter-spacing: 0.14em; text-transform: uppercase;
         color: var(--color-gray, #676767); transition: color var(--duration-fast, 250ms);
       }
       .svc-block[data-active="true"] .svc-cat { color: var(--cat); }
       .svc-h3 {
         font-family: var(--font-brand); font-weight: 700;
-        font-size: clamp(17px, 1.7vw, 21px); letter-spacing: -0.025em;
-        line-height: 1.18; color: var(--color-dark, #303030);
+        font-size: clamp(18px, 2.7svh, 27px); letter-spacing: -0.025em;
+        line-height: 1.16; color: var(--color-dark, #303030);
       }
 
       .svc-panel {
@@ -281,10 +281,10 @@ function ScopedStyle() {
       .svc-block[data-active="true"] .svc-panel { grid-template-rows: 1fr; opacity: 1; }
       .svc-panel-inner {
         overflow: hidden; min-height: 0;
-        display: flex; flex-direction: column; gap: 12px;
-        padding-left: 58px; padding-bottom: 18px;
+        display: flex; flex-direction: column; gap: clamp(9px, 1.5svh, 15px);
+        padding-left: 58px; padding-bottom: clamp(10px, 1.7svh, 16px);
       }
-      .svc-body { font-size: 13.5px; line-height: 1.55; color: var(--color-gray, #676767); max-width: 56ch; }
+      .svc-body { font-size: clamp(13px, 1.85svh, 16.5px); line-height: 1.5; color: var(--color-gray, #676767); max-width: 56ch; }
 
       .svc-sublist {
         list-style: none; margin: 0; padding: 0;
@@ -299,7 +299,7 @@ function ScopedStyle() {
       .svc-sublist li:nth-child(even) { padding-left: 12px; }
       .svc-sublist a {
         display: flex; align-items: center; justify-content: space-between; gap: 8px;
-        min-height: 40px; padding: 8px 0; font-size: 13px; font-weight: 500;
+        min-height: clamp(38px, 5.4svh, 52px); padding: 8px 0; font-size: clamp(13px, 1.85svh, 16px); font-weight: 500;
         color: var(--color-dark, #303030); letter-spacing: -0.005em; text-decoration: none;
         transition: color var(--duration-instant, 150ms), padding-left var(--duration-instant, 150ms);
       }
@@ -313,7 +313,7 @@ function ScopedStyle() {
 
       .svc-foot {
         display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
-        font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+        font-family: var(--font-mono); font-size: clamp(11px, 1.35svh, 13px); font-weight: 700;
         letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-dark, #303030);
         text-decoration: none; transition: color var(--duration-instant, 150ms), gap var(--duration-instant, 150ms);
       }
