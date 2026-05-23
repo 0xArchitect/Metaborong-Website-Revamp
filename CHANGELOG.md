@@ -23,11 +23,14 @@ Adopting the Claude-Design v1.0 handoff (`docs/design_handoff_homepage_revamp/`)
 
 **Section 1.5 — Trust bar.** Kept the existing per-logo silhouette/colorize handling; borrowed the handoff's left **label column** (`25+ / IN PRODUCTION / SHIPPED FOR`) + an **edge fade-mask** on the marquee. Added **SunsetML** (`/clients/sunset.svg`, white asset → `keepSilhouette` so it renders as a visible dark logo; links to sunsetml.com).
 
+**Section 2 — Problem.** Kept as-is (already richer than the handoff: real animated SVG trend-window chart + AEO blockquote + accordion + DefinedTerm/FAQPage schema). Two tweaks only: enlarged `.problem-h2` (flat `32px` → `clamp(32px, 3vw, 46px)`, removed the 28/24 tablet/mobile overrides) and `.problem-blockquote` (`15px` → `clamp(16px, 1.5vw, 19px)`) so they fill the card proportions — sized so content stays ≤ chart height and the card doesn't grow past the viewport. Inner inverse "The problem" chip kept; no outer eyebrow (tried, reverted per preference).
+
 ### Files
 
 - **Phase 0:** `app/globals.css`, `DESIGN.md`, `components/sections/{services-data.ts,services-iso-canvas.tsx,work-preview.tsx,testimonials.tsx}`, `public/fonts/Switzer-*.woff2`.
 - **Hero:** `components/sections/hero.tsx`, `components/layout/nav.tsx`, `DESIGN.md` (pill exception), `CHANGELOG.md`.
 - **Trust bar:** `components/sections/trust-bar.tsx`, `public/clients/sunset.svg`.
+- **Problem:** `components/sections/problem.tsx`, `app/globals.css`.
 
 ### Verification
 
