@@ -21,10 +21,13 @@ Adopting the Claude-Design v1.0 handoff (`docs/design_handoff_homepage_revamp/`)
 - Left column **brackets the video frame**: three zones (eyebrow+H1 / lede / CTAs) over a height-matched block (`lg:h-[80%] max-h-[700px]`, `justify-between`), so the lede sits equidistant and eyebrow∥video-top + CTA∥video-bottom. Two height-base bugs fixed in the process (video cell forced `100vh` vs grid `100vh-56`; video `80%` vs copy block `82%`) — bottoms now align Δ0 at 720/768/800/900.
 - H1 `clamp(32px,4.8vw,72px)` → `clamp(40px,6vw,84px)`; lede `text-base` → `text-lg`.
 
+**Section 1.5 — Trust bar.** Kept the existing per-logo silhouette/colorize handling; borrowed the handoff's left **label column** (`25+ / IN PRODUCTION / SHIPPED FOR`) + an **edge fade-mask** on the marquee. Added **SunsetML** (`/clients/sunset.svg`, white asset → `keepSilhouette` so it renders as a visible dark logo; links to sunsetml.com).
+
 ### Files
 
 - **Phase 0:** `app/globals.css`, `DESIGN.md`, `components/sections/{services-data.ts,services-iso-canvas.tsx,work-preview.tsx,testimonials.tsx}`, `public/fonts/Switzer-*.woff2`.
 - **Hero:** `components/sections/hero.tsx`, `components/layout/nav.tsx`, `DESIGN.md` (pill exception), `CHANGELOG.md`.
+- **Trust bar:** `components/sections/trust-bar.tsx`, `public/clients/sunset.svg`.
 
 ### Verification
 
