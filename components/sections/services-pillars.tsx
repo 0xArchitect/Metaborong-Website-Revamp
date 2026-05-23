@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react'
+import { useScroll, useTransform, useMotionValueEvent } from 'motion/react'
 import { pillars, getPublishedLeaves, type PillarId } from '@/components/sections/services-data'
 import { ServicesIsoStage } from '@/components/sections/services-iso-stage'
 import { activeIndexFromProgress, riseForCube } from '@/components/sections/services-scroll'

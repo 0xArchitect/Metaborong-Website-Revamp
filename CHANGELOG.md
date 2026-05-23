@@ -4,7 +4,18 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
-## 2026-05-23 — Homepage revamp (design-system v1.0): Phase 0 + Hero
+## 2026-05-24 — Section 3: Services (A1 rebuild)
+
+Rebuilt Services as a **single-viewport pinned scrolltelling**, replacing the 260vh CSS iso-canvas with an SVG isometric stage. Plan/spec: `docs/superpowers/{plans,specs}/2026-05-24-section-services.*`. Executed subagent-driven (per-task implement → spec review → quality gate).
+
+- **Motion.** Added **`motion`** (`motion/react`, the current name for framer-motion) — first of the two sanctioned pins. `useScroll` over the 260vh container drives per-cube `rise` 0→1 imperatively (no React re-render on scroll); active pillar is discrete state off the same progress.
+- **Iso cubes — grounded.** New `services-iso-stage.tsx`: grid + cubes share one SVG coordinate space. Cubes **extrude up out of the grid** (bottom edge pinned), so the base never floats off a separate plate (the handoff's behaviour, rejected). Top-plate **glyphs** fade in past ~35% rise (Web3 cube-cluster / AI node-graph / Studio layered-diamond); contact shadows grow with rise. Geometry + scroll math are pure, unit-tested modules (`services-iso-geometry.ts`, `services-scroll.ts`; 13 tests).
+- **Header in the pin.** Left-aligned eyebrow `What we build` + `01/03` step counter; H2 "A small, senior team. ⟨phrase⟩" where the phrase swaps **text + colour** per active pillar (Web3 protocols. / Production AI. / End-to-end products. — blue/teal/orange).
+- **Accordion.** Tech-stack pills dropped; spacious subservice list (≥44px rows) + "See all" per pillar. Mobile (<lg) keeps the static `<details>` stack.
+- **Copy.** Product Studio headline `Greenfield product engineering` → **`End-to-end product engineering`** (homepage only; "greenfield" still present on `/services` pages + SEO copy — flagged for a separate A3 copy pass). Centered intro lede dropped (equivalent framing retained in the FAQ JSON-LD).
+- **Single viewport.** Whole section in `calc(100svh - 56px)`. Fixed an `overflow:hidden`-ancestor bug that broke the sticky seat (frame was at `top:-124`, bar+H2 clipped); now seats at `top:56`. Density pass clears internal accordion scroll at ≤768px (720 leaves a 20px graceful residual on 5-item pillars).
+
+
 
 Adopting the Claude-Design v1.0 handoff (`docs/design_handoff_homepage_revamp/`) section by section. The handoff HTML is a wireframe/reference, not a pixel target. Plan: `~/.claude/plans/so-i-don-t-intend-robust-spring.md`.
 
