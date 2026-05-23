@@ -224,7 +224,7 @@ export const pillars: Pillar[] = [
     num: '03',
     label: 'Product Studio',
     color: '#C2410C',
-    headline: 'Greenfield product engineering',
+    headline: 'End-to-end product engineering',
     body: 'MVP, SaaS, and B2B multi-tenant platforms for founders without a CTO. One senior team owns architecture through deployment.',
     hubHref: '/services/product-studio/',
     hubCta: 'Product Studio services',
