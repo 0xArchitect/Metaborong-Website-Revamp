@@ -51,6 +51,16 @@ export const organizationSchema = {
     areaServed: 'Worldwide',
     availableLanguage: ['English'],
   },
+  // Aggregate of the verified third-party reviews surfaced in the Social-proof
+  // section (clutch.co/profile/metaborong-technologies-private). Mirrors the
+  // visible 4.9 / 9-review figures so the entity graph and the page agree.
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '9',
+    bestRating: '5',
+    worstRating: '1',
+  },
   sameAs: [
     'https://linkedin.com/company/metaborong-technologies',
     'https://x.com/Metaborong',
