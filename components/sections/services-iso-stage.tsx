@@ -19,6 +19,11 @@ const VB_H = 600
 // cells of the grid (centre cube centred at VB_W/2 = 240).
 const CUBE_X = [45, 175, 305]
 const CUBE_Y = 300
+// Per-cube vertical offset. The centre (AI) cube hops up exactly one grid cell
+// (-74 == one lattice step diagonally, since 65*74 = STEP) so it seats in the
+// polygon above with clean spacing while staying grounded on the grid. Labels
+// stay on the shared baseline below.
+const CUBE_DY = [0, -74, 0]
 const LABEL_Y = CUBE_Y + 104
 const INDEX_Y = CUBE_Y + 120
 
@@ -82,7 +87,7 @@ export function ServicesIsoStage({
             {GRID.b.map((d, i) => <path key={`gb${i}`} d={d} />)}
           </g>
           {PILLAR_ORDER.map((id, i) => (
-            <g key={`base-${id}`} transform={`translate(${CUBE_X[i]}, ${CUBE_Y})`}>
+            <g key={`base-${id}`} transform={`translate(${CUBE_X[i]}, ${CUBE_Y + CUBE_DY[i]})`}>
               <polygon className="cube-floor" points={FLOOR_DIAMOND} />
             </g>
           ))}
@@ -151,11 +156,12 @@ function Cube({
 
   const cat = CAT[id]
   const x = CUBE_X[index]
+  const y = CUBE_Y + CUBE_DY[index]
 
   return (
     <>
-      <ellipse ref={shadowRef} className="cube-shadow" cx={x + 65} cy={CUBE_Y + 43} rx="64" ry="13" />
-      <g transform={`translate(${x}, ${CUBE_Y})`}>
+      <ellipse ref={shadowRef} className="cube-shadow" cx={x + 65} cy={y + 43} rx="64" ry="13" />
+      <g transform={`translate(${x}, ${y})`}>
         <g className="cube" data-cat={cat} data-active={active}>
           <polygon ref={leftRef} className="face left" points={cubeFaces(0).left} />
           <polygon ref={rightRef} className="face right" points={cubeFaces(0).right} />
