@@ -259,18 +259,19 @@ function ScopedStyle() {
       .cube[data-active="true"][data-cat="studio"] .edge { stroke: #6E2607; }
 
       .cube-shadow { fill: #1a2540; opacity: 0; }
-      .cube-glyph { transition: opacity var(--duration-base, 400ms); }
+      /* White solid; greys give it iso form against the coloured cube top. */
+      .cube-glyph {
+        transition: opacity var(--duration-base, 400ms);
+        --gtop:#ffffff; --glite:#eef1f6; --gleft:#d7dce6; --gright:#b8bfcc; --gdark:#9aa2b2;
+      }
       .cube-glyph polygon { stroke: var(--gdark); stroke-width: 0.5; stroke-linejoin: round; }
       .cube-glyph .gf-top   { fill: var(--gtop); }
       .cube-glyph .gf-lite  { fill: var(--glite); }
       .cube-glyph .gf-left  { fill: var(--gleft); }
       .cube-glyph .gf-right { fill: var(--gright); }
       .cube-glyph .gf-dark  { fill: var(--gdark); }
-      .cube-glyph .gf-wire  { stroke: var(--gleft); stroke-width: 1.6; fill: none; }
+      .cube-glyph .gf-wire  { stroke: #ffffff; stroke-width: 1.6; fill: none; }
       .cube-glyph .gf-seam  { stroke: var(--gdark); stroke-width: 0.7; fill: none; }
-      .cube-glyph[data-cat="web3"]   { --gtop:#6FA3FF; --glite:#B7CEFF; --gleft:#296ff0; --gright:#1A3FDB; --gdark:#0F2EB8; }
-      .cube-glyph[data-cat="ai"]     { --gtop:#4FB3A8; --glite:#9FE0D6; --gleft:#0F766E; --gright:#0B5953; --gdark:#074039; }
-      .cube-glyph[data-cat="studio"] { --gtop:#F08A4F; --glite:#FBC9A8; --gleft:#C2410C; --gright:#9A340A; --gdark:#6E2607; }
 
       .cube-label {
         font-family: var(--font-mono); font-size: 11px; font-weight: 700;
