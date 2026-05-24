@@ -134,7 +134,6 @@ export function WhyUsSlider() {
                     key={r.tag}
                     ref={cardRefs[i]}
                     className="why-card absolute inset-0 bg-bg"
-                    data-active={i === active}
                     style={{ ['--x']: i === 0 ? '0%' : '100%', zIndex: i + 1 } as CSSProperties}
                   >
                     <CardInner r={r} i={i} />
@@ -142,13 +141,13 @@ export function WhyUsSlider() {
                 ))}
               </div>
 
-              <div className="grid flex-shrink-0 grid-cols-3 border-t border-border">
+              <div role="group" aria-label="Slide navigation" className="grid flex-shrink-0 grid-cols-3 border-t border-border">
                 {reasons.map((r, i) => (
                   <button
                     key={r.tag}
                     type="button"
                     onClick={() => jumpTo(i)}
-                    aria-current={i === active ? 'true' : undefined}
+                    aria-current={i === active ? true : undefined}
                     className="why-pill flex min-h-[56px] flex-col justify-center gap-[2px] border-l border-border px-[16px] py-[12px] text-left first:border-l-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
                     data-active={i === active}
                   >
