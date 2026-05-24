@@ -74,8 +74,10 @@ export function ServicesIsoStage({
           <filter id="svc-feather" x="-25%" y="-25%" width="150%" height="150%">
             <feGaussianBlur stdDeviation="20" />
           </filter>
+          {/* Lower edge ends just below the cube labels (the feather makes it
+              dissolve there) rather than running to the section bottom. */}
           <mask id="svc-grid-mask">
-            <rect x="6" y="14" width={VB_W - 12} height={VB_H - 22} rx="24" fill="#fff" filter="url(#svc-feather)" />
+            <rect x="6" y="14" width={VB_W - 12} height={422} rx="24" fill="#fff" filter="url(#svc-feather)" />
           </mask>
         </defs>
 
