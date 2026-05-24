@@ -150,6 +150,16 @@ card states + mobile + reduced-motion) → `impeccable critique` + `tsc --noEmit
 - Eyebrow numbering scheme (`04/04`) site-wide.
 - Dark mode.
 
+## Shipped (2026-05-24)
+
+Built subagent-driven, commits `b742fe3`→`40d3aa5`, graduated in CHANGELOG + DESIGN.md
+(Pin 2 + Decisions Log). Single-viewport fit verified clean at 768/900/1080 (no H2-tier
+deviation needed — H2 stayed at `clamp(28px,3.4vw,48px)`, slightly under the T2 max but
+within budget). Reduced-motion + 390px mobile static stack verified. The webp shows on
+mobile in a height-capped (`max-h-[220px]`) band above the text. One benign lint warning
+(`<img>` vs `next/image`) retained to match the prior `why-us.tsx` pattern. The anchor-#06
+deviation (below) is the only intentional master-grammar break.
+
 ## Verification
 
 - `npx tsc --noEmit` clean (not `npm run build` — PR #26 env hold).
