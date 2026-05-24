@@ -126,3 +126,39 @@ SVG stage height; confirm cube apex + labels stay inside the frame at min height
 - Why-Us rebuild (next A1), Work reorder, parallel tail.
 - Site-wide eyebrow numbering scheme.
 - Dark mode.
+
+## Deviations from master plan (graduated 2026-05-24)
+
+Logged per the DESIGN.md per-section override rule. Master spec: `DESIGN.md`. Hard
+constraints (SSR/SEO, ARIA, reduced-motion, focus-visible, brand discipline) are honored.
+
+1. **H2 below the T1 tier.** DESIGN.md tiers Services H2 at T1 (`clamp(36px,4.6vw,64px)`,
+   an "emotional peak"). The pinned `calc(100svh-56px)` frame has a vertical budget the tier
+   system didn't anticipate, so the H2 uses `clamp(27px,min(4.2svh,3.5vw),44px)` — sized to
+   keep the whole section in one viewport (the locked single-viewport requirement). Accepted
+   single-viewport deviation, not a regression.
+2. **Desktop subservice links 38px (< 44px).** The lg+ pinned variant floors sublink height
+   at `clamp(38px,…)` to fit the single-viewport budget on short screens. This is a pointer
+   (lg+) surface; the touch/mobile `<details>` stack already uses `min-h-[44px]`. Accepted
+   single-viewport deviation on the pointer surface.
+3. **Component-local structural hex.** `services-iso-stage.tsx` uses component-local hex for
+   the iso render (cube neutral faces, grid lines, floor diamond, white-shaded glyph ramp,
+   contact shadow) and lighten/darken shade steps of the pillar token hexes for the active
+   cube faces/glyph marks. Same sanctioned precedent as the trefoil "structural slate" — the
+   canonical pillar token hexes (`#296ff0` / `#0F766E` / `#C2410C`) remain the mid-tone
+   anchors; the tints are local and not promoted to global tokens.
+4. **Reduced-motion → static stack** (v1.0 pin hard-constraint, satisfied): the desktop pin
+   is gated behind `useReducedMotion()` and renders the static `MobileStack` instead of the
+   scroll-scrubbed pin.
+
+### Post-rebuild visual refinements (2026-05-24)
+
+- Cube-top glyphs extruded to 3D iso solids, rendered **white** (grey-shaded for form):
+  **Web3 = Ethereum mark** (flat faceted, no prism depth), **AI = node-graph with cube
+  nodes**, **Studio = framed product block**. Per-pillar marks; user-picked.
+- **AI (centre) cube seated one grid cell up** (`CUBE_DY = [0,-74,0]`, one lattice step) for
+  clean spacing above its apex; stays grounded; axis labels stay on the shared baseline.
+- Iso grid is a **feathered atmospheric plane** dissolving into the section grey (no white
+  panel/border); lower edge trimmed to fade just below the cube labels.
+- QA: impeccable critique **35/40** (not AI-slop); deterministic detector clean except the
+  rule-draw `width` animation, since changed to `transform: scaleX`.
