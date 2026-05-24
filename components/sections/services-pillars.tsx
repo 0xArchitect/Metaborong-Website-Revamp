@@ -147,8 +147,8 @@ export function ServicesPillars() {
                 </div>
               </div>
 
-              {/* RIGHT: iso stage in a bounded enclosure that fills the column */}
-              <div className="relative min-h-0 overflow-hidden rounded-[14px] border border-[#e6e9f2] bg-[rgba(255,255,255,0.5)]">
+              {/* RIGHT: iso stage — atmospheric grid faded into the section grey */}
+              <div className="relative min-h-0 overflow-hidden">
                 <ServicesIsoStage rises={rises} activeIndex={activeIndex} />
               </div>
             </div>
