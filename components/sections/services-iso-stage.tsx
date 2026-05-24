@@ -11,23 +11,24 @@ const CAT: Record<PillarId, 'web3' | 'ai' | 'studio'> = {
 }
 const LABEL: Record<PillarId, string> = { 'web3': 'WEB3', 'ai': 'AI', 'product-studio': 'STUDIO' }
 
-// Enclosure viewBox. Cube base diamonds are 130x74 (see services-iso-geometry).
-const VB_W = 560
-const VB_H = 470
+// Portrait viewBox ~matching the tall right column so the grid (drawn with
+// `slice`) covers it edge-to-edge. Cube base diamonds are 130x74.
+const VB_W = 480
+const VB_H = 600
 // Cube base-left vertices, 130 apart so the three bases are three ADJACENT
-// cells of the grid below (centre cube centred at VB_W/2 = 280).
-const CUBE_X = [85, 215, 345]
-const CUBE_Y = 250
-const LABEL_Y = CUBE_Y + 102
-const INDEX_Y = CUBE_Y + 118
+// cells of the grid (centre cube centred at VB_W/2 = 240).
+const CUBE_X = [45, 175, 305]
+const CUBE_Y = 300
+const LABEL_Y = CUBE_Y + 104
+const INDEX_Y = CUBE_Y + 120
 
 // The grid is two families of parallel lines along the cube-base edges
 // (slopes -+37/65). A line of family A satisfies 37x+65y=c; family B 37x-65y=d.
 // One cell step = 37*130 = 4810. Anchoring c0/d0 on the centre cube's left
-// vertex (215,250) guarantees every cube base diamond coincides with one cell.
+// vertex (175,300) guarantees every cube base diamond coincides with one cell.
 const STEP = 37 * 130
-const C0 = 37 * 215 + 65 * CUBE_Y
-const D0 = 37 * 215 - 65 * CUBE_Y
+const C0 = 37 * 175 + 65 * CUBE_Y
+const D0 = 37 * 175 - 65 * CUBE_Y
 
 function isoGrid() {
   const X1 = -160
@@ -56,22 +57,16 @@ export function ServicesIsoStage({
   return (
     <div className="iso-stage-wrap">
       <ScopedStyle />
-      <svg viewBox={`0 0 ${VB_W} ${VB_H}`} aria-hidden="true" className="iso-stage-svg">
+      <svg viewBox={`0 0 ${VB_W} ${VB_H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" className="iso-stage-svg">
         <defs>
-          <clipPath id="svc-encl-clip">
-            <rect x="0" y="0" width={VB_W} height={VB_H} rx="14" />
-          </clipPath>
           <linearGradient id="svc-floor" x1="0.5" y1="0" x2="0.5" y2="1">
             <stop offset="0" stopColor="#ffffff" stopOpacity="0" />
             <stop offset="1" stopColor="#eaeef7" stopOpacity="0.85" />
           </linearGradient>
         </defs>
 
-        {/* Enclosure panel — the bounded area the grid lives in. */}
-        <rect className="iso-encl" x="0.5" y="0.5" width={VB_W - 1} height={VB_H - 1} rx="14" />
-
-        <g clipPath="url(#svc-encl-clip)">
-          <rect x="0" y={VB_H * 0.42} width={VB_W} height={VB_H * 0.58} fill="url(#svc-floor)" />
+        <g>
+          <rect x="-200" y={VB_H * 0.42} width={VB_W + 400} height={VB_H * 0.7} fill="url(#svc-floor)" />
 
           {/* Iso diamond grid — cells coincide with the cube bases. */}
           <g className="iso-grid-line">
@@ -214,8 +209,7 @@ function ScopedStyle() {
   return (
     <style precedence="default">{`
       .iso-stage-wrap { position: absolute; inset: 0; }
-      .iso-stage-svg { width: 100%; height: 100%; overflow: visible; }
-      .iso-encl { fill: rgba(255,255,255,0.55); stroke: #e6e9f2; stroke-width: 1; }
+      .iso-stage-svg { width: 100%; height: 100%; display: block; }
       .iso-grid-line { stroke: #e1e5f0; stroke-width: 1; fill: none; }
       .cube-floor { fill: #edf0f6; stroke: #d4d9e6; stroke-width: 1; }
 
