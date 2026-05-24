@@ -61,10 +61,10 @@ function CardInner({ r, i }: { r: (typeof reasons)[number]; i: number }) {
         <span aria-hidden="true" className="absolute right-[12px] top-[12px] size-[18px] border-r-2 border-t-2 border-gray-subtle" />
         <span aria-hidden="true" className="absolute bottom-[12px] left-[12px] size-[18px] border-b-2 border-l-2 border-gray-subtle" />
       </div>
-      <div className="flex flex-col justify-center gap-[16px] px-[clamp(16px,3vw,48px)] py-[32px]">
-        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray">{r.tag}</span>
-        <h3 className="text-balance text-[clamp(20px,1.7vw,26px)] font-bold leading-[1.15] tracking-[-0.025em] text-dark">{r.title}</h3>
-        <p className="max-w-[460px] text-[clamp(14px,1.05vw,16px)] leading-[1.65] tracking-[-0.005em] text-gray">{r.body}</p>
+      <div className="flex flex-col justify-center gap-[clamp(16px,2.6svh,28px)] px-[clamp(20px,3.2vw,56px)] py-[clamp(28px,5svh,48px)]">
+        <span className="font-mono text-[12px] font-bold uppercase tracking-[0.16em] text-gray">{r.tag}</span>
+        <h3 className="text-balance text-[clamp(26px,2.7vw,42px)] font-bold leading-[1.08] tracking-[-0.03em] text-dark">{r.title}</h3>
+        <p className="max-w-[54ch] text-[clamp(15px,1.05vw,18px)] leading-[1.6] tracking-[-0.005em] text-gray">{r.body}</p>
       </div>
     </div>
   )
@@ -131,7 +131,7 @@ export function WhyUsSlider() {
             <div className="mx-auto grid h-full w-full max-w-[1440px] grid-rows-[auto_1fr_auto] px-[16px] sm:px-[24px] md:px-[40px] lg:px-[40px] xl:px-[72px] 2xl:px-[112px]">
               <Header />
 
-              <div className="relative min-h-0 overflow-hidden border border-border">
+              <div className="relative min-h-0 overflow-hidden border-x border-t border-border">
                 {reasons.map((r, i) => (
                   <article
                     key={r.tag}
@@ -144,7 +144,7 @@ export function WhyUsSlider() {
                 ))}
               </div>
 
-              <div role="group" aria-label="Slide navigation" className="grid flex-shrink-0 grid-cols-3 border-t border-border">
+              <div role="group" aria-label="Slide navigation" className="grid flex-shrink-0 grid-cols-3 border-x border-t border-border">
                 {reasons.map((r, i) => (
                   <button
                     key={r.tag}
