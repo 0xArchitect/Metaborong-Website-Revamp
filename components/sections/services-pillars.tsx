@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
-import { useScroll, useTransform, useMotionValueEvent } from 'motion/react'
+import { useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react'
 import { pillars, getPublishedLeaves, type PillarId } from '@/components/sections/services-data'
 import { ServicesIsoStage } from '@/components/sections/services-iso-stage'
 import { activeIndexFromProgress, riseForCube } from '@/components/sections/services-scroll'
@@ -37,6 +37,10 @@ export function ServicesPillars() {
 
   const active = pillars[activeIndex]
 
+  // v1.0 pin constraint: degrade to the static stack under reduced motion
+  // (no scroll-scrubbed pin). null (pre-hydration) keeps the motion default.
+  const reduceMotion = useReducedMotion()
+
   const scrollToPillar = (i: number) => {
     const wrap = wrapRef.current
     if (!wrap) return
@@ -50,14 +54,16 @@ export function ServicesPillars() {
     <>
       <ScopedStyle />
 
-      {/* Mobile (lg-): static stack with section padding. */}
-      <div className="lg:hidden px-[16px] sm:px-[24px] md:px-[40px] py-[56px] md:py-[72px]">
+      {/* Static stack — mobile (lg-) always, plus all widths under reduced motion. */}
+      <div className={`${reduceMotion ? '' : 'lg:hidden'} px-[16px] sm:px-[24px] md:px-[40px] py-[56px] md:py-[72px]`}>
         <div className="mx-auto max-w-[1280px]">
           <MobileStack />
         </div>
       </div>
 
-      {/* Desktop (lg+): full-bleed single-viewport pinned scrolltelling. */}
+      {/* Desktop (lg+): full-bleed single-viewport pinned scrolltelling. Not rendered
+          under reduced motion — the static stack above takes over. */}
+      {!reduceMotion && (
       <div ref={wrapRef} data-services-anchor-wrap className="hidden lg:block relative h-[260vh]">
         <div
           className="sticky overflow-hidden flex flex-col border-t border-b border-border"
@@ -161,6 +167,7 @@ export function ServicesPillars() {
           </div>
         </div>
       </div>
+      )}
     </>
   )
 }
@@ -243,11 +250,12 @@ function ScopedStyle() {
       .svc-block:last-child { border-bottom: 1px solid var(--color-border, #e5e7eb); }
       .svc-block[data-active="true"] { opacity: 1; }
       .svc-block-rule {
-        position: absolute; left: 0; top: -1px; height: 1px; width: 0;
+        position: absolute; left: 0; top: -1px; height: 1px; width: 100%;
         background: var(--cat); pointer-events: none;
-        transition: width var(--duration-slow, 620ms) cubic-bezier(0.16,1,0.3,1);
+        transform: scaleX(0); transform-origin: left;
+        transition: transform var(--duration-slow, 620ms) cubic-bezier(0.16,1,0.3,1);
       }
-      .svc-block-rule[data-active="true"] { width: 100%; }
+      .svc-block-rule[data-active="true"] { transform: scaleX(1); }
 
       .svc-block-head {
         display: grid; grid-template-columns: 44px 1fr; gap: 14px;
