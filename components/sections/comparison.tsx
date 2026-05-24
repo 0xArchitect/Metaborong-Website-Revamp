@@ -20,7 +20,7 @@ export function ComparisonSection() {
       bg="default"
       maxWidth="xwide"
       reveal={false}
-      className="flex min-h-[calc(100svh-56px)] flex-col justify-center py-[clamp(16px,3svh,48px)]!"
+      className="flex min-h-[calc(100svh-56px)] flex-col justify-center py-[clamp(16px,3svh,48px)]! [&>div]:w-full"
     >
       <div className="mb-[clamp(14px,2.4svh,28px)]">
         <Pill className="mb-[clamp(10px,1.5svh,16px)]">Comparison</Pill>
