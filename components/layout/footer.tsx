@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react'
-import { Eyebrow } from '@/components/ui/eyebrow'
+import { Logo } from '@/components/ui/logo'
 
 const companyLinks = [
   { label: 'Work', href: '/#work' },
@@ -21,106 +20,84 @@ const offices = [
   { country: 'USA', address: '16192 Coastal Hwy, Lewes, DE 19958' },
 ]
 
-// LinkedIn + X are real verified profiles (rel="me"). Behance/Medium/Discord
-// are a deliberate TEMPORARY homepage redirect — real URLs pending; NO rel="me"
-// on temp links (would assert a false identity). See spec Deviation 5.
-const socials: { label: string; href: string; me: boolean; icon: ReactNode }[] = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/company/metaborong-technologies', me: true,
-    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> },
-  { label: 'X', href: 'https://x.com/Metaborong', me: true,
-    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
-  { label: 'Behance', href: '/', me: false,
-    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7v2zM8.5 12.5c1.1 0 2-.4 2-1.7 0-1.4-1-1.8-2.2-1.8H4v3.5h4.5zM4 17h4.6c1.3 0 2.4-.5 2.4-2 0-1.6-1.2-2-2.6-2H4v4zm-2 2V7h6.7c2.7 0 4.3 1 4.3 3.3 0 1.4-.7 2.3-1.9 2.8 1.6.4 2.4 1.5 2.4 3.1C13.5 18 11.7 19 9 19H2zm14.7-3.6c.1 1.4 1 2.1 2.3 2.1 1 0 1.7-.4 2-1h2.6c-.6 2.1-2.4 3.1-4.7 3.1-3.1 0-5-2-5-5.1 0-3 2-5.2 5-5.2 3.3 0 4.9 2.5 4.7 5.7l-6.9.4zm4.2-1.7c-.1-1.2-.8-1.9-2-1.9s-2 .7-2.1 1.9h4.1z"/></svg> },
-  { label: 'Medium', href: '/', me: false,
-    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 12a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0zm7.1 0c0 3.4-1.5 6.1-3.2 6.1-1.8 0-3.2-2.7-3.2-6.1s1.4-6.1 3.2-6.1c1.7 0 3.2 2.7 3.2 6.1zM24 12c0 3-.5 5.5-1.2 5.5-.6 0-1.1-2.5-1.1-5.5s.5-5.5 1.1-5.5c.7 0 1.2 2.5 1.2 5.5z"/></svg> },
-  { label: 'Discord', href: '/', me: false,
-    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4.4A19 19 0 0 0 15.3 3l-.3.5a14 14 0 0 0-6 0L8.7 3A19 19 0 0 0 4 4.4 19.7 19.7 0 0 0 .5 17.8a19 19 0 0 0 5.8 2.9l.8-1.3c-.6-.2-1.2-.5-1.7-.8l.4-.3a13.6 13.6 0 0 0 11.6 0l.4.3c-.5.3-1.1.6-1.7.8l.8 1.3a19 19 0 0 0 5.8-2.9A19.7 19.7 0 0 0 20 4.4zM8.7 14.7c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3zm6.6 0c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3z"/></svg> },
-]
-
-// Repeated 4x (3 nav columns + the contact email). Constant, not abstraction —
-// one string to keep the columns in lockstep.
-const linkCls =
-  'inline-flex min-h-[44px] items-center text-[15px] tracking-[-0.01em] text-gray no-underline transition-[color] duration-[var(--duration-instant)] hover:text-dark'
+const colHead = 'mb-[18px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray-light'
+const colLink =
+  'inline-flex min-h-[40px] items-center text-[14px] tracking-[-0.005em] text-dark no-underline transition-[color] duration-[var(--duration-instant)] hover:text-brand'
+const bottomLink =
+  'text-gray no-underline transition-[color] duration-[var(--duration-instant)] hover:text-brand'
 
 export function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-border bg-bg px-[16px] py-[64px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
+    <footer className="border-t border-border bg-bg px-[16px] pt-[64px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
       <div className="mx-auto max-w-[1280px]">
-        {/* Row 1 — positioning */}
-        <div className="mb-[48px]">
-          <p className="max-w-[560px] text-[16px] leading-[1.5] tracking-[-0.01em] text-gray">
-            Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a small, senior, founder-led team.
-          </p>
-        </div>
+        {/* Top — brand + sitemap + offices */}
+        <div className="grid grid-cols-1 gap-[40px] border-b border-border pb-[48px] md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+          <div className="flex flex-col gap-[16px]">
+            <Logo size="md" href="/" />
+            <p className="max-w-[36ch] text-[14px] leading-[1.55] tracking-[-0.005em] text-gray">
+              Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a small, senior, founder-led team.
+            </p>
+          </div>
 
-        {/* Row 2 — sitemap grid */}
-        <div className="grid grid-cols-2 gap-[1px] border border-border bg-border lg:grid-cols-4">
-          <nav aria-label="Company" className="bg-bg p-[24px]">
-            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Company</Eyebrow>
-            <ul className="space-y-[12px]">
+          <nav aria-label="Company">
+            <p className={colHead}>Company</p>
+            <ul className="flex flex-col gap-[10px]">
               {companyLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className={linkCls}>{label}</a>
+                  <a href={href} className={colLink}>{label}</a>
                 </li>
               ))}
             </ul>
           </nav>
-          <nav aria-label="Services" className="bg-bg p-[24px]">
-            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Services</Eyebrow>
-            <ul className="space-y-[12px]">
+
+          <nav aria-label="Services">
+            <p className={colHead}>Services</p>
+            <ul className="flex flex-col gap-[10px]">
               {serviceLinks.map(({ label, href }) => (
                 <li key={label}>
-                  <a href={href} className={linkCls}>{label}</a>
+                  <a href={href} className={colLink}>{label}</a>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="bg-bg p-[24px]">
-            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Offices</Eyebrow>
-            <div className="space-y-[16px]">
+
+          <div>
+            <p className={colHead}>Offices</p>
+            <div className="flex flex-col gap-[18px]">
               {offices.map(({ country, address }) => (
-                <address key={country} className="not-italic">
-                  <span className="block text-[14px] font-bold uppercase tracking-[-0.01em] text-dark">{country}</span>
-                  <span className="mt-[4px] block text-[14px] leading-[1.5] tracking-[-0.01em] text-gray">{address}</span>
+                <address key={country} className="flex flex-col gap-[4px] not-italic">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-brand">{country}</span>
+                  <span className="text-[13px] leading-[1.5] text-gray">{address}</span>
                 </address>
               ))}
             </div>
           </div>
-          <nav aria-label="Contact and social" className="bg-bg p-[24px]">
-            <Eyebrow as="p" className="mb-[16px] font-mono text-[12px]! text-dark!">Get in touch</Eyebrow>
-            <a href="mailto:contact@metaborong.com" className={linkCls}>contact@metaborong.com</a>
-            <div className="mt-[16px] flex flex-wrap gap-[12px]">
-              {socials.map(({ label, href, me, icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target="_blank"
-                  rel={me ? 'me noopener noreferrer' : 'noopener noreferrer'}
-                  className="inline-flex h-[44px] w-[44px] items-center justify-center text-gray transition-[color] duration-[var(--duration-instant)] hover:text-dark"
-                >
-                  {icon}
-                </a>
-              ))}
-            </div>
-          </nav>
         </div>
 
-        {/* Row 3 — giant wordmark (Figma 237:383) */}
-        <p
-          aria-hidden="true"
-          className="mt-[40px] select-none whitespace-nowrap text-[clamp(40px,15vw,200px)] font-black uppercase leading-none tracking-[-0.04em] text-gray-light/40"
-        >
-          Metaborong
-        </p>
-
-        {/* Row 4 — bottom bar */}
-        <div className="mt-[24px] flex flex-col items-center gap-[12px] text-[13px] tracking-[-0.01em] text-gray sm:flex-row sm:justify-between">
+        {/* Bottom bar */}
+        <div className="flex flex-wrap items-center justify-between gap-[16px] py-[28px] font-mono text-[11px] uppercase tracking-[0.12em] text-gray-light">
           <span>© {year} Metaborong Technologies</span>
-          <div className="flex gap-[20px]">
-            <a href="https://linkedin.com/company/metaborong-technologies" target="_blank" rel="me noopener noreferrer" className="no-underline text-gray transition-[color] duration-[var(--duration-instant)] hover:text-dark">LinkedIn</a>
-            <a href="https://x.com/Metaborong" target="_blank" rel="me noopener noreferrer" className="no-underline text-gray transition-[color] duration-[var(--duration-instant)] hover:text-dark">X</a>
+          <a href="mailto:contact@metaborong.com" className={bottomLink}>contact@metaborong.com</a>
+          <div className="flex items-center gap-[8px]">
+            <a
+              href="https://linkedin.com/company/metaborong-technologies"
+              target="_blank"
+              rel="me noopener noreferrer"
+              aria-label="LinkedIn"
+              className="inline-flex h-[44px] w-[44px] items-center justify-center border border-border text-gray transition-[color,border-color] duration-[var(--duration-instant)] hover:border-brand hover:text-brand"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.4 0h4.37v2h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 7v8.36h-4.56v-7.4c0-1.77-.03-4.05-2.47-4.05-2.47 0-2.85 1.93-2.85 3.93V22H7.62V8z"/></svg>
+            </a>
+            <a
+              href="https://x.com/Metaborong"
+              target="_blank"
+              rel="me noopener noreferrer"
+              aria-label="X / Twitter"
+              className="inline-flex h-[44px] w-[44px] items-center justify-center border border-border text-gray transition-[color,border-color] duration-[var(--duration-instant)] hover:border-brand hover:text-brand"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
           </div>
         </div>
       </div>
