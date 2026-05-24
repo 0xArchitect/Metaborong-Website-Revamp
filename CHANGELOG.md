@@ -4,6 +4,18 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-24 — Section 4: Work (A2 + reorder)
+
+Reordered and restyled the Work-Preview section. Per-section A2 flow (brainstorm → frontend-design build → agent-browser → detector/lint → graduate).
+
+- **Reorder.** Moved `<WorkPreviewSection>` (+ `#work` anchor) **above** `<WhyUsSection>` in `app/page.tsx` — new order Services → **Work** → Why-Us → Testimonials (leads with proof-of-work before the "why us" argument). The ASCII seam that sat Why-Us→Work now sits **Work→Why-Us**; Services' subtle bg + pinned-frame bottom border separates Services→Work (no top divider on Work).
+- **Card grammar → handoff hairline-seam grid.** At lg+ the four cards are one engineered table: 4-col grid, `gap:1px` on a `--color-border` bg + 1px outer border, **no per-card radius/border** (cards split by hairlines). Each leads with a solid **pillar-colored 56px monogram square** (white initial) replacing the blueprint-hairline placeholder; hover = `--color-bg-raised` tint (bg-color only, 250ms, motion-reduce safe) replacing the lift+shadow+brand-border. Mono uppercase category (neutral `text-gray` for AA) + 20px name + mono "Read more →". Mobile keeps the bordered-cell drag-scroll snap lane + static arrows.
+- **Token.** `--color-bg-raised` (`#fafbff`, already defined) **first consumed** here.
+- **Content unchanged.** KGeN / DATA3 AI / Bionic / Bayan — names + categories only, no fabricated outcomes; "Case studies are on the way" lede kept.
+- **QA.** `tsc` clean; impeccable detector clean (`[]`); verified live at desktop (hairline grid + monograms) and 390px (drag lane). Pre-existing `<a href="/#contact">` lint nits flagged (not introduced). Commit `1f1ed23`.
+
+---
+
 ## 2026-05-24 — Section 3: Services (A1 rebuild)
 
 Rebuilt Services as a **single-viewport pinned scrolltelling**, replacing the 260vh CSS iso-canvas with an SVG isometric stage. Plan/spec: `docs/superpowers/{plans,specs}/2026-05-24-section-services.*`. Executed subagent-driven (per-task implement → spec review → quality gate).
