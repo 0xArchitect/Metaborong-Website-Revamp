@@ -20,7 +20,7 @@ export function ComparisonSection() {
       bg="default"
       maxWidth="xwide"
       reveal={false}
-      className="flex min-h-[calc(100svh-56px)] flex-col justify-center py-[clamp(16px,3svh,48px)]! [&>div]:w-full"
+      className="lg:flex lg:min-h-[calc(100svh-56px)] lg:flex-col lg:justify-center lg:py-[clamp(16px,3svh,48px)]! [&>div]:w-full"
     >
       <div className="mb-[clamp(14px,2.4svh,28px)]">
         <Pill className="mb-[clamp(10px,1.5svh,16px)]">Comparison</Pill>
@@ -31,7 +31,7 @@ export function ComparisonSection() {
           A side-by-side comparison of Metaborong — a lean Web3 and AI development studio with integrated delivery across engineering, project management, and operations — against large agencies and freelance teams.
         </p>
       </div>
-      <div className="overflow-x-auto border border-border">
+      <div className="hidden border border-border lg:block lg:overflow-x-auto">
         <table className="w-full min-w-[720px] border-collapse text-[13px]">
           <caption className="sr-only">
             Comparison of Metaborong, large Web3 or AI agencies, and freelance teams across seven operational dimensions: team access, AI-native operations, engineering standards, delivery timeline, documentation and handover, process and project management, and track record.
@@ -59,6 +59,38 @@ export function ComparisonSection() {
           <ComparisonRows rows={rows} />
         </table>
       </div>
+
+      {/* Stacked dimension cards — <lg (no horizontal scroll on phones/portrait tablets). */}
+      <div className="flex flex-col gap-[12px] lg:hidden">
+        {rows.map((r) => (
+          <article key={r.label} className="border border-border bg-bg">
+            <p className="border-b border-border bg-bg-subtle px-[16px] py-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-dark">
+              {r.label}
+            </p>
+            <dl className="divide-y divide-border-subtle">
+              <div className="bg-brand/[0.04] px-[16px] py-[12px]">
+                <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-brand">Metaborong</dt>
+                <dd className="mt-[4px] text-[14px] leading-[1.5] text-dark">
+                  <b className="font-bold text-brand">{r.mbBold}</b>
+                  {r.mbRest}
+                </dd>
+              </div>
+              <div className="px-[16px] py-[12px]">
+                <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-light">Large Web3 / AI Agency</dt>
+                <dd className="mt-[4px] text-[14px] leading-[1.5] text-gray">
+                  {r.large}
+                  {r.largeCheck && <span aria-hidden="true" className="ml-[6px] font-bold text-accent">✓</span>}
+                </dd>
+              </div>
+              <div className="px-[16px] py-[12px]">
+                <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-light">Freelance Team</dt>
+                <dd className="mt-[4px] text-[14px] leading-[1.5] text-gray">{r.free}</dd>
+              </div>
+            </dl>
+          </article>
+        ))}
+      </div>
+
       <p className="mt-[clamp(12px,2svh,18px)] max-w-[72ch] font-mono text-[12px] leading-[1.55] text-gray">
         <span className="mr-[4px] font-bold text-accent">✓</span>
         marks where the alternative has a structural advantage. Large agencies bring longer track records and procurement maturity. Metaborong&apos;s edge is integrated delivery — one senior team across engineering, project management, and operations, with fewer handoffs and faster decisions.
