@@ -4,7 +4,6 @@ import { Section } from '@/components/ui/section'
 import { Pill } from '@/components/ui/pill'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { clutchProfileUrl } from '@/lib/links'
-
 const rating = '4.9'
 const reviewCount = '9'
 
@@ -23,7 +22,9 @@ export function TestimonialsSection() {
       <div className="grid grid-cols-1 gap-[40px] lg:grid-cols-2 lg:items-start lg:gap-[64px]">
         <div className="flex flex-col">
           <Pill className="mb-[16px]">Social proof</Pill>
-          <h2 className="max-w-[440px] text-balance text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">Reviewed and verified on Clutch</h2>
+          <h2 className="max-w-[440px] text-balance text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">
+            Reviewed and verified on <img src="/images/clutchlogo-clean.png" alt="Clutch" style={{ display: 'inline-block', height: '0.85em', width: 'auto', marginLeft: '0.15em', transform: 'translateY(-0.12em)' }} />
+          </h2>
           <p className="mt-[16px] max-w-[480px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
             Real clients rate our work on Clutch — every review is verified, every reviewer is named. Metaborong holds a {rating} out of 5 rating across {reviewCount} verified client reviews.
           </p>
