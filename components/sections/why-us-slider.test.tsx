@@ -13,10 +13,12 @@ vi.mock('./clutch-widget', () => ({ ClutchWidget: () => <div data-testid="clutch
 
 describe('WhyUsSlider', () => {
   it('renders all three reasons content server-side (crawlable)', () => {
-    const { getAllByText, getByText } = render(<WhyUsSlider />)
-    expect(getByText('First working version in weeks')).toBeTruthy()
-    expect(getByText('We stress-test the brief before we build')).toBeTruthy()
-    expect(getByText('Multichain Web3 and production-grade AI agents')).toBeTruthy()
+    // Both the static stack and the desktop pin render in happy-dom (CSS show/hide
+    // does not apply), so each title appears in both — assert presence, not uniqueness.
+    const { getAllByText } = render(<WhyUsSlider />)
+    expect(getAllByText('First working version in weeks').length).toBeGreaterThan(0)
+    expect(getAllByText('We stress-test the brief before we build').length).toBeGreaterThan(0)
+    expect(getAllByText('Multichain Web3 and production-grade AI agents').length).toBeGreaterThan(0)
     expect(getAllByText('Product thinking').length).toBeGreaterThan(0)
   })
 })

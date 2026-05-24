@@ -1,7 +1,7 @@
-// components/sections/why-us-slider.tsx
 'use client'
 
-import { useRef, useState, useSyncExternalStore } from 'react'
+import { useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { Zap, CalendarDays } from 'lucide-react'
 import { useScroll, useMotionValueEvent, useReducedMotion } from 'motion/react'
 import { Pill } from '@/components/ui/pill'
@@ -17,17 +17,6 @@ const stats = [
 
 const chip =
   'inline-flex min-h-[40px] items-center justify-center gap-[8px] border border-border bg-bg px-[14px] text-[13px] font-semibold tabular-nums tracking-[-0.005em] text-dark'
-
-// Subscribe is a no-op: innerWidth doesn't fire "change" events we care about for
-// this guard (it only needs to be correct after hydration, not on resize).
-const noop = () => () => {}
-const getInnerWidth = () => window.innerWidth
-const getServerWidth = () => 0
-
-/** True on the client once the viewport is at the lg breakpoint (≥1024px). */
-function useIsDesktop(): boolean {
-  return useSyncExternalStore(noop, getInnerWidth, getServerWidth) >= 1024
-}
 
 function Header() {
   return (
@@ -101,7 +90,6 @@ export function WhyUsSlider() {
   const cardRefs = [r0, r1, r2]
   const [active, setActive] = useState(0)
   const reduce = useReducedMotion()
-  const isDesktop = useIsDesktop()
 
   const { scrollYProgress } = useScroll({ target: wrapRef, offset: ['start start', 'end end'] })
   useMotionValueEvent(scrollYProgress, 'change', (p) => {
@@ -122,18 +110,13 @@ export function WhyUsSlider() {
     <>
       <ScopedStyle />
 
-      {/* Static stack — mobile (lg-) always, plus all widths under reduced motion.
-          Unmounted (not just hidden) when isDesktop && !reduce so card text appears
-          only once in the DOM. SSR (server snapshot → isDesktop=false) always renders
-          the static stack for crawlers and the accessible copy. */}
-      {(!isDesktop || reduce) && (
-        <div className={`${reduce ? '' : 'lg:hidden'} px-[16px] sm:px-[24px] md:px-[40px] py-[56px] md:py-[72px]`}>
-          <div className="mx-auto flex max-w-[1280px] flex-col gap-[32px]">
-            <Header />
-            <WhyUsStatic />
-          </div>
+      {/* Static stack — mobile (lg-) always, plus all widths under reduced motion. */}
+      <div className={`${reduce ? '' : 'lg:hidden'} px-[16px] sm:px-[24px] md:px-[40px] py-[56px] md:py-[72px]`}>
+        <div className="mx-auto flex max-w-[1280px] flex-col gap-[32px]">
+          <Header />
+          <WhyUsStatic />
         </div>
-      )}
+      </div>
 
       {/* Desktop (lg+): 320vh pinned horizontal card-slide. Not under reduced motion. */}
       {!reduce && (
@@ -152,7 +135,7 @@ export function WhyUsSlider() {
                     ref={cardRefs[i]}
                     className="why-card absolute inset-0 bg-bg"
                     data-active={i === active}
-                    style={{ ['--x' as string]: i === 0 ? '0%' : '100%', zIndex: i + 1 } as React.CSSProperties}
+                    style={{ ['--x']: i === 0 ? '0%' : '100%', zIndex: i + 1 } as CSSProperties}
                   >
                     <CardInner r={r} i={i} />
                   </article>
