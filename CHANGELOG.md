@@ -4,6 +4,21 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-24 — Section 5: Why-Us (A1 rebuild)
+
+Replaced the static 3-card grid with the handoff's **320vh horizontal pinned card-slide** (the second and final sanctioned pin). Brainstorm → spec → plan → subagent-driven build (per-task spec + code-quality review). Spec/plan: `docs/superpowers/{specs,plans}/2026-05-24-section-why-us.*`.
+
+- **Motion / pin.** 320vh stage → sticky `calc(100svh-56px)` frame (`grid-rows-[auto_1fr_auto]`). Three cards (Speed / Product thinking / Niche depth) `translateX` in from the right over each other; `useScroll` drives the slide via a CSS var, applied imperatively (no re-render on scroll), no CSS transition on the transform (1:1 scrub). Active pillar = discrete state. The second of the two `section.pin` budget (**2 of 2 used**).
+- **Architecture.** Server shell `why-us.tsx` (`aria-label`, `sr-only` lede + Clutch line) → client `why-us-slider.tsx` (plain `'use client'`, **not** `ssr:false`, so card text is SSR-crawlable) → pure tested `why-us-slide.ts` (slide windows, active thresholds, dwell centers; 6 unit tests) → shared `why-us-data.tsx`. Mirrors the Services split.
+- **Layout.** Eyebrow above a compact H2; Clutch badge + two stat chips in the header right cluster; lede dropped to `sr-only` (SEO-safe). Pillar nav = 3 `<button>`s (click-to-jump, mapped into the pin's usable scroll range), brand-blue active (inset-top shadow + `bg-subtle`). Whitespace on the canonical edge px chain, matching the Services pin.
+- **Imagery — anchor #06 deviation (user-accepted).** Kept the retired raster-isometric `whyus/*.webp` (downscaled into a `bg-subtle` well per card; capped band above the text on mobile). Logged in the section spec as an eyes-open deviation.
+- **Content unchanged.** The three reasons keep their rich client-proof bodies (AbsolveMe / SunsetML / OrbitXPay / PredictRAM).
+- **Fallbacks.** Reduced-motion + `<lg` → static stacked column (pin not rendered), all content SSR-present.
+- **Process notes.** A mid-build `useSyncExternalStore`/`innerWidth` desktop-detection hack (added to satisfy a too-strict test) was caught in code review and reverted to the CSS house pattern; the test was loosened instead. Live agent-browser verification caught a `jumpTo` scroll-range overshoot and the missing mobile imagery — both fixed.
+- **QA.** Single-viewport fit verified at 768/900/1080; reduced-motion + 390px mobile verified; `tsc` clean; 7 unit tests pass; lint clean except one benign `<img>` warning (matches the prior `why-us.tsx` pattern). Commits `b742fe3`→`40d3aa5`.
+
+---
+
 ## 2026-05-24 — Section 4: Work (A2 + reorder)
 
 Reordered and restyled the Work-Preview section. Per-section A2 flow (brainstorm → frontend-design build → agent-browser → detector/lint → graduate).
