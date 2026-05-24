@@ -5,15 +5,46 @@ import { type MotionValue } from 'motion/react'
 import { type PillarId } from '@/components/sections/services-data'
 import { cubeFaces, topPlateCenterY, glyphOpacity, shadowOpacity, FLOOR_DIAMOND } from './services-iso-geometry'
 
-// Pillars left->right on the iso floor, one diamond-step apart.
 const PILLAR_ORDER: PillarId[] = ['web3', 'ai', 'product-studio']
 const CAT: Record<PillarId, 'web3' | 'ai' | 'studio'> = {
   'web3': 'web3', 'ai': 'ai', 'product-studio': 'studio',
 }
 const LABEL: Record<PillarId, string> = { 'web3': 'WEB3', 'ai': 'AI', 'product-studio': 'STUDIO' }
-// X translate per cube within the 680-wide viewBox (floor left vertex).
-const CUBE_X = [120, 310, 500]
-const CUBE_Y = 412
+
+// Enclosure viewBox. Cube base diamonds are 130x74 (see services-iso-geometry).
+const VB_W = 560
+const VB_H = 470
+// Cube base-left vertices, 130 apart so the three bases are three ADJACENT
+// cells of the grid below (centre cube centred at VB_W/2 = 280).
+const CUBE_X = [85, 215, 345]
+const CUBE_Y = 250
+const LABEL_Y = CUBE_Y + 102
+const INDEX_Y = CUBE_Y + 118
+
+// The grid is two families of parallel lines along the cube-base edges
+// (slopes -+37/65). A line of family A satisfies 37x+65y=c; family B 37x-65y=d.
+// One cell step = 37*130 = 4810. Anchoring c0/d0 on the centre cube's left
+// vertex (215,250) guarantees every cube base diamond coincides with one cell.
+const STEP = 37 * 130
+const C0 = 37 * 215 + 65 * CUBE_Y
+const D0 = 37 * 215 - 65 * CUBE_Y
+
+function isoGrid() {
+  const X1 = -160
+  const X2 = VB_W + 160
+  const a: string[] = []
+  const b: string[] = []
+  for (let k = -9; k <= 9; k++) {
+    const c = C0 + k * STEP
+    a.push(`M ${X1} ${(c - 37 * X1) / 65} L ${X2} ${(c - 37 * X2) / 65}`)
+  }
+  for (let j = -9; j <= 9; j++) {
+    const d = D0 + j * STEP
+    b.push(`M ${X1} ${(37 * X1 - d) / 65} L ${X2} ${(37 * X2 - d) / 65}`)
+  }
+  return { a, b }
+}
+const GRID = isoGrid()
 
 export function ServicesIsoStage({
   rises,
@@ -25,57 +56,47 @@ export function ServicesIsoStage({
   return (
     <div className="iso-stage-wrap">
       <ScopedStyle />
-      <svg viewBox="0 0 680 612" aria-hidden="true" className="iso-stage-svg">
+      <svg viewBox={`0 0 ${VB_W} ${VB_H}`} aria-hidden="true" className="iso-stage-svg">
         <defs>
+          <clipPath id="svc-encl-clip">
+            <rect x="0" y="0" width={VB_W} height={VB_H} rx="14" />
+          </clipPath>
           <linearGradient id="svc-floor" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0" stopColor="#fafbff" stopOpacity="0" />
-            <stop offset="1" stopColor="#eef1f8" stopOpacity="1" />
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0" />
+            <stop offset="1" stopColor="#eaeef7" stopOpacity="0.85" />
           </linearGradient>
-          <linearGradient id="svc-fade" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0" stopColor="#fff" stopOpacity="0" />
-            <stop offset="0.45" stopColor="#fff" stopOpacity="0" />
-            <stop offset="1" stopColor="#fff" stopOpacity="1" />
-          </linearGradient>
-          <mask id="svc-grid-mask">
-            <rect x="-100" y="-100" width="900" height="900" fill="url(#svc-fade)" />
-          </mask>
         </defs>
 
-        <rect x="-100" y="100" width="900" height="500" fill="url(#svc-floor)" />
+        {/* Enclosure panel — the bounded area the grid lives in. */}
+        <rect className="iso-encl" x="0.5" y="0.5" width={VB_W - 1} height={VB_H - 1} rx="14" />
 
-        <g mask="url(#svc-grid-mask)" strokeLinecap="square">
+        <g clipPath="url(#svc-encl-clip)">
+          <rect x="0" y={VB_H * 0.42} width={VB_W} height={VB_H * 0.58} fill="url(#svc-floor)" />
+
+          {/* Iso diamond grid — cells coincide with the cube bases. */}
           <g className="iso-grid-line">
-            <path d="M -120 580 L 800  76" /><path d="M -120 640 L 800 136" />
-            <path d="M -120 520 L 800  16" /><path d="M -120 460 L 800 -44" />
-            <path d="M -120 400 L 800 -104" /><path d="M -120 700 L 800 196" />
-            <path d="M -120 760 L 800 256" /><path d="M -120 820 L 800 316" />
-            <path d="M -120 880 L 800 376" />
+            {GRID.a.map((d, i) => <path key={`ga${i}`} d={d} />)}
+            {GRID.b.map((d, i) => <path key={`gb${i}`} d={d} />)}
           </g>
-          <g className="iso-grid-line">
-            <path d="M -120  76 L 800 580" /><path d="M -120 136 L 800 640" />
-            <path d="M -120  16 L 800 520" /><path d="M -120 -44 L 800 460" />
-            <path d="M -120 -104 L 800 400" /><path d="M -120 196 L 800 700" />
-            <path d="M -120 256 L 800 760" /><path d="M -120 316 L 800 820" />
-            <path d="M -120 376 L 800 880" />
-          </g>
+
+          {/* The three pillar cells, filled so they read as occupied cells. */}
+          {PILLAR_ORDER.map((id, i) => (
+            <g key={`base-${id}`} transform={`translate(${CUBE_X[i]}, ${CUBE_Y})`}>
+              <polygon className="cube-floor" points={FLOOR_DIAMOND} />
+            </g>
+          ))}
+
+          {PILLAR_ORDER.map((id, i) => (
+            <Cube key={id} id={id} index={i} rise={rises[i]} active={i === activeIndex} />
+          ))}
         </g>
-
-        {PILLAR_ORDER.map((id, i) => (
-          <g key={`base-${id}`} transform={`translate(${CUBE_X[i]}, ${CUBE_Y})`}>
-            <polygon className="cube-floor" points={FLOOR_DIAMOND} />
-          </g>
-        ))}
-
-        {PILLAR_ORDER.map((id, i) => (
-          <Cube key={id} id={id} index={i} rise={rises[i]} active={i === activeIndex} />
-        ))}
 
         <g>
           {PILLAR_ORDER.map((id, i) => (
             <text
               key={`lbl-${id}`}
               x={CUBE_X[i] + 65}
-              y={498}
+              y={LABEL_Y}
               className="cube-label"
               data-active={i === activeIndex}
               data-cat={CAT[id]}
@@ -86,7 +107,7 @@ export function ServicesIsoStage({
         </g>
         <g>
           {PILLAR_ORDER.map((id, i) => (
-            <text key={`idx-${id}`} x={CUBE_X[i] + 65} y={514} className="cube-index">
+            <text key={`idx-${id}`} x={CUBE_X[i] + 65} y={INDEX_Y} className="cube-index">
               {String(i + 1).padStart(2, '0')}
             </text>
           ))}
@@ -132,7 +153,7 @@ function Cube({
 
   return (
     <>
-      <ellipse ref={shadowRef} className="cube-shadow" cx={x + 65} cy={CUBE_Y + 43} rx="66" ry="14" />
+      <ellipse ref={shadowRef} className="cube-shadow" cx={x + 65} cy={CUBE_Y + 43} rx="64" ry="13" />
       <g transform={`translate(${x}, ${CUBE_Y})`}>
         <g className="cube" data-cat={cat} data-active={active}>
           <polygon ref={leftRef} className="face left" points={cubeFaces(0).left} />
@@ -194,8 +215,9 @@ function ScopedStyle() {
     <style precedence="default">{`
       .iso-stage-wrap { position: absolute; inset: 0; }
       .iso-stage-svg { width: 100%; height: 100%; overflow: visible; }
-      .iso-grid-line { stroke: #d8dce4; stroke-width: 1; fill: none; }
-      .cube-floor { fill: #f3f4f6; stroke: #c8ccd3; stroke-width: 1; }
+      .iso-encl { fill: rgba(255,255,255,0.55); stroke: #e6e9f2; stroke-width: 1; }
+      .iso-grid-line { stroke: #e1e5f0; stroke-width: 1; fill: none; }
+      .cube-floor { fill: #edf0f6; stroke: #d4d9e6; stroke-width: 1; }
 
       .cube .face { transition: fill var(--duration-base, 400ms) cubic-bezier(0.16,1,0.3,1); }
       .cube .top   { fill: #ECEEF2; }
@@ -217,7 +239,7 @@ function ScopedStyle() {
       .cube[data-active="true"][data-cat="studio"] .right{ fill: #9A340A; }
       .cube[data-active="true"][data-cat="studio"] .edge { stroke: #6E2607; }
 
-      .cube-shadow { fill: #000; opacity: 0; }
+      .cube-shadow { fill: #1a2540; opacity: 0; }
       .cube-glyph { transition: opacity var(--duration-base, 400ms); }
       .cube-glyph .gtop { fill: #fff; }
       .cube-glyph[data-cat="web3"]   .gleft { fill: #B7CEFF; }
