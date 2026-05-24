@@ -16,6 +16,7 @@ Replaced the static 3-card grid with the handoff's **320vh horizontal pinned car
 - **Fallbacks.** Reduced-motion + `<lg` → static stacked column (pin not rendered), all content SSR-present.
 - **Process notes.** A mid-build `useSyncExternalStore`/`innerWidth` desktop-detection hack (added to satisfy a too-strict test) was caught in code review and reverted to the CSS house pattern; the test was loosened instead. Live agent-browser verification caught a `jumpTo` scroll-range overshoot and the missing mobile imagery — both fixed.
 - **QA.** Single-viewport fit verified at 768/900/1080; reduced-motion + 390px mobile verified; `tsc` clean; 7 unit tests pass; lint clean except one benign `<img>` warning (matches the prior `why-us.tsx` pattern). Commits `b742fe3`→`40d3aa5`.
+- **Content-panel + border refinement.** Card title bumped `clamp(20px,1.7vw,26px)`→`clamp(26px,2.7vw,42px)`, body `→clamp(15px,1.05vw,18px)`, eyebrow/padding/gap scaled with `svh` so the right panel carries weight and uses its vertical space (was thin/under-filled). Weight comes from scale, **not** the handoff's per-category eyebrow color (deliberately kept neutral). Closed the pillar-strip sides (`border-x`) and dropped the card region's bottom border so 01-Speed's left edge and 03-Niche Depth's right edge are finished. Verified no internal overflow at 768px.
 
 ---
 
