@@ -170,43 +170,62 @@ function Cube({
   )
 }
 
+// Glyph diamond keeps the cube's top-plate proportions (half-w / half-h = 65/37).
+const GLYPH_WH = 65 / 37
+const join = (pts: number[][]) => pts.map((q) => q.join(',')).join(' ')
+
+// An extruded iso slab: top diamond at (cx,cy) with half-width W, dropped by
+// thickness t. Three visible faces, shaded like the parent cube.
+function isoSlab(cx: number, cy: number, W: number, t: number, key: string) {
+  const H = W / GLYPH_WH
+  const Lx = cx - W, Rx = cx + W, Fy = cy + H
+  return [
+    <polygon key={`${key}l`} className="gf-left" points={`${Lx},${cy} ${cx},${Fy} ${cx},${Fy + t} ${Lx},${cy + t}`} />,
+    <polygon key={`${key}r`} className="gf-right" points={`${cx},${Fy} ${Rx},${cy} ${Rx},${cy + t} ${cx},${Fy + t}`} />,
+    <polygon key={`${key}t`} className="gf-top" points={`${Lx},${cy} ${cx},${Fy} ${Rx},${cy} ${cx},${cy - H}`} />,
+  ]
+}
+
 function CubeGlyph({ cat }: { cat: 'web3' | 'ai' | 'studio' }) {
+  // W1 — Ethereum mark as an extruded faceted token.
   if (cat === 'web3') {
-    const unit = (
-      <>
-        <polygon className="gleft" points="-11,0 -11,-18 0,-24 0,-6" />
-        <polygon className="gright" points="11,0 11,-18 0,-24 0,-6" />
-        <polygon className="gtop" points="-11,-18 0,-12 11,-18 0,-24" />
-        <path className="gedge" d="M -11,0 L -11,-18 L 0,-24 L 11,-18 L 11,0 L 0,6 Z M -11,-18 L 0,-12 L 11,-18 M 0,-12 L 0,6" />
-      </>
-    )
+    const d = 9, dx = d * 0.869, dy = -d * 0.495
+    const T = [0, -30], L = [-18, -3], R = [18, -3], C = [0, 4], B = [0, 30]
+    const sT = [T[0] + dx, T[1] + dy], sR = [R[0] + dx, R[1] + dy], sB = [B[0] + dx, B[1] + dy], sL = [L[0] + dx, L[1] + dy]
     return (
       <>
-        <g transform="translate(-22,-13)">{unit}</g>
-        <g transform="translate(-22,13)">{unit}</g>
-        <g transform="translate(22,-13)">{unit}</g>
-        <g transform="translate(22,13)">{unit}</g>
+        <polygon className="gf-right" points={join([R, T, sT, sR])} />
+        <polygon className="gf-dark" points={join([R, B, sB, sR])} />
+        <polygon className="gf-right" points={join([T, L, sL, sT])} />
+        <polygon className="gf-dark" points={join([L, B, sB, sL])} />
+        <polygon className="gf-lite" points={join([T, L, C])} />
+        <polygon className="gf-top" points={join([T, C, R])} />
+        <polygon className="gf-left" points={join([C, L, B])} />
+        <polygon className="gf-right" points={join([C, R, B])} />
+        <polyline className="gf-seam" points={`${L[0]},${L[1]} ${R[0]},${R[1]}`} />
+        <polyline className="gf-seam" points={`${T[0]},${T[1]} ${C[0]},${C[1]} ${B[0]},${B[1]}`} />
       </>
     )
   }
+  // A1 — node-graph with extruded cube nodes.
   if (cat === 'ai') {
+    const nodes = [[0, -24], [-24, -6], [24, -6], [0, 16]]
+    const edges = [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]]
     return (
       <>
-        <path className="gline" d="M -22,-12 L 0,6 M -22,-12 L 22,-12 M 0,6 L 22,-12 M -22,-12 L 0,-22 M 22,-12 L 0,-22 M 0,-22 L 0,6" />
-        <circle className="gnode" cx="0" cy="-22" r="4.5" />
-        <circle className="gnode" cx="-22" cy="-12" r="4.5" />
-        <circle className="gnode" cx="22" cy="-12" r="4.5" />
-        <circle className="gnode" cx="0" cy="6" r="4.5" />
+        {edges.map(([i, j], k) => (
+          <line key={`e${k}`} className="gf-wire" x1={nodes[i][0]} y1={nodes[i][1]} x2={nodes[j][0]} y2={nodes[j][1]} />
+        ))}
+        {nodes.map((n, k) => isoSlab(n[0], n[1], 8, 6, `n${k}`))}
       </>
     )
   }
+  // S2 — framed product block with an inset top recess.
+  const iW = 18, iH = iW / GLYPH_WH, iy = -2
   return (
     <>
-      <polygon className="gtop" points="-32,-2 0,-20 32,-2 0,16" />
-      <path className="gedge" d="M -32,-2 L 0,-20 L 32,-2 L 0,16 Z" />
-      <polygon className="gmid" points="-20,-2 0,-13 20,-2 0,9" />
-      <path className="gedge" d="M -20,-2 L 0,-13 L 20,-2 L 0,9 Z" />
-      <polygon className="gcore" points="-6,-2 0,-5.5 6,-2 0,1.5" />
+      {isoSlab(0, 0, 32, 18, 'o')}
+      <polygon className="gf-dark" points={`${-iW},${iy} 0,${iy + iH} ${iW},${iy} 0,${iy - iH}`} />
     </>
   )
 }
@@ -241,15 +260,17 @@ function ScopedStyle() {
 
       .cube-shadow { fill: #1a2540; opacity: 0; }
       .cube-glyph { transition: opacity var(--duration-base, 400ms); }
-      .cube-glyph .gtop { fill: #fff; }
-      .cube-glyph[data-cat="web3"]   .gleft { fill: #B7CEFF; }
-      .cube-glyph[data-cat="web3"]   .gright{ fill: #6FA3FF; }
-      .cube-glyph[data-cat="web3"]   .gedge { stroke: #1A3FDB; stroke-width: 0.6; fill: none; }
-      .cube-glyph[data-cat="ai"]     .gline { stroke: #fff; stroke-width: 1.2; fill: none; }
-      .cube-glyph[data-cat="ai"]     .gnode { fill: #fff; stroke: #074039; stroke-width: 0.5; }
-      .cube-glyph[data-cat="studio"] .gmid  { fill: #F08A4F; }
-      .cube-glyph[data-cat="studio"] .gcore { fill: #fff; }
-      .cube-glyph[data-cat="studio"] .gedge { stroke: #6E2607; stroke-width: 0.6; fill: none; }
+      .cube-glyph polygon { stroke: var(--gdark); stroke-width: 0.5; stroke-linejoin: round; }
+      .cube-glyph .gf-top   { fill: var(--gtop); }
+      .cube-glyph .gf-lite  { fill: var(--glite); }
+      .cube-glyph .gf-left  { fill: var(--gleft); }
+      .cube-glyph .gf-right { fill: var(--gright); }
+      .cube-glyph .gf-dark  { fill: var(--gdark); }
+      .cube-glyph .gf-wire  { stroke: var(--gleft); stroke-width: 1.6; fill: none; }
+      .cube-glyph .gf-seam  { stroke: var(--gdark); stroke-width: 0.7; fill: none; }
+      .cube-glyph[data-cat="web3"]   { --gtop:#6FA3FF; --glite:#B7CEFF; --gleft:#296ff0; --gright:#1A3FDB; --gdark:#0F2EB8; }
+      .cube-glyph[data-cat="ai"]     { --gtop:#4FB3A8; --glite:#9FE0D6; --gleft:#0F766E; --gright:#0B5953; --gdark:#074039; }
+      .cube-glyph[data-cat="studio"] { --gtop:#F08A4F; --glite:#FBC9A8; --gleft:#C2410C; --gright:#9A340A; --gdark:#6E2607; }
 
       .cube-label {
         font-family: var(--font-mono); font-size: 11px; font-weight: 700;
