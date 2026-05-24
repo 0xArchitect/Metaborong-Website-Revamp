@@ -187,17 +187,11 @@ function isoSlab(cx: number, cy: number, W: number, t: number, key: string) {
 }
 
 function CubeGlyph({ cat }: { cat: 'web3' | 'ai' | 'studio' }) {
-  // W1 — Ethereum mark as an extruded faceted token.
+  // W1 — flat faceted Ethereum mark (facet shading only, no extruded depth).
   if (cat === 'web3') {
-    const d = 9, dx = d * 0.869, dy = -d * 0.495
     const T = [0, -30], L = [-18, -3], R = [18, -3], C = [0, 4], B = [0, 30]
-    const sT = [T[0] + dx, T[1] + dy], sR = [R[0] + dx, R[1] + dy], sB = [B[0] + dx, B[1] + dy], sL = [L[0] + dx, L[1] + dy]
     return (
       <>
-        <polygon className="gf-right" points={join([R, T, sT, sR])} />
-        <polygon className="gf-dark" points={join([R, B, sB, sR])} />
-        <polygon className="gf-right" points={join([T, L, sL, sT])} />
-        <polygon className="gf-dark" points={join([L, B, sB, sL])} />
         <polygon className="gf-lite" points={join([T, L, C])} />
         <polygon className="gf-top" points={join([T, C, R])} />
         <polygon className="gf-left" points={join([C, L, B])} />
