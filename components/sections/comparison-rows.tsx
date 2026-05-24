@@ -14,7 +14,7 @@ export type Row = {
   largeCheck?: boolean
 }
 
-const cell = 'px-[20px] py-[18px] align-top'
+const cell = 'px-[20px] py-[clamp(8px,1.2svh,16px)] align-top'
 
 // Client island: IO-gated, staggered row reveal (opacity + translateY), mirroring
 // components/ui/reveal.tsx. Row text is always in the SSR DOM (opacity only) so it
