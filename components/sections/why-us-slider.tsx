@@ -45,7 +45,7 @@ function Header() {
 function CardInner({ r, i }: { r: (typeof reasons)[number]; i: number }) {
   return (
     <div className="grid h-full grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
-      <div className="relative hidden items-center justify-center bg-bg-subtle lg:flex">
+      <div className="relative flex max-h-[220px] items-center justify-center bg-bg-subtle py-[24px] lg:max-h-none lg:py-0">
         <img
           src={r.image}
           alt=""
@@ -102,7 +102,10 @@ export function WhyUsSlider() {
     const wrap = wrapRef.current
     if (!wrap) return
     const top = wrap.getBoundingClientRect().top + window.scrollY
-    const target = top + wrap.offsetHeight * dwellCenter(i) - window.innerHeight / 2
+    // Map the dwell-center fraction into the pin's usable scroll range
+    // (offsetHeight - viewport), so the last pillar lands inside the pin
+    // rather than past its release point.
+    const target = top + dwellCenter(i) * (wrap.offsetHeight - window.innerHeight)
     window.scrollTo({ top: target, behavior: 'smooth' })
   }
 
