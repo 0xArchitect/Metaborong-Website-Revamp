@@ -61,30 +61,36 @@ export function ServicesIsoStage({
         <defs>
           <linearGradient id="svc-floor" x1="0.5" y1="0" x2="0.5" y2="1">
             <stop offset="0" stopColor="#ffffff" stopOpacity="0" />
-            <stop offset="1" stopColor="#eaeef7" stopOpacity="0.85" />
+            <stop offset="1" stopColor="#e7ecf6" stopOpacity="0.6" />
           </linearGradient>
+          {/* Feathered rectangle: the grid reads as a soft-edged plane that
+              dissolves into the section grey (no hard white panel/border) while
+              keeping defined, horizontal top and bottom edges. */}
+          <filter id="svc-feather" x="-25%" y="-25%" width="150%" height="150%">
+            <feGaussianBlur stdDeviation="20" />
+          </filter>
+          <mask id="svc-grid-mask">
+            <rect x="6" y="14" width={VB_W - 12} height={VB_H - 22} rx="24" fill="#fff" filter="url(#svc-feather)" />
+          </mask>
         </defs>
 
-        <g>
+        {/* Atmospheric grid — masked to fade into the grey; cubes stay crisp. */}
+        <g mask="url(#svc-grid-mask)">
           <rect x="-200" y={VB_H * 0.42} width={VB_W + 400} height={VB_H * 0.7} fill="url(#svc-floor)" />
-
-          {/* Iso diamond grid — cells coincide with the cube bases. */}
           <g className="iso-grid-line">
             {GRID.a.map((d, i) => <path key={`ga${i}`} d={d} />)}
             {GRID.b.map((d, i) => <path key={`gb${i}`} d={d} />)}
           </g>
-
-          {/* The three pillar cells, filled so they read as occupied cells. */}
           {PILLAR_ORDER.map((id, i) => (
             <g key={`base-${id}`} transform={`translate(${CUBE_X[i]}, ${CUBE_Y})`}>
               <polygon className="cube-floor" points={FLOOR_DIAMOND} />
             </g>
           ))}
-
-          {PILLAR_ORDER.map((id, i) => (
-            <Cube key={id} id={id} index={i} rise={rises[i]} active={i === activeIndex} />
-          ))}
         </g>
+
+        {PILLAR_ORDER.map((id, i) => (
+          <Cube key={id} id={id} index={i} rise={rises[i]} active={i === activeIndex} />
+        ))}
 
         <g>
           {PILLAR_ORDER.map((id, i) => (
@@ -210,8 +216,8 @@ function ScopedStyle() {
     <style precedence="default">{`
       .iso-stage-wrap { position: absolute; inset: 0; }
       .iso-stage-svg { width: 100%; height: 100%; display: block; }
-      .iso-grid-line { stroke: #e1e5f0; stroke-width: 1; fill: none; }
-      .cube-floor { fill: #edf0f6; stroke: #d4d9e6; stroke-width: 1; }
+      .iso-grid-line { stroke: #d7ddea; stroke-width: 1; fill: none; }
+      .cube-floor { fill: #eef2fa; stroke: #cfd5e4; stroke-width: 1; }
 
       .cube .face { transition: fill var(--duration-base, 400ms) cubic-bezier(0.16,1,0.3,1); }
       .cube .top   { fill: #ECEEF2; }
