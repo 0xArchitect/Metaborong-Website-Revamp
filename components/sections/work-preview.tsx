@@ -7,9 +7,9 @@ type Project = { name: string; category: string; color: string }
 // no fabricated outcomes. Names + categories only.
 const projects: Project[] = [
   { name: 'KGeN',               category: 'Web3 · Gaming', color: '#296ff0' },
-  { name: 'DATA3 AI',           category: 'AI · Data',     color: '#10b981' },
+  { name: 'DATA3 AI',           category: 'AI · Data',     color: '#0F766E' },
   { name: 'Bionic',             category: 'Web3 · DeFi',   color: '#296ff0' },
-  { name: 'Bayan — AI Chatbot', category: 'AI · Voice',    color: '#10b981' },
+  { name: 'Bayan — AI Chatbot', category: 'AI · Voice',    color: '#0F766E' },
 ]
 
 export function WorkPreviewSection() {
@@ -28,30 +28,27 @@ export function WorkPreviewSection() {
       <div className="relative mt-[24px] [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)]">
         <div
           data-lenis-prevent
-          className="flex overflow-x-auto snap-x snap-mandatory gap-[16px] lg:grid lg:grid-cols-4 lg:gap-[16px] pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] lg:mx-0 lg:px-0 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex overflow-x-auto snap-x snap-mandatory gap-[16px] lg:grid lg:grid-cols-4 lg:gap-[1px] lg:bg-border lg:border lg:border-border pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] lg:mx-0 lg:px-0 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {projects.map(p => (
             <div
               key={p.name}
               className="snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-[calc(50vw-32px)] lg:w-auto lg:max-w-none flex"
             >
-              <div className="flex w-full flex-col gap-[12px] rounded-[12px] border border-border px-[20px] py-[24px] transition-[transform,box-shadow,border-color] duration-[250ms] hover:-translate-y-[2px] hover:border-brand/30 hover:shadow-sm motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:px-[24px] sm:py-[28px] lg:px-[28px] lg:py-[32px]">
-                {/* Blueprint-hairline panel + corner monogram — placeholder until case-study art. */}
-                <div
-                  className="relative mb-[8px] h-[96px] overflow-hidden rounded-[8px] border border-border"
-                  style={{ backgroundImage: `repeating-linear-gradient(45deg, ${p.color}1a 0, ${p.color}1a 1px, transparent 1px, transparent 9px)` }}
+              <div className="group flex w-full flex-col gap-[20px] min-h-[240px] rounded-[12px] border border-border bg-bg px-[24px] py-[28px] transition-colors duration-[250ms] hover:bg-bg-raised motion-reduce:transition-none lg:rounded-none lg:border-0">
+                {/* Solid pillar-colored monogram square — placeholder until case-study art. */}
+                <span
+                  aria-hidden="true"
+                  className="flex h-[56px] w-[56px] flex-none items-center justify-center text-[28px] font-bold tracking-[-0.04em] text-white"
+                  style={{ backgroundColor: p.color }}
                 >
-                  <span
-                    aria-hidden="true"
-                    className="absolute left-[10px] top-[8px] font-mono text-[12px] font-bold uppercase tracking-[0.1em]"
-                    style={{ color: p.color }}
-                  >
-                    {p.name.charAt(0)}
-                  </span>
+                  {p.name.charAt(0)}
+                </span>
+                <div className="flex flex-col gap-[8px]">
+                  <div className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray">{p.category}</div>
+                  <h3 className="text-[20px] font-bold leading-[1.15] tracking-[-0.025em] text-dark">{p.name}</h3>
                 </div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.06em]" style={{ color: p.color }}>{p.category}</div>
-                <h3 className="text-[18px] font-bold tracking-[-0.025em] text-dark">{p.name}</h3>
-                <a href="/#contact" className="mt-auto inline-flex min-h-[44px] items-center text-[13px] font-medium text-brand no-underline">Read more →</a>
+                <a href="/#contact" className="mt-auto inline-flex min-h-[44px] items-center gap-[6px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-dark no-underline transition-colors duration-[150ms] group-hover:text-brand">Read more <span aria-hidden="true">→</span></a>
               </div>
             </div>
           ))}

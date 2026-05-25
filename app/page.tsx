@@ -76,10 +76,10 @@ export default function HomePage() {
         <AsciiSeam seed={0} />
         <span id="services" className="block scroll-mt-[64px]" aria-hidden="true" />
         <ServicesSection />
-        <WhyUsSection />
-        <AsciiSeam seed={1} />
         <span id="work" className="block scroll-mt-[64px]" aria-hidden="true" />
         <WorkPreviewSection />
+        <AsciiSeam seed={1} />
+        <WhyUsSection />
         <TestimonialsSection />
         <span id="founders" className="block scroll-mt-[64px]" aria-hidden="true" />
         <FoundersSection />

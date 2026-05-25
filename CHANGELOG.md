@@ -4,6 +4,82 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-05-24 — Section 5: Why-Us (A1 rebuild)
+
+Replaced the static 3-card grid with the handoff's **320vh horizontal pinned card-slide** (the second and final sanctioned pin). Brainstorm → spec → plan → subagent-driven build (per-task spec + code-quality review). Spec/plan: `docs/superpowers/{specs,plans}/2026-05-24-section-why-us.*`.
+
+- **Motion / pin.** 320vh stage → sticky `calc(100svh-56px)` frame (`grid-rows-[auto_1fr_auto]`). Three cards (Speed / Product thinking / Niche depth) `translateX` in from the right over each other; `useScroll` drives the slide via a CSS var, applied imperatively (no re-render on scroll), no CSS transition on the transform (1:1 scrub). Active pillar = discrete state. The second of the two `section.pin` budget (**2 of 2 used**).
+- **Architecture.** Server shell `why-us.tsx` (`aria-label`, `sr-only` lede + Clutch line) → client `why-us-slider.tsx` (plain `'use client'`, **not** `ssr:false`, so card text is SSR-crawlable) → pure tested `why-us-slide.ts` (slide windows, active thresholds, dwell centers; 6 unit tests) → shared `why-us-data.tsx`. Mirrors the Services split.
+- **Layout.** Eyebrow above a compact H2; Clutch badge + two stat chips in the header right cluster; lede dropped to `sr-only` (SEO-safe). Pillar nav = 3 `<button>`s (click-to-jump, mapped into the pin's usable scroll range), brand-blue active (inset-top shadow + `bg-subtle`). Whitespace on the canonical edge px chain, matching the Services pin.
+- **Imagery — anchor #06 deviation (user-accepted).** Kept the retired raster-isometric `whyus/*.webp` (downscaled into a `bg-subtle` well per card; capped band above the text on mobile). Logged in the section spec as an eyes-open deviation.
+- **Content unchanged.** The three reasons keep their rich client-proof bodies (AbsolveMe / SunsetML / OrbitXPay / PredictRAM).
+- **Fallbacks.** Reduced-motion + `<lg` → static stacked column (pin not rendered), all content SSR-present.
+- **Process notes.** A mid-build `useSyncExternalStore`/`innerWidth` desktop-detection hack (added to satisfy a too-strict test) was caught in code review and reverted to the CSS house pattern; the test was loosened instead. Live agent-browser verification caught a `jumpTo` scroll-range overshoot and the missing mobile imagery — both fixed.
+- **QA.** Single-viewport fit verified at 768/900/1080; reduced-motion + 390px mobile verified; `tsc` clean; 7 unit tests pass; lint clean except one benign `<img>` warning (matches the prior `why-us.tsx` pattern). Commits `b742fe3`→`40d3aa5`.
+- **Content-panel + border refinement.** Card title bumped `clamp(20px,1.7vw,26px)`→`clamp(26px,2.7vw,42px)`, body `→clamp(15px,1.05vw,18px)`, eyebrow/padding/gap scaled with `svh` so the right panel carries weight and uses its vertical space (was thin/under-filled). Weight comes from scale, **not** the handoff's per-category eyebrow color (deliberately kept neutral). Closed the pillar-strip sides (`border-x`) and dropped the card region's bottom border so 01-Speed's left edge and 03-Niche Depth's right edge are finished. Verified no internal overflow at 768px.
+
+---
+
+## 2026-05-24 — Section 4: Work (A2 + reorder)
+
+Reordered and restyled the Work-Preview section. Per-section A2 flow (brainstorm → frontend-design build → agent-browser → detector/lint → graduate).
+
+- **Reorder.** Moved `<WorkPreviewSection>` (+ `#work` anchor) **above** `<WhyUsSection>` in `app/page.tsx` — new order Services → **Work** → Why-Us → Testimonials (leads with proof-of-work before the "why us" argument). The ASCII seam that sat Why-Us→Work now sits **Work→Why-Us**; Services' subtle bg + pinned-frame bottom border separates Services→Work (no top divider on Work).
+- **Card grammar → handoff hairline-seam grid.** At lg+ the four cards are one engineered table: 4-col grid, `gap:1px` on a `--color-border` bg + 1px outer border, **no per-card radius/border** (cards split by hairlines). Each leads with a solid **pillar-colored 56px monogram square** (white initial) replacing the blueprint-hairline placeholder; hover = `--color-bg-raised` tint (bg-color only, 250ms, motion-reduce safe) replacing the lift+shadow+brand-border. Mono uppercase category (neutral `text-gray` for AA) + 20px name + mono "Read more →". Mobile keeps the bordered-cell drag-scroll snap lane + static arrows.
+- **Token.** `--color-bg-raised` (`#fafbff`, already defined) **first consumed** here.
+- **Content unchanged.** KGeN / DATA3 AI / Bionic / Bayan — names + categories only, no fabricated outcomes; "Case studies are on the way" lede kept.
+- **QA.** `tsc` clean; impeccable detector clean (`[]`); verified live at desktop (hairline grid + monograms) and 390px (drag lane). Pre-existing `<a href="/#contact">` lint nits flagged (not introduced). Commit `1f1ed23`.
+
+---
+
+## 2026-05-24 — Section 3: Services (A1 rebuild)
+
+Rebuilt Services as a **single-viewport pinned scrolltelling**, replacing the 260vh CSS iso-canvas with an SVG isometric stage. Plan/spec: `docs/superpowers/{plans,specs}/2026-05-24-section-services.*`. Executed subagent-driven (per-task implement → spec review → quality gate).
+
+- **Motion.** Added **`motion`** (`motion/react`, the current name for framer-motion) — first of the two sanctioned pins. `useScroll` over the 260vh container drives per-cube `rise` 0→1 imperatively (no React re-render on scroll); active pillar is discrete state off the same progress.
+- **Iso cubes — grounded.** New `services-iso-stage.tsx`: grid + cubes share one SVG coordinate space. Cubes **extrude up out of the grid** (bottom edge pinned), so the base never floats off a separate plate (the handoff's behaviour, rejected). Top-plate **glyphs** fade in past ~35% rise (Web3 cube-cluster / AI node-graph / Studio layered-diamond); contact shadows grow with rise. Geometry + scroll math are pure, unit-tested modules (`services-iso-geometry.ts`, `services-scroll.ts`; 13 tests).
+- **Header in the pin.** Left-aligned eyebrow `What we build` + `01/03` step counter; H2 "A small, senior team. ⟨phrase⟩" where the phrase swaps **text + colour** per active pillar (Web3 protocols. / Production AI. / End-to-end products. — blue/teal/orange).
+- **Accordion.** Tech-stack pills dropped; spacious subservice list (≥44px rows) + "See all" per pillar. Mobile (<lg) keeps the static `<details>` stack.
+- **Copy.** Product Studio headline `Greenfield product engineering` → **`End-to-end product engineering`** (homepage only; "greenfield" still present on `/services` pages + SEO copy — flagged for a separate A3 copy pass). Centered intro lede dropped (equivalent framing retained in the FAQ JSON-LD).
+- **Single viewport.** Whole section in `calc(100svh - 56px)`. Fixed an `overflow:hidden`-ancestor bug that broke the sticky seat (frame was at `top:-124`, bar+H2 clipped); now seats at `top:56`. Density pass clears internal accordion scroll at ≤768px (720 leaves a 20px graceful residual on 5-item pillars).
+- **Refinement + QA pass (same day).** Cube-top glyphs rebuilt as 3D extruded **white** iso solids in the cube light model — **Web3 = Ethereum mark** (flat faceted), **AI = node-graph**, **Studio = framed block** (supersedes the earlier cube-cluster / node-graph / layered-diamond marks). Centre **AI cube seated one grid cell higher** (`CUBE_DY`, one lattice step) for apex spacing; **iso grid** made a **feathered atmospheric plane** dissolving into the grey (no white panel), lower edge trimmed to just below the cube labels. **QA — impeccable critique 35/40, not AI-slop:** gated the desktop pin behind `useReducedMotion()` so reduced-motion users get the static stack (v1.0 pin "degrade to static" constraint); `.svc-block-rule` now draws via `transform: scaleX` not `width`. H2-below-T1 and 38px desktop sublinks logged as accepted single-viewport deviations (section spec). Commits `2bfbd22`→`920882d`.
+
+
+
+Adopting the Claude-Design v1.0 handoff (`docs/design_handoff_homepage_revamp/`) section by section. The handoff HTML is a wireframe/reference, not a pixel target. Plan: `~/.claude/plans/so-i-don-t-intend-robust-spring.md`.
+
+**Phase 0 — global foundation (commit `5608ba9`).** Token/font conformance before any section work:
+- Font **Satoshi → Switzer** (self-hosted `.woff2`, 6 weights, `@font-face`; fallback Inter/Helvetica). Dropped the Fontshare/Space-Grotesk CDN imports; JetBrains Mono unchanged.
+- **`--color-accent` `#F6851B` → `#C2410C`** (burnt orange; avoids MetaMask wallet-orange). **`--color-ai` `#10b981` → `#0F766E`** (institutional teal; replaces Tailwind emerald). Brand `#296ff0` unchanged. Literal swaps in `services-data.ts`, `services-iso-canvas.tsx`, `work-preview.tsx`, `testimonials.tsx` stars, and the orb-label HUD. Admin AI-readiness PASS/WARN palettes left as independent status colors (not brand).
+- DESIGN.md updated (typography, color table, scroll-motion note, dark-mode-deferred). Dark mode **deferred**; Contact-CTA will go **dark** (supersedes the 2026-05-20 painterly-light lock); `design-system.html` = historical reference but wins on value conflict.
+
+**Section 1 — Hero (commit `e85c334`).**
+- White bg; **nav whitened** (`bg-bg-subtle` → `bg-bg`) to remove the shade-seam at the nav/hero boundary.
+- Content capped to `max-w-[1280px]` to match the nav's content edges (was `1600` — overshot the bar) + `64px` column gap; closes the wide-screen "panels too far apart" gap without moving the video.
+- Eyebrow: unified `Pill` → hero-only square + mono `// WEB3 & AI DEVELOPMENT STUDIO` (handoff treatment; logged as a Pill-rule exception in DESIGN.md).
+- Content now centers in the area **below** the fixed nav (was centered ignoring it → eyebrow sat ~1px under the bar) → comfortable nav→eyebrow gap.
+- Left column **brackets the video frame**: three zones (eyebrow+H1 / lede / CTAs) over a height-matched block (`lg:h-[80%] max-h-[700px]`, `justify-between`), so the lede sits equidistant and eyebrow∥video-top + CTA∥video-bottom. Two height-base bugs fixed in the process (video cell forced `100vh` vs grid `100vh-56`; video `80%` vs copy block `82%`) — bottoms now align Δ0 at 720/768/800/900.
+- H1 `clamp(32px,4.8vw,72px)` → `clamp(40px,6vw,84px)`; lede `text-base` → `text-lg`.
+
+**Section 1.5 — Trust bar.** Kept the existing per-logo silhouette/colorize handling; borrowed the handoff's left **label column** (`25+ / IN PRODUCTION / SHIPPED FOR`) + an **edge fade-mask** on the marquee. Added **SunsetML** (`/clients/sunset.svg`, white asset → `keepSilhouette` so it renders as a visible dark logo; links to sunsetml.com).
+
+**Section 2 — Problem.** Kept as-is (already richer than the handoff: real animated SVG trend-window chart + AEO blockquote + accordion + DefinedTerm/FAQPage schema). Two tweaks only: enlarged `.problem-h2` (flat `32px` → `clamp(32px, 3vw, 46px)`, removed the 28/24 tablet/mobile overrides) and `.problem-blockquote` (`15px` → `clamp(16px, 1.5vw, 19px)`) so they fill the card proportions — sized so content stays ≤ chart height and the card doesn't grow past the viewport. Inner inverse "The problem" chip kept; no outer eyebrow (tried, reverted per preference).
+
+### Files
+
+- **Phase 0:** `app/globals.css`, `DESIGN.md`, `components/sections/{services-data.ts,services-iso-canvas.tsx,work-preview.tsx,testimonials.tsx}`, `public/fonts/Switzer-*.woff2`.
+- **Hero:** `components/sections/hero.tsx`, `components/layout/nav.tsx`, `DESIGN.md` (pill exception), `CHANGELOG.md`.
+- **Trust bar:** `components/sections/trust-bar.tsx`, `public/clients/sunset.svg`.
+- **Problem:** `components/sections/problem.tsx`, `app/globals.css`.
+
+### Verification
+
+- `npx tsc --noEmit` clean after each step (not `npm run build` — rss.xml env hold).
+- Phase 0: live computed `--font-brand`/`--color-accent`/`--color-ai` confirmed on `:3000`; `/blog`, `/services`, a service page → 200; `/admin` → 307.
+- Hero: alignment measured Δ0 (top + bottom) at 720/768/800/900; responsive screenshots at 390/768/1366/1440 (Playwright, since the agent-browser daemon is viewport-locked).
+
+---
+
 ## 2026-05-22 — Session 20 (cont.): Design-review audit fixes
 
 Acted on a `/design-review` audit (graded B+) of the homepage. Audit-only first, then fixed one finding at a time with live before/after.
