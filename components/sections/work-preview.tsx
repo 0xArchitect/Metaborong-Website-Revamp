@@ -1,15 +1,37 @@
 import { Section } from '@/components/ui/section'
 import { Pill } from '@/components/ui/pill'
 
-type Project = { name: string; category: string; color: string }
+type Project = { name: string; title: string; category: string; logo: string; slug: string }
 
-// Per-card one-liners deferred until case studies land (docs/content/homepage.md) —
-// no fabricated outcomes. Names + categories only.
 const projects: Project[] = [
-  { name: 'KGeN', category: 'Web3 · Gaming', color: '#296ff0' },
-  { name: 'DATA3 AI', category: 'AI · Data', color: '#0F766E' },
-  { name: 'Bionic', category: 'Web3 · DeFi', color: '#296ff0' },
-  { name: 'Bayan — AI Chatbot', category: 'AI · Voice', color: '#0F766E' },
+  { 
+    name: 'SUNSET', 
+    title: 'An AI-native writing platform that eliminates creative friction.',
+    category: 'AI · Platform', 
+    logo: '/clients/sunset.svg',
+    slug: 'sunset'
+  },
+  { 
+    name: 'MAGIC', 
+    title: 'A scalable AI creative automation platform for e-commerce.',
+    category: 'AI · Automation', 
+    logo: '/clients/magic.svg',
+    slug: 'magic'
+  },
+  { 
+    name: 'OrbitX', 
+    title: 'A production-grade stablecoin banking infrastructure.',
+    category: 'Web3 · Fintech', 
+    logo: '/clients/orbitx.svg',
+    slug: 'orbitx'
+  },
+  { 
+    name: 'SEDAX', 
+    title: 'A blockchain eKYC platform with Zero-Knowledge Proof identity.',
+    category: 'Web3 · Identity', 
+    logo: '/clients/sedax.svg',
+    slug: 'sedax'
+  },
 ]
 
 export function WorkPreviewSection() {
@@ -23,7 +45,7 @@ export function WorkPreviewSection() {
         <a href="/#contact" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-brand no-underline">Talk to us →</a>
       </div>
       <p className="mb-[36px] max-w-[600px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray sm:mb-[48px]">
-        Live products across DeFi, AI, gaming, and SaaS — each shipped with founders we still work with. Case studies are on the way.
+        Live products across Web3, AI, fintech, and SaaS — each engineered for production and shipped with founders we still work with.
       </p>
       <div className="relative mt-[24px] [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)]">
         <div
@@ -36,19 +58,14 @@ export function WorkPreviewSection() {
               className="snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-auto md:max-w-none flex"
             >
               <div className="group flex w-full flex-col gap-[20px] min-h-[240px] rounded-[12px] border border-border bg-bg px-[24px] py-[28px] transition-colors duration-[250ms] hover:bg-bg-raised motion-reduce:transition-none lg:rounded-none lg:border-0">
-                {/* Solid pillar-colored monogram square — placeholder until case-study art. */}
-                <span
-                  aria-hidden="true"
-                  className="flex h-[56px] w-[56px] flex-none items-center justify-center text-[28px] font-bold tracking-[-0.04em] text-white"
-                  style={{ backgroundColor: p.color }}
-                >
-                  {p.name.charAt(0)}
-                </span>
-                <div className="flex flex-col gap-[8px]">
-                  <div className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray">{p.category}</div>
-                  <h3 className="text-[20px] font-bold leading-[1.15] tracking-[-0.025em] text-dark">{p.name}</h3>
+                <div className="flex h-[36px] items-center justify-start">
+                  <img src={p.logo} alt={p.name} className="h-full max-w-[120px] object-contain brightness-0 opacity-80" />
                 </div>
-                <a href="/#contact" className="mt-auto inline-flex min-h-[44px] items-center gap-[6px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-dark no-underline transition-colors duration-[150ms] group-hover:text-brand">Read more <span aria-hidden="true">→</span></a>
+                <div className="flex flex-col gap-[10px] mt-[8px]">
+                  <div className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray">{p.category}</div>
+                  <h3 className="text-[17px] font-semibold leading-[1.35] tracking-[-0.01em] text-dark">{p.title}</h3>
+                </div>
+                <a href={`/work/${p.slug}`} className="mt-auto inline-flex min-h-[44px] items-center gap-[6px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-dark no-underline transition-colors duration-[150ms] group-hover:text-brand">Read case study <span aria-hidden="true">→</span></a>
               </div>
             </div>
           ))}
