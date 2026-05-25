@@ -6,10 +6,10 @@ type Project = { name: string; category: string; color: string }
 // Per-card one-liners deferred until case studies land (docs/content/homepage.md) —
 // no fabricated outcomes. Names + categories only.
 const projects: Project[] = [
-  { name: 'KGeN',               category: 'Web3 · Gaming', color: '#296ff0' },
-  { name: 'DATA3 AI',           category: 'AI · Data',     color: '#0F766E' },
-  { name: 'Bionic',             category: 'Web3 · DeFi',   color: '#296ff0' },
-  { name: 'Bayan — AI Chatbot', category: 'AI · Voice',    color: '#0F766E' },
+  { name: 'KGeN', category: 'Web3 · Gaming', color: '#296ff0' },
+  { name: 'DATA3 AI', category: 'AI · Data', color: '#0F766E' },
+  { name: 'Bionic', category: 'Web3 · DeFi', color: '#296ff0' },
+  { name: 'Bayan — AI Chatbot', category: 'AI · Voice', color: '#0F766E' },
 ]
 
 export function WorkPreviewSection() {
@@ -28,12 +28,12 @@ export function WorkPreviewSection() {
       <div className="relative mt-[24px] [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)]">
         <div
           data-lenis-prevent
-          className="flex overflow-x-auto snap-x snap-mandatory gap-[16px] lg:grid lg:grid-cols-4 lg:gap-[1px] lg:bg-border lg:border lg:border-border pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] lg:mx-0 lg:px-0 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex overflow-x-auto snap-x snap-mandatory gap-[16px] md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-[16px] lg:gap-[1px] lg:bg-border lg:border lg:border-border pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] md:mx-0 md:px-0 md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {projects.map(p => (
             <div
               key={p.name}
-              className="snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-[calc(50vw-32px)] lg:w-auto lg:max-w-none flex"
+              className="snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-auto md:max-w-none flex"
             >
               <div className="group flex w-full flex-col gap-[20px] min-h-[240px] rounded-[12px] border border-border bg-bg px-[24px] py-[28px] transition-colors duration-[250ms] hover:bg-bg-raised motion-reduce:transition-none lg:rounded-none lg:border-0">
                 {/* Solid pillar-colored monogram square — placeholder until case-study art. */}
@@ -54,19 +54,19 @@ export function WorkPreviewSection() {
           ))}
         </div>
 
-        {/* Static swipe affordances (mobile lane) — no infinite animation per DESIGN.md. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute lg:hidden text-gray opacity-70"
+        {/* Floating swipe hint arrow (Left) */}
+        <div 
+          className="pointer-events-none absolute md:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
           style={{ top: 'calc(50% - 12px)', left: 'calc(var(--cw) * 0.04)', transform: 'translate(-50%, -50%)' }}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </div>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute lg:hidden text-gray opacity-70"
+
+        {/* Floating swipe hint arrow (Right) */}
+        <div 
+          className="pointer-events-none absolute md:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
           style={{ top: 'calc(50% - 12px)', right: 'calc(var(--cw) * 0.04)', transform: 'translate(50%, -50%)' }}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
@@ -77,3 +77,4 @@ export function WorkPreviewSection() {
     </Section>
   )
 }
+
