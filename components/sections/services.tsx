@@ -36,7 +36,7 @@ export function ServicesSection() {
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="services-section-bridge bg-bg-subtle"
+      className="services-section-bridge bg-bg"
     >
       <h2 id="services-heading" className="sr-only">What we build — a small, senior team across three pillars</h2>
       <ServicesPillarsLazy />
