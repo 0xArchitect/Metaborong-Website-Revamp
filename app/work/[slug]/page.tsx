@@ -383,7 +383,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
       {/* Technologies Marquee */}
       {allTech.length > 0 && (
-        <Section bg="subtle" maxWidth="full" className="py-[80px] overflow-hidden border-t border-b border-border">
+        <section className="bg-bg-subtle py-[80px] overflow-hidden border-t border-b border-border">
           <div className="relative flex w-full flex-col gap-[16px]">
             <div className="flex w-fit animate-marquee items-center gap-[40px] pr-[40px]">
               {[...allTech, ...allTech, ...allTech, ...allTech].map((tech, i) => (
@@ -394,7 +394,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               ))}
             </div>
           </div>
-        </Section>
+        </section>
       )}
 
       {/* FAQ */}
