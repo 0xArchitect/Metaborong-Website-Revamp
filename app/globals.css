@@ -823,22 +823,11 @@ video.hero-ascii-image::-webkit-media-controls-container {
   margin: 0;
 }
 
-/* Smooth boundary between Problem (bg) and Services (bg-subtle). */
+/* Services shares the white section bg; the stacking context is kept for the
+   pinned pillar stage. (Prior Problem→Services grey bridge removed — both white.) */
 .services-section-bridge {
   position: relative;
   isolation: isolate;
-}
-
-.services-section-bridge::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: clamp(44px, 5vw, 72px);
-  transform: translateY(calc(-100% + 1px));
-  pointer-events: none;
-  background: linear-gradient(to bottom, var(--color-bg) 0%, var(--color-bg-subtle) 100%);
 }
 
 /* Responsive: tablet */
