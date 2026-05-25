@@ -15,7 +15,7 @@ declare global {
 // element is aria-hidden. Defaults match the Why-Us badge (type 2, h=45);
 // Testimonials passes the type-8 reviews carousel (h=300, curated review IDs).
 interface ClutchWidgetProps {
-  widgetType?: '2' | '8'
+  widgetType?: '2' | '3' | '8' | '16'
   height?: number
   reviews?: string
   className?: string

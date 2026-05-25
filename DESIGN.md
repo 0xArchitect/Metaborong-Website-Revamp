@@ -6,6 +6,12 @@ from shipped state, optimized for consistency across sections built session-by-s
 Read this file before any UI change. If a section deviates, log it under
 `docs/superpowers/specs/<date>-<section>.md` per the override rule below.
 
+> **Foundation source (2026-05-23):** the homepage revamp adopts the design-system v1.0
+> handoff (`docs/design_handoff_homepage_revamp/design-system.html`). This DESIGN.md is the
+> **operational** authority and is kept in sync; the handoff doc is historical reference
+> **but wins on any value conflict** (it is the newer revision). See the 2026-05-23
+> Decisions Log entry.
+
 ## Brand
 - **Product:** Metaborong (metaborong.com)
 - **Audience:** Web3 / AI / SaaS founders evaluating a senior dev studio
@@ -67,20 +73,22 @@ Applied via `:focus-visible` only — never `:focus`. Mandatory on `<Button>`, `
 
 ## Typography
 
-Loaded via Fontshare + Google Fonts in `app/globals.css:2-6`.
+Switzer is **self-hosted** as `.woff2` from `/public/fonts` via `@font-face` (six weights)
+in `app/globals.css`. JetBrains Mono still loads from the Google Fonts CDN.
 
-- **Display + Body:** Satoshi (300, 400, 500, 700, 900) — `--font-brand`.
+- **Display + Body:** Switzer (300, 400, 500, 600, 700, 900) — `--font-brand`. Humanist
+  grotesque, Indian Type Foundry. *(Replaces Satoshi as of 2026-05-23, design-system v1.0.)*
 - **Mono / data / eyebrows:** JetBrains Mono 400 — `--font-mono`.
-- **Fallback:** Space Grotesk (system fallback only — never specify directly).
+- **Fallback:** Inter, Helvetica Neue (system fallback only — never specify directly).
 
-CSS vars (`globals.css:40-41`):
+CSS vars:
 ```css
---font-brand: 'Satoshi', 'Space Grotesk', sans-serif;
+--font-brand: 'Switzer', 'Inter', 'Helvetica Neue', sans-serif;
 --font-mono:  'JetBrains Mono', 'Courier New', monospace;
 ```
 
-Applied globally on `html` (`globals.css:79`). Must not add a second
-`html { @apply font-sans }` elsewhere — Tailwind's default sans stack overrides Satoshi.
+Applied globally on `html`. Must not add a second
+`html { @apply font-sans }` elsewhere — Tailwind's default sans stack overrides Switzer.
 
 ### Type scale
 
@@ -134,8 +142,8 @@ canonical.
 | Alias                 | CSS var          | Hex       | Use                                          |
 |-----------------------|------------------|-----------|----------------------------------------------|
 | `color.brand.primary` | `--color-brand`  | `#296ff0` | Web3 pillar, primary CTA, hub                |
-| `color.brand.accent`  | `--color-accent` | `#F6851B` | Product Studio pillar, HUD                   |
-| `color.brand.ai`      | `--color-ai`     | `#10b981` | AI Agents pillar (only)                      |
+| `color.brand.accent`  | `--color-accent` | `#C2410C` | Product Studio pillar, HUD — burnt orange (avoids MetaMask wallet-orange) |
+| `color.brand.ai`      | `--color-ai`     | `#0F766E` | AI Agents pillar (only) — institutional teal (replaces Tailwind emerald) |
 
 #### Text
 | Alias                  | CSS var               | Hex       | Use                                       |
@@ -161,13 +169,19 @@ canonical.
 | `color.border.subtle`   | `--color-border-subtle` | `#f3f4f6` | Internal dividers, hover backgrounds    |
 
 ### Pillar color rule
-Pillars own their color globally — Web3 is brand-blue, AI is `#10b981`, Product Studio
-is `#F6851B`. Must not introduce new pillar-tinted UI without updating `services-data.ts`.
+Pillars own their color globally — Web3 is brand-blue, AI is `#0F766E`, Product Studio
+is `#C2410C`. Must not introduce new pillar-tinted UI without updating `services-data.ts`.
 
 ### Inactive / structural slate
 Used for inactive glyphs and dashed spokes in `services-glyphs.tsx`. Component-local,
 not global tokens:
 - Stroke: `#cbd5e1` · Fill: `#e2e8f0` · Dot/accent: `#94a3b8`
+
+`services-iso-stage.tsx` follows the same precedent: its iso render (cube neutral faces, grid
+lines `#d7ddea`, floor diamond, white-shaded glyph ramp `--gtop…--gdark`, contact shadow) plus
+lighten/darken steps of the pillar token hexes for the active cube faces/glyphs are
+component-local structural hex, not promoted to global tokens. The canonical pillar hexes
+(`#296ff0` / `#0F766E` / `#C2410C`) remain the mid-tone anchors.
 
 ### Status / window-chrome colors (sanctioned local hex)
 Universal traffic-light semantics (error/warning/success), **not** brand colors — kept as
@@ -180,9 +194,10 @@ namespace). Sanctioned uses:
   for a **separate data-viz token pass** — out of scope for the homepage token-discipline check.
 
 ### Dark mode
-A `.dark` token block exists (`globals.css:303-335`) but is not currently activated. The
+A `.dark` token block exists in `globals.css` but is not currently activated. The
 site ships light-only. If reintroduced, surfaces must be redesigned — must not just
-invert.
+invert. **Note:** design-system v1.0 (2026-05-23) specs a full dark-mode token map +
+nav toggle, but it is **deferred** — out of scope for the current homepage revamp.
 
 ---
 
@@ -266,6 +281,50 @@ Locked grammar. Originally specified in (now archived)
 4. **CSS over JS for media queries.** Must not use `matchMedia` if a CSS query suffices.
    SVG sections use inline `<style precedence="default">` blocks to avoid hydration cost.
 
+### Scroll-driven layer (design-system v1.0, 2026-05-23)
+A second motion layer is sanctioned: **scroll-scrubbed pinned sections** (scroll *plays*
+the animation, never replays it — consistent with the one-shot rule). **Framer Motion** is
+adopted **only** for these (Lenis + the IO `Reveal` auto-wrap stay everywhere else).
+Budget: `section.pin` **max 2 per page** (Services vertical iso-cubes, Why-Us horizontal
+card-slide), `stack.sticky` max 1. Hard constraints: each pin must degrade to a static
+stack under `prefers-reduced-motion` and below the mobile breakpoint, must not collide with
+the sticky nav (offset by nav height), and must keep INP healthy.
+
+**Pin 1 — Services (shipped 2026-05-24).** Package is **`motion`** (`motion/react`), the
+current name for framer-motion — not the legacy `framer-motion`. `useScroll` over a 260vh
+container drives per-cube `rise` 0→1 (continuous, applied imperatively to the SVG so scroll
+causes no React re-render); active-pillar (H2 phrase+colour, open accordion row, cube fill)
+is discrete React state off the same progress. Cubes are **grounded** — they extrude up out
+of the shared iso grid, bottom edge pinned (no floating baseplate). Whole section sits in one
+`calc(100svh - 56px)` frame. Gotcha logged: an `overflow:hidden` ancestor becomes the sticky
+containing block and breaks the `top:56` seat — keep the pinned frame free of such ancestors.
+Cube-top glyphs are **3D extruded white iso solids** in the cube light model (Web3 = Ethereum
+mark, AI = node-graph, Studio = framed block); the centre (AI) cube **seats one grid cell
+higher** (`CUBE_DY`, one lattice step) for apex spacing; the grid is a **feathered atmospheric
+plane** dissolving into the section grey (no white panel). **Reduced-motion degrades to the
+static stack** — the desktop pin is gated behind `useReducedMotion()` (renders `MobileStack`),
+satisfying the degrade-to-static pin constraint.
+
+**Pin 2 — Why-Us (shipped 2026-05-24).** The second and final pin (**budget now 2 of 2
+used**). A **320vh horizontal card-slide**: three full-viewport cards (Speed / Product
+thinking / Niche depth) slide in from the right over each other inside a sticky
+`calc(100svh - 56px)` frame (`grid-rows-[auto_1fr_auto]` = header / card stack / pillar nav).
+`useScroll` over the 320vh container drives each card's `translateX` via a CSS var, applied
+imperatively (no re-render on scroll); the active pillar is discrete state off the same
+progress. **No CSS transition on the card transform** — the slide is 1:1 with scroll (scrub,
+not eased replay). Slide windows + active thresholds + dwell centers live in the pure tested
+module `why-us-slide.ts`; click-to-jump maps the dwell fraction into the pin's *usable* scroll
+range (`offsetHeight − viewport`). Architecture mirrors Services (server shell `why-us.tsx`
+labelled via `aria-label` + sr-only lede/Clutch line → client `why-us-slider.tsx` (plain
+`'use client'`, **not** `ssr:false`, so card text is SSR-crawlable) → shared `why-us-data.tsx`).
+Pillar-nav active = brand blue + inset-top box-shadow + `bg-subtle` (anchor #01: the three
+category colours don't apply — Speed/Product/Depth aren't the Web3/AI/Studio pillars).
+Reduced-motion + `<lg` → static stacked column. **Deviation (anchor #06):** the section keeps
+the retired raster-isometric `whyus/*.webp` (downscaled into a `bg-subtle` well per card,
+capped band above the text on mobile) — a user-accepted, eyes-open deviation; see
+`docs/superpowers/specs/2026-05-24-section-why-us.md`. The horizontal motion deliberately
+contrasts the Services vertical pin so the two don't read as the same trick.
+
 ### Duration tokens
 
 | Alias                         | Value    | Use                                  |
@@ -301,8 +360,9 @@ Locked grammar. Originally specified in (now archived)
   falloff + horizontal edge-fade mask). On IO entry it stamps in **once** via a left-to-right
   `mask-position` wipe (1100ms out-expo) + opacity fade, then holds static (honors the no-infinite
   rule). Fixed 88px height reserves space (no CLS). `prefers-reduced-motion` → static texture, no
-  wipe. Placed at 4 rhythmic seams (Problem→Services, Why-Us→Work, Founders→Comparison,
-  FAQ→Contact); those followers drop their `divider` hairline so the band is the only seam.
+  wipe. Placed at 4 rhythmic seams (Problem→Services, **Work→Why-Us** (post the 2026-05-24
+  reorder that moved Work above Why-Us), Founders→Comparison, FAQ→Contact); those followers
+  drop their `divider` hairline so the band is the only seam.
 - **phrase-stamp** (`components/sections/phrase-stamp.tsx`): per-word stagger, IO-gated,
   600ms after entry; reference for any first-paint-with-delay pattern.
 - **Services trefoil** (`components/sections/services-trefoil.tsx`):
@@ -334,10 +394,14 @@ Locked grammar. Originally specified in (now archived)
 - **Comparison row-reveal** (`comparison-rows.tsx`): IO-gated, per-row staggered
   `opacity 0→1` + `translateY(6px→0)` (`delay = i*60ms`, base/out-expo). Row text is in the SSR
   DOM (opacity only) so it stays crawlable; reduced-motion → all rows visible immediately.
-- **Work-Preview card hover + blueprint-hairline tiles** (`work-preview.tsx`): card
-  `-translate-y-[2px]` + `border-brand/30` + `shadow.sm` (250ms, `motion-reduce` neutralized);
-  the placeholder tile is a faint diagonal blueprint-hairline panel (pillar hue) with a small
-  corner monogram — a deliberate placeholder until case-study art lands.
+- **Work-Preview hairline-seam card grid** (`work-preview.tsx`, 2026-05-24): at lg+ the four
+  cards are **one engineered table** — a 4-col grid with `gap:1px` on a `--color-border`
+  background + 1px outer border, so cards are split by hairlines (no per-card radius/border).
+  Each card leads with a solid **pillar-colored 56px monogram square** (placeholder until
+  case-study art); hover = `--color-bg-raised` tint (bg-color transition, 250ms,
+  `motion-reduce` neutralized) — replaced the earlier lift+shadow+blueprint-tile treatment.
+  Below lg the cards become individually bordered cells in the drag-scroll snap lane (static
+  swipe arrows, `data-lenis-prevent`). `--color-bg-raised` (`#fafbff`) first consumed here.
 
 > **Removed (Session 19 redo):** the undocumented infinite `animate-[pulse]` on the
 > Founders + Work-Preview swipe-hint arrows (violated the no-infinite-animation rule) — arrows
@@ -355,7 +419,7 @@ Locked grammar. Originally specified in (now archived)
 | `ascii-seam.tsx`      | `seed`                                       | Decorative connective ASCII texture band between sections (Session 20). One-shot mask-wipe stamp-in, reduced-motion static, `aria-hidden`, fixed 88px (CLS-safe). |
 | `card.tsx`            | default / featured / quote                   | `featured` adds 3px left border, takes `accentColor` prop. Hover: -0.5 translate, brand/30 border, `shadow.sm`. |
 | `button.tsx`          | primary / ghost / secondary; sm / md / lg    | Inline-style. Brand-blue primary.                                                                  |
-| `pill.tsx`            | as: span/div/p; tone: default/inverse        | **Canonical section label** (Session 19 redo). Bordered mono pill, sharp/squared corners: `border rounded-[2px] px-[12px] py-[6px] font-mono text-[11px] font-bold uppercase tracking-[0.1em]`. `default` = white bg / dark text; `inverse` = `border-white/60 bg-white/10 text-off-white` for colored/dark surfaces (Problem card). Used by every section eyebrow. |
+| `pill.tsx`            | as: span/div/p; tone: default/inverse        | **Canonical section label** (Session 19 redo). Bordered mono pill, sharp/squared corners: `border rounded-[2px] px-[12px] py-[6px] font-mono text-[11px] font-bold uppercase tracking-[0.1em]`. `default` = white bg / dark text; `inverse` = `border-white/60 bg-white/10 text-off-white` for colored/dark surfaces (Problem card). Used by every section eyebrow **except the Hero**, which uses a hero-only square + `// …` mono eyebrow (2026-05-23 revamp; page-driver exception). |
 | `eyebrow.tsx`         | as: span/div/p                               | 11px bold uppercase 0.1em tracking, gray-light. No longer used for section labels (see `pill.tsx`); still used for sub-labels (footer headings, founder role chip). |
 | `reveal.tsx`          | optional `delay`                             | The IO+motion gate. Used by `<Section>`.                                                           |
 | `section-header.tsx`  | —                                            | Eyebrow + H2 + lede composition.                                                                   |
@@ -515,6 +579,10 @@ Run before marking a section shipped.
 
 | Date       | Decision                                                                                                                                                  | Rationale                                                                                  |
 |------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| 2026-05-24 | **Why-Us A1 rebuild — pinned horizontal card-slide (Pin 2 of 2).** Replaced the static 3-card grid with a 320vh horizontal card-slide: Speed / Product thinking / Niche depth cards slide in from the right inside a sticky `calc(100svh-56px)` frame; pillar-nav strip (brand-blue active, inset-top shadow + bg-subtle) with click-to-jump; eyebrow above a compact H2; Clutch badge + two stat chips in the header; the lede dropped to `sr-only` (SEO-safe). Server shell (`why-us.tsx`, `aria-label`) + client pin (`why-us-slider.tsx`, plain `'use client'` so SSR-crawlable) + pure tested math (`why-us-slide.ts`) + shared data (`why-us-data.tsx`). Reduced-motion + `<lg` → static stacked column. **Anchor #06 deviation:** kept the retired raster-isometric `whyus/*.webp` (downscaled into a bg-subtle well; capped band above text on mobile) — user-accepted, eyes-open; logged in the section spec. Built subagent-driven (per-task spec + code-quality review); a mid-build `useSyncExternalStore` desktop-detection hack was caught in review and reverted to the CSS house pattern; `jumpTo` scroll-range bug + missing mobile imagery caught in live agent-browser verification and fixed. Single-viewport fit verified 768–1080; `tsc` + 7 unit tests + lint clean (one benign `<img>` warning, matching the prior pattern). Commits `b742fe3`→`40d3aa5`. | Closes the second A1 rebuild and the sequential spine. The horizontal pin contrasts the Services vertical pin; the section keeps its strong client-proof copy while adopting the v1.0 motion/viewport grammar. The imagery deviation is a deliberate, documented owner call rather than an unflagged anchor break. |
+| 2026-05-24 | **Work-Preview reordered + hairline-seam card grid (A2).** Moved Work **above Why-Us** in `app/page.tsx` (new order Services → Work → Why-Us → Testimonials); the ASCII seam that sat Why-Us→Work now sits **Work→Why-Us** (Services' subtle bg + bottom border separates Services→Work, so Work needs no top divider). Cards adopt the v1.0 handoff grammar: lg+ **hairline-seam grid** (1px seams on `--color-border` bg, no per-card radius/border) with a solid **pillar-colored 56px monogram square** per card and a `--color-bg-raised` hover tint (replaces the lift+shadow+blueprint-tile treatment); mobile keeps the bordered-cell drag-scroll lane. `--color-bg-raised` (`#fafbff`) first consumed. Content unchanged (KGeN / DATA3 AI / Bionic / Bayan — names + categories only, no fabricated outcomes). `tsc` + impeccable detector clean; verified live at desktop + 390px. Pre-existing `<a href="/#contact">` `no-html-link-for-pages` lint nits noted (not introduced here). | Work now reads as one engineered table consistent with the Swiss-engineering posture and the v1.0 system, and the page order leads with proof-of-work before the "why us" argument. |
+| 2026-05-24 | **Services refinement + QA graduation (Pin 1).** Cube-top glyphs rebuilt as 3D extruded **white** iso solids in the cube light model (Web3 = Ethereum mark / AI = node-graph / Studio = framed block; supersedes the cube-cluster/node-graph/layered-diamond marks). Centre **AI cube seated one grid cell higher** (`CUBE_DY`, one lattice step) for apex spacing; **iso grid** = feathered atmospheric plane dissolving into the section grey (no white panel), lower edge trimmed to just below the cube labels. **QA (impeccable critique 35/40, not AI-slop):** desktop pin gated behind `useReducedMotion()` → static `MobileStack` (degrade-to-static pin constraint); `.svc-block-rule` draws via `transform: scaleX` not `width`. **Accepted single-viewport deviations** (logged in `docs/superpowers/specs/2026-05-24-section-services.md`): H2 stays below its T1 tier (`clamp(27px,min(4.2svh,3.5vw),44px)`) and desktop subservice links floor at 38px — both to hold the locked single-viewport fit (the lg+ pin is a pointer surface; the mobile stack already uses 44px). `services-iso-stage.tsx` local structural hex documented under "Inactive / structural slate". | Closes the Services A1 pass: glyphs read as solid objects carved from the cubes, the centre cube has breathing room, the grid integrates with the grey, and the one real a11y gap (reduced-motion not degrading) is fixed — while preserving the user-locked single-viewport result via documented deviations rather than fighting it. |
+| 2026-05-23 | **Adopt design-system v1.0 foundations (homepage revamp Phase 0).** Font Satoshi → Switzer (self-hosted .woff2, 6 weights, fallback Inter/Helvetica); Product-Studio accent #F6851B → #C2410C (burnt orange, avoids MetaMask wallet-orange); AI pillar #10b981 → #0F766E (institutional teal, replaces Tailwind emerald-500); brand #296ff0 unchanged. Token swaps in `globals.css` (`--font-brand`, `--color-accent`, `--color-ai`) + literal usages in `services-data.ts`, `services-iso-canvas.tsx`, `work-preview.tsx`, `testimonials.tsx`, and the orb-label HUD corners/cat. Admin AI-readiness PASS/WARN palettes left as independent status colors (green=pass / amber=warn, not brand). `framer-motion` added, scoped to the two new pinned sections only (Lenis + IO `Reveal` retained everywhere else). Dark mode spec'd in v1.0 but **deferred**. Contact-CTA to adopt the **dark** treatment (supersedes the 2026-05-20 painterly-light lock). `design-system.html` = historical reference but **wins on value conflict**. | One foundation aligned to the v1.0 handoff before section-by-section rework; brand colors now read as owned (distinct from MetaMask wallet-orange and Tailwind emerald defaults); motion stack ready for the two pins without ripping out the working Reveal. |
 | 2026-05-22 | **Audit polish — P2 token discipline + P3 seam contrast.** (P3) ASCII seams darkened from `--color-gray-light` @ 0.5 (near-invisible on white) to `--color-gray` @ 0.6 — picked from four live candidates. (P2) The token-discipline check surfaced a real collision: the shadcn `@theme inline` block (`globals.css`) redefined `--color-accent` as `var(--accent)` (a near-white `oklch(0.97)`), silently overriding the brand `@theme` `--color-accent: #F6851B` and leaving every `bg/text/border-accent` (blog/admin "Warning" callouts) rendering near-white. Removed the colliding alias so the brand orange is authoritative again (verified computed `--color-accent` → `#f6851b`). Status/window-chrome colors (`#d90429`/`#ffba08`/`#38b000`) documented as sanctioned local hex (see "Status / window-chrome colors") rather than promoted to brand tokens. **Flagged, not fixed:** the same inline block also shadows `--color-border` with `oklch(0.922)` (≈`#e4e4e4` vs DESIGN.md `#e5e7eb`) — visually identical, left alone; and `problem-trend-chart.tsx`'s `#296ff0`/`#fffffc` raw hex remains a separate data-viz token pass. | The Product Studio accent token resolves to its intended orange again (un-breaks blog/admin warn callouts) and the connective seams are legible as designed texture. Traffic-light semantics stay out of the brand namespace by intent. |
 | 2026-05-22 | **Design-review audit fixes (Session 20 cont.).** Acted on a `/design-review` audit (B+). (1) **Space Grotesk leak removed** — `.problem-h2`, `.problem-chart-lane-label`, `.problem-chart-status`, and the services iso-canvas `.iso-label` specified `'Space Grotesk'` (or an undefined `--font-grotesk`) as the *primary* face, rendering in Grotesk while every other heading was Satoshi; all repointed to `var(--font-brand)` (Grotesk stays the fallback inside the token). (2) **H2 casing unified to sentence case** (see Typography → H2 size tiers). (3) **Problem AEO accordion question** (`.problem-aeo-q`) 14px → 16px (the `base` token) for a clearer Q/A hierarchy in the collapsed disclosure; the primary FAQ questions were already 16–17px (no change). (4) **Consent banner** restructured to a compact summary + `<details>` "How it works" expander (full disclosure verbatim, progressively disclosed) with Accept/Reject bumped to ≥44px tap targets — fixes the mobile case where the full-text card buried both hero CTAs. `tsc` clean; no copy removed (consent text marked NEED LEGAL REVIEW kept verbatim in the expander). | Page now reads as one typographic system (single heading face + casing), the collapsed AEO block has correct hierarchy, and the mobile first impression is the hero (not a wall of legal text) while the legal disclosure stays one tap away. |
 | 2026-05-21 | **Homepage A+ pass — intentionality + earned richness (Session 20).** Pushes the Session-19-redo B+ toward A in two movements. **Movement 1 (subtractive intentionality):** (1a) **H2 size tiers** — section H2 now encodes narrative importance via a 3-tier clamp scale (T1 64 / T2 56 / T3 44) instead of the prior ad-hoc 44–56 spread: Services + Contact-CTA → 64 (peaks), Why-Us + Founders → 56, Work-Preview demoted 52→44 to join Testimonials/Comparison/FAQ (utility); Problem exempt (card-internal 32). (1b) **Selective Reveal** — new `Section reveal={false}` prop; turned off on Comparison (was double-animating over its own `comparison-rows` per-row reveal) and Testimonials (async Clutch widget reads better static). The **pill-reduction lever was deliberately dropped** — all 9 unified pills kept (de-risks the prior pill revert). **Movement 2 (earned richness):** new `components/ui/ascii-seam.tsx` connective ASCII texture band placed at 4 rhythmic seams (Problem→Services, Why-Us→Work, Founders→Comparison, FAQ→Contact); deterministic smooth glyph field (no hydration mismatch), one-shot left-to-right mask-wipe stamp-in then static, `aria-hidden`, fixed 88px (CLS-safe), reduced-motion static; those four followers dropped their `divider` hairline so the band is the sole seam. A **count-up** on figures was evaluated and **rejected** — the only standalone numeric display is the Testimonials 4.9 rating, and a lone decimal count-up on a non-accumulating metric read as gimmick, not earned. All motion transform/opacity/mask-only + reduced-motion-gated; `tsc --noEmit` clean; no CWV-measurable risk (fixed-height bands, IO + GPU transitions). | Section hierarchy now reads as designed (clear 64/56/44 rhythm), first-paint motion is deliberate rather than applied to every block, and the page gains a single restrained signature motif — the ASCII connective tissue — without the pill regression or a weak template flourish. |

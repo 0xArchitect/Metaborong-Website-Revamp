@@ -1,13 +1,54 @@
-/* ── Satoshi via Fontshare ───────────────────────────────── */
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
-/* ── Space Grotesk fallback ──────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* ── Switzer self-hosted — see @font-face below (replaces Satoshi + Space Grotesk per design-system v1.0) ── */
 /* ── JetBrains Mono (ASCII canvas renderer) ─────────────── */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
 
 @import "tailwindcss";
 
 @import "tw-animate-css";
+
+/* ── Switzer (Indian Type Foundry) — self-hosted .woff2 from /public/fonts ── */
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/Switzer-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Switzer-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Switzer-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Switzer-Semibold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Switzer-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/Switzer-Black.woff2') format('woff2');
+}
 
 /* @import "shadcn/tailwind.css"; */
 /* TEMP: file/package not present — broken import predates Section 5 work */
@@ -18,7 +59,7 @@
 @theme {
   /* Brand colors */
   --color-brand: #296ff0;
-  --color-accent: #F6851B;
+  --color-accent: #C2410C;
 
   /* Neutrals */
   --color-dark: #303030;
@@ -34,12 +75,12 @@
   --color-canvas: #0a0a0a;
 
   /* Third pillar + borders */
-  --color-ai: #10b981;
+  --color-ai: #0F766E;
   --color-border: #e5e7eb;
   --color-border-subtle: #f3f4f6;
 
   /* Typography */
-  --font-brand: 'Satoshi', 'Space Grotesk', sans-serif;
+  --font-brand: 'Switzer', 'Inter', 'Helvetica Neue', sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Spacing scale */
@@ -340,29 +381,29 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .orb-label-corner.tl {
   top: -1px;
   left: -1px;
-  border-top: 2px solid #F6851B;
-  border-left: 2px solid #F6851B;
+  border-top: 2px solid #C2410C;
+  border-left: 2px solid #C2410C;
 }
 
 .orb-label-corner.tr {
   top: -1px;
   right: -1px;
-  border-top: 2px solid #F6851B;
-  border-right: 2px solid #F6851B;
+  border-top: 2px solid #C2410C;
+  border-right: 2px solid #C2410C;
 }
 
 .orb-label-corner.bl {
   bottom: -1px;
   left: -1px;
-  border-bottom: 2px solid #F6851B;
-  border-left: 2px solid #F6851B;
+  border-bottom: 2px solid #C2410C;
+  border-left: 2px solid #C2410C;
 }
 
 .orb-label-corner.br {
   bottom: -1px;
   right: -1px;
-  border-bottom: 2px solid #F6851B;
-  border-right: 2px solid #F6851B;
+  border-bottom: 2px solid #C2410C;
+  border-right: 2px solid #C2410C;
 }
 
 .orb-label-scan {
@@ -379,7 +420,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.16em;
-  color: #F6851B;
+  color: #C2410C;
   font-weight: 700;
   margin-bottom: 4px;
   opacity: 0.95;
@@ -692,8 +733,8 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-h2 {
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: 32px;
-  line-height: 1.05;
+  font-size: clamp(32px, 3vw, 46px);
+  line-height: 1.08;
   letter-spacing: -0.014em;
   text-wrap: balance;
   color: #fffffc;
@@ -721,8 +762,8 @@ video.hero-ascii-image::-webkit-media-controls-container {
   padding: 24px 32px;
   border-top: 1px solid rgba(255, 255, 252, 0.18);
   font-family: var(--font-brand);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.6;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 252, 0.92);
   font-style: normal;
@@ -810,9 +851,6 @@ video.hero-ascii-image::-webkit-media-controls-container {
   .problem-content {
     padding-left: 0;
   }
-  .problem-h2 {
-    font-size: 28px;
-  }
 }
 
 /* Responsive: mobile — flat chart */
@@ -832,9 +870,6 @@ video.hero-ascii-image::-webkit-media-controls-container {
   }
   .problem-aeo {
     padding: 8px 16px 24px;
-  }
-  .problem-h2 {
-    font-size: 24px;
   }
   .problem-chrome-label {
     font-size: 9px;

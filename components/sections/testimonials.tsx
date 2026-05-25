@@ -1,5 +1,3 @@
-'use client'
-
 import { Section } from '@/components/ui/section'
 import { Pill } from '@/components/ui/pill'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
@@ -7,65 +5,67 @@ import { clutchProfileUrl } from '@/lib/links'
 const rating = '4.9'
 const reviewCount = '9'
 
-// Curated review IDs surfaced by the official Clutch widget (type 8). The widget
-// is the only review surface in the section — the prior hand-rolled card fallback
-// duplicated the same quotes and was removed by user direction 2026-05-21.
-const clutchReviewIds = '457842,454740,453781,439014,438481,437747'
+// Verbatim review highlights from the verified Clutch profile
+// (clutch.co/profile/metaborong-technologies-private). Surfaced natively (white,
+// borderless, crawlable) as the section's main element; the live Clutch type-16
+// review-collector badge sits top-right as the verifiable third-party marker.
+// Aggregate figures are mirrored in AggregateRating JSON-LD on the Organization
+// node (lib/schema.ts). Refresh quotes when the Clutch profile changes.
+const reviews = [
+  { quote: 'Their implementation and prompt product delivery stood out.', role: 'Executive', company: 'Sedax Data Solutions' },
+  { quote: 'They had great teamwork and the ability to understand and adapt to the business problems.', role: 'President', company: 'Digital Financial Aid Corporation' },
+  { quote: 'All works were delivered within the promised deadlines with proper deliverables.', role: 'Executive', company: 'SBS Construction' },
+  { quote: 'Their ability to translate IT concepts into solutions for the food and beverage sector was particularly impressive.', role: 'CEO', company: 'Taisi' },
+  { quote: 'They provided strategic insights that directly impacted revenue optimization and stock management.', role: 'CEO', company: 'Miniso Greece' },
+  { quote: 'They did not just build a tool; they designed a solution tailored to our business model and revenue goals.', role: 'General Manager', company: 'Mayada Marketing Services' },
+]
 
 export function TestimonialsSection() {
-  // Split-screen layout: header column (eyebrow + H2 + lede + section CTA) sits
-  // left at lg+; the Clutch widget sits right. Stacks vertically below lg. White
-  // section bg (matches Founders below + the iframe's internal bg) so the widget
-  // reads as a continuation of the section, not a separate card.
   return (
-    <Section bg="default" maxWidth="xwide" divider reveal={false}>
-      <div className="grid grid-cols-1 gap-[40px] lg:grid-cols-2 lg:items-start lg:gap-[64px]">
+    <Section
+      bg="default"
+      maxWidth="xwide"
+      divider
+      reveal={false}
+      className="lg:flex lg:min-h-[calc(100svh-56px)] lg:flex-col lg:justify-center lg:py-[clamp(24px,4svh,72px)]!"
+    >
+      <div className="mb-[clamp(20px,3.5svh,44px)] grid grid-cols-1 items-end gap-[clamp(20px,3vw,40px)] lg:grid-cols-[1fr_minmax(0,400px)]">
         <div className="flex flex-col">
-          <Pill className="mb-[16px]">Social proof</Pill>
-          <h2 className="max-w-[440px] text-balance text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">
-            Reviewed and verified on <img src="/images/clutchlogo-clean.png" alt="Clutch" style={{ display: 'inline-block', height: '0.85em', width: 'auto', marginLeft: '0.15em', transform: 'translateY(-0.12em)' }} />
+          <Pill className="mb-[14px]">Social proof</Pill>
+          <h2 className="max-w-[20ch] text-balance text-[clamp(24px,2.7vw,38px)] font-bold leading-[1.08] tracking-[-0.035em] text-dark">
+            Reviewed and verified on Clutch
           </h2>
-          <p className="mt-[16px] max-w-[480px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
-            Real clients rate our work on Clutch — every review is verified, every reviewer is named. Metaborong holds a {rating} out of 5 rating across {reviewCount} verified client reviews.
+          <p className="mt-[12px] max-w-[58ch] text-[clamp(13px,1vw,15px)] leading-[1.55] tracking-[-0.01em] text-gray">
+            Real clients rate our work on Clutch, the independent review platform for B2B service providers. Every review is verified, every reviewer is named.
           </p>
-          <div className="mt-[24px] flex items-center gap-[16px]">
-            <span className="text-[36px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
-            <span aria-hidden="true" className="text-[18px] leading-none text-[#F6851B]">{'★★★★★'}</span>
-            <span className="text-[13px] leading-[1.4] text-gray">{reviewCount} verified<br />Clutch reviews</span>
-          </div>
-          <a
-            href={clutchProfileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-[24px] inline-flex w-fit items-center text-[14px] font-semibold tracking-[-0.005em] text-brand no-underline"
-          >
-            View all reviews on Clutch →
-          </a>
         </div>
-
-        {/* The visible badge below carries the rating + count as crawlable, JS-free,
-            always-rendered trust content. The official Clutch widget loads on top
-            (its iframe is opaque), so when Clutch's CDN serves the live carousel
-            this badge is hidden behind it; when the widget fails (CDN bot-challenge,
-            ad-blocker, no-JS), the badge remains visible. pointer-events-none
-            ensures the fallback never intercepts clicks meant for the iframe (the
-            iframe carries its own per-review carousel arrows + outbound CTAs);
-            the left column's "View all reviews on Clutch →" is the explicit link. */}
-        <div className="relative w-full">
-          <div
-            className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-[12px] p-[24px] text-center"
-            aria-hidden="true"
-          >
-            <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-gray-light">Verified · Clutch</span>
-            <span className="flex items-center gap-[12px]">
-              <span className="text-[44px] font-bold leading-none tracking-[-0.03em] text-dark tabular-nums">{rating}</span>
-              <span className="text-[20px] leading-none text-[#F6851B]">{'★★★★★'}</span>
-            </span>
-            <span className="text-[14px] leading-[1.5] text-gray">Based on {reviewCount} verified Clutch reviews</span>
-          </div>
-          <ClutchWidget widgetType="8" height={220} reviews={clutchReviewIds} className="relative w-full" />
+        <div className="w-full lg:justify-self-end">
+          <ClutchWidget widgetType="16" height={90} className="w-full" />
         </div>
       </div>
+
+      <ul className="grid grid-cols-1 gap-x-[clamp(28px,3.5vw,56px)] gap-y-[clamp(16px,2.6svh,32px)] md:grid-cols-2 lg:grid-cols-3">
+        {reviews.map((r, i) => (
+          <li key={r.company}>
+            <figure className="flex h-full flex-col">
+              <span className="font-mono text-[11px] font-bold tracking-[0.14em] text-gray-light">
+                [{String(i + 1).padStart(2, '0')}]
+              </span>
+              <span aria-hidden="true" className="mt-[10px] text-[14px] tracking-[3px] text-accent">★★★★★</span>
+              <blockquote className="mt-[10px] text-[clamp(13px,1.05vw,16px)] leading-[1.5] tracking-[-0.01em] text-dark">
+                “{r.quote}”
+              </blockquote>
+              <figcaption className="mt-auto pt-[14px] font-mono text-[11px] uppercase tracking-[0.1em] text-gray">
+                <b className="font-bold text-dark">{r.role}</b>, {r.company}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+
+      <a href={clutchProfileUrl} target="_blank" rel="noopener noreferrer" className="sr-only">
+        Metaborong is rated {rating} out of 5 based on {reviewCount} verified client reviews on Clutch.
+      </a>
     </Section>
   )
 }

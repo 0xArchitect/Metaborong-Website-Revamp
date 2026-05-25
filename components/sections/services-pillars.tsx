@@ -1,233 +1,176 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import { useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react'
 import { pillars, getPublishedLeaves, type PillarId } from '@/components/sections/services-data'
-import { ServicesIsoCanvas } from '@/components/sections/services-iso-canvas'
+import { ServicesIsoStage } from '@/components/sections/services-iso-stage'
+import { activeIndexFromProgress, riseForCube } from '@/components/sections/services-scroll'
 
 const TOP_N = 5
+const NAV_OFFSET = 56
+
+const H2_PHRASE: Record<PillarId, string> = {
+  'web3': 'Web3 protocols.',
+  'ai': 'Production AI.',
+  'product-studio': 'End-to-end products.',
+}
 
 export function ServicesPillars() {
-  const [activeId, setActiveId] = useState<PillarId>(pillars[0].id)
   const wrapRef = useRef<HTMLDivElement>(null)
-  const anchorRefs = useRef<Map<PillarId, HTMLDivElement>>(new Map())
+  const { scrollYProgress } = useScroll({
+    target: wrapRef,
+    offset: ['start start', 'end end'],
+  })
 
-  // Scroll-driven active pillar (lg+ via tall sticky-pinned section).
-  useEffect(() => {
-    const refsMap = anchorRefs.current
-    if (refsMap.size === 0) return
+  const rise0 = useTransform(scrollYProgress, (p) => riseForCube(0, p, pillars.length))
+  const rise1 = useTransform(scrollYProgress, (p) => riseForCube(1, p, pillars.length))
+  const rise2 = useTransform(scrollYProgress, (p) => riseForCube(2, p, pillars.length))
+  const rises = [rise0, rise1, rise2]
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible[0]) {
-          const id = (visible[0].target as HTMLElement).dataset.pillar as PillarId
-          if (id) setActiveId(id)
-        }
-      },
-      {
-        // Crop the viewport to a 2vh-tall band straddling the vertical
-        // midline. An anchor "is intersecting" only while its midpoint
-        // is in that band — so the active pillar flips exactly when its
-        // assigned third of the 260vh scroll range crosses center-screen.
-        rootMargin: '-49% 0px -49% 0px',
-        threshold: 0,
-      },
-    )
+  const [activeIndex, setActiveIndex] = useState(0)
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    const next = activeIndexFromProgress(p, pillars.length)
+    setActiveIndex((cur) => (cur === next ? cur : next))
+  })
 
-    refsMap.forEach((el) => io.observe(el))
-    return () => io.disconnect()
-  }, [])
+  const active = pillars[activeIndex]
 
-  const active = pillars.find((p) => p.id === activeId)!
+  // v1.0 pin constraint: degrade to the static stack under reduced motion
+  // (no scroll-scrubbed pin). null (pre-hydration) keeps the motion default.
+  const reduceMotion = useReducedMotion()
+
+  const scrollToPillar = (i: number) => {
+    const wrap = wrapRef.current
+    if (!wrap) return
+    const rect = wrap.getBoundingClientRect()
+    const sectionTop = rect.top + window.scrollY
+    const target = sectionTop + (wrap.offsetHeight / pillars.length) * (i + 0.5) - window.innerHeight / 2
+    window.scrollTo({ top: target, behavior: 'smooth' })
+  }
 
   return (
     <>
       <ScopedStyle />
 
-      {/* Mobile (lg-): compact stack, no pinning. */}
-      <div className="lg:hidden mt-[48px]">
-        <MobileStack />
+      {/* Static stack — mobile (lg-) always, plus all widths under reduced motion. */}
+      <div className={`${reduceMotion ? '' : 'lg:hidden'} px-[16px] sm:px-[24px] md:px-[40px] py-[56px] md:py-[72px]`}>
+        <div className="mx-auto max-w-[1280px]">
+          <MobileStack />
+        </div>
       </div>
 
-      {/* Desktop (lg+): scrolltelling. */}
-      <div ref={wrapRef} className="hidden lg:block relative h-[260vh]">
-        {pillars.map((p, i) => (
-          <div
-            key={p.id}
-            ref={(el) => {
-              if (el) anchorRefs.current.set(p.id, el)
-              else anchorRefs.current.delete(p.id)
-            }}
-            data-pillar={p.id}
-            aria-hidden="true"
-            className="absolute left-0 w-px pointer-events-none"
-            style={{
-              top: `${(i * 100) / 3}%`,
-              height: `${100 / 3}%`,
-            }}
-          />
-        ))}
+      {/* Desktop (lg+): full-bleed single-viewport pinned scrolltelling. Not rendered
+          under reduced motion — the static stack above takes over. */}
+      {!reduceMotion && (
+      <div ref={wrapRef} data-services-anchor-wrap className="hidden lg:block relative h-[260vh]">
+        <div
+          className="sticky overflow-hidden flex flex-col border-t border-b border-border"
+          style={{ top: NAV_OFFSET, height: `calc(100svh - ${NAV_OFFSET}px)` }}
+        >
+          <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[40px] xl:px-[72px] 2xl:px-[112px]">
+            {/* Bar */}
+            <div className="flex flex-shrink-0 items-center gap-[14px] pt-[clamp(18px,2.6svh,28px)] pb-[clamp(14px,2svh,22px)] font-mono text-[clamp(11px,1.4svh,13px)] font-bold uppercase tracking-[0.14em] text-gray-light">
+              <span aria-hidden="true" className="h-[6px] w-[6px] shrink-0 bg-brand" />
+              <span>What we build</span>
+              <span aria-hidden="true" className="h-px flex-1 bg-border" />
+              <span className="tabular-nums tracking-[0.06em] text-dark">
+                <span style={{ color: active.color }}>{active.num}</span>
+                <span className="text-gray-light"> / 03</span>
+              </span>
+            </div>
 
-        <div className="sticky top-0 h-screen flex items-center">
-          <div className="w-full grid grid-cols-[minmax(280px,360px)_1fr] xl:grid-cols-[minmax(320px,380px)_1fr] items-stretch">
-            <LeftAccordion activeId={activeId} setActiveId={setActiveId} active={active} />
-            <RightCanvas active={active} activeId={activeId} />
+            {/* Content */}
+            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] gap-[32px] pb-[12px] xl:gap-[56px] 2xl:gap-[72px]">
+              {/* LEFT: H2 + handoff-style blocks */}
+              <div className="flex min-h-0 flex-col">
+                <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(27px,min(4.2svh,3.5vw),44px)] font-bold leading-[1.05] tracking-[-0.03em] text-dark">
+                  A small, senior team.{' '}
+                  <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
+                    {H2_PHRASE[active.id]}
+                  </span>
+                </h2>
+
+                <div className="mt-[clamp(12px,2.4svh,28px)] flex min-h-0 flex-col overflow-y-auto">
+                  {pillars.map((pillar, idx) => {
+                    const isActive = idx === activeIndex
+                    const children = getPublishedLeaves(pillar)
+                    return (
+                      <div
+                        key={pillar.id}
+                        className="svc-block"
+                        data-active={isActive}
+                        style={{ '--cat': pillar.color } as React.CSSProperties}
+                      >
+                        <span aria-hidden="true" className="svc-block-rule" data-active={isActive} />
+                        <button
+                          type="button"
+                          onClick={() => { setActiveIndex(idx); scrollToPillar(idx) }}
+                          aria-expanded={isActive}
+                          aria-controls={`pillar-body-${pillar.id}`}
+                          className="svc-block-head focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                        >
+                          <span className="svc-num">[{pillar.num}]</span>
+                          <span className="svc-block-body">
+                            <span className="svc-cat">{pillar.label}</span>
+                            <span className="svc-h3">{pillar.headline}</span>
+                          </span>
+                        </button>
+
+                        <div
+                          id={`pillar-body-${pillar.id}`}
+                          role="region"
+                          className="svc-panel"
+                          data-active={isActive}
+                        >
+                          <div className="svc-panel-inner">
+                            <p className="svc-body">{pillar.body}</p>
+                            <ul className="svc-sublist">
+                              {children.map((child, ci) => (
+                                <li key={child.slug}>
+                                  <Link
+                                    href={`${pillar.hubHref}${child.slug}/`}
+                                    className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                                  >
+                                    <span className="svc-sub-idx" aria-hidden="true">{String(ci + 1).padStart(2, '0')}</span>
+                                    <span className="svc-sub-name">{child.name}</span>
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                            <Link
+                              href={pillar.hubHref}
+                              className="svc-foot focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                            >
+                              See all {pillar.label} services
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* RIGHT: iso stage — atmospheric grid faded into the section grey */}
+              <div className="relative min-h-0 overflow-hidden">
+                <ServicesIsoStage rises={rises} activeIndex={activeIndex} />
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll hint — bottom-right, aligned to the full-bleed edge padding */}
+          <div className="pointer-events-none absolute bottom-[18px] right-[16px] flex items-center gap-[10px] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-light sm:right-[24px] md:right-[40px] lg:right-[48px] xl:right-[80px] 2xl:right-[128px]">
+            <span>Scroll</span>
+            <ChevronDown size={14} aria-hidden="true" />
           </div>
         </div>
       </div>
+      )}
     </>
   )
 }
-
-/* ---------- LEFT ACCORDION ---------- */
-
-function LeftAccordion({
-  activeId,
-  setActiveId,
-  active,
-}: {
-  activeId: PillarId
-  setActiveId: (id: PillarId) => void
-  active: (typeof pillars)[number]
-}) {
-  return (
-    <div className="border-r border-border-subtle bg-white overflow-hidden flex flex-col h-[70vh] min-h-[500px] max-h-[700px] xl:h-[75vh] xl:max-h-[800px]">
-      <div className="px-[20px] py-[14px] border-b border-border-subtle flex items-center justify-between flex-shrink-0">
-        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-gray-light">
-          Three pillars
-        </span>
-        <span className="font-mono text-[11px] font-bold tracking-[0.06em]">
-          <span style={{ color: active.color }}>{active.num}</span>
-          <span className="text-gray-light"> / 03</span>
-        </span>
-      </div>
-
-      <ol className="overflow-y-auto flex-1">
-        {pillars.map((pillar, idx) => {
-          const isActive = pillar.id === activeId
-          const isLast = idx === pillars.length - 1
-          // v1 published leaves only — coming-soon stubs are filtered out of
-          // the homepage accordion per SERVICES_PLAN.md § Risk 3.
-          const visibleChildren = getPublishedLeaves(pillar).slice(0, TOP_N)
-          return (
-            <li
-              key={pillar.id}
-              className={`relative ${isLast ? '' : 'border-b border-border-subtle'}`}
-              style={{ '--pillar-color': pillar.color } as React.CSSProperties}
-            >
-              <span
-                aria-hidden="true"
-                className="services-row-bar absolute left-0 top-0 bottom-0 w-[3px]"
-                data-active={isActive}
-                style={{ backgroundColor: pillar.color }}
-              />
-
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveId(pillar.id)
-                  const wrap = document.querySelector('[data-services-anchor-wrap]') as HTMLElement | null
-                  if (wrap) {
-                    const i = pillars.findIndex((p) => p.id === pillar.id)
-                    const rect = wrap.getBoundingClientRect()
-                    const sectionTop = rect.top + window.scrollY
-                    const target =
-                      sectionTop + (wrap.offsetHeight / pillars.length) * (i + 0.5) - window.innerHeight / 2
-                    window.scrollTo({ top: target, behavior: 'smooth' })
-                  }
-                }}
-                aria-expanded={isActive}
-                aria-controls={`pillar-body-${pillar.id}`}
-                className="services-row-button w-full text-left px-[24px] py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-                data-active={isActive}
-              >
-                <span
-                  className="font-mono text-[12px] font-bold tracking-[0.06em] block services-row-num"
-                  data-active={isActive}
-                  style={isActive ? { color: pillar.color } : undefined}
-                >
-                  [{pillar.num}]
-                </span>
-                <span className="block mt-[6px] text-[15px] font-bold tracking-[-0.005em] uppercase services-row-label">
-                  {pillar.label}
-                </span>
-              </button>
-
-              <div
-                id={`pillar-body-${pillar.id}`}
-                className="services-row-body"
-                data-active={isActive}
-                role="region"
-              >
-                <div className="services-row-body-inner">
-                  <div className="px-[24px] pb-[20px]">
-                    <ul role="list" className="space-y-[4px]">
-                      {visibleChildren.map((child) => (
-                        <li key={child.slug}>
-                          <Link
-                            href={`${pillar.hubHref}${child.slug}/`}
-                            className="group flex items-center justify-between gap-[12px] min-h-[44px] -mx-[8px] px-[10px] py-[8px] rounded-sm hover:bg-bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 transition-colors duration-[var(--duration-instant)]"
-                          >
-                            <span className="text-[13px] font-medium tracking-[-0.005em] text-dark">
-                              {child.name}
-                            </span>
-                            <ArrowUpRight className="shrink-0 text-gray-light group-hover:text-[var(--pillar-color)] transition-colors duration-[var(--duration-instant)]" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-[12px] pt-[12px] border-t border-border-subtle">
-                      <Link
-                        href={pillar.hubHref}
-                        className="inline-flex items-center gap-[8px] text-[13px] font-medium hover:opacity-80 transition-opacity duration-[var(--duration-instant)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-                        style={{ color: pillar.color }}
-                      >
-                        <span>See all {pillar.label} services</span>
-                        <ArrowRight />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          )
-        })}
-      </ol>
-    </div>
-  )
-}
-
-/* ---------- RIGHT CANVAS (now powered by R3F) ---------- */
-
-function RightCanvas({ active, activeId }: { active: (typeof pillars)[number]; activeId: PillarId }) {
-  return (
-    <div className="bg-white overflow-hidden h-[70vh] min-h-[500px] max-h-[700px] xl:h-[75vh] xl:max-h-[800px] flex flex-col">
-      <div className="px-[24px] pt-[20px] pb-[12px] flex-shrink-0">
-        <p
-          key={`hl-${active.id}`}
-          className="services-canvas-headline font-mono text-[11px] font-bold uppercase tracking-[0.14em]"
-          style={{ color: active.color }}
-        >
-          {active.headline}
-        </p>
-      </div>
-      <div className="relative flex-1">
-        <ServicesIsoCanvas activeId={activeId} />
-      </div>
-      <div className="px-[24px] py-[20px] border-t border-border-subtle flex-shrink-0">
-        <p key={`b-${active.id}`} className="services-canvas-body text-[14px] leading-[1.65] text-gray max-w-[640px]">
-          {active.body}
-        </p>
-      </div>
-    </div>
-  )
-}
-
-/* ---------- MOBILE STACK ---------- */
 
 function MobileStack() {
   return (
@@ -253,7 +196,6 @@ function MobileStack() {
             </div>
             <ChevronDown size={18} className="shrink-0 text-gray transition-transform duration-[var(--duration-instant)] group-open:rotate-180" />
           </summary>
-
           <div className="mt-[24px]">
             <h4
               id={`pillar-${pillar.id}-mobile-heading`}
@@ -294,43 +236,121 @@ function MobileStack() {
   )
 }
 
-/* ---------- SCOPED STYLES ---------- */
-
 function ScopedStyle() {
   return (
     <style precedence="default">{`
-      .services-row-button {
-        background-color: transparent;
-        transition: background-color var(--duration-fast, 250ms);
-        cursor: pointer;
+      /* Handoff svc-block: every pillar shows num + category + headline; the
+         active one un-dims, draws a coloured top rule, and expands its panel. */
+      .svc-block {
+        position: relative;
+        border-top: 1px solid var(--color-border, #e5e7eb);
+        opacity: 0.4;
+        transition: opacity var(--duration-base, 400ms) cubic-bezier(0.16,1,0.3,1);
       }
-      .services-row-button[data-active="true"] { background-color: #f5f7ff; }
-      .services-row-button[data-active="false"]:hover { background-color: #fafbff; }
-      .services-row-num { color: #999999; transition: color var(--duration-fast, 250ms); }
-      .services-row-label { color: #676767; transition: color var(--duration-fast, 250ms); }
-      .services-row-button[data-active="true"] .services-row-label { color: #303030; }
-      .services-row-bar { opacity: 0; transition: opacity var(--duration-fast, 250ms); }
-      .services-row-bar[data-active="true"] { opacity: 1; }
-      .services-row-body {
-        display: grid;
-        grid-template-rows: 1fr;
-        transition: grid-template-rows var(--duration-base, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
-                    opacity var(--duration-base, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
-        opacity: 1;
+      .svc-block:last-child { border-bottom: 1px solid var(--color-border, #e5e7eb); }
+      .svc-block[data-active="true"] { opacity: 1; }
+      .svc-block-rule {
+        position: absolute; left: 0; top: -1px; height: 1px; width: 100%;
+        background: var(--cat); pointer-events: none;
+        transform: scaleX(0); transform-origin: left;
+        transition: transform var(--duration-slow, 620ms) cubic-bezier(0.16,1,0.3,1);
       }
-      .services-row-body[data-active="false"] { grid-template-rows: 0fr; opacity: 0; }
-      .services-row-body-inner { min-height: 0; overflow: hidden; }
-      .services-canvas-headline, .services-canvas-body {
-        animation: services-fade-in var(--duration-fast, 250ms) ease-out;
+      .svc-block-rule[data-active="true"] { transform: scaleX(1); }
+
+      .svc-block-head {
+        display: grid; grid-template-columns: 44px 1fr; gap: 14px;
+        width: 100%; text-align: left; padding: clamp(10px, min(1.7svh, 1.5vw), 18px) 0;
+        background: transparent; cursor: pointer;
       }
+      .svc-num {
+        font-family: var(--font-mono); font-size: clamp(11px, 1.35svh, 13px); font-weight: 700;
+        letter-spacing: 0.14em; color: var(--color-gray-light, #9ca3af);
+        padding-top: 4px; transition: color var(--duration-fast, 250ms);
+      }
+      .svc-block[data-active="true"] .svc-num { color: var(--cat); }
+      .svc-block-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+      .svc-cat {
+        font-family: var(--font-mono); font-size: clamp(11px, 1.35svh, 13px); font-weight: 700;
+        letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--color-gray, #676767); transition: color var(--duration-fast, 250ms);
+      }
+      .svc-block[data-active="true"] .svc-cat { color: var(--cat); }
+      .svc-h3 {
+        font-family: var(--font-brand); font-weight: 700;
+        font-size: clamp(17px, min(2.7svh, 2.4vw), 27px); letter-spacing: -0.025em;
+        line-height: 1.16; color: var(--color-dark, #303030);
+      }
+
+      .svc-panel {
+        display: grid; grid-template-rows: 0fr; opacity: 0;
+        transition:
+          grid-template-rows var(--duration-slow, 620ms) cubic-bezier(0.16,1,0.3,1),
+          opacity var(--duration-base, 400ms) cubic-bezier(0.16,1,0.3,1);
+      }
+      .svc-block[data-active="true"] .svc-panel { grid-template-rows: 1fr; opacity: 1; }
+      .svc-panel-inner {
+        overflow: hidden; min-height: 0;
+        display: flex; flex-direction: column; gap: clamp(9px, 1.5svh, 15px);
+        padding-left: 58px; padding-bottom: clamp(10px, 1.7svh, 16px);
+      }
+      .svc-body { font-size: clamp(13px, min(1.85svh, 1.5vw), 16.5px); line-height: 1.5; color: var(--color-gray, #676767); max-width: 56ch; }
+
+      .svc-sublist {
+        list-style: none; margin: 0; padding: 0;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+      }
+      .svc-sublist li { display: flex; }
+      .svc-sublist a {
+        display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 11px; width: 100%;
+        min-height: clamp(38px, min(5.2svh, 4.2vw), 50px); padding: 8px 11px;
+        font-size: clamp(12.5px, min(1.85svh, 1.45vw), 16px); font-weight: 500;
+        color: var(--color-dark, #303030); letter-spacing: -0.005em; text-decoration: none;
+        border: 1px solid var(--color-border, #e5e7eb); border-radius: 6px;
+        background: color-mix(in oklab, var(--cat) 4%, var(--color-bg, #fff));
+        transition: background-color var(--duration-instant, 150ms), border-color var(--duration-instant, 150ms), color var(--duration-instant, 150ms);
+      }
+      .svc-sub-idx {
+        font-family: var(--font-mono); font-size: clamp(10px, 1.2svh, 11.5px); font-weight: 700;
+        letter-spacing: 0.06em; color: var(--cat);
+        font-variant-numeric: tabular-nums; opacity: 0.85;
+        transition: opacity var(--duration-instant, 150ms);
+      }
+      .svc-sub-name { transition: transform var(--duration-instant, 150ms); }
+      .svc-sublist a::after {
+        content: '→'; font-family: var(--font-mono); color: var(--color-gray-light, #9ca3af);
+        font-size: 12px; transition: transform var(--duration-instant, 150ms), color var(--duration-instant, 150ms);
+      }
+      .svc-sublist a:hover {
+        border-color: color-mix(in oklab, var(--cat) 45%, var(--color-border, #e5e7eb));
+        background-color: color-mix(in oklab, var(--cat) 7%, var(--color-bg, #fff));
+        color: var(--cat);
+      }
+      .svc-sublist a:hover .svc-sub-idx { color: var(--cat); }
+      .svc-sublist a:hover .svc-sub-name { transform: translateX(2px); }
+      .svc-sublist a:hover::after { color: var(--cat); transform: translateX(3px); }
+
+      .svc-foot {
+        display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+        font-family: var(--font-mono); font-size: clamp(11px, 1.35svh, 13px); font-weight: 700;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-dark, #303030);
+        text-decoration: none; transition: color var(--duration-instant, 150ms), gap var(--duration-instant, 150ms);
+      }
+      .svc-foot::after { content: '→'; transition: transform var(--duration-instant, 150ms); }
+      .svc-foot:hover { color: var(--cat); gap: 10px; }
+      .svc-foot:hover::after { transform: translateX(2px); }
+
+      .services-h2-phrase { display: inline-block; animation: services-fade-in var(--duration-fast, 250ms) ease-out; }
       @keyframes services-fade-in {
-        from { opacity: 0; transform: translateY(4px); }
+        from { opacity: 0; transform: translateY(3px); }
         to   { opacity: 1; transform: translateY(0); }
       }
       @media (prefers-reduced-motion: reduce) {
-        .services-row-button, .services-row-num, .services-row-label,
-        .services-row-bar, .services-row-body { transition: none !important; }
-        .services-canvas-headline, .services-canvas-body { animation: none !important; }
+        .svc-block, .svc-panel, .svc-block-rule, .svc-num, .svc-cat,
+        .svc-sub-idx, .svc-sub-name,
+        .svc-sublist a, .svc-sublist a::after, .svc-foot, .svc-foot::after {
+          transition: none !important;
+        }
+        .services-h2-phrase { animation: none !important; }
       }
     `}</style>
   )
