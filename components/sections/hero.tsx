@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Eyebrow } from '@/components/ui/eyebrow'
 import { Reveal } from '@/components/ui/reveal'
 import { Typewriter } from '@/components/ui/typewriter'
 
@@ -68,37 +69,12 @@ export function HeroSection() {
       video.pause()
       return
     }
-
-    const tryPlay = () => {
-      if (!video.paused) return
-      video.muted = true
-      video.play().catch(() => {})
-    }
-
-    // Eager first attempt.
-    tryPlay()
-
-    // Safari refuses programmatic play() in tabs that opened in the
-    // background and never received user activation — so initial
-    // autoplay + the IntersectionObserver retries both fail silently
-    // until the user switches back to the tab. Retry on any signal
-    // that grants activation: visibility change, scroll, click, touch,
-    // pointer. Each listener is { once: true } so we don't accumulate
-    // handlers.
-    const onActivation = () => tryPlay()
-    const onVisibility = () => {
-      if (document.visibilityState === 'visible') tryPlay()
-    }
-    document.addEventListener('visibilitychange', onVisibility)
-    window.addEventListener('scroll', onActivation, { passive: true, once: true })
-    window.addEventListener('pointerdown', onActivation, { once: true })
-    window.addEventListener('keydown', onActivation, { once: true })
-    window.addEventListener('touchstart', onActivation, { passive: true, once: true })
-
+    video.play().catch(() => { })
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          tryPlay()
+          video.muted = true
+          video.play().catch(() => { })
         } else {
           video.pause()
         }
@@ -106,18 +82,11 @@ export function HeroSection() {
       { threshold: 0 },
     )
     obs.observe(box)
-    return () => {
-      obs.disconnect()
-      document.removeEventListener('visibilitychange', onVisibility)
-      window.removeEventListener('scroll', onActivation)
-      window.removeEventListener('pointerdown', onActivation)
-      window.removeEventListener('keydown', onActivation)
-      window.removeEventListener('touchstart', onActivation)
-    }
+    return () => obs.disconnect()
   }, [mountVideo])
 
   return (
-    <section className="relative min-h-screen bg-bg px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
+    <section className="relative min-h-screen bg-bg-subtle px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
       {/* Preload the AVIF poster — React 19 hoists this to <head> so it
           races ahead of the bundle and wins the LCP slot. fetchPriority high
           marks it as critical-path. */}
@@ -128,61 +97,50 @@ export function HeroSection() {
         type="image/avif"
         fetchPriority="high"
       />
-      <div className="w-full max-w-[1280px] mx-auto min-h-screen lg:min-h-[calc(100svh-56px)] lg:mt-[56px] grid grid-cols-1 lg:grid-cols-[57fr_43fr] lg:gap-[64px]">
+      <div className="max-w-[1280px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[57fr_43fr]">
         {/* Left: copy */}
-        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-0 lg:pb-0">
-          {/* Inner block mirrors the ASCII video frame's vertical extent (h-[82%], centered)
-              so the eyebrow top aligns with the video top and the CTAs bottom with the video
-              bottom on lg+. Three zones (eyebrow+H1 / lede / CTAs) spread by justify-between
-              so the lede sits equidistant between the headline and the buttons. On mobile/tablet
-              they stack with a fixed 28px gap. */}
-          <div className="flex flex-col gap-[28px] lg:h-[80%] lg:max-h-[700px] lg:justify-between lg:gap-0">
-            {/* Eyebrow + H1 */}
-            <div>
-              {/* Eyebrow — square + mono entity-category line (hero-only treatment) */}
-              <div className="mb-7 flex items-center gap-[10px]">
-                <span aria-hidden="true" className="h-[8px] w-[8px] shrink-0 bg-brand" />
-                <span className="font-mono text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-gray-light">
-                  // Web3 &amp; AI development studio
-                </span>
-              </div>
+        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-[96px] lg:pb-[48px]">
+          {/* Eyebrow chip — entity-category line */}
+          <div className="inline-flex items-center mb-7 bg-bg border border-border rounded-sm px-3 py-[6px] w-fit">
+            <Eyebrow className="text-[12px]! tracking-[0.12em]!">
+              Web3 &amp; AI development studio
+            </Eyebrow>
+          </div>
 
-              <h1 className="text-[clamp(40px,6vw,84px)] font-black tracking-[-0.04em] leading-[1.02] text-dark">
-                <Typewriter
-                  lines={[
-                    { text: 'Web3 protocols.' },
-                    { text: 'AI agents.' },
-                    { text: 'Shipped.', className: 'text-brand' },
-                  ]}
-                  durationMs={520}
-                  startDelayMs={120}
-                  staggerMs={150}
-                />
-              </h1>
-            </div>
+          {/* H1 */}
+          <h1 className="text-[clamp(32px,4.8vw,72px)] font-black tracking-[-0.04em] leading-[1.02] text-dark mb-6">
+            <Typewriter
+              lines={[
+                { text: 'Web3 protocols.' },
+                { text: 'AI agents.' },
+                { text: 'Shipped.', className: 'text-brand' },
+              ]}
+              durationMs={650}
+              startDelayMs={150}
+            />
+          </h1>
 
-            {/* AEO extraction blockquote / lede — own zone so it sits equidistant on lg+ */}
-            <blockquote cite="/#services">
-              <p className="text-lg text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
-                Metaborong is a Web3 development company and AI agent studio. A
-                remote-first team of senior engineers, globally distributed. We ship
-                DeFi protocols and smart contract audits across EVM chains and Solana,
-                AI agents spanning RAG, agentic workflows, and generative systems, and
-                full-stack SaaS for founders and early-stage startups. Spec to
-                production, fast.
-              </p>
-            </blockquote>
+          {/* AEO extraction blockquote */}
+          <blockquote cite="/#services" className="mb-6">
+            <p className="text-base text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
+              Metaborong is a Web3 development company and AI agent studio. A
+              remote-first team of senior engineers, globally distributed. We ship
+              DeFi protocols and smart contract audits across EVM chains and Solana,
+              AI agents spanning RAG, agentic workflows, and generative systems, and
+              full-stack SaaS for founders and early-stage startups. Spec to
+              production, fast.
+            </p>
+          </blockquote>
 
-            {/* CTAs */}
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-              <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
-              <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
-            </div>
+          {/* CTAs */}
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
+            <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
           </div>
         </Reveal>
 
         {/* Right: ASCII-art still — replaces the orb */}
-        <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-0 flex items-center justify-center lg:justify-end">
+        <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-screen flex items-center justify-center lg:justify-end">
           {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
           <div ref={asciiBoxRef} className="relative w-[92%] h-[82%] max-w-[520px] max-h-[700px] sm:w-[86%] sm:h-[80%]">
             {mountVideo && (
@@ -199,10 +157,7 @@ export function HeroSection() {
                 preload="auto"
                 aria-hidden="true"
                 onPlaying={() => setVideoPlaying(true)}
-                onPause={() => setVideoPlaying(false)}
-                onEnded={() => setVideoPlaying(false)}
-                onStalled={() => setVideoPlaying(false)}
-                className="hero-ascii-image absolute inset-0 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-center select-none pointer-events-none"
+                className="hero-ascii-image absolute inset-0 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-cover sm:object-center select-none pointer-events-none"
               />
             )}
             {/* Poster overlay — the LCP element. <picture> negotiates the
@@ -222,9 +177,8 @@ export function HeroSection() {
                 draggable={false}
                 fetchPriority="high"
                 decoding="async"
-                className={`absolute inset-0 z-10 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-center select-none pointer-events-none transition-opacity duration-300 ${
-                  videoPlaying ? 'opacity-0' : 'opacity-100'
-                }`}
+                className={`absolute inset-0 z-10 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-cover sm:object-center select-none pointer-events-none transition-opacity duration-300 ${videoPlaying ? 'opacity-0' : 'opacity-100'
+                  }`}
               />
             </picture>
             {/* Glassmorphic overlay "windows" — three pillar proofs, anchored to the image frame */}
@@ -250,9 +204,8 @@ export function HeroSection() {
       {/* Scroll-down affordance — centered on full viewport, not the left column */}
       <div
         aria-hidden="true"
-        className={`absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-light transition-opacity duration-300 z-10 ${
-          scrolled ? 'opacity-0' : 'opacity-100'
-        } motion-safe:animate-[heroScrollBounce_1.6s_cubic-bezier(0.45,0,0.55,1)_infinite]`}
+        className={`absolute bottom-[40px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-light transition-opacity duration-300 z-10 ${scrolled ? 'opacity-0' : 'opacity-100'
+          } motion-safe:animate-[heroScrollBounce_1.6s_cubic-bezier(0.45,0,0.55,1)_infinite]`}
       >
         <ChevronDown size={16} strokeWidth={2} />
         <span className="text-[10px] tracking-[0.15em] uppercase">Scroll</span>
@@ -294,7 +247,7 @@ function HeroOverlayCard({
 
   useEffect(() => {
     if (typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setPhase('result')
       return
     }
