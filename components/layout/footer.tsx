@@ -32,15 +32,15 @@ export function Footer() {
     <footer className="border-t border-border bg-bg px-[16px] pt-[64px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
       <div className="mx-auto max-w-[1280px]">
         {/* Top — brand + sitemap + offices */}
-        <div className="grid grid-cols-1 gap-[40px] border-b border-border pb-[48px] md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-          <div className="flex flex-col gap-[16px]">
+        <div className="grid grid-cols-2 gap-x-[16px] gap-y-[40px] border-b border-border pb-[48px] md:gap-[40px] lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+          <div className="col-span-2 flex flex-col gap-[16px] md:col-span-1 lg:col-span-1">
             <Logo size="md" href="/" />
             <p className="max-w-[36ch] text-[14px] leading-[1.55] tracking-[-0.005em] text-gray">
               Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a small, senior, founder-led team.
             </p>
           </div>
 
-          <nav aria-label="Company">
+          <nav aria-label="Company" className="col-span-1">
             <p className={colHead}>Company</p>
             <ul className="flex flex-col gap-[10px]">
               {companyLinks.map(({ label, href }) => (
@@ -51,7 +51,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Services">
+          <nav aria-label="Services" className="col-span-1">
             <p className={colHead}>Services</p>
             <ul className="flex flex-col gap-[10px]">
               {serviceLinks.map(({ label, href }) => (
@@ -62,7 +62,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <div>
+          <div className="col-span-2 md:col-span-1 lg:col-span-1">
             <p className={colHead}>Offices</p>
             <div className="flex flex-col gap-[18px]">
               {offices.map(({ country, address }) => (
@@ -76,10 +76,10 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-wrap items-center justify-between gap-[16px] py-[28px] font-mono text-[11px] uppercase tracking-[0.12em] text-gray-light">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-[16px] py-[28px] font-mono text-[11px] uppercase tracking-[0.12em] text-gray-light text-center md:text-left">
           <span>© {year} Metaborong Technologies</span>
           <a href="mailto:contact@metaborong.com" className={bottomLink}>contact@metaborong.com</a>
-          <div className="flex items-center gap-[8px]">
+          <div className="flex items-center justify-center gap-[8px] w-full md:w-auto">
             <a
               href="https://linkedin.com/company/metaborong-technologies"
               target="_blank"

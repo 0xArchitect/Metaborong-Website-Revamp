@@ -1,3 +1,5 @@
+import { Section } from '@/components/ui/section'
+import { Pill } from '@/components/ui/pill'
 import { ServicesPillarsLazy } from '@/components/sections/services-pillars-lazy'
 
 const FAQ_JSONLD = {
@@ -33,19 +35,31 @@ const FAQ_JSONLD = {
 
 export function ServicesSection() {
   return (
-    <section
-      id="services"
-      aria-labelledby="services-heading"
-      className="services-section-bridge bg-bg"
-    >
-      <h2 id="services-heading" className="sr-only">What we build — a small, senior team across three pillars</h2>
-      <ServicesPillarsLazy />
+    <Section bg="subtle" maxWidth="xwide" className="services-section-bridge" id="services" aria-labelledby="services-heading">
+      <div className="lg:rounded-lg lg:border lg:border-border lg:bg-white">
+        <div className="lg:border-b lg:border-border lg:pt-[64px] lg:pb-[48px] lg:px-[48px]">
+          <div className="max-w-[720px]">
+            <Pill>What we build</Pill>
+            <h2
+              id="services-heading"
+              className="mt-[24px] text-balance text-[clamp(36px,4.6vw,64px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark"
+            >
+              A small, senior team.<br />Three pillars. End to end.
+            </h2>
+            <p className="mt-[20px] text-[16px] text-gray leading-[1.65] tracking-[-0.01em]">
+              A boutique studio for founders without a CTO. We ship Web3 protocols, production AI agents, and full SaaS products with one senior team that owns the work from architecture to deployment. Every build is engineered for production, not stopped at a demo.
+            </p>
+          </div>
+        </div>
+
+        <ServicesPillarsLazy />
+      </div>
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: FAQ_JSONLD_JSON }}
       />
-    </section>
+    </Section>
   )
 }
 

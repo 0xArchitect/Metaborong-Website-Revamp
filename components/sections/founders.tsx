@@ -1,5 +1,8 @@
-import { type ReactNode } from 'react'
+'use client'
+
+import { type ReactNode, useEffect, useRef } from 'react'
 import { Section } from '@/components/ui/section'
+import { Eyebrow } from '@/components/ui/eyebrow'
 import { Pill } from '@/components/ui/pill'
 
 type Founder = {
@@ -11,7 +14,7 @@ type Founder = {
   /** Verified LinkedIn URL, or null → no button (spec Deviation 6). */
   linkedin: string | null
   /** Verified X profile URL, or null → no button. Added 2026-05-19 (user override
-   *  of Deviation 6's "LinkedIn-only"). Same brand mark as LinkedIn. */
+   *  of Deviation 6's "LinkedIn-only"). Same brand-blue square button as LinkedIn. */
   x: string | null
 }
 
@@ -54,10 +57,10 @@ function initials(name: string): string {
     .toUpperCase()
 }
 
-// Outlined square social button (LinkedIn + X use the same Bauhaus mark via
-// currentColor — no X-black, per DESIGN.md brand discipline). Handoff draws these
-// at 32px; we hold a ≥44px hit area (tap-target rule wins). Focus-visible ring
-// comes from the global :where(a,…):focus-visible rule in globals.css — do not
+// Shared brand-blue square social button (LinkedIn + X use the same Bauhaus mark —
+// no X-black, per DESIGN.md brand-color discipline). 7 states; focus-visible ring
+// comes from the global :where(a,…):focus-visible rule in globals.css (2px brand
+// outline, 2px offset → lands on the white section bg, not the blue fill). Do not
 // add outline-none here.
 function SocialButton({
   href,
@@ -74,7 +77,7 @@ function SocialButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="inline-flex h-[44px] w-[44px] items-center justify-center border border-border text-gray transition-[color,border-color,background-color] duration-[150ms] hover:border-brand hover:bg-bg-subtle hover:text-brand"
+      className="inline-flex h-[44px] w-[44px] items-center justify-center border border-white bg-brand text-white transition-[background-color,border-color,color] duration-[150ms] hover:bg-[#1f5fd0] active:bg-[#1a52b8]"
     >
       {children}
     </a>
@@ -83,35 +86,60 @@ function SocialButton({
 
 function FounderCard({ founder }: { founder: Founder }) {
   return (
-    <article className="flex flex-col gap-[18px] bg-bg px-[28px] pt-[32px] pb-[36px] transition-colors duration-[250ms] hover:bg-bg-raised motion-reduce:transition-none">
-      {/* 96px square photo well — image or monogram fallback for null. */}
-      <div className="flex h-[96px] w-[96px] flex-none items-center justify-center overflow-hidden border border-border bg-bg-subtle">
-        {founder.image ? (
-          <img
-            src={founder.image}
-            alt={`${founder.name}, ${founder.role}`}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <span aria-hidden className="text-[36px] font-bold tracking-[-0.04em] text-brand">
-            {initials(founder.name)}
-          </span>
-        )}
+    <div className="group flex flex-col">
+      {/* Photo tile is non-interactive by design — only the social-row buttons link. */}
+      <div className="relative aspect-square overflow-hidden border border-border bg-white shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12),0_6px_16px_-4px_rgba(0,0,0,0.06)] transition-[transform,border-color] duration-[250ms] group-hover:-translate-y-[2px] group-hover:border-brand/30 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
+        {/* 4 dashed edge accents (Figma blueprint ticks) */}
+        <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] top-0 border-t border-dashed border-gray" />
+        <span aria-hidden className="pointer-events-none absolute left-[8%] right-[8%] bottom-0 border-b border-dashed border-gray" />
+        <span aria-hidden className="pointer-events-none absolute top-[8%] bottom-[8%] left-0 border-l border-dashed border-gray" />
+        <span aria-hidden className="pointer-events-none absolute top-[8%] bottom-[8%] right-0 border-r border-dashed border-gray" />
+
+        {/* Inset dashed frame holding the portrait/monogram */}
+        <div className="absolute inset-[8%] border border-dashed border-gray overflow-hidden">
+          {founder.image ? (
+            <img
+              src={founder.image}
+              alt={`${founder.name}, ${founder.role}`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover transition-transform duration-[250ms] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+          ) : (
+            <div
+              role="img"
+              aria-label={founder.name}
+              className="flex h-full w-full items-center justify-center bg-bg-subtle"
+            >
+              <span aria-hidden className="text-[56px] font-bold tracking-[-0.02em] text-gray">
+                {initials(founder.name)}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
-      <h3 className="text-[22px] font-bold leading-[1.2] tracking-[-0.025em] text-dark">
-        {founder.name}
-      </h3>
-      <span className="-mt-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
-        {founder.role}
-      </span>
-      <p className="flex-1 text-[15px] leading-[1.55] text-gray">{founder.bio}</p>
+      {/* Name + role chip — chip never shrinks; stack on narrow to avoid collision */}
+      <div className="mt-[24px] flex flex-col gap-[12px] sm:flex-row sm:items-center sm:justify-between sm:gap-[12px]">
+        <h3 className="text-[20px] font-bold tracking-[-0.025em] text-dark">
+          {founder.name}
+        </h3>
+        <div className="inline-flex shrink-0 items-center bg-bg-subtle border border-border rounded-sm px-3 py-[6px] w-fit">
+          <Eyebrow as="span" className="text-[11px]! tracking-[0.1em]! text-gray!">
+            {founder.role}
+          </Eyebrow>
+        </div>
+      </div>
 
-      {/* Social row — LinkedIn + X, each rendered only when its URL exists. */}
+      {/* Bio */}
+      <p className="mt-[12px] text-[16px] leading-[1.6] tracking-[-0.01em] text-gray">
+        {founder.bio}
+      </p>
+
+      {/* Social row — LinkedIn + X, each rendered only when its URL exists
+          (graceful no-button degrade kept for correctness). */}
       {(founder.linkedin || founder.x) && (
-        <div className="mt-auto flex items-center gap-[8px] border-t border-border-subtle pt-[16px]">
+        <div className="mt-[16px] flex items-center gap-[12px]">
           {founder.linkedin && (
             <SocialButton href={founder.linkedin} label={`${founder.name} on LinkedIn`}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
@@ -128,19 +156,48 @@ function FounderCard({ founder }: { founder: Founder }) {
           )}
         </div>
       )}
-    </article>
+    </div>
   )
 }
 
 export function FoundersSection() {
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Only manage scroll on mobile (where it is swipeable)
+    if (window.innerWidth >= 1024) return
+
+    const container = scrollRef.current
+    if (!container) return
+
+    // Jump to the middle set of cards instantly on mount.
+    // Since index 0 is Arnab and index 12 is also Arnab, this jump is visually imperceptible.
+    // It gives the user 12 cards of runway to swipe left!
+    requestAnimationFrame(() => {
+      const middleCard = container.children[12] as HTMLElement
+      if (middleCard) {
+        const targetScroll = middleCard.offsetLeft - (container.clientWidth / 2) + (middleCard.clientWidth / 2)
+        container.scrollLeft = targetScroll
+      }
+    })
+  }, [])
+
+  // 9 sets of 3 founders = 27 cards. Middle set is indices 12, 13, 14.
+  const repeatedFounders = Array(9).fill(founders).flat()
+
   return (
     <Section bg="default" maxWidth="xwide" divider>
       {/* Header */}
-      <div className="flex flex-col items-start gap-[24px]">
+      <div className="flex flex-col gap-[24px] items-start">
+        {/* Eyebrow chip — unified Pill primitive (Session 19 redo) */}
         <Pill>The team</Pill>
-        <h2 className="text-balance text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.03em] text-dark">
+
+        {/* H2 — "the work" in brand blue (Figma) */}
+        <h2 className="text-balance text-[clamp(32px,4vw,56px)] font-bold tracking-[-0.03em] leading-[1.05] text-dark">
           The team behind <span className="text-brand">the work</span>
         </h2>
+
+        {/* A3 lede */}
         <p className="max-w-[640px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
           Metaborong&apos;s three co-founders are hands-on in every Web3 and AI
           engagement. The work in our portfolio was built by us, not by a contracting
@@ -148,12 +205,55 @@ export function FoundersSection() {
         </p>
       </div>
 
-      {/* Hairline-seam team grid — matches Work-Preview's grammar: gap-[1px] on a
-          bg-border field with a border-border frame; cards bg-bg, hover bg-bg-raised. */}
-      <div className="mt-[48px] grid grid-cols-1 gap-[1px] border border-border bg-border md:grid-cols-3">
-        {founders.map((founder) => (
-          <FounderCard key={founder.name} founder={founder} />
-        ))}
+      {/* Card row wrapper */}
+      <div className="relative mt-[48px] [--cw:82vw] sm:[--cw:78vw] md:[--cw:56vw]">
+        <div
+          ref={scrollRef}
+          data-lenis-prevent
+          className="flex overflow-x-auto snap-x snap-mandatory gap-[24px] lg:grid lg:grid-cols-3 lg:gap-[48px] pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] md:-mx-[48px] md:px-[48px] lg:mx-0 lg:px-0 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {repeatedFounders.map((founder, idx) => {
+            const isOriginal = idx >= 12 && idx <= 14;
+            return (
+              <div
+                key={`${founder.name}-${idx}`}
+                className={`snap-center snap-always shrink-0 w-[82vw] sm:w-[78vw] md:w-[56vw] lg:w-auto lg:max-w-none ${!isOriginal ? 'lg:hidden' : ''}`}
+              >
+                <FounderCard founder={founder} />
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Static swipe affordance (Left) — no infinite animation per DESIGN.md. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute lg:hidden text-gray opacity-70"
+          style={{
+            top: 'calc(var(--cw) / 2)',
+            left: 'calc(var(--cw) * 0.04)',
+            transform: 'translate(-50%, -50%)'
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </div>
+
+        {/* Static swipe affordance (Right) — no infinite animation per DESIGN.md. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute lg:hidden text-gray opacity-70"
+          style={{
+            top: 'calc(var(--cw) / 2)',
+            right: 'calc(var(--cw) * 0.04)',
+            transform: 'translate(50%, -50%)'
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
       </div>
     </Section>
   )
