@@ -57,17 +57,19 @@ function Breadcrumb({ pillar }: { pillar: Pillar }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="bg-bg px-[16px] pt-[24px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
+      className="bg-bg px-[16px] pt-[calc(56px+16px)] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
     >
-      <ol className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-[8px] gap-y-[4px] text-[12px] tracking-[-0.005em] text-gray-light">
+      <ol className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-[10px] gap-y-[4px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-gray-light">
         <li>
-          <Link href="/" className="hover:text-dark">Home</Link>
+          <Link
+            href="/services/"
+            className="inline-flex items-center gap-[5px] hover:text-dark transition-colors duration-[var(--duration-instant)] group"
+          >
+            <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
+            <span>Services</span>
+          </Link>
         </li>
-        <li aria-hidden="true">/</li>
-        <li>
-          <Link href="/services/" className="hover:text-dark">Services</Link>
-        </li>
-        <li aria-hidden="true">/</li>
+        <li aria-hidden="true" className="text-border">/</li>
         <li aria-current="page" className="text-dark">{pillar.label}</li>
       </ol>
     </nav>
