@@ -66,7 +66,7 @@ export function ServicesPillars() {
       {!reduceMotion && (
         <div ref={wrapRef} data-services-anchor-wrap className="hidden lg:block relative h-[260vh]">
           <div
-            className="sticky overflow-hidden flex flex-col border-t border-b border-border"
+            className="sticky overflow-hidden flex flex-col border-b border-border"
             style={{ top: NAV_OFFSET, height: `calc(100svh - ${NAV_OFFSET}px)` }}
           >
             <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[40px] xl:px-[72px] 2xl:px-[112px]">
@@ -160,11 +160,6 @@ export function ServicesPillars() {
               </div>
             </div>
 
-            {/* Scroll hint — bottom-right, aligned to the full-bleed edge padding */}
-            <div className="pointer-events-none absolute bottom-[18px] right-[16px] flex items-center gap-[10px] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-light sm:right-[24px] md:right-[40px] lg:right-[48px] xl:right-[80px] 2xl:right-[128px]">
-              <span>Scroll</span>
-              <ChevronDown size={14} aria-hidden="true" />
-            </div>
           </div>
         </div>
       )}
