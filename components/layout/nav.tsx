@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect, useRef, type KeyboardEvent } from 'react
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { Logo } from '@/components/ui/logo'
 import { Button } from '@/components/ui/button'
+import { BackButton } from '@/components/ui/back-button'
 import { pillars, getPublishedLeaves } from '@/components/sections/services-data'
 
 const navLinks = [
@@ -19,7 +20,7 @@ function Divider() {
   return <span aria-hidden="true" className="w-px h-[34px] bg-border self-center" />
 }
 
-export function Nav() {
+export function Nav({ backHref, backLabel }: { backHref?: string; backLabel?: string } = {}) {
   const [megaOpen, setMegaOpen]     = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled]     = useState(false)
@@ -231,7 +232,22 @@ export function Nav() {
             <Divider />
 
             <Button href="/#contact" size="sm" arrow="→">Let&apos;s Talk</Button>
+
+            {/* Back button on desktop — right-aligned, only on subpages */}
+            {backHref !== undefined && (
+              <>
+                <Divider />
+                <BackButton href={backHref} label={backLabel ?? 'Back'} variant="nav" />
+              </>
+            )}
           </div>
+
+          {/* Back button — shown on subpages (desktop: in nav bar, mobile: before hamburger) */}
+          {backHref !== undefined && (
+            <div className="flex items-center ml-auto lg:ml-0">
+              <BackButton href={backHref} label={backLabel ?? 'Back'} variant="nav" />
+            </div>
+          )}
 
           {/* Mobile hamburger (<lg) */}
           <button
@@ -239,7 +255,7 @@ export function Nav() {
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(v => !v)}
-            className="ml-auto cursor-pointer border-0 bg-transparent p-[4px] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark lg:hidden [touch-action:manipulation]"
+            className={`${backHref !== undefined ? 'ml-[12px]' : 'ml-auto'} cursor-pointer border-0 bg-transparent p-[4px] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark lg:hidden [touch-action:manipulation]`}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
