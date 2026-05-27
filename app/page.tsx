@@ -12,7 +12,6 @@ import { FoundersSection } from '@/components/sections/founders'
 import { ComparisonSection } from '@/components/sections/comparison'
 import { FaqSection } from '@/components/sections/faq'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
-import { AsciiSeam } from '@/components/ui/ascii-seam'
 import {
   organizationSchemaJson,
   websiteSchemaJson,
@@ -73,21 +72,17 @@ export default function HomePage() {
         <HeroSection />
         <TrustBar />
         <ProblemSection />
-        <AsciiSeam seed={0} />
         <span id="services" className="block scroll-mt-[64px]" aria-hidden="true" />
         <ServicesSection />
         <span id="work" className="block scroll-mt-[64px]" aria-hidden="true" />
         <WorkPreviewSection />
-        <AsciiSeam seed={1} />
         <WhyUsSection />
         <TestimonialsSection />
         <span id="founders" className="block scroll-mt-[64px]" aria-hidden="true" />
         <FoundersSection />
-        <AsciiSeam seed={2} />
         <ComparisonSection />
         <span id="faq" className="block scroll-mt-[64px]" aria-hidden="true" />
         <FaqSection />
-        <AsciiSeam seed={3} />
         <span id="contact" className="block scroll-mt-[64px]" aria-hidden="true" />
         <ContactCtaSection />
       </main>

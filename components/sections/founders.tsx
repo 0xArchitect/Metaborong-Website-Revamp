@@ -134,7 +134,7 @@ function FounderCard({ founder }: { founder: Founder }) {
 
 export function FoundersSection() {
   return (
-    <Section bg="default" maxWidth="xwide" divider>
+    <Section bg="default" maxWidth="xwide">
       {/* Header */}
       <div className="flex flex-col items-start gap-[24px]">
         <SectionEyebrow>The team</SectionEyebrow>
