@@ -197,7 +197,7 @@ export function ProblemTrendChart() {
     <>
       <svg
         ref={ref}
-        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        viewBox="0 26 584 322"
         preserveAspectRatio="xMidYMid meet"
         className="problem-chart problem-chart-iso"
         role="img"
