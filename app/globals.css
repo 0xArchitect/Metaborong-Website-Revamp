@@ -453,7 +453,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
     cursor: zoom-in;
   }
   .problem-chart-wrap:hover {
-    transform: scale(1.12);
+    transform: scale(1.04);
   }
 }
 
@@ -467,7 +467,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
     transform: scale(1.02);
   }
   .problem-chart-wrap:hover {
-    transform: scale(1.14);
+    transform: scale(1.035);
   }
 }
 
@@ -491,18 +491,18 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-chart-lane-label {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  font-size: 13px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .problem-chart-lane-label.is-emphasis {
-  font-size: 13px;
+  font-size: 15px;
 }
 .problem-chart-window-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .problem-chart-week-tag {
@@ -519,7 +519,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
   text-transform: uppercase;
 }
 .problem-chart-status.is-emphasis {
-  font-size: 11px;
+  font-size: 12px;
 }
 .problem-chart-status-glyph {
   font-family: var(--font-mono);
@@ -563,27 +563,28 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-h2 {
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: clamp(30px, 2.7vw, 42px);
-  line-height: 1.08;
-  letter-spacing: -0.014em;
+  font-size: clamp(32px, 3vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
   text-wrap: balance;
   color: #fffffc;
   margin: 0;
 }
 .problem-body {
   font-family: var(--font-brand);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.55;
   letter-spacing: -0.01em;
-  color: #fffffc;
+  color: rgba(255, 255, 252, 0.82);
   margin: 0;
 }
 .problem-bridge {
   font-family: var(--font-brand);
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1.4;
-  letter-spacing: -0.005em;
-  color: rgba(255, 255, 252, 0.9);
+  letter-spacing: -0.01em;
+  color: #fffffc;
   margin: 0;
 }
 
@@ -592,9 +593,9 @@ video.hero-ascii-image::-webkit-media-controls-container {
   padding: clamp(18px, 2.6svh, 24px) clamp(20px, 2.4vw, 32px);
   border-top: 1px solid rgba(255, 255, 252, 0.18);
   font-family: var(--font-brand);
-  font-size: clamp(16px, 1.4vw, 18px);
-  line-height: 1.6;
-  letter-spacing: -0.01em;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.55;
+  letter-spacing: -0.015em;
   color: rgba(255, 255, 252, 0.92);
   font-style: normal;
   quotes: none;
