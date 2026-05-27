@@ -420,26 +420,3 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     </main>
   )
 }
-        </Section >
-      )}
-
-{/* Contact CTA */ }
-      <Section bg="dark" maxWidth="xwide" className="text-center py-[100px]">
-        <h2 className="text-[clamp(32px,4vw,48px)] font-bold tracking-[-0.03em] text-white mb-[24px]">
-          Ready to build?
-        </h2>
-        <p className="text-gray-subtle mb-[40px] max-w-[500px] mx-auto text-[16px] leading-[1.6]">
-          If you are building an AI agent or a Web3 protocol and need a team that takes ownership from architecture to deployment, we should talk.
-        </p>
-        <a
-          href="mailto:contact@metaborong.com"
-          className="inline-flex h-[52px] items-center justify-center rounded-[4px] bg-brand px-[32px] text-[15px] font-bold tracking-[0.02em] text-white transition-colors hover:bg-brand/90"
-        >
-          Book an exploration call
-        </a>
-      </Section>
-
-      <Footer />
-    </main >
-  )
-}
