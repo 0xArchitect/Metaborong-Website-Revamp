@@ -16,7 +16,6 @@ import Link from 'next/link'
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
-import { TechLogo } from '@/components/ui/tech-logo'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import {
   pillars,
