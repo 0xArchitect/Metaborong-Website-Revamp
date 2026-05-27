@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
+import { TechLogo } from '@/components/ui/tech-logo'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import {
   pillars,
@@ -62,22 +63,21 @@ function Breadcrumb({ pillar, leaf }: { pillar: Pillar; leaf: ChildService }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="bg-bg border-b border-border-subtle px-[16px] py-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
+      className="bg-bg border-b border-border-subtle px-[16px] pt-[calc(56px+14px)] pb-[14px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
     >
       <div className="mx-auto max-w-[1120px]">
-        <ol className="flex flex-wrap items-center gap-x-[8px] gap-y-[4px] text-[12px] font-medium text-gray-light">
+        <ol className="flex flex-wrap items-center gap-x-[10px] gap-y-[4px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-gray-light">
+          {/* ← arrow link back to pillar hub */}
           <li>
-            <Link href="/" className="hover:text-dark transition-colors duration-[var(--duration-instant)]">Home</Link>
+            <Link
+              href={pillar.hubHref}
+              className="inline-flex items-center gap-[5px] hover:text-dark transition-colors duration-[var(--duration-instant)] group"
+            >
+              <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
+              <span>{pillar.label}</span>
+            </Link>
           </li>
-          <li aria-hidden="true">/</li>
-          <li>
-            <Link href="/services/" className="hover:text-dark transition-colors duration-[var(--duration-instant)]">Services</Link>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li>
-            <Link href={pillar.hubHref} className="hover:text-dark transition-colors duration-[var(--duration-instant)]">{pillar.label}</Link>
-          </li>
-          <li aria-hidden="true">/</li>
+          <li aria-hidden="true" className="text-border">/</li>
           <li aria-current="page" className="text-dark">{leaf.name}</li>
         </ol>
       </div>

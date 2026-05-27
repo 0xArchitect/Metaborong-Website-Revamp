@@ -21,7 +21,7 @@ export default function ServicesOverviewPage() {
   return (
     <>
       <Nav />
-      <main>
+      <main className="pt-[56px]">
         <ServicesOverview />
       </main>
       <Footer />
