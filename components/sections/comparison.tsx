@@ -1,4 +1,4 @@
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { Section } from '@/components/ui/section'
 import { ComparisonRows, type Row } from '@/components/sections/comparison-rows'
 
@@ -23,7 +23,7 @@ export function ComparisonSection() {
       className="lg:flex lg:min-h-[calc(100svh-56px)] lg:flex-col lg:justify-center lg:py-[clamp(16px,3svh,48px)]! [&>div]:w-full"
     >
       <div className="mb-[clamp(14px,2.4svh,28px)]">
-        <Pill className="mb-[clamp(10px,1.5svh,16px)]">Comparison</Pill>
+        <SectionEyebrow className="mb-[clamp(10px,1.5svh,16px)]">Comparison</SectionEyebrow>
         <h2 className="mb-[clamp(10px,1.4svh,14px)] text-balance text-[clamp(24px,2.8vw,38px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
           Metaborong vs. large Web3/AI agencies and freelancers
         </h2>

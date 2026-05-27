@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { Zap, CalendarDays } from 'lucide-react'
 import { useScroll, useMotionValueEvent, useReducedMotion } from 'motion/react'
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { reasons } from '@/components/sections/why-us-data'
 import { cardXForProgress, activeIndexFromProgress, dwellCenter } from '@/components/sections/why-us-slide'
@@ -22,7 +22,7 @@ function Header() {
   return (
     <div className="flex flex-shrink-0 flex-col gap-[20px] pt-[clamp(20px,3svh,32px)] pb-[clamp(14px,2svh,22px)] lg:flex-row lg:items-start lg:justify-between">
       <div className="flex flex-col gap-[12px]">
-        <Pill>Why us</Pill>
+        <SectionEyebrow>Why us</SectionEyebrow>
         <h2 className="text-balance text-[clamp(28px,3.4vw,48px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
           Why founders choose <span className="text-brand">Metaborong</span>
         </h2>

@@ -5,6 +5,7 @@ import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Reveal } from '@/components/ui/reveal'
 import { Typewriter } from '@/components/ui/typewriter'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 
 export function HeroSection() {
   const [scrolled, setScrolled] = useState(false)
@@ -139,13 +140,8 @@ export function HeroSection() {
           <div className="flex flex-col gap-[28px] lg:h-[80%] lg:max-h-[700px] lg:justify-between lg:gap-0">
             {/* Eyebrow + H1 */}
             <div>
-              {/* Eyebrow — square + mono entity-category line (hero-only treatment) */}
-              <div className="mb-7 flex items-center gap-[10px]">
-                <span aria-hidden="true" className="h-[8px] w-[8px] shrink-0 bg-brand" />
-                <span className="font-mono text-[11px] font-bold uppercase leading-none tracking-[0.14em] text-gray-light">
-                  // Web3 &amp; AI development studio
-                </span>
-              </div>
+              {/* Eyebrow — unified square + mono treatment (SectionEyebrow primitive) */}
+              <SectionEyebrow className="mb-7">Web3 &amp; AI development studio</SectionEyebrow>
 
               <h1 className="text-[clamp(40px,6vw,84px)] font-black tracking-[-0.04em] leading-[1.02] text-dark">
                 <Typewriter
@@ -163,7 +159,7 @@ export function HeroSection() {
 
             {/* AEO extraction blockquote / lede — own zone so it sits equidistant on lg+ */}
             <blockquote cite="/#services">
-              <p className="text-lg text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
+              <p className="text-base text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
                 Metaborong is a Web3 development company and AI agent studio. A
                 remote-first team of senior engineers, globally distributed. We ship
                 DeFi protocols and smart contract audits across EVM chains and Solana,

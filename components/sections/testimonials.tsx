@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/section'
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { clutchProfileUrl } from '@/lib/links'
 
@@ -32,7 +32,7 @@ export function TestimonialsSection() {
     >
       <div className="mb-[clamp(20px,3.5svh,44px)] grid grid-cols-1 items-end gap-[clamp(20px,3vw,40px)] lg:grid-cols-[1fr_minmax(0,400px)]">
         <div className="flex flex-col">
-          <Pill className="mb-[14px]">Social proof</Pill>
+          <SectionEyebrow className="mb-[14px]">Social proof</SectionEyebrow>
           <h2 className="max-w-[20ch] text-balance text-[clamp(24px,2.7vw,38px)] font-bold leading-[1.08] tracking-[-0.035em] text-dark">
             Reviewed and verified on Clutch
           </h2>

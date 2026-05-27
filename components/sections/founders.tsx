@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { Section } from '@/components/ui/section'
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 
 type Founder = {
   name: string
@@ -137,7 +137,7 @@ export function FoundersSection() {
     <Section bg="default" maxWidth="xwide" divider>
       {/* Header */}
       <div className="flex flex-col items-start gap-[24px]">
-        <Pill>The team</Pill>
+        <SectionEyebrow>The team</SectionEyebrow>
         <h2 className="text-balance text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.03em] text-dark">
           The team behind <span className="text-brand">the work</span>
         </h2>

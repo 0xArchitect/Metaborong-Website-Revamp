@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/section'
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { ProblemTrendChart } from './problem-trend-chart'
 import { ProblemAEOAccordion } from './problem-aeo-accordion'
 import { PROBLEM_QA } from './problem-qa-data'
@@ -28,7 +28,7 @@ const faqPageJsonLd = {
 
 export function ProblemSection() {
   return (
-    <Section bg="default" maxWidth="xwide" id="problem">
+    <Section bg="default" maxWidth="xwide" id="problem" className="py-[clamp(40px,6svh,80px)]!">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermJsonLd) }}
@@ -53,7 +53,7 @@ export function ProblemSection() {
             </figcaption>
           </figure>
           <div className="problem-content">
-            <Pill tone="inverse">The problem</Pill>
+            <SectionEyebrow tone="inverse">The problem</SectionEyebrow>
             <h2 className="problem-h2">
               The window opens fast. Most teams aren&apos;t built to move through it.
             </h2>
