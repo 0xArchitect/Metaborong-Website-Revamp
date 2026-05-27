@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/section'
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
 
 export function FaqSection() {
@@ -7,7 +7,7 @@ export function FaqSection() {
     <Section as="section" maxWidth="xwide" divider>
       <div className="grid gap-[40px] md:grid-cols-[minmax(0,360px)_1fr] md:gap-[64px] lg:gap-[96px]">
         <div className="md:sticky md:top-[96px] md:self-start">
-          <Pill className="mb-[16px]">FAQ</Pill>
+          <SectionEyebrow className="mb-[16px]">FAQ</SectionEyebrow>
           <h2 className="text-balance text-[clamp(28px,3.5vw,44px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
             Frequently asked questions
           </h2>

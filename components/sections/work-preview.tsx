@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/section'
-import { Pill } from '@/components/ui/pill'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 
 type Project = { name: string; category: string; color: string }
 
@@ -17,7 +17,7 @@ export function WorkPreviewSection() {
     <Section bg="default" maxWidth="xwide">
       <div className="mb-[20px] flex flex-col gap-[18px] sm:mb-[24px] sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-[16px]">
-          <Pill>Our work</Pill>
+          <SectionEyebrow>Our work</SectionEyebrow>
           <h2 className="text-balance text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">What we&apos;ve built</h2>
         </div>
         <a href="/#contact" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-brand no-underline">Talk to us →</a>
