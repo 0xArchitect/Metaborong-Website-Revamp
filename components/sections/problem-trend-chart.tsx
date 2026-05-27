@@ -218,14 +218,14 @@ export function ProblemTrendChart() {
         <rect
           x={WEEK6_X}
           y={LANE_TOP - 16}
-          width={AXIS_X12 - WEEK6_X + 60}
+          width={AXIS_X12 - WEEK6_X + 98}
           height={AXIS_BASELINE_Y - LANE_TOP + 24}
           fill="url(#problem-closed-hatch)"
         />
         <rect
           x={WEEK6_X}
           y={LANE_TOP - 16}
-          width={AXIS_X12 - WEEK6_X + 60}
+          width={AXIS_X12 - WEEK6_X + 98}
           height={AXIS_BASELINE_Y - LANE_TOP + 24}
           fill="rgba(0,0,0,0.12)"
         />
