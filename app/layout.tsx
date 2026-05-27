@@ -37,7 +37,7 @@ export default function RootLayout({
           `data-new-gr-c-s-check-loaded`) inject attributes into <body> before
           React hydrates. The flag suppresses *only* the body element's
           attribute mismatch, not anything inside it. */}
-      <body suppressHydrationWarning>
+      <body className="overflow-x-hidden" suppressHydrationWarning>
         <SmoothScroll>{children}</SmoothScroll>
         <ConsentBanner />
         <ConsentRevokePill />

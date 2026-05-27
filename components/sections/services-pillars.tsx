@@ -55,7 +55,7 @@ export function ServicesPillars() {
       <ScopedStyle />
 
       {/* Static stack — mobile (lg-) always, plus all widths under reduced motion. */}
-      <div className={`${reduceMotion ? '' : 'lg:hidden'} px-[16px] sm:px-[24px] md:px-[40px] py-[56px] md:py-[72px]`}>
+      <div className={`${reduceMotion ? '' : 'lg:hidden'} mt-[40px] md:mt-[56px]`}>
         <div className="mx-auto max-w-[1280px]">
           <MobileStack />
         </div>
@@ -64,109 +64,109 @@ export function ServicesPillars() {
       {/* Desktop (lg+): full-bleed single-viewport pinned scrolltelling. Not rendered
           under reduced motion — the static stack above takes over. */}
       {!reduceMotion && (
-      <div ref={wrapRef} data-services-anchor-wrap className="hidden lg:block relative h-[260vh]">
-        <div
-          className="sticky overflow-hidden flex flex-col border-t border-b border-border"
-          style={{ top: NAV_OFFSET, height: `calc(100svh - ${NAV_OFFSET}px)` }}
-        >
-          <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[40px] xl:px-[72px] 2xl:px-[112px]">
-            {/* Bar */}
-            <div className="flex flex-shrink-0 items-center gap-[14px] pt-[clamp(18px,2.6svh,28px)] pb-[clamp(14px,2svh,22px)] font-mono text-[clamp(11px,1.4svh,13px)] font-bold uppercase tracking-[0.14em] text-gray-light">
-              <span aria-hidden="true" className="h-[6px] w-[6px] shrink-0 bg-brand" />
-              <span>What we build</span>
-              <span aria-hidden="true" className="h-px flex-1 bg-border" />
-              <span className="tabular-nums tracking-[0.06em] text-dark">
-                <span style={{ color: active.color }}>{active.num}</span>
-                <span className="text-gray-light"> / 03</span>
-              </span>
-            </div>
+        <div ref={wrapRef} data-services-anchor-wrap className="hidden lg:block relative h-[260vh]">
+          <div
+            className="sticky overflow-hidden flex flex-col border-t border-b border-border"
+            style={{ top: NAV_OFFSET, height: `calc(100svh - ${NAV_OFFSET}px)` }}
+          >
+            <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col min-h-0 px-[16px] sm:px-[24px] md:px-[40px] lg:px-[40px] xl:px-[72px] 2xl:px-[112px]">
+              {/* Bar */}
+              <div className="flex flex-shrink-0 items-center gap-[14px] pt-[clamp(18px,2.6svh,28px)] pb-[clamp(14px,2svh,22px)] font-mono text-[clamp(11px,1.4svh,13px)] font-bold uppercase tracking-[0.14em] text-gray-light">
+                <span aria-hidden="true" className="h-[6px] w-[6px] shrink-0 bg-brand" />
+                <span>What we build</span>
+                <span aria-hidden="true" className="h-px flex-1 bg-border" />
+                <span className="tabular-nums tracking-[0.06em] text-dark">
+                  <span style={{ color: active.color }}>{active.num}</span>
+                  <span className="text-gray-light"> / 03</span>
+                </span>
+              </div>
 
-            {/* Content */}
-            <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] gap-[32px] pb-[12px] xl:gap-[56px] 2xl:gap-[72px]">
-              {/* LEFT: H2 + handoff-style blocks */}
-              <div className="flex min-h-0 flex-col">
-                <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(27px,min(4.2svh,3.5vw),44px)] font-bold leading-[1.05] tracking-[-0.03em] text-dark">
-                  A small, senior team.{' '}
-                  <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
-                    {H2_PHRASE[active.id]}
-                  </span>
-                </h2>
+              {/* Content */}
+              <div className="grid min-h-0 flex-1 grid-cols-1 md:grid-cols-[1.3fr_0.7fr] lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] gap-[32px] pb-[12px] xl:gap-[56px] 2xl:gap-[72px]">
+                {/* LEFT: H2 + handoff-style blocks */}
+                <div className="flex min-h-0 flex-col">
+                  <h2 className="services-h2 max-w-[20ch] flex-shrink-0 text-balance text-[clamp(27px,min(4.2svh,3.5vw),44px)] font-bold leading-[1.05] tracking-[-0.03em] text-dark">
+                    A small, senior team.{' '}
+                    <span key={active.id} className="services-h2-phrase" style={{ color: active.color }}>
+                      {H2_PHRASE[active.id]}
+                    </span>
+                  </h2>
 
-                <div className="mt-[clamp(12px,2.4svh,28px)] flex min-h-0 flex-col overflow-y-auto">
-                  {pillars.map((pillar, idx) => {
-                    const isActive = idx === activeIndex
-                    const children = getPublishedLeaves(pillar)
-                    return (
-                      <div
-                        key={pillar.id}
-                        className="svc-block"
-                        data-active={isActive}
-                        style={{ '--cat': pillar.color } as React.CSSProperties}
-                      >
-                        <span aria-hidden="true" className="svc-block-rule" data-active={isActive} />
-                        <button
-                          type="button"
-                          onClick={() => { setActiveIndex(idx); scrollToPillar(idx) }}
-                          aria-expanded={isActive}
-                          aria-controls={`pillar-body-${pillar.id}`}
-                          className="svc-block-head focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-                        >
-                          <span className="svc-num">[{pillar.num}]</span>
-                          <span className="svc-block-body">
-                            <span className="svc-cat">{pillar.label}</span>
-                            <span className="svc-h3">{pillar.headline}</span>
-                          </span>
-                        </button>
-
+                  <div className="mt-[clamp(12px,2.4svh,28px)] flex min-h-0 flex-col overflow-y-auto pr-[8px] lg:pr-0 [scrollbar-width:none] md:[&::-webkit-scrollbar]:hidden lg:[scrollbar-width:auto] lg:[&::-webkit-scrollbar]:auto">
+                    {pillars.map((pillar, idx) => {
+                      const isActive = idx === activeIndex
+                      const children = getPublishedLeaves(pillar)
+                      return (
                         <div
-                          id={`pillar-body-${pillar.id}`}
-                          role="region"
-                          className="svc-panel"
+                          key={pillar.id}
+                          className="svc-block"
                           data-active={isActive}
+                          style={{ '--cat': pillar.color } as React.CSSProperties}
                         >
-                          <div className="svc-panel-inner">
-                            <p className="svc-body">{pillar.body}</p>
-                            <ul className="svc-sublist">
-                              {children.map((child, ci) => (
-                                <li key={child.slug}>
-                                  <Link
-                                    href={`${pillar.hubHref}${child.slug}/`}
-                                    className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-                                  >
-                                    <span className="svc-sub-idx" aria-hidden="true">{String(ci + 1).padStart(2, '0')}</span>
-                                    <span className="svc-sub-name">{child.name}</span>
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                            <Link
-                              href={pillar.hubHref}
-                              className="svc-foot focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-                            >
-                              See all {pillar.label} services
-                            </Link>
+                          <span aria-hidden="true" className="svc-block-rule" data-active={isActive} />
+                          <button
+                            type="button"
+                            onClick={() => { setActiveIndex(idx); scrollToPillar(idx) }}
+                            aria-expanded={isActive}
+                            aria-controls={`pillar-body-${pillar.id}`}
+                            className="svc-block-head focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                          >
+                            <span className="svc-num">[{pillar.num}]</span>
+                            <span className="svc-block-body">
+                              <span className="svc-cat">{pillar.label}</span>
+                              <span className="svc-h3">{pillar.headline}</span>
+                            </span>
+                          </button>
+
+                          <div
+                            id={`pillar-body-${pillar.id}`}
+                            role="region"
+                            className="svc-panel"
+                            data-active={isActive}
+                          >
+                            <div className="svc-panel-inner">
+                              <p className="svc-body">{pillar.body}</p>
+                              <ul className="svc-sublist">
+                                {children.map((child, ci) => (
+                                  <li key={child.slug}>
+                                    <Link
+                                      href={`${pillar.hubHref}${child.slug}/`}
+                                      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                                    >
+                                      <span className="svc-sub-idx" aria-hidden="true">{String(ci + 1).padStart(2, '0')}</span>
+                                      <span className="svc-sub-name">{child.name}</span>
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                              <Link
+                                href={pillar.hubHref}
+                                className="svc-foot focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                              >
+                                See all {pillar.label} services
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* RIGHT: iso stage — atmospheric grid faded into the section grey */}
+                <div className="relative min-h-0 overflow-hidden">
+                  <ServicesIsoStage rises={rises} activeIndex={activeIndex} />
                 </div>
               </div>
+            </div>
 
-              {/* RIGHT: iso stage — atmospheric grid faded into the section grey */}
-              <div className="relative min-h-0 overflow-hidden">
-                <ServicesIsoStage rises={rises} activeIndex={activeIndex} />
-              </div>
+            {/* Scroll hint — bottom-right, aligned to the full-bleed edge padding */}
+            <div className="pointer-events-none absolute bottom-[18px] right-[16px] flex items-center gap-[10px] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-light sm:right-[24px] md:right-[40px] lg:right-[48px] xl:right-[80px] 2xl:right-[128px]">
+              <span>Scroll</span>
+              <ChevronDown size={14} aria-hidden="true" />
             </div>
           </div>
-
-          {/* Scroll hint — bottom-right, aligned to the full-bleed edge padding */}
-          <div className="pointer-events-none absolute bottom-[18px] right-[16px] flex items-center gap-[10px] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-light sm:right-[24px] md:right-[40px] lg:right-[48px] xl:right-[80px] 2xl:right-[128px]">
-            <span>Scroll</span>
-            <ChevronDown size={14} aria-hidden="true" />
-          </div>
         </div>
-      </div>
       )}
     </>
   )
@@ -297,7 +297,10 @@ function ScopedStyle() {
 
       .svc-sublist {
         list-style: none; margin: 0; padding: 0;
-        display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+        display: grid; grid-template-columns: 1fr; gap: 6px;
+      }
+      @media (min-width: 1024px) {
+        .svc-sublist { grid-template-columns: 1fr 1fr; }
       }
       .svc-sublist li { display: flex; }
       .svc-sublist a {

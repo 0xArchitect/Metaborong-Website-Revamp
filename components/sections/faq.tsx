@@ -5,13 +5,13 @@ import { FaqAccordion } from '@/components/sections/faq-accordion'
 export function FaqSection() {
   return (
     <Section as="section" maxWidth="xwide">
-      <div className="grid gap-[40px] md:grid-cols-[minmax(0,360px)_1fr] md:gap-[64px] lg:gap-[96px]">
-        <div className="md:sticky md:top-[96px] md:self-start">
+      <div className="grid gap-[40px] lg:grid-cols-[minmax(0,360px)_1fr] md:gap-[64px] lg:gap-[96px]">
+        <div className="lg:sticky lg:top-[96px] lg:self-start">
           <SectionEyebrow className="mb-[16px]">FAQ</SectionEyebrow>
           <h2 className="text-balance text-[clamp(28px,3.5vw,44px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
             Frequently asked questions
           </h2>
-          <div className="mt-[32px] hidden border border-border p-[24px] md:block">
+          <div className="mt-[32px] hidden border border-border p-[24px] lg:block">
             <p className="text-[15px] font-semibold leading-[1.4] tracking-[-0.02em] text-dark">
               Don&apos;t see your question?
             </p>

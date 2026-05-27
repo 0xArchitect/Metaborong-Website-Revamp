@@ -2,7 +2,6 @@ import { Section } from '@/components/ui/section'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { clutchProfileUrl } from '@/lib/links'
-
 const rating = '4.9'
 const reviewCount = '9'
 
@@ -45,24 +44,49 @@ export function TestimonialsSection() {
         </div>
       </div>
 
-      <ul className="grid grid-cols-1 gap-x-[clamp(28px,3.5vw,56px)] gap-y-[clamp(16px,2.6svh,32px)] md:grid-cols-2 lg:grid-cols-3">
-        {reviews.map((r, i) => (
-          <li key={r.company}>
-            <figure className="flex h-full flex-col">
-              <span className="font-mono text-[11px] font-bold tracking-[0.14em] text-gray-light">
-                [{String(i + 1).padStart(2, '0')}]
-              </span>
-              <span aria-hidden="true" className="mt-[10px] text-[14px] tracking-[3px] text-accent">★★★★★</span>
-              <blockquote className="mt-[10px] text-[clamp(13px,1.05vw,16px)] leading-[1.5] tracking-[-0.01em] text-dark">
-                “{r.quote}”
-              </blockquote>
-              <figcaption className="mt-auto pt-[14px] font-mono text-[11px] uppercase tracking-[0.1em] text-gray">
-                <b className="font-bold text-dark">{r.role}</b>, {r.company}
-              </figcaption>
-            </figure>
-          </li>
-        ))}
-      </ul>
+      <div className="relative [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)]">
+        <ul className="flex overflow-x-auto snap-x snap-mandatory gap-[16px] md:grid md:gap-x-[clamp(28px,3.5vw,56px)] md:gap-y-[clamp(16px,2.6svh,32px)] md:grid-cols-2 lg:grid-cols-3 pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] md:mx-0 md:px-0 md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {reviews.map((r, i) => (
+            <li 
+              key={r.company}
+              className="snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-auto md:max-w-none flex flex-col justify-between border border-border bg-white p-[24px] sm:p-[32px]"
+            >
+              <figure className="flex h-full flex-col">
+                <span className="font-mono text-[11px] font-bold tracking-[0.14em] text-gray-light">
+                  [{String(i + 1).padStart(2, '0')}]
+                </span>
+                <span aria-hidden="true" className="mt-[10px] text-[14px] tracking-[3px] text-accent">★★★★★</span>
+                <blockquote className="mt-[10px] text-[clamp(13px,1.05vw,16px)] leading-[1.5] tracking-[-0.01em] text-dark">
+                  “{r.quote}”
+                </blockquote>
+                <figcaption className="mt-[24px] pt-[14px] font-mono text-[11px] uppercase tracking-[0.1em] text-gray md:mt-auto">
+                  <b className="font-bold text-dark">{r.role}</b>, {r.company}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+
+        {/* Floating swipe hint arrow (Left) */}
+        <div 
+          className="pointer-events-none absolute md:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+          style={{ top: 'calc(50% - 12px)', left: 'calc(var(--cw) * 0.04)', transform: 'translate(-50%, -50%)' }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </div>
+
+        {/* Floating swipe hint arrow (Right) */}
+        <div 
+          className="pointer-events-none absolute md:hidden text-gray opacity-80 motion-safe:animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]"
+          style={{ top: 'calc(50% - 12px)', right: 'calc(var(--cw) * 0.04)', transform: 'translate(50%, -50%)' }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="square" strokeLinejoin="miter">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+      </div>
 
       <a href={clutchProfileUrl} target="_blank" rel="noopener noreferrer" className="sr-only">
         Metaborong is rated {rating} out of 5 based on {reviewCount} verified client reviews on Clutch.
