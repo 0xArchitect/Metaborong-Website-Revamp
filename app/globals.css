@@ -603,10 +603,10 @@ video.hero-ascii-image::-webkit-media-controls-container {
 
 .problem-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.58fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
   align-items: center;
-  gap: 24px;
-  padding: 40px 32px;
+  gap: clamp(20px, 2.4vw, 32px);
+  padding: clamp(26px, 4svh, 40px) clamp(20px, 2.4vw, 32px);
 }
 
 .problem-chart-wrap {
@@ -629,9 +629,9 @@ video.hero-ascii-image::-webkit-media-controls-container {
 
 @media (min-width: 1536px) {
   .problem-grid {
-    grid-template-columns: minmax(0, 1.68fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.58fr) minmax(0, 1fr);
     gap: 30px;
-    padding: 44px 36px;
+    padding: clamp(30px, 4svh, 44px) 36px;
   }
   .problem-chart-wrap {
     transform: scale(1.02);
@@ -659,14 +659,14 @@ video.hero-ascii-image::-webkit-media-controls-container {
 }
 
 .problem-chart-lane-label {
-  font-family: var(--font-brand);
+  font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .problem-chart-lane-label.is-emphasis {
-  font-size: 14px;
+  font-size: 13px;
 }
 .problem-chart-window-label {
   font-family: var(--font-mono);
@@ -682,18 +682,18 @@ video.hero-ascii-image::-webkit-media-controls-container {
   letter-spacing: 0.06em;
 }
 .problem-chart-status {
-  font-family: var(--font-brand);
+  font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .problem-chart-status.is-emphasis {
-  font-size: 12px;
+  font-size: 11px;
 }
 .problem-chart-status-glyph {
-  font-family: var(--font-brand);
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
   font-weight: 700;
 }
 .problem-chart-axis-week {
@@ -727,13 +727,13 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: clamp(14px, 2.2svh, 20px);
   padding-left: 8px;
 }
 .problem-h2 {
   font-family: var(--font-brand);
   font-weight: 700;
-  font-size: clamp(32px, 3vw, 46px);
+  font-size: clamp(30px, 2.7vw, 42px);
   line-height: 1.08;
   letter-spacing: -0.014em;
   text-wrap: balance;
@@ -743,7 +743,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-body {
   font-family: var(--font-brand);
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.5;
   letter-spacing: -0.01em;
   color: #fffffc;
   margin: 0;
@@ -759,10 +759,10 @@ video.hero-ascii-image::-webkit-media-controls-container {
 
 .problem-blockquote {
   margin: 0;
-  padding: 24px 32px;
+  padding: clamp(18px, 2.6svh, 24px) clamp(20px, 2.4vw, 32px);
   border-top: 1px solid rgba(255, 255, 252, 0.18);
   font-family: var(--font-brand);
-  font-size: clamp(16px, 1.5vw, 19px);
+  font-size: clamp(16px, 1.4vw, 18px);
   line-height: 1.6;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 252, 0.92);
@@ -773,7 +773,7 @@ video.hero-ascii-image::-webkit-media-controls-container {
 .problem-aeo {
   border-top: 1px solid rgba(255, 255, 252, 0.18);
   margin: 0;
-  padding: 8px 32px 28px;
+  padding: 8px clamp(20px, 2.4vw, 32px) clamp(20px, 3svh, 28px);
   color: #fffffc;
 }
 .problem-aeo > summary {
