@@ -830,6 +830,48 @@ video.hero-ascii-image::-webkit-media-controls-container {
   isolation: isolate;
 }
 
+/* ── Dot-grid filler texture (supermemory-style) ──────────────────────────────
+   Faint brand-tinted 1px dot grid on an 18px pitch, for filling whitespace.
+   Decorative: applied to aria-hidden layers behind content, masked so dots only
+   occupy empty space and never sit behind text. */
+.dot-grid {
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 40%, transparent) 1px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+/* Side-gutter fade: dots at left/right edges, clear through the center column. */
+.dot-grid-fade-x {
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 30%, transparent 70%, #000 100%);
+          mask-image: linear-gradient(90deg, #000 0%, transparent 30%, transparent 70%, #000 100%);
+}
+/* Soft center: dots cover the whole area but drop to a faint ~20% through the
+   center band (instead of clearing) — keeps texture behind content, readable. */
+.dot-grid-fade-x-soft {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 14%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, #000 86%, transparent 100%);
+}
+/* Top-down fade: dots dense at the top, dissolving downward (card-well look). */
+.dot-grid-fade-top {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 78%);
+          mask-image: linear-gradient(180deg, #000 0%, transparent 78%);
+}
+
+/* Site-wide section-padding air: a fainter dot layer on every <Section>, masked
+   to a vertical fade so dots fill the top/bottom padding bands and clear the
+   content in the middle. Pseudo-element keeps it zero-DOM and zero-a11y. */
+.section-dotair { position: relative; }
+.section-dotair > * { position: relative; z-index: 1; }
+.section-dotair::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 22%, transparent) 1px, transparent 1.6px);
+  background-size: 18px 18px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+          mask-image: linear-gradient(180deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+}
+
 /* Responsive: tablet */
 @media (max-width: 1023px) {
   .problem-grid {
