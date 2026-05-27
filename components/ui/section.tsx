@@ -43,7 +43,7 @@ export function Section({
 }: SectionProps) {
   return (
     <Tag
-      className={`${bgClass[bg]} ${divider ? 'border-t border-border' : ''} py-[64px] md:py-[96px] lg:py-[120px] px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px] ${className}`}
+      className={`section-dotair ${bgClass[bg]} ${divider ? 'border-t border-border' : ''} py-[64px] md:py-[96px] lg:py-[120px] px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px] ${className}`}
       {...props}
     >
       <div className={`${maxWidthClass[maxWidth]} mx-auto`}>

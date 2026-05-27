@@ -129,7 +129,9 @@ export function HeroSection() {
         type="image/avif"
         fetchPriority="high"
       />
-      <div className="w-full max-w-[1280px] mx-auto min-h-screen lg:min-h-[calc(100svh-56px)] lg:mt-[56px] grid grid-cols-1 lg:grid-cols-[57fr_43fr] lg:gap-[64px]">
+      {/* Dot-grid filler — covers the whole hero, faint through the center. */}
+      <div aria-hidden="true" className="dot-grid dot-grid-fade-x-soft pointer-events-none absolute inset-0 z-0" />
+      <div className="relative z-[1] w-full max-w-[1280px] mx-auto min-h-screen lg:min-h-[calc(100svh-56px)] lg:mt-[56px] grid grid-cols-1 lg:grid-cols-[57fr_43fr] lg:gap-[64px]">
         {/* Left: copy */}
         <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-0 lg:pb-0">
           {/* Inner block mirrors the ASCII video frame's vertical extent (h-[82%], centered)
