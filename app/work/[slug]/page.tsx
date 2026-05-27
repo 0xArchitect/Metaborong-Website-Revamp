@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import fs from 'fs'
 import path from 'path'
+import Link from 'next/link'
 import { Nav } from '@/components/layout/nav'
 import { Footer } from '@/components/layout/footer'
 import { Markdown } from '@/components/ui/markdown'
@@ -124,7 +125,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="flex min-h-screen flex-col">
-      <Nav backHref="/#work" backLabel="All Work" />
+      <Nav />
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden bg-[#0a0a0a] pt-[100px] sm:pt-[120px] lg:pt-[160px]">
@@ -199,7 +200,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
         {/* Hero text */}
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[80px] xl:px-[128px] pb-[48px] sm:pb-[64px] lg:pb-[100px]">
-          <span className="block mb-[20px] font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">{meta.category}</span>
+          <Link
+            href="/#work"
+            className="inline-flex items-center gap-[5px] mb-[20px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/50 hover:text-white transition-colors duration-[var(--duration-instant)] group"
+          >
+            <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
+            <span>All Work</span>
+          </Link>
+          <span className="block mb-[20px] font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-brand">{meta.category}</span>
           {/* Title must not overlap the logo on mobile — cap width */}
           <h1 className="text-[clamp(28px,5vw,80px)] font-bold tracking-[-0.04em] leading-[1.0] text-white max-w-[min(620px,70vw)] sm:max-w-[min(700px,72vw)] lg:max-w-[900px] mb-[40px] sm:mb-[56px]">
             {meta.title}
