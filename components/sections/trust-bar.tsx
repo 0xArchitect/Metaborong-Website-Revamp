@@ -59,7 +59,7 @@ export function TrustBar() {
                   href={c.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${c.name} — visit site`}
+                  aria-label={`${c.name}, visit site`}
                   className="group relative flex items-center justify-center rounded-md transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
                   style={{ height: cellH }}
                 >
@@ -108,7 +108,7 @@ export function TrustBar() {
                 href={c.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${c.name} — visit site`}
+                aria-label={`${c.name}, visit site`}
                 className="group flex items-center justify-center rounded-md opacity-60 transition-opacity duration-200 ease-out hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
                 style={{ height: cellH }}
               >

@@ -31,11 +31,11 @@ const content: LeafContent = {
   phases: [
     {
       title: 'Problem framing',
-      body: 'We start with a half-day workshop to write the problem statement in plain language. We then mine existing customer signal — sales calls, support tickets, founder DMs — for evidence the problem is real. We exit with a one-page brief, named user segments, and the hypotheses worth testing first.',
+      body: 'We start with a half-day workshop to write the problem statement in plain language. We then mine existing customer signal - sales calls, support tickets, founder DMs - for evidence the problem is real. We exit with a one-page brief, named user segments, and the hypotheses worth testing first.',
     },
     {
       title: 'Customer evidence',
-      body: 'We run two cycles of customer interviews — eight to twelve conversations per cycle, recorded and clustered. Between cycles we tighten the script around the assumptions that did not break. Output is a synthesised insight document and a sharp definition of who would pay, why they would pay, and what they would replace.',
+      body: 'We run two cycles of customer interviews - eight to twelve conversations per cycle, recorded and clustered. Between cycles we tighten the script around the assumptions that did not break. Output is a synthesised insight document and a sharp definition of who would pay, why they would pay, and what they would replace.',
     },
     {
       title: 'Prototype the risk',
@@ -66,8 +66,8 @@ const content: LeafContent = {
     ],
     doesNotFit: [
       'You already have a shipped product and need help with retention or growth.',
-      'You want a brand identity or marketing site — that is design work, not discovery.',
-      'You need a fixed-bid build quote next week — discovery does not collapse that fast.',
+      'You want a brand identity or marketing site - that is design work, not discovery.',
+      'You need a fixed-bid build quote next week - discovery does not collapse that fast.',
     ],
   },
 
@@ -76,13 +76,13 @@ const content: LeafContent = {
 
   relatedWork: [
     {
-      descriptor: 'Spain-based IT services firm — strategy engagement',
+      descriptor: 'Spain-based IT services firm - strategy engagement',
       summary:
         'We ran a strategy engagement for Taisi in Spain to frame the next product line and align engineering capacity against it.',
       href: '/work/',
     },
     {
-      descriptor: 'Pre-seed B2B founder — discovery to a Figma prototype',
+      descriptor: 'Pre-seed B2B founder - discovery to a Figma prototype',
       summary:
         'A pre-seed founder hired us to test demand for a vertical SaaS idea. Six weeks later they had a prototype, an estimate, and the confidence to raise.',
       href: '/work/',
@@ -104,7 +104,7 @@ const content: LeafContent = {
     {
       question: 'Do we have to use Metaborong for the build afterwards?',
       answer:
-        'No. Roughly a third of discovery clients hand the report to their own engineering team or a different studio. We design the handoff for that case — the architecture sketch, estimate, and risk register are written for a competent third party, not gated on us. If you do want us to build, we discount the discovery fee against the build engagement.',
+        'No. Roughly a third of discovery clients hand the report to their own engineering team or a different studio. We design the handoff for that case - the architecture sketch, estimate, and risk register are written for a competent third party, not gated on us. If you do want us to build, we discount the discovery fee against the build engagement.',
     },
     {
       question: 'Can you sign an NDA before kickoff?',
@@ -114,7 +114,7 @@ const content: LeafContent = {
     {
       question: 'What if discovery shows the idea will not work?',
       answer:
-        'We say so, on the record, in writing. Roughly one in five discovery engagements ends with a recommendation not to build the proposed product. That is a successful outcome — you save twelve months of build cost and find out before the wrong commitment. The discovery fee is non-contingent and paid either way.',
+        'We say so, on the record, in writing. Roughly one in five discovery engagements ends with a recommendation not to build the proposed product. That is a successful outcome - you save twelve months of build cost and find out before the wrong commitment. The discovery fee is non-contingent and paid either way.',
     },
   ],
 }

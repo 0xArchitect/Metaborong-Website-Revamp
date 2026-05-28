@@ -61,7 +61,7 @@ export const pillars: Pillar[] = [
           },
           {
             name: 'Web3 Product Discovery',
-            description: 'Discovery sprints for on-chain founders — user research, scoping, and feasibility.',
+            description: 'Discovery sprints for on-chain founders - user research, scoping, and feasibility.',
             slug: 'web3-product-discovery',
             status: 'coming-soon',
           },
@@ -169,13 +169,13 @@ export const pillars: Pillar[] = [
         children: [
           {
             name: 'AI Copilots & Internal Tools',
-            description: 'Custom AI copilots for support, sales, and ops teams — grounded in your data, wired into your stack.',
+            description: 'Custom AI copilots for support, sales, and ops teams - grounded in your data, wired into your stack.',
             slug: 'ai-copilots-internal-tools',
             status: 'published',
           },
           {
             name: 'Conversational Agents & Assistants',
-            description: 'Voice and chat agents that handle real workflows — discovery, support, scheduling.',
+            description: 'Voice and chat agents that handle real workflows - discovery, support, scheduling.',
             slug: 'conversational-agents-assistants',
             status: 'published',
           },
@@ -193,19 +193,19 @@ export const pillars: Pillar[] = [
         children: [
           {
             name: 'Agentic AI Systems',
-            description: 'Multi-step autonomous agents that plan, use tools, and report results — with evals and guardrails.',
+            description: 'Multi-step autonomous agents that plan, use tools, and report results - with evals and guardrails.',
             slug: 'agentic-ai-systems',
             status: 'published',
           },
           {
             name: 'RAG & Retrieval Pipelines',
-            description: 'Retrieval pipelines that ground LLMs in your proprietary data — embeddings, reranking, evaluations.',
+            description: 'Retrieval pipelines that ground LLMs in your proprietary data - embeddings, reranking, evaluations.',
             slug: 'rag-retrieval-pipelines',
             status: 'published',
           },
           {
             name: 'LLM Integration & Architecture',
-            description: 'Architect and harden LLMs inside your product — auth, routing, fallback, cost controls, observability.',
+            description: 'Architect and harden LLMs inside your product - auth, routing, fallback, cost controls, observability.',
             slug: 'llm-integration-architecture',
             status: 'published',
           },
@@ -259,7 +259,7 @@ export const pillars: Pillar[] = [
         children: [
           {
             name: 'MVP Development',
-            description: 'Zero-to-launch product builds — founder-led scope through first paying users.',
+            description: 'Zero-to-launch product builds - founder-led scope through first paying users.',
             slug: 'mvp-development',
             status: 'published',
           },
@@ -306,13 +306,13 @@ export const pillars: Pillar[] = [
 ]
 
 // Flatten a pillar's sub-groups into a single ordered list of leaves.
-// Used by route generation, schema emitters, and llms.txt — anywhere the
+// Used by route generation, schema emitters, and llms.txt - anywhere the
 // pillar-level view of "every leaf under this pillar" is the natural shape.
 export function getAllLeaves(pillar: Pillar): ChildService[] {
   return pillar.subGroups.flatMap((sg) => sg.children)
 }
 
-// v1 published leaves only — used by surfaces that must hide coming-soon
+// v1 published leaves only - used by surfaces that must hide coming-soon
 // stubs from users and crawlers (mega-menu, homepage accordion, schema
 // OfferCatalog). See SERVICES_PLAN.md § Risk 3.
 export function getPublishedLeaves(pillar: Pillar): ChildService[] {

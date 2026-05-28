@@ -35,7 +35,7 @@ export function ContactCtaSection() {
               Tell us what you are building.
             </h2>
             <p className="mt-[20px] max-w-[56ch] text-[17px] leading-[1.55] text-white/85">
-              We build what large agencies under-deliver and freelancers can&apos;t architect, across Web3 protocols, AI agents, and SaaS products. Tell us what you are building. We will tell you how we would approach it — no pitch deck, no fluff, no commitment required.
+              We build what large agencies under-deliver and freelancers can&apos;t architect, across Web3 protocols, AI agents, and SaaS products. Tell us what you are building. We will tell you how we would approach it, no pitch deck, no fluff, no commitment required.
             </p>
           </div>
 

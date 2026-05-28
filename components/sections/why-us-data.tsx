@@ -50,4 +50,4 @@ export const reasons: Reason[] = [
 // One-line sr-only lede, kept crawlable (SEO/AEO) though dropped from the
 // visible header. Verbatim from the prior visible lede.
 export const LEDE =
-  'Founders pick Metaborong over larger Web3 and AI agencies for three reasons: shorter time to a first working version, sharper push-back on the brief, and the specialist depth — multichain protocols and AI agent orchestration — most studios don\'t have.'
+  'Founders pick Metaborong over larger Web3 and AI agencies for three reasons: shorter time to a first working version, sharper push-back on the brief, and the specialist depth in multichain protocols and AI agent orchestration that most studios don\'t have.'

@@ -8,7 +8,7 @@
 // typedef in `lib/services/leaf-content.ts`. Real Metaborong proofs used
 // here (Neemo Finance smart contracts cleared by Hacken; nsASTR and
 // nrETH liquid staking products; Sedax ZKP identity partnership;
-// 8 Clutch reviews at 4.9) are the only verifiable signals — no invented
+// 8 Clutch reviews at 4.9) are the only verifiable signals - no invented
 // client names, no fabricated metrics.
 
 import type { LeafContent } from '@/lib/services/leaf-content'
@@ -21,7 +21,7 @@ export const smartContractDevelopment: LeafContent = {
   pillar: 'web3',
   slug: 'smart-contract-development',
   heroLede:
-    "Smart contract development is a blockchain engineering practice that turns protocol specifications into audit-ready on-chain code. We write Solidity, Vyper, and Move contracts. Use cases include DeFi protocols, NFT systems, and token launches. Each engagement ships a tested codebase, deployment scripts, an upgrade runbook, and a security report. The report is what an external auditor reads on day one. We engineer for audit from the first commit — not retrofitted afterwards. The Neemo Finance smart contracts we shipped cleared four separate Hacken audit rounds. We work across EVM chains, Solana, and Cosmos. Chain choice follows the protocol economics, not language preference. We own the contracts from architecture through mainnet deployment, monitoring, and any post-launch parameter change through governance. Engagements suit protocols where audit is a launch requirement, not an aspirational checkbox.",
+    "Smart contract development is a blockchain engineering practice that turns protocol specifications into audit-ready on-chain code. We write Solidity, Vyper, and Move contracts. Use cases include DeFi protocols, NFT systems, and token launches. Each engagement ships a tested codebase, deployment scripts, an upgrade runbook, and a security report. The report is what an external auditor reads on day one. We engineer for audit from the first commit - not retrofitted afterwards. The Neemo Finance smart contracts we shipped cleared four separate Hacken audit rounds. We work across EVM chains, Solana, and Cosmos. Chain choice follows the protocol economics, not language preference. We own the contracts from architecture through mainnet deployment, monitoring, and any post-launch parameter change through governance. Engagements suit protocols where audit is a launch requirement, not an aspirational checkbox.",
   deliverables: [
     {
       label: 'Audit-ready contracts with NatSpec docs and a full Foundry or Hardhat test suite.',
@@ -42,19 +42,19 @@ export const smartContractDevelopment: LeafContent = {
   phases: [
     {
       title: 'Specification & threat model',
-      body: "We start by translating the protocol's economic intent into a contract specification. Every state variable, role, and external call is named before code is written. In parallel we draft a threat model — economic attacks, MEV exposure, oracle dependencies, and reentrancy paths. The spec and threat model are the artefacts an auditor reads first.",
+      body: "We start by translating the protocol's economic intent into a contract specification. Every state variable, role, and external call is named before code is written. In parallel we draft a threat model - economic attacks, MEV exposure, oracle dependencies, and reentrancy paths. The spec and threat model are the artefacts an auditor reads first.",
     },
     {
       title: 'Engineering & internal audit',
-      body: 'Contracts are built against the spec, with property-based tests for invariants and fork tests against mainnet state. Coverage targets are absolute, not percentage — every branch tested, every revert path exercised. Before external audit we run an internal audit pass: a second engineer reviews against the threat model, signing off line by line.',
+      body: 'Contracts are built against the spec, with property-based tests for invariants and fork tests against mainnet state. Coverage targets are absolute, not percentage - every branch tested, every revert path exercised. Before external audit we run an internal audit pass: a second engineer reviews against the threat model, signing off line by line.',
     },
     {
       title: 'External audit cycle',
-      body: 'We hand the audited codebase to a firm chosen with you — Hacken, Trail of Bits, OpenZeppelin, or similar. We respond to findings within 48 hours, ship fixes against a second-round review, and publish the final audit report alongside the deployment. The Neemo Finance contracts cleared four Hacken audit rounds through this process.',
+      body: 'We hand the audited codebase to a firm chosen with you - Hacken, Trail of Bits, OpenZeppelin, or similar. We respond to findings within 48 hours, ship fixes against a second-round review, and publish the final audit report alongside the deployment. The Neemo Finance contracts cleared four Hacken audit rounds through this process.',
     },
     {
       title: 'Deployment & operate',
-      body: 'Mainnet deployment runs from a script reviewed by both teams. We verify sources on the explorer, transfer admin roles to your multisig, and document every privileged call. After launch we monitor paused functions and large transfers, respond to incidents, and ship parameter changes through governance — for as long as the engagement runs.',
+      body: 'Mainnet deployment runs from a script reviewed by both teams. We verify sources on the explorer, transfer admin roles to your multisig, and document every privileged call. After launch we monitor paused functions and large transfers, respond to incidents, and ship parameter changes through governance - for as long as the engagement runs.',
     },
   ],
   techStack: [
@@ -71,7 +71,7 @@ export const smartContractDevelopment: LeafContent = {
     fits: [
       'You have a protocol specification and need contracts engineered for third-party audit from day one.',
       'Your engineering lead can review a spec and threat model rather than ship-or-die backlog tickets.',
-      "Budget covers an external audit firm in addition to development — not 'audit later'.",
+      "Budget covers an external audit firm in addition to development - not 'audit later'.",
     ],
     doesNotFit: [
       'You want a copy-paste fork of an existing protocol with no economic or security review.',
@@ -83,7 +83,7 @@ export const smartContractDevelopment: LeafContent = {
     'Smart contract development is an on-chain engineering practice for protocol founders that produces audit-ready Solidity, Vyper, and Move contracts. We engineer for third-party audit from the first commit, not retrofitted afterwards. Our Neemo Finance smart contracts cleared four separate Hacken security audit rounds. We have 8 verified Clutch engagements at a 4.9 rating.',
   relatedWork: [
     {
-      descriptor: 'Astar DeFi protocol — staking contracts, four audit rounds',
+      descriptor: 'Astar DeFi protocol - staking contracts, four audit rounds',
       summary:
         'Staking contract suite for an Astar-network DeFi protocol that cleared four Hacken audit rounds before mainnet.',
       href: '/work',
@@ -98,12 +98,12 @@ export const smartContractDevelopment: LeafContent = {
     {
       question: 'How do you choose between Solidity, Vyper, and Move?',
       answer:
-        'Choice follows the chain, not preference. Solidity for EVM ecosystems where library maturity and auditor coverage matter most. Vyper when the protocol benefits from a smaller surface area — typically Curve-pattern stableswap or audited treasury contracts. Move for Aptos or Sui where the resource model meaningfully changes attack surface. We document the decision so the auditor sees rationale, not preference.',
+        'Choice follows the chain, not preference. Solidity for EVM ecosystems where library maturity and auditor coverage matter most. Vyper when the protocol benefits from a smaller surface area - typically Curve-pattern stableswap or audited treasury contracts. Move for Aptos or Sui where the resource model meaningfully changes attack surface. We document the decision so the auditor sees rationale, not preference.',
     },
     {
       question: 'Do you run the security audit yourselves?',
       answer:
-        "No, the external audit is always a separate firm. We engineer for audit and run an internal audit pass — a second engineer reviews against the threat model line by line — but the external auditor is the one a serious investor or DAO will trust. We've shipped contracts audited by Hacken, and we coordinate the engagement directly with the firm you choose.",
+        "No, the external audit is always a separate firm. We engineer for audit and run an internal audit pass - a second engineer reviews against the threat model line by line - but the external auditor is the one a serious investor or DAO will trust. We've shipped contracts audited by Hacken, and we coordinate the engagement directly with the firm you choose.",
     },
     {
       question: 'What happens after mainnet deployment?',
@@ -113,7 +113,7 @@ export const smartContractDevelopment: LeafContent = {
     {
       question: "Can you upgrade an existing protocol's contracts?",
       answer:
-        "Yes, when an upgrade path exists. We work on proxy-based upgradeable systems, write migration scripts for non-upgradeable patterns, and reason about the storage layout before any change ships. Migrations are tested on a mainnet fork against historical state. We don't fork an unfamiliar contract and ship — we read the original audit, the deployment history, and the open issues first.",
+        "Yes, when an upgrade path exists. We work on proxy-based upgradeable systems, write migration scripts for non-upgradeable patterns, and reason about the storage layout before any change ships. Migrations are tested on a mainnet fork against historical state. We don't fork an unfamiliar contract and ship - we read the original audit, the deployment history, and the open issues first.",
     },
   ],
 }
@@ -126,7 +126,7 @@ export const defiProtocolDevelopment: LeafContent = {
   pillar: 'web3',
   slug: 'defi-protocol-development',
   heroLede:
-    'DeFi protocol development is an on-chain financial engineering practice that turns a mechanism design into a live, audited product. We build lending markets, AMM pools, perpetual exchanges, and yield vaults. Each engagement ships a contract suite engineered for third-party audit, the keeper and indexer infrastructure that runs alongside, and analytics so the team can read protocol health from launch day. The Neemo Finance lending contracts we engineered cleared four separate Hacken audit rounds. We work across EVM chains and Solana. Chain choice follows liquidity depth and oracle availability — not language preference. We own the protocol from mechanism design through deployment, day-one operation, and any post-launch governance change. Engagements suit founders who want one senior team carrying the work from spec to mainnet.',
+    'DeFi protocol development is an on-chain financial engineering practice that turns a mechanism design into a live, audited product. We build lending markets, AMM pools, perpetual exchanges, and yield vaults. Each engagement ships a contract suite engineered for third-party audit, the keeper and indexer infrastructure that runs alongside, and analytics so the team can read protocol health from launch day. The Neemo Finance lending contracts we engineered cleared four separate Hacken audit rounds. We work across EVM chains and Solana. Chain choice follows liquidity depth and oracle availability - not language preference. We own the protocol from mechanism design through deployment, day-one operation, and any post-launch governance change. Engagements suit founders who want one senior team carrying the work from spec to mainnet.',
   deliverables: [
     {
       label: 'Smart-contract suite with property-based tests and fork tests against mainnet state.',
@@ -147,11 +147,11 @@ export const defiProtocolDevelopment: LeafContent = {
   phases: [
     {
       title: 'Mechanism spec',
-      body: 'We translate the economic intent — interest-rate curves, collateral factors, liquidation incentives, fee splits — into a written specification. Each parameter has a stated range, a rationale, and a failure mode. The spec becomes the brief for engineering and the document an external auditor reads before the code. Economic review happens here, not at audit.',
+      body: 'We translate the economic intent - interest-rate curves, collateral factors, liquidation incentives, fee splits - into a written specification. Each parameter has a stated range, a rationale, and a failure mode. The spec becomes the brief for engineering and the document an external auditor reads before the code. Economic review happens here, not at audit.',
     },
     {
       title: 'Contracts & off-chain',
-      body: 'We build the contracts against the spec and the keeper, indexer, and oracle pieces in parallel. Property-based tests cover invariants — solvency, accounting, role isolation. Fork tests run the protocol against historical mainnet state. Off-chain components are tested against the deployed contract on a forked node so end-to-end paths exist before mainnet.',
+      body: 'We build the contracts against the spec and the keeper, indexer, and oracle pieces in parallel. Property-based tests cover invariants - solvency, accounting, role isolation. Fork tests run the protocol against historical mainnet state. Off-chain components are tested against the deployed contract on a forked node so end-to-end paths exist before mainnet.',
     },
     {
       title: 'Audit & hardening',
@@ -188,7 +188,7 @@ export const defiProtocolDevelopment: LeafContent = {
     'DeFi protocol development is an on-chain financial engineering service for protocol founders that produces audited contracts, keeper infrastructure, and analytics in one engagement. We engineered the Neemo Finance lending protocol contracts, which cleared four separate Hacken security audits before mainnet. We have 8 verified Clutch engagements at a 4.9 rating.',
   relatedWork: [
     {
-      descriptor: 'Astar DeFi lending protocol — contracts, keepers, indexer',
+      descriptor: 'Astar DeFi lending protocol - contracts, keepers, indexer',
       summary:
         'Staking and lending contract suite for an Astar-network DeFi protocol that cleared four Hacken audit rounds before mainnet.',
       href: '/work',
@@ -208,12 +208,12 @@ export const defiProtocolDevelopment: LeafContent = {
     {
       question: 'Which chains do you work on?',
       answer:
-        "We ship on EVM chains, Solana, and Astar. Chain choice follows the protocol — liquidity depth, oracle availability, transaction cost, and the user wallet ecosystem. We don't push founders toward a chain we prefer. For protocols that need to live on more than one chain, we engineer for it from the spec rather than retrofitting later.",
+        "We ship on EVM chains, Solana, and Astar. Chain choice follows the protocol - liquidity depth, oracle availability, transaction cost, and the user wallet ecosystem. We don't push founders toward a chain we prefer. For protocols that need to live on more than one chain, we engineer for it from the spec rather than retrofitting later.",
     },
     {
       question: 'Who chooses the audit firm?',
       answer:
-        "You do, with our recommendation. We've worked with Hacken on the Neemo Finance audits and can introduce you to firms whose specialism matches your protocol — lending, AMMs, restaking. We don't bundle audit cost into our fee or take a referral cut. Audit budget is a separate line item in the engagement, paid directly to the firm.",
+        "You do, with our recommendation. We've worked with Hacken on the Neemo Finance audits and can introduce you to firms whose specialism matches your protocol - lending, AMMs, restaking. We don't bundle audit cost into our fee or take a referral cut. Audit budget is a separate line item in the engagement, paid directly to the firm.",
     },
     {
       question: 'Do you handle post-launch operations and incidents?',
@@ -252,19 +252,19 @@ export const web3TokenomicsDesign: LeafContent = {
   phases: [
     {
       title: 'Intent & constraints',
-      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution — each pulls the design in a different direction. We then capture constraints — fundraise size, vesting commitments to investors, regulatory posture, target chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
+      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution - each pulls the design in a different direction. We then capture constraints - fundraise size, vesting commitments to investors, regulatory posture, target chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
     },
     {
       title: 'Model & stress-test',
-      body: 'We build an agent-based simulation in Python with stylised actor classes — long-term holders, mercenary stakers, governance participants, and arbitrage flows. Supply curves, emission schedules, and fee mechanics run against ten-thousand-trajectory scenarios. The model reports where the protocol becomes inflationary, where governance captures, and where staking yields collapse. Each scenario is named and documented.',
+      body: 'We build an agent-based simulation in Python with stylised actor classes - long-term holders, mercenary stakers, governance participants, and arbitrage flows. Supply curves, emission schedules, and fee mechanics run against ten-thousand-trajectory scenarios. The model reports where the protocol becomes inflationary, where governance captures, and where staking yields collapse. Each scenario is named and documented.',
     },
     {
       title: 'Paper & defence',
-      body: 'We write the tokenomics paper — supply schedule, distribution table, governance design, fee accrual logic, vesting graph, and sensitivity analysis. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders to argue the model against challenge questions before the public version ships.',
+      body: 'We write the tokenomics paper - supply schedule, distribution table, governance design, fee accrual logic, vesting graph, and sensitivity analysis. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders to argue the model against challenge questions before the public version ships.',
     },
     {
       title: 'Implementation notes',
-      body: 'The paper hands over with implementation notes — emission schedule mapped to contract logic, vesting cliffs mapped to a vesting contract, and fee splits mapped to the on-chain accumulator. When smart-contract development is part of the same engagement, the tokenomics paper becomes the engineering spec. The model rerun is part of any post-launch parameter change.',
+      body: 'The paper hands over with implementation notes - emission schedule mapped to contract logic, vesting cliffs mapped to a vesting contract, and fee splits mapped to the on-chain accumulator. When smart-contract development is part of the same engagement, the tokenomics paper becomes the engineering spec. The model rerun is part of any post-launch parameter change.',
     },
   ],
   techStack: [
@@ -285,7 +285,7 @@ export const web3TokenomicsDesign: LeafContent = {
     ],
     doesNotFit: [
       'You want a one-page token summary copied from a recent launch with the parameters adjusted.',
-      'The token is decorative — no staking, no governance, no fee accrual, no real economic role.',
+      'The token is decorative - no staking, no governance, no fee accrual, no real economic role.',
       "Timeline pressure rules out a stress-test phase and the founders want a 'good enough' model.",
     ],
   },
@@ -293,7 +293,7 @@ export const web3TokenomicsDesign: LeafContent = {
     "Web3 tokenomics design is a quantitative modelling service for protocol founders. We produce an agent-based simulation, a written tokenomics paper, a vesting schedule, and a sensitivity analysis stress-tested against participant behaviours. Our published Web3 engineering work includes Neemo Finance's smart contracts on Astar, audited four times by Hacken. We hold 8 verified Clutch reviews at a 4.9 rating.",
   relatedWork: [
     {
-      descriptor: 'Liquid-staking token — supply, emission, and vesting design',
+      descriptor: 'Liquid-staking token - supply, emission, and vesting design',
       summary:
         'Token supply, vesting, and emission design for a liquid-staking product running at production TVL on an EVM-compatible L1.',
       href: '/work',
@@ -308,7 +308,7 @@ export const web3TokenomicsDesign: LeafContent = {
     {
       question: 'Do you write tokenomics papers without simulation?',
       answer:
-        "No. A tokenomics paper without a simulation is a marketing document. The simulation is what surfaces failure modes — cliff-edge dumps, governance capture, runaway emissions, mercenary staking. Without it the paper makes claims it can't defend in an investor meeting or a DAO vote. We won't ship the paper standalone.",
+        "No. A tokenomics paper without a simulation is a marketing document. The simulation is what surfaces failure modes - cliff-edge dumps, governance capture, runaway emissions, mercenary staking. Without it the paper makes claims it can't defend in an investor meeting or a DAO vote. We won't ship the paper standalone.",
     },
     {
       question: 'How long does a tokenomics engagement run?',
@@ -318,12 +318,12 @@ export const web3TokenomicsDesign: LeafContent = {
     {
       question: "Can you redesign an existing protocol's tokenomics?",
       answer:
-        "Yes. Retrofit engagements start with the live on-chain data — supply curve, staking participation, voting turnout, fee accumulation. The simulation calibrates against observed behaviour, so the proposed redesign is defended against the protocol's actual users. We've taken this path for protocols whose original token model was launched without a stress-test phase.",
+        "Yes. Retrofit engagements start with the live on-chain data - supply curve, staking participation, voting turnout, fee accumulation. The simulation calibrates against observed behaviour, so the proposed redesign is defended against the protocol's actual users. We've taken this path for protocols whose original token model was launched without a stress-test phase.",
     },
     {
       question: 'Do you handle the legal or regulatory framing?',
       answer:
-        "No. We work with the founder's chosen securities and tax counsel, document the model's assumptions cleanly enough for legal review, and answer technical questions in their conversations. The tokenomics paper is the model document — it is not a securities opinion. Investors and DAOs read both side by side.",
+        "No. We work with the founder's chosen securities and tax counsel, document the model's assumptions cleanly enough for legal review, and answer technical questions in their conversations. The tokenomics paper is the model document - it is not a securities opinion. Investors and DAOs read both side by side.",
     },
   ],
 }
@@ -336,7 +336,7 @@ export const nftMarketplaceDevelopment: LeafContent = {
   pillar: 'web3',
   slug: 'nft-marketplace-development',
   heroLede:
-    'NFT marketplace development is a full-stack product engineering practice. We build custom marketplaces with royalty enforcement, curated drops, secondary trading, lazy minting, and multi-chain support. Each engagement ships an audit-ready contract suite, a marketplace frontend, an indexer that powers discovery, and operator tooling for moderation. Contracts are engineered for third-party audit from the first commit. We work across EVM chains and Solana. Chain choice follows your creator base and gas profile. We engineer for the operator shipping a real product — not a clone of an existing marketplace. The team owns the marketplace from contract spec through frontend release and post-launch operations. We pair the build with tokenomics or staking work when the marketplace ships its own creator economy. Our broader Web3 engineering practice includes the Neemo Finance contracts cleared by four Hacken audit rounds.',
+    'NFT marketplace development is a full-stack product engineering practice. We build custom marketplaces with royalty enforcement, curated drops, secondary trading, lazy minting, and multi-chain support. Each engagement ships an audit-ready contract suite, a marketplace frontend, an indexer that powers discovery, and operator tooling for moderation. Contracts are engineered for third-party audit from the first commit. We work across EVM chains and Solana. Chain choice follows your creator base and gas profile. We engineer for the operator shipping a real product - not a clone of an existing marketplace. The team owns the marketplace from contract spec through frontend release and post-launch operations. We pair the build with tokenomics or staking work when the marketplace ships its own creator economy. Our broader Web3 engineering practice includes the Neemo Finance contracts cleared by four Hacken audit rounds.',
   deliverables: [
     {
       label: 'Marketplace contracts with royalty enforcement, escrow, and operator-controlled curation roles.',
@@ -357,15 +357,15 @@ export const nftMarketplaceDevelopment: LeafContent = {
   phases: [
     {
       title: 'Marketplace spec & economics',
-      body: 'We start with what the marketplace sells. Curated drops, open editions, secondary trading, creator royalties, fees, and dispute handling all have different contract and operations implications. We write a spec that pins each policy down — royalty enforcement model, fee splits, takedown rules, KYC posture. The spec is the brief for engineering and the operator playbook.',
+      body: 'We start with what the marketplace sells. Curated drops, open editions, secondary trading, creator royalties, fees, and dispute handling all have different contract and operations implications. We write a spec that pins each policy down - royalty enforcement model, fee splits, takedown rules, KYC posture. The spec is the brief for engineering and the operator playbook.',
     },
     {
       title: 'Contracts & indexer',
-      body: 'Contracts are built against the spec — escrow, lazy-mint, royalty hook, operator roles, and bidding logic. In parallel we build the indexer and search layer. Listings, transfers, and metadata are read from chain into a search index that the frontend hits. Contract changes are propagated through the indexer schema so frontend never reads chain directly.',
+      body: 'Contracts are built against the spec - escrow, lazy-mint, royalty hook, operator roles, and bidding logic. In parallel we build the indexer and search layer. Listings, transfers, and metadata are read from chain into a search index that the frontend hits. Contract changes are propagated through the indexer schema so frontend never reads chain directly.',
     },
     {
       title: 'Audit & frontend',
-      body: 'The contract suite goes to external audit while we ship the marketplace frontend, the operator dashboard, and the moderation tools. Audit findings ship into the suite before mainnet; frontend release is gated on the audit clearing. Wallet integration covers the standard wallets — MetaMask, WalletConnect, Phantom — and creator onboarding flows live behind feature flags.',
+      body: 'The contract suite goes to external audit while we ship the marketplace frontend, the operator dashboard, and the moderation tools. Audit findings ship into the suite before mainnet; frontend release is gated on the audit clearing. Wallet integration covers the standard wallets - MetaMask, WalletConnect, Phantom - and creator onboarding flows live behind feature flags.',
     },
     {
       title: 'Launch & operate',
@@ -398,13 +398,13 @@ export const nftMarketplaceDevelopment: LeafContent = {
     'NFT marketplace development is a full-stack engineering service for creator platforms that produces audit-ready marketplace contracts, an indexer, a frontend, and operator tooling. We work across EVM chains and Solana with multi-chain support from the contract layer up. We hold 8 verified Clutch reviews at a 4.9 rating, with Web3 work including four Hacken audit rounds on Neemo Finance.',
   relatedWork: [
     {
-      descriptor: 'Curated drop marketplace — multi-chain, royalty enforcement',
+      descriptor: 'Curated drop marketplace - multi-chain, royalty enforcement',
       summary:
         'A curated drop marketplace running across two EVM chains with royalty enforcement, lazy-minting, and an operator-led moderation flow.',
       href: '/work',
     },
     {
-      descriptor: 'Creator label secondary marketplace — royalties and disputes',
+      descriptor: 'Creator label secondary marketplace - royalties and disputes',
       summary:
         "A creator label's secondary marketplace with on-chain royalty splits, dispute handling, and a moderation queue for takedowns.",
       href: '/work',
@@ -419,12 +419,12 @@ export const nftMarketplaceDevelopment: LeafContent = {
     {
       question: "Do you support royalty enforcement on chains that don't enforce it?",
       answer:
-        "Yes, within the limits of the chain. On chains that ignore EIP-2981 by default, we enforce royalties at the marketplace contract layer — listings created on our marketplace honour the royalty, listings created elsewhere don't. We document the limit so creators understand what the marketplace can and can't guarantee, and operators set listing policy explicitly.",
+        "Yes, within the limits of the chain. On chains that ignore EIP-2981 by default, we enforce royalties at the marketplace contract layer - listings created on our marketplace honour the royalty, listings created elsewhere don't. We document the limit so creators understand what the marketplace can and can't guarantee, and operators set listing policy explicitly.",
     },
     {
       question: 'What chains do you support?',
       answer:
-        "We've shipped marketplace work on EVM chains and Solana. Choice follows your creator base, gas profile, and the wallet ecosystem your users already use. Multi-chain marketplaces are engineered from the contract layer up — indexer and frontend abstract chain so users don't see a chain switcher. We won't push a chain we prefer over yours.",
+        "We've shipped marketplace work on EVM chains and Solana. Choice follows your creator base, gas profile, and the wallet ecosystem your users already use. Multi-chain marketplaces are engineered from the contract layer up - indexer and frontend abstract chain so users don't see a chain switcher. We won't push a chain we prefer over yours.",
     },
     {
       question: 'How do you handle moderation and takedowns?',
@@ -434,7 +434,7 @@ export const nftMarketplaceDevelopment: LeafContent = {
     {
       question: 'Do you build operator dashboards or do you expect us to?',
       answer:
-        "Included. The operator dashboard is core scope — listing management, moderation queue, fee splits, royalty disputes, and analytics. We don't ship a marketplace and expect you to build the back office. The dashboard is engineered for your moderators and curators, not as a developer-facing console.",
+        "Included. The operator dashboard is core scope - listing management, moderation queue, fee splits, royalty disputes, and analytics. We don't ship a marketplace and expect you to build the back office. The dashboard is engineered for your moderators and curators, not as a developer-facing console.",
     },
   ],
 }
@@ -472,15 +472,15 @@ export const liquidStakingVaults: LeafContent = {
     },
     {
       title: 'Contracts & keepers',
-      body: 'We build the vault contracts and the off-chain keeper infrastructure in parallel. Property-based tests cover accounting invariants — total supply, validator-side balance, fee accumulator. Fork tests run the vault against real validator data. Keepers handle validator rotation, slashing events, and exit-queue processing. The two pieces are tested as a single system before audit.',
+      body: 'We build the vault contracts and the off-chain keeper infrastructure in parallel. Property-based tests cover accounting invariants - total supply, validator-side balance, fee accumulator. Fork tests run the vault against real validator data. Keepers handle validator rotation, slashing events, and exit-queue processing. The two pieces are tested as a single system before audit.',
     },
     {
       title: 'Audit & integration',
-      body: 'The contract suite goes to external audit while we build the operator dashboard and the integration documentation for downstream protocols. DeFi protocols that compose your receipt token need a clear SDK and an integration guide — that ships alongside the audit, not after. Findings ship into a second-round review and the audit report publishes alongside deployment.',
+      body: 'The contract suite goes to external audit while we build the operator dashboard and the integration documentation for downstream protocols. DeFi protocols that compose your receipt token need a clear SDK and an integration guide - that ships alongside the audit, not after. Findings ship into a second-round review and the audit report publishes alongside deployment.',
     },
     {
       title: 'Mainnet & operate',
-      body: 'Mainnet deployment runs from a reviewed script. Validators are routed to, the receipt token is live, and the keeper services run with monitoring. We respond to slashing events, validator-set changes, and exit-queue load through the operate phase. nsASTR currently runs at around twenty million dollars in TVL — that operating envelope is what we engineer for.',
+      body: 'Mainnet deployment runs from a reviewed script. Validators are routed to, the receipt token is live, and the keeper services run with monitoring. We respond to slashing events, validator-set changes, and exit-queue load through the operate phase. nsASTR currently runs at around twenty million dollars in TVL - that operating envelope is what we engineer for.',
     },
   ],
   techStack: [
@@ -496,12 +496,12 @@ export const liquidStakingVaults: LeafContent = {
   fit: {
     fits: [
       "You're shipping a liquid staking product and need contracts, keepers, and dashboards in one engagement.",
-      'Receipt token integration matters — DeFi protocols compose your token and need an SDK ready.',
+      'Receipt token integration matters - DeFi protocols compose your token and need an SDK ready.',
       'Budget covers external audit and the operate-phase keeper and monitoring work, not just contract delivery.',
     ],
     doesNotFit: [
       'You want to fork an existing liquid staking codebase and deploy on a new chain unchanged.',
-      'Validator selection is opinionated and constrained — only one operator, no rotation, no exit queue.',
+      'Validator selection is opinionated and constrained - only one operator, no rotation, no exit queue.',
       'The vault is a temporary mechanic for a token launch with no long-term operate-phase requirement.',
     ],
   },
@@ -509,13 +509,13 @@ export const liquidStakingVaults: LeafContent = {
     'Liquid staking vaults are validator-routing smart-contract systems for protocol founders that issue a transferable receipt token in exchange for staked assets. We engineered nsASTR, a liquid staking product running at roughly twenty million dollars in TVL on Astar. We engineered nrETH at roughly one million dollars in TVL. Our smart-contract work has cleared four Hacken audit rounds.',
   relatedWork: [
     {
-      descriptor: 'Astar liquid staking vault — ~$20M TVL receipt token',
+      descriptor: 'Astar liquid staking vault - ~$20M TVL receipt token',
       summary:
         'Liquid staking vault on Astar issuing a transferable receipt token, operating at roughly twenty million dollars in TVL.',
       href: '/work',
     },
     {
-      descriptor: 'EVM liquid restaking vault — receipt token at production',
+      descriptor: 'EVM liquid restaking vault - receipt token at production',
       summary:
         'Liquid restaking vault on an EVM chain with validator routing, rebasing accounting, and a receipt token integrated by downstream DeFi.',
       href: '/work',
@@ -530,7 +530,7 @@ export const liquidStakingVaults: LeafContent = {
     {
       question: 'How do you handle slashing risk in the receipt token?',
       answer:
-        'Slashing-aware accounting is part of the vault contracts from day one. When a validator gets slashed, the loss propagates to the receipt token balance through an accounting hook — not deferred, not socialized opaquely. The vault logs every slashing event on-chain so depositors and downstream DeFi protocols see exactly what happened. Insurance integration is optional, not assumed.',
+        'Slashing-aware accounting is part of the vault contracts from day one. When a validator gets slashed, the loss propagates to the receipt token balance through an accounting hook - not deferred, not socialized opaquely. The vault logs every slashing event on-chain so depositors and downstream DeFi protocols see exactly what happened. Insurance integration is optional, not assumed.',
     },
     {
       question: 'Do you handle validator operations?',
@@ -540,7 +540,7 @@ export const liquidStakingVaults: LeafContent = {
     {
       question: 'How does the receipt token integrate with downstream DeFi?',
       answer:
-        "Two paths. Composable rebasing — the balance changes over time, with adapter contracts published for integrations that don't handle rebasing natively. Wrapped non-rebasing — a wrapper that holds the rebasing token and exposes a non-rebasing share. We ship the SDK and integration docs so DeFi teams can adopt the token without back-and-forth.",
+        "Two paths. Composable rebasing - the balance changes over time, with adapter contracts published for integrations that don't handle rebasing natively. Wrapped non-rebasing - a wrapper that holds the rebasing token and exposes a non-rebasing share. We ship the SDK and integration docs so DeFi teams can adopt the token without back-and-forth.",
     },
     {
       question: 'Can you migrate or upgrade an existing liquid staking vault?',
@@ -557,7 +557,7 @@ export const liquidStakingVaults: LeafContent = {
 // DID-based Aadhaar verification as the core capability. AEO answer block
 // includes Aadhaar-scale deployment as a verifiable fact so AI Overviews
 // can cite this page as the India identity-systems reference. India-explicit
-// by design — other Web3 leaves stay globally positioned.
+// by design - other Web3 leaves stay globally positioned.
 // ---------------------------------------------------------------------------
 
 export const decentralizedIdentityDidIntegration: LeafContent = {
@@ -589,7 +589,7 @@ export const decentralizedIdentityDidIntegration: LeafContent = {
     },
     {
       title: 'DID & credential layer',
-      body: "We build the DID resolver, the verifiable-credential issuer, and the verifier. Credentials follow the W3C VC data model with proof formats interoperable across chains. The DID method is chosen by application context — chain-anchored where on-chain attestation matters, key-based where it doesn't. Selective disclosure uses ZKP primitives where Aadhaar attributes need privacy-preserving attestation rather than raw eKYC.",
+      body: "We build the DID resolver, the verifiable-credential issuer, and the verifier. Credentials follow the W3C VC data model with proof formats interoperable across chains. The DID method is chosen by application context - chain-anchored where on-chain attestation matters, key-based where it doesn't. Selective disclosure uses ZKP primitives where Aadhaar attributes need privacy-preserving attestation rather than raw eKYC.",
     },
     {
       title: 'UIDAI integration & hardening',
@@ -614,25 +614,25 @@ export const decentralizedIdentityDidIntegration: LeafContent = {
     fits: [
       'You operate a regulated product in India needing verified-identity flows linked to Aadhaar without storing eKYC.',
       'Your application can issue and verify W3C verifiable credentials, with consent flows the user controls.',
-      'Compliance teams are part of engagement scope — UIDAI access posture and audit logging are first-order.',
+      'Compliance teams are part of engagement scope - UIDAI access posture and audit logging are first-order.',
     ],
     doesNotFit: [
-      'You want a national-ID system built from scratch — Aadhaar replacement, not Aadhaar integration.',
+      'You want a national-ID system built from scratch - Aadhaar replacement, not Aadhaar integration.',
       'Raw eKYC data must be stored on chain or in plaintext for analytics or business logic.',
-      "There's no compliance or UIDAI-access workstream — the engagement assumes a clean regulatory path.",
+      "There's no compliance or UIDAI-access workstream - the engagement assumes a clean regulatory path.",
     ],
   },
   aeoAnswer:
     "Decentralized identity DID integration is a verifiable-credentials engineering service for India-regulated products that need Aadhaar-linked identity without storing raw eKYC data. We integrate UIDAI's eKYC, OTP authentication, and offline-mode QR verification with W3C DID and verifiable credentials infrastructure, engineered for Aadhaar-scale deployment across India's 1.3-billion-record identity system. We partner with Sedax for zero-knowledge selective disclosure of Aadhaar attributes.",
   relatedWork: [
     {
-      descriptor: 'India fintech — Aadhaar-linked verified-identity onboarding',
+      descriptor: 'India fintech - Aadhaar-linked verified-identity onboarding',
       summary:
         'Verified-identity onboarding for an India-regulated fintech using UIDAI eKYC, OTP authentication, and W3C verifiable credentials.',
       href: '/work',
     },
     {
-      descriptor: 'Web3 identity layer — ZKP-based Aadhaar attribute disclosure',
+      descriptor: 'Web3 identity layer - ZKP-based Aadhaar attribute disclosure',
       summary:
         'Selective-disclosure layer for an India-built Web3 identity product, partnered with Sedax for zero-knowledge attestations of Aadhaar attributes.',
       href: '/work',
@@ -647,28 +647,28 @@ export const decentralizedIdentityDidIntegration: LeafContent = {
     {
       question: 'Do you work directly with UIDAI?',
       answer:
-        "We integrate against UIDAI's published interfaces — eKYC, OTP, offline-mode QR — through your authorized KUA or AUA registration. We don't claim direct UIDAI partnership. The compliance and access registration is owned by your team or your KUA partner; we engineer against the access pattern they secure. We document the integration cleanly for UIDAI's audit review.",
+        "We integrate against UIDAI's published interfaces - eKYC, OTP, offline-mode QR - through your authorized KUA or AUA registration. We don't claim direct UIDAI partnership. The compliance and access registration is owned by your team or your KUA partner; we engineer against the access pattern they secure. We document the integration cleanly for UIDAI's audit review.",
     },
     {
       question: 'Why DID and not a standard eKYC integration?',
       answer:
-        "DID and verifiable credentials let the user hold their own credential. Verification happens without the verifier calling UIDAI for every check, which reduces UIDAI rate-limit pressure and improves verification latency. Re-verification is local — the credential's signature is checked against the issuer's DID-anchored key. For high-frequency verification this is materially cheaper and faster.",
+        "DID and verifiable credentials let the user hold their own credential. Verification happens without the verifier calling UIDAI for every check, which reduces UIDAI rate-limit pressure and improves verification latency. Re-verification is local - the credential's signature is checked against the issuer's DID-anchored key. For high-frequency verification this is materially cheaper and faster.",
     },
     {
       question: "How do you handle Aadhaar's privacy requirements?",
       answer:
-        "Raw eKYC data never leaves the issuer's custody. The credential carries claims, not raw documents. For attributes that need to be proved without disclosure — age over 18, residency in a state, citizenship — we use ZKP attestations through our Sedax partnership. Consent capture, audit logging, and revocation are first-class flows, not afterthoughts.",
+        "Raw eKYC data never leaves the issuer's custody. The credential carries claims, not raw documents. For attributes that need to be proved without disclosure - age over 18, residency in a state, citizenship - we use ZKP attestations through our Sedax partnership. Consent capture, audit logging, and revocation are first-class flows, not afterthoughts.",
     },
     {
       question: 'Can the DID layer work outside India?',
       answer:
-        'Yes. The DID and verifiable-credentials infrastructure is interoperable across national-ID systems — Aadhaar is the most demanding integration we ship, not the only one. The same credential layer supports passport-based, driver-license, and university-issued credentials. The UIDAI integration is what most India-regulated engagements lead with, but the architecture is portable.',
+        'Yes. The DID and verifiable-credentials infrastructure is interoperable across national-ID systems - Aadhaar is the most demanding integration we ship, not the only one. The same credential layer supports passport-based, driver-license, and university-issued credentials. The UIDAI integration is what most India-regulated engagements lead with, but the architecture is portable.',
     },
   ],
 }
 
 // ---------------------------------------------------------------------------
-// Bundled export — consumed by `./index.ts`.
+// Bundled export - consumed by `./index.ts`.
 // ---------------------------------------------------------------------------
 
 export const web3LeafContent = {

@@ -16,7 +16,7 @@ export function FaqSection() {
               Don&apos;t see your question?
             </p>
             <p className="mt-[8px] text-[14px] leading-[1.5] text-gray">
-              Email the founders directly — first reply usually lands the same day.
+              Email the founders directly: first reply usually lands the same day.
             </p>
             <a
               href="mailto:contact@metaborong.com?subject=Question%20about%20your%20studio"

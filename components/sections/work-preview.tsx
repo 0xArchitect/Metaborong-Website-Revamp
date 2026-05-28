@@ -55,7 +55,7 @@ export function WorkPreviewSection() {
         <a href="/#contact" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-brand no-underline">Talk to us →</a>
       </div>
       <p className="mb-[36px] max-w-[600px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
-        Live products across Web3, AI, fintech, and SaaS — each engineered for production and shipped with founders we still work with.
+        Live products across Web3, AI, fintech, and SaaS. Each is engineered for production and shipped with founders we still work with.
       </p>
 
       <div className="border border-border bg-bg">

@@ -17,6 +17,7 @@ import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
+import { ArrowRight } from 'lucide-react'
 import {
   pillars,
   getAllLeaves,
@@ -192,31 +193,91 @@ function HowWeWork({ phases }: { phases: readonly LeafContent['phases'][number][
 // Tech / stack strip — JetBrains Mono, restrained list, no logo soup.
 // ─────────────────────────────────────────────────────────────────────────────
 
+const getSimpleIconSlug = (name: string): string | null => {
+  const map: Record<string, string> = {
+    'next.js': 'nextdotjs',
+    'typescript': 'typescript',
+    'postgresql': 'postgresql',
+    'postgres': 'postgresql',
+    'prisma': 'prisma',
+    'aws': 'amazonwebservices',
+    'datadog': 'datadog',
+    'github actions': 'githubactions',
+    'terraform': 'terraform',
+    'react': 'react',
+    'vercel': 'vercel',
+    'stripe': 'stripe',
+    'stripe billing': 'stripe',
+    'auth.js': 'authdotjs',
+    'figma': 'figma',
+    'posthog': 'posthog',
+    'solidity': 'solidity',
+    'chainlink': 'chainlink',
+    'walletconnect': 'walletconnect',
+    'ipfs': 'ipfs',
+    'node.js': 'nodedotjs',
+    'python': 'python',
+    'openai': 'openai',
+    'anthropic': 'anthropic',
+    'redis': 'redis',
+    'hugging face': 'huggingface',
+    'linear': 'linear',
+    'notion': 'notion',
+    'miro': 'miro',
+    'loom': 'loom',
+    'numpy': 'numpy',
+    'pandas': 'pandas',
+    'matplotlib': 'matplotlib',
+    'jupyter': 'jupyter',
+    'langchain': 'langchain',
+    'sentry': 'sentry',
+    'twilio': 'twilio',
+    'the graph': 'thegraph',
+    'meilisearch': 'meilisearch'
+  }
+  return map[name.toLowerCase()] || null
+}
+
 function TechStackStrip({ items }: { items: readonly LeafContent['techStack'][number][] }) {
+  // Triple the items to ensure the marquee fills the screen and loops smoothly
+  const marqueeItems = [...items, ...items, ...items, ...items]
+
   return (
-    <Section bg="subtle" maxWidth="wide">
-      <div className="mb-[24px] md:mb-[32px]">
+    <section className="bg-bg-subtle py-[32px] md:py-[48px] overflow-hidden border-y border-border">
+      <div className="mx-auto w-full max-w-[1120px] px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px] mb-[24px]">
         <Eyebrow as="p" className="mb-[12px]">Tech stack</Eyebrow>
         <h2 className="text-[clamp(24px,3vw,36px)] font-bold tracking-[-0.025em] text-dark">
           What we build on
         </h2>
       </div>
-      <ul role="list" className="flex flex-wrap gap-[8px]">
-        {items.map((tech, i) => (
-          <li
-            key={i}
-            className="font-mono inline-flex items-center gap-[8px] border border-border bg-bg px-[12px] py-[8px] text-[12px] font-medium tracking-[0.02em] text-dark"
-          >
-            {tech.category && (
-              <span className="text-[10px] uppercase tracking-[0.1em] text-gray-light">
-                {tech.category}
-              </span>
-            )}
-            <span>{tech.name}</span>
-          </li>
-        ))}
-      </ul>
-    </Section>
+      <div className="relative flex w-full overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]">
+        <ul className="flex w-max animate-marquee items-center gap-[48px] md:gap-[80px] pr-[48px] md:pr-[80px] m-0 p-0 list-none will-change-transform hover:[animation-play-state:paused]">
+          {marqueeItems.map((tech, i) => {
+            const slug = getSimpleIconSlug(tech.name)
+            return (
+              <li
+                key={`${tech.name}-${i}`}
+                className="flex items-center gap-[16px] opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 shrink-0"
+              >
+                {slug ? (
+                  <img
+                    src={`https://cdn.simpleicons.org/${slug}/111111`}
+                    alt={`${tech.name} logo`}
+                    className="h-[32px] w-[32px] md:h-[40px] md:w-[40px] object-contain dark:invert"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="h-[8px] w-[8px] rounded-full bg-dark/30 dark:bg-white/30" />
+                )}
+                <span className="font-mono text-[16px] md:text-[20px] font-bold tracking-[0.02em] text-dark uppercase whitespace-nowrap">
+                  {tech.name}
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </section>
   )
 }
 
@@ -231,7 +292,7 @@ function FitBlock({ pillar, fit }: { pillar: Pillar; fit: LeafContent['fit'] }) 
       <div className="mb-[32px] md:mb-[40px]">
         <Eyebrow as="p" className="mb-[12px]">Scope</Eyebrow>
         <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.03em] text-dark">
-          When this fits — and when it doesn&apos;t
+          When this fits and when it doesn&apos;t
         </h2>
       </div>
       <div className="grid grid-cols-1 gap-[24px] md:grid-cols-2 md:gap-[48px]">
@@ -325,15 +386,23 @@ function RelatedWork({
               href={work.href}
               className="group flex h-full flex-col gap-[12px] border border-border bg-bg p-[24px] no-underline transition-colors duration-[var(--duration-fast)] hover:border-[color:var(--pillar-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
               style={{ '--pillar-color': pillar.color } as React.CSSProperties}
+              target={work.href.startsWith('http') ? '_blank' : undefined}
+              rel={work.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
-              <p
-                className="font-mono text-[11px] font-bold uppercase tracking-[0.1em]"
-                style={{ color: pillar.color }}
-              >
-                {work.descriptor}
-              </p>
-              <p className="text-[15px] leading-[1.6] text-dark">{work.summary}</p>
-              <span className="mt-auto text-[13px] font-medium text-brand">Read more →</span>
+              <div className="flex items-center gap-[10px]">
+                <span
+                  className="font-mono text-[11px] font-bold uppercase tracking-[0.1em]"
+                  style={{ color: pillar.color }}
+                >
+                  Live project
+                </span>
+              </div>
+              <p className="mt-[10px] text-[15px] font-semibold text-dark">{work.descriptor}</p>
+              <p className="mt-[8px] text-[14px] leading-[1.6] text-gray">{work.summary}</p>
+              <span className="mt-auto inline-flex items-center gap-[8px] text-[13px] font-semibold text-dark group-hover:text-[var(--pillar-color)]">
+                View live project
+                <ArrowRight />
+              </span>
             </Link>
           </li>
         ))}

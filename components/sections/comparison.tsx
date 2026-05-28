@@ -28,7 +28,7 @@ export function ComparisonSection() {
           Metaborong vs. large Web3/AI agencies and freelancers
         </h2>
         <p className="max-w-[760px] text-[clamp(14px,1.05vw,16px)] leading-[1.55] tracking-[-0.01em] text-gray">
-          A side-by-side comparison of Metaborong — a lean Web3 and AI development studio with integrated delivery across engineering, project management, and operations — against large agencies and freelance teams.
+          A side-by-side comparison of Metaborong, a lean Web3 and AI development studio with integrated delivery across engineering, project management, and operations, against large agencies and freelance teams.
         </p>
       </div>
       <div className="hidden border border-border lg:block lg:overflow-x-auto">
@@ -93,7 +93,7 @@ export function ComparisonSection() {
 
       <p className="mt-[clamp(12px,2svh,18px)] max-w-[72ch] font-mono text-[12px] leading-[1.55] text-gray">
         <span className="mr-[4px] font-bold text-accent">✓</span>
-        marks where the alternative has a structural advantage. Large agencies bring longer track records and procurement maturity. Metaborong&apos;s edge is integrated delivery — one senior team across engineering, project management, and operations, with fewer handoffs and faster decisions.
+        marks where the alternative has a structural advantage. Large agencies bring longer track records and procurement maturity. Metaborong&apos;s edge is integrated delivery: one senior team across engineering, project management, and operations, with fewer handoffs and faster decisions.
       </p>
     </Section>
   )
