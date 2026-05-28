@@ -17,6 +17,7 @@ import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
+import { ArrowRight } from 'lucide-react'
 import {
   pillars,
   getAllLeaves,
@@ -395,12 +396,9 @@ function RelatedWork({
                 >
                   Live project
                 </span>
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-gray-light">
-                  {work.descriptor}
-                </span>
               </div>
-              <p className="text-[15px] font-semibold text-dark">{work.outcome || 'Product Demo'}</p>
-              <p className="text-[14px] leading-[1.6] text-gray">{work.summary}</p>
+              <p className="mt-[10px] text-[15px] font-semibold text-dark">{work.descriptor}</p>
+              <p className="mt-[8px] text-[14px] leading-[1.6] text-gray">{work.summary}</p>
               <span className="mt-auto inline-flex items-center gap-[8px] text-[13px] font-semibold text-dark group-hover:text-[var(--pillar-color)]">
                 View live project
                 <ArrowRight />
