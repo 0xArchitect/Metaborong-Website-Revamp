@@ -7,7 +7,7 @@ import { listPublishedForFeed } from '@/lib/posts'
 import { deriveTextDescription } from '@/lib/blocks-to-md'
 
 const SITE_ORIGIN = 'https://www.metaborong.com'
-const FEED_TITLE = 'Metaborong — Field notes from the studio'
+const FEED_TITLE = 'Metaborong | Field notes from the studio'
 const FEED_DESC =
   'Web3 protocol design, AI agent architecture, and the messy product decisions in between.'
 

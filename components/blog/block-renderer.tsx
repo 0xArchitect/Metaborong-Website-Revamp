@@ -95,7 +95,7 @@ export function BlockRenderer({ block, resolveImage }: BlockRendererProps) {
           </p>
           {block.data.cite ? (
             <cite className="mt-[8px] block text-[13px] not-italic text-gray tracking-[-0.005em]">
-              — {block.data.cite}
+              - {block.data.cite}
             </cite>
           ) : null}
         </blockquote>

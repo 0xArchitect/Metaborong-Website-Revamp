@@ -11,7 +11,7 @@ import { ContactCtaSection } from '@/components/sections/contact-cta'
 // § Writing Tone. Body sentence target 12–14 words. No marketing inflation
 // (`revolutionary`, `cutting-edge`, etc.).
 const HERO_LEDE =
-  'Metaborong is a boutique engineering studio that builds production AI systems, on-chain protocols, and greenfield SaaS products for founders and crypto-native teams. We sell three engagements — AI capability added to existing products, decentralised protocol work across smart contracts and DeFi, and end-to-end product builds from scope through launch. One senior team owns each engagement: architecture, engineering, security, and deployment, from the first call to production. We engage from India and deliver globally, staying accountable as co-builders rather than billed contractors. Every claim on this site maps to a shipped engagement — agentic AI in production at PredictRAM and SunsetML, an Aadhaar-integrated DID stack live at GovTech scale, and DeFi protocols audited and shipped across EVM, Solana, and Cosmos. The three pillars below describe what we sell. The outcome strip routes by problem, not capability.'
+  'Metaborong is a boutique engineering studio that builds production AI systems, on-chain protocols, and greenfield SaaS products for founders and crypto-native teams. We sell three engagements: AI capability added to existing products, decentralised protocol work across smart contracts and DeFi, and end-to-end product builds from scope through launch. One senior team owns each engagement: architecture, engineering, security, and deployment, from the first call to production. We engage from India and deliver globally, staying accountable as co-builders rather than billed contractors. Every claim on this site maps to a shipped engagement: agentic AI in production at PredictRAM and SunsetML, an Aadhaar-integrated DID stack live at GovTech scale, and DeFi protocols audited and shipped across EVM, Solana, and Cosmos. The three pillars below describe what we sell. The outcome strip routes by problem, not capability.'
 
 type Outcome = {
   title: string
@@ -59,7 +59,7 @@ const ENGAGEMENT_PHASES: EngagementPhase[] = [
     num: '01',
     title: 'Discovery',
     duration: '1–2 wks',
-    body: 'A scoped sprint — problem framing, technical feasibility, written approach, milestone plan.',
+    body: 'A scoped sprint: problem framing, technical feasibility, written approach, milestone plan.',
   },
   {
     num: '02',
@@ -71,7 +71,7 @@ const ENGAGEMENT_PHASES: EngagementPhase[] = [
     num: '03',
     title: 'Operate',
     duration: 'Ongoing',
-    body: 'Post-launch retainers for AI evals, protocol upgrades, and product engineering — only when wanted.',
+    body: 'Post-launch retainers for AI evals, protocol upgrades, and product engineering, available only when wanted.',
   },
 ]
 
@@ -83,23 +83,23 @@ type OverviewFaq = { q: string; a: string }
 const OVERVIEW_FAQS: OverviewFaq[] = [
   {
     q: 'How do engagements typically start?',
-    a: 'A 30-minute call to scope the problem, then a written approach you can read or leave. No pitch deck, no discovery gauntlet. We hold NDAs until scoping gets concrete — not before the first conversation. Most teams hear back within 12 hours of the first email.',
+    a: 'A 30-minute call to scope the problem, then a written approach you can read or leave. No pitch deck, no discovery gauntlet. We hold NDAs until scoping gets concrete, but not before the first conversation. Most teams hear back within 12 hours of the first email.',
   },
   {
     q: 'What is a typical engagement length?',
-    a: 'Four to twelve weeks for most builds. Smart-contract delivery and AI integrations usually land in four to six. DeFi protocols, full SaaS platforms, and DID rollouts run longer — eight to sixteen weeks, milestoned and reviewed every two weeks. We scope to deliverables, not billed hours.',
+    a: 'Four to twelve weeks for most builds. Smart-contract delivery and AI integrations usually land in four to six. DeFi protocols, full SaaS platforms, and DID rollouts run longer, typically eight to sixteen weeks, milestoned and reviewed every two weeks. We scope to deliverables, not billed hours.',
   },
   {
     q: 'Where is the team based?',
-    a: 'Remote-first and globally distributed, with senior engineering anchored in India. We deliver across EVM, Solana, and Cosmos for global Web3 clients, and run UIDAI- and Aadhaar-integrated DID work for Indian GovTech engagements. No single head office — contact@metaborong.com reaches a founder.',
+    a: 'Remote-first and globally distributed, with senior engineering anchored in India. We deliver across EVM, Solana, and Cosmos for global Web3 clients, and run UIDAI- and Aadhaar-integrated DID work for Indian GovTech engagements. No single head office; contact@metaborong.com reaches a founder.',
   },
   {
     q: 'Who owns the IP and the code?',
-    a: 'You do, on delivery. Code, models, deployment infrastructure, and credentials transfer to your team or organisation. We keep no claim beyond the right to reference anonymised case studies — and even those wait for explicit sign-off from the engagement owner.',
+    a: 'You do, on delivery. Code, models, deployment infrastructure, and credentials transfer to your team or organisation. We keep no claim beyond the right to reference anonymised case studies, and even those wait for explicit sign-off from the engagement owner.',
   },
   {
     q: 'Do you work on retainer or fixed-bid?',
-    a: 'Both. Fixed-bid for scoped deliverables — smart-contract suites, MVP builds, audit response, DID rollouts. Retainer for ongoing work — production AI monitoring, protocol upgrades, post-launch product engineering. We default to fixed-bid for first engagements so the brief is forced into clarity.',
+    a: 'Both. Fixed-bid for scoped deliverables: smart-contract suites, MVP builds, audit response, DID rollouts. Retainer for ongoing work: production AI monitoring, protocol upgrades, post-launch product engineering. We default to fixed-bid for first engagements so the brief is forced into clarity.',
   },
 ]
 
@@ -246,7 +246,7 @@ function PillarGrid() {
           AI, Web3, and Product Studio
         </h2>
         <p className="mt-[16px] text-[16px] leading-[1.65] tracking-[-0.005em] text-gray">
-          Each pillar runs a Strategy / Product / Engineering triad — the same shape across all three, so engagements compose cleanly.
+          Each pillar runs a Strategy / Product / Engineering triad, using the same shape across all three, so engagements compose cleanly.
         </p>
       </div>
 

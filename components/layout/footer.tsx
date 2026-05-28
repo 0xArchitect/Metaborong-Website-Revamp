@@ -36,7 +36,7 @@ export function Footer() {
           <div className="col-span-2 flex flex-col gap-[16px] md:col-span-1 lg:col-span-1">
             <Logo size="md" href="/" />
             <p className="max-w-[36ch] text-[14px] leading-[1.55] tracking-[-0.005em] text-gray">
-              Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a small, senior, founder-led team.
+              Metaborong builds and ships Web3 protocols, AI agents, and SaaS products. We are a small, senior, founder-led team.
             </p>
           </div>
 

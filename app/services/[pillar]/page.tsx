@@ -9,19 +9,19 @@ type Params = { pillar: string }
 // this map mirrors that table so the hubs ship indexable from day one.
 const PILLAR_META: Record<string, { title: string; description: string }> = {
   ai: {
-    title: 'AI Development Services — Copilots, Agents, RAG — Metaborong',
+    title: 'AI Development Services | Copilots, Agents, RAG | Metaborong',
     description:
-      'Production AI capability: copilots, RAG, agentic systems, integration, and evaluation. Senior team, India + global.',
+      'Production AI engineering for startups and enterprise. We build agentic workflows, custom RAG pipelines, and specialized LLM integrations that solve concrete business problems.',
   },
   web3: {
-    title: 'Web3 Development Services — Smart Contracts, DeFi, DID — Metaborong',
+    title: 'Web3 Development Services | Smart Contracts, DeFi, DID | Metaborong',
     description:
       'Smart-contract, DeFi, NFT, DID, and tokenomics engineering. Multichain protocol studio from India, global delivery.',
   },
   'product-studio': {
-    title: 'Product Studio — MVP, SaaS, B2B Product Builds — Metaborong',
+    title: 'Product Studio | MVP, SaaS, B2B Product Builds | Metaborong',
     description:
-      'Greenfield product builds for founders without a CTO. MVP, SaaS, and B2B multi-tenant platforms, end-to-end.',
+      'End-to-end product builds for founders. We take zero-to-one SaaS, B2B platforms, and complex MVPs from technical scope through to production launch.',
   },
 }
 
