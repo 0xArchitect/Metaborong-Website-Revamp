@@ -211,13 +211,15 @@ function CaseStudyCard({
       href={caseStudy.href}
       className="group block border border-border bg-white p-[20px] no-underline transition-colors duration-[var(--duration-instant)] hover:border-dark md:p-[24px]"
       style={{ '--pillar-color': pillar.color } as React.CSSProperties}
+      target={caseStudy.href.startsWith('http') ? '_blank' : undefined}
+      rel={caseStudy.href.startsWith('http') ? 'noopener noreferrer' : undefined}
     >
       <div className="flex items-center gap-[10px]">
         <span
           className="font-mono text-[10px] font-bold uppercase tracking-[0.12em]"
           style={{ color: pillar.color }}
         >
-          Case study
+          Live project
         </span>
         <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-gray-light">
           {subGroupLabel}
@@ -230,7 +232,7 @@ function CaseStudyCard({
         {caseStudy.outcome}
       </p>
       <span className="mt-[14px] inline-flex items-center gap-[8px] text-[13px] font-semibold tracking-[-0.005em] text-dark group-hover:text-[var(--pillar-color)]">
-        Read related work
+        View live project
         <ArrowRight />
       </span>
     </Link>
@@ -334,11 +336,11 @@ function phaseHeadline(id: PillarId, copy: PillarHubCopy): string {
   const labels = copy.engagement.map((p) => p.label).join(' → ')
   switch (id) {
     case 'ai':
-      return `${labels} — production AI, not demoware.`
+      return `${labels}: production AI, not demoware.`
     case 'web3':
-      return `${labels} — audit-ready by default.`
+      return `${labels}: audit-ready by default.`
     case 'product-studio':
-      return `${labels} — one senior team, end to end.`
+      return `${labels}: one senior team, end to end.`
   }
 }
 

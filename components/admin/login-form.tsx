@@ -62,7 +62,7 @@ export function LoginForm() {
   const [fieldError, setFieldError] = useState<FieldKey | null>(null)
   const [retryAt, setRetryAt] = useState<number | null>(null) // epoch ms
   const [retryRemaining, setRetryRemaining] = useState<number>(0) // seconds
-  // Defers focus until after `busy` flips back to false — direct focus()
+  // Defers focus until after `busy` flips back to false - direct focus()
   // calls inside the catch block run while the input is still disabled,
   // which silently no-ops in real browsers and happy-dom alike.
   const [focusAfterReset, setFocusAfterReset] = useState<FieldKey | null>(null)
@@ -117,10 +117,10 @@ export function LoginForm() {
       setPassword('')
 
       if (err instanceof CsrfMissingError) {
-        // Defensive only — with skipCsrf:true on the login POST above this
+        // Defensive only - with skipCsrf:true on the login POST above this
         // path is unreachable. Kept as a friendly fallback in case the
         // api-client contract changes.
-        setError('Could not establish a session — please refresh and try again.')
+        setError('Could not establish a session - please refresh and try again.')
         setBusy(false)
         return
       }

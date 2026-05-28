@@ -5,7 +5,7 @@ const content: LeafContent = {
   slug: 'saas-product-development',
 
   heroLede:
-    'SaaS Product Development is an end-to-end product engagement for founders building a multi-tenant subscription business. We design and ship version one of the product with the SaaS plumbing built in from day one — multi-tenancy, billing, role-based access, audit logs, and the observability you need to run on-call. Founders get a single senior team owning architecture, design, engineering, and deployment, not a hand-off chain across vendors. Engagements run twelve to twenty weeks, deliver a production SaaS on your cloud account, and exit with a written runbook your future engineering hires can actually read. We work in two-week sprints, demo every Friday, and ship to staging on a continuous-deployment pipeline you own. At handoff you receive the repo, the Stripe account, the observability stack, and the cuts we recommend for v1.1 — written as a backlog, not as opinion.',
+    'SaaS Product Development is an end-to-end product engagement for founders building a multi-tenant subscription business. We design and ship version one of the product with the SaaS plumbing built in from day one - multi-tenancy, billing, role-based access, audit logs, and the observability you need to run on-call. Founders get a single senior team owning architecture, design, engineering, and deployment, not a hand-off chain across vendors. Engagements run twelve to twenty weeks, deliver a production SaaS on your cloud account, and exit with a written runbook your future engineering hires can actually read. We work in two-week sprints, demo every Friday, and ship to staging on a continuous-deployment pipeline you own. At handoff you receive the repo, the Stripe account, the observability stack, and the cuts we recommend for v1.1 - written as a backlog, not as opinion.',
 
   deliverables: [
     {
@@ -31,19 +31,19 @@ const content: LeafContent = {
   phases: [
     {
       title: 'Architecture lock',
-      body: 'We start with a one-week architecture review. Two senior engineers decide the tenancy model — schema-per-tenant, row-level isolation, or hybrid — based on customer-size and compliance needs. The decision drives data model, billing, and admin tooling, so we write it down and you sign off before any code ships.',
+      body: 'We start with a one-week architecture review. Two senior engineers decide the tenancy model - schema-per-tenant, row-level isolation, or hybrid - based on customer-size and compliance needs. The decision drives data model, billing, and admin tooling, so we write it down and you sign off before any code ships.',
     },
     {
       title: 'Vertical slices',
-      body: 'Two-week sprints, each ending with a working demo on staging. We ship vertical slices — auth, onboarding, the primary workflow, then billing — so the product is real and testable from sprint two onward. Founders run customer interviews on the staging build and feed the backlog directly, so the product reflects real usage before launch.',
+      body: 'Two-week sprints, each ending with a working demo on staging. We ship vertical slices - auth, onboarding, the primary workflow, then billing - so the product is real and testable from sprint two onward. Founders run customer interviews on the staging build and feed the backlog directly, so the product reflects real usage before launch.',
     },
     {
       title: 'SaaS plumbing',
-      body: 'Two sprints are reserved for the plumbing customers never see but auditors and lawyers do — Stripe webhooks, dunning, plan upgrades, refunds, audit logs, GDPR data-export, soft-delete. We build the admin tooling your support team will need from day one, not a quarter after launch when the first dispute lands.',
+      body: 'Two sprints are reserved for the plumbing customers never see but auditors and lawyers do - Stripe webhooks, dunning, plan upgrades, refunds, audit logs, GDPR data-export, soft-delete. We build the admin tooling your support team will need from day one, not a quarter after launch when the first dispute lands.',
     },
     {
       title: 'Hardening and handoff',
-      body: 'The final two sprints are hardening — load testing, a dependency audit, an on-call runbook, secret rotation, rate-limit tuning. We rehearse the launch on a clone of production with synthetic tenants. At handoff you get the repo, the Stripe account, the runbook, and a written v1.1 backlog ordered by cost-of-delay.',
+      body: 'The final two sprints are hardening - load testing, a dependency audit, an on-call runbook, secret rotation, rate-limit tuning. We rehearse the launch on a clone of production with synthetic tenants. At handoff you get the repo, the Stripe account, the runbook, and a written v1.1 backlog ordered by cost-of-delay.',
     },
   ],
 
@@ -63,13 +63,13 @@ const content: LeafContent = {
   fit: {
     fits: [
       'You are building a multi-tenant subscription product and need it shipped to production.',
-      'You want the SaaS plumbing — billing, audit logs, admin tooling — built in from v1.',
+      'You want the SaaS plumbing - billing, audit logs, admin tooling - built in from v1.',
       'You want one senior team owning architecture through launch, not a stack of contractors.',
     ],
     doesNotFit: [
-      'You already have a live SaaS and need v2 work — write to us at /contact instead.',
-      'You want a single-tenant tool for one company — that is a custom build, not a SaaS engagement.',
-      'You need SOC 2 certification on day one — scope a separate compliance program, not this build.',
+      'You already have a live SaaS and need v2 work - write to us at /contact instead.',
+      'You want a single-tenant tool for one company - that is a custom build, not a SaaS engagement.',
+      'You need SOC 2 certification on day one - scope a separate compliance program, not this build.',
     ],
   },
 
@@ -78,13 +78,13 @@ const content: LeafContent = {
 
   relatedWork: [
     {
-      descriptor: 'Chillies Enterprises — ERP-integrated AI engagement',
+      descriptor: 'Chillies Enterprises - ERP-integrated AI engagement',
       summary:
-        'We delivered an AI capability layered onto an existing ERP, with multi-account access controls and audit trails — the same plumbing a multi-tenant SaaS needs.',
+        'We delivered an AI capability layered onto an existing ERP, with multi-account access controls and audit trails - the same plumbing a multi-tenant SaaS needs.',
       href: '/work/',
     },
     {
-      descriptor: 'Internal — agri-fintech platform on permissioned blockchain',
+      descriptor: 'Internal - agri-fintech platform on permissioned blockchain',
       summary:
         'Our own build, CropXcel, runs on a permissioned Hyperledger Fabric stack with tenant-scoped data isolation. The patterns we use on client SaaS work were proved here first.',
       href: '/work/',
@@ -106,7 +106,7 @@ const content: LeafContent = {
     {
       question: 'Do you handle SOC 2, ISO, or HIPAA compliance?',
       answer:
-        'We design for the controls — audit logs, role-based access, encryption at rest, secret management — so the SaaS is auditable. The certification program itself is a separate engagement with a separate timeline; we can scope it or hand you off to a specialist. We do not bundle compliance into the build estimate, because it never goes well when we do.',
+        'We design for the controls - audit logs, role-based access, encryption at rest, secret management - so the SaaS is auditable. The certification program itself is a separate engagement with a separate timeline; we can scope it or hand you off to a specialist. We do not bundle compliance into the build estimate, because it never goes well when we do.',
     },
     {
       question: 'Which billing provider do you default to?',
@@ -116,7 +116,7 @@ const content: LeafContent = {
     {
       question: 'Can we add custom enterprise features after launch?',
       answer:
-        'Yes, but as a separate engagement, not a quiet rollover. Post-launch work — SSO, custom SLAs, dedicated tenants, white-label — is a v2 conversation we scope based on the contract that triggered it. If you are already shipped and need that work, write to us at /contact rather than starting a new MVP engagement.',
+        'Yes, but as a separate engagement, not a quiet rollover. Post-launch work - SSO, custom SLAs, dedicated tenants, white-label - is a v2 conversation we scope based on the contract that triggered it. If you are already shipped and need that work, write to us at /contact rather than starting a new MVP engagement.',
     },
   ],
 }

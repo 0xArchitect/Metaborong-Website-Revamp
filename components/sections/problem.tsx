@@ -61,7 +61,7 @@ export function ProblemSection() {
               Web3 and AI move in windows, not roadmaps. By the time most teams are ready to build, the window has already closed.
             </p>
             <p className="problem-bridge">
-              We ship inside the window — and build to last past it.
+              We ship inside the window, and build to last past it.
             </p>
           </div>
         </div>

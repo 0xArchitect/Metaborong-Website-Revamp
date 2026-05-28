@@ -32,7 +32,7 @@ export async function GET(): Promise<Response> {
   lines.push('## Key facts')
   lines.push('- Founded by three technical co-founders: Arnab Ray (CEO), Anik Ghosh (COO), Soumojit Ash (CTO).')
   lines.push('- Remote-first and globally distributed; no single head office.')
-  lines.push('- Direct contact: contact@metaborong.com — no account managers, no pitch decks.')
+  lines.push('- Direct contact: contact@metaborong.com (no account managers, no pitch decks).')
   lines.push('- Typical project duration: 4–12 weeks; smart contract audits and AI integrations deliver in 4–6 weeks.')
   lines.push('- 8+ products shipped in production across DeFi, gaming, AI, and SaaS.')
   lines.push('- Three service pillars: Web3, AI, and Product Studio.')
@@ -52,7 +52,7 @@ export async function GET(): Promise<Response> {
       lines.push(`#### ${sg.label}`)
       for (const c of sg.children) {
         const marker = c.status === 'coming-soon' ? ' _(coming soon)_' : ''
-        lines.push(`- **${c.name}**${marker} — ${c.description}`)
+        lines.push(`- **${c.name}**${marker}: ${c.description}`)
       }
       lines.push('')
     }

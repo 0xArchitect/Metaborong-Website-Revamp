@@ -6,7 +6,7 @@ import { useConsent } from '@/lib/use-consent'
 /**
  * Bottom-right consent banner. Renders only when there's no recorded decision.
  *
- * NEED LEGAL REVIEW — all visible copy in this component (banner body + button
+ * NEED LEGAL REVIEW - all visible copy in this component (banner body + button
  * labels) is placeholder language drafted without counsel. Replace with text
  * approved by a privacy lawyer before production launch.
  */
@@ -42,7 +42,7 @@ export function ConsentBanner() {
         {/* NEED LEGAL REVIEW */}
         We use your approximate location (country, region, city) to lightly
         personalize this page. It&apos;s derived from your IP and cached in a
-        cookie on your device — never stored on our servers, sold, or linked
+        cookie on your device - never stored on our servers, sold, or linked
         to your identity.
       </p>
       <details className="mb-4">
@@ -51,7 +51,7 @@ export function ConsentBanner() {
         </summary>
         <p className="mt-2 text-[13px] text-gray leading-snug">
           {/* NEED LEGAL REVIEW */}
-          We derive your location from your IP — either via our hosting
+          We derive your location from your IP - either via our hosting
           platform&apos;s edge geo (no third party) or, where that isn&apos;t
           available, by sending your IP to <strong>ipapi.co</strong> for a
           one-time lookup that we cache in a cookie on your device. Nothing is
@@ -86,7 +86,7 @@ export function ConsentBanner() {
 /**
  * Tiny pill that renders after a decision is recorded, letting the visitor
  * revoke consent (resets cookies, banner re-appears). Required for GDPR's
- * right-to-withdraw — consent must be as easy to revoke as to give.
+ * right-to-withdraw - consent must be as easy to revoke as to give.
  */
 export function ConsentRevokePill() {
   const { decision, set } = useConsent()
