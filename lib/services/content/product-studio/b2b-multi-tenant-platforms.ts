@@ -5,7 +5,7 @@ const content: LeafContent = {
   slug: 'b2b-multi-tenant-platforms',
 
   heroLede:
-    'B2B Multi-Tenant Platforms is an end-to-end engagement for teams shipping software that enterprise buyers procure and operate. We build the platform with workspace-scoped tenancy, SSO, audit logs, and role-based access wired in from day one — the controls procurement teams ask about before they sign. The engagement covers architecture, data model, frontend, backend, admin tooling, and the runbooks your support team will work from. Engagements run sixteen to twenty-four weeks, ship to your cloud account, and end with a deployable v1 that survives an enterprise security review. We pair a senior architect with a small engineering team and a designer, owned end-to-end from one shop. Founders building for mid-market or enterprise buyers, and SaaS teams whose first enterprise deal is forcing the rebuild, both fit here. The output is a platform, a runbook, and a handoff document.',
+    'B2B Multi-Tenant Platforms is an end-to-end engagement for teams shipping software that enterprise buyers procure and operate. We build the platform with workspace-scoped tenancy, SSO, audit logs, and role-based access wired in from day one - the controls procurement teams ask about before they sign. The engagement covers architecture, data model, frontend, backend, admin tooling, and the runbooks your support team will work from. Engagements run sixteen to twenty-four weeks, ship to your cloud account, and end with a deployable v1 that survives an enterprise security review. We pair a senior architect with a small engineering team and a designer, owned end-to-end from one shop. Founders building for mid-market or enterprise buyers, and SaaS teams whose first enterprise deal is forcing the rebuild, both fit here. The output is a platform, a runbook, and a handoff document.',
 
   deliverables: [
     {
@@ -35,15 +35,15 @@ const content: LeafContent = {
     },
     {
       title: 'Vertical slices',
-      body: 'Two-week sprints shipping vertical slices through the platform — auth and SSO, workspace creation, the primary workflow, admin tooling, audit logs. Each slice is testable on staging by the end of its sprint. We invite your earliest enterprise prospect to test on staging from sprint four so the product reflects real procurement pressure.',
+      body: 'Two-week sprints shipping vertical slices through the platform - auth and SSO, workspace creation, the primary workflow, admin tooling, audit logs. Each slice is testable on staging by the end of its sprint. We invite your earliest enterprise prospect to test on staging from sprint four so the product reflects real procurement pressure.',
     },
     {
       title: 'Enterprise controls',
-      body: 'Two sprints are reserved for the controls enterprise security reviews ask about — SCIM provisioning, IP allow-lists, audit-log export, data residency, custom retention, soft-delete and undelete. These are the items that turn a six-month sales cycle into a two-week one when the procurement team can tick them off in their template.',
+      body: 'Two sprints are reserved for the controls enterprise security reviews ask about - SCIM provisioning, IP allow-lists, audit-log export, data residency, custom retention, soft-delete and undelete. These are the items that turn a six-month sales cycle into a two-week one when the procurement team can tick them off in their template.',
     },
     {
       title: 'Hardening and handoff',
-      body: 'The final sprints harden the platform for production load and an enterprise security review — pen test, dependency audit, on-call runbook, SLA monitoring, secret rotation. We rehearse a tenant onboarding end-to-end. At handoff you get the repo, the cloud account, the runbook, and a written list of the next ten items to ship after first contract.',
+      body: 'The final sprints harden the platform for production load and an enterprise security review - pen test, dependency audit, on-call runbook, SLA monitoring, secret rotation. We rehearse a tenant onboarding end-to-end. At handoff you get the repo, the cloud account, the runbook, and a written list of the next ten items to ship after first contract.',
     },
   ],
 
@@ -62,13 +62,13 @@ const content: LeafContent = {
   fit: {
     fits: [
       'You are building for mid-market or enterprise buyers who run procurement and security reviews.',
-      'You need SSO, audit logs, and per-tenant configuration from day one — not bolted on later.',
+      'You need SSO, audit logs, and per-tenant configuration from day one - not bolted on later.',
       'You want one senior team owning architecture through enterprise readiness, not a chain of vendors.',
     ],
     doesNotFit: [
-      'You are pre-validation or pre-design — start with discovery, then return when the shape is clear.',
-      'You want a single-tenant install — that is a custom build, not a multi-tenant platform engagement.',
-      'You need a finished SOC 2 audit by launch — scope a separate compliance program in parallel.',
+      'You are pre-validation or pre-design - start with discovery, then return when the shape is clear.',
+      'You want a single-tenant install - that is a custom build, not a multi-tenant platform engagement.',
+      'You need a finished SOC 2 audit by launch - scope a separate compliance program in parallel.',
     ],
   },
 
@@ -77,15 +77,15 @@ const content: LeafContent = {
 
   relatedWork: [
     {
-      descriptor: 'Internal — CropXcel agri-fintech platform',
+      descriptor: 'Internal - CropXcel agri-fintech platform',
       summary:
-        'We built CropXcel, an agri-fintech platform, on a permissioned Hyperledger Fabric stack with tenant-scoped data isolation across producers, lenders, and buyers — our own build.',
+        'We built CropXcel, an agri-fintech platform, on a permissioned Hyperledger Fabric stack with tenant-scoped data isolation across producers, lenders, and buyers - our own build.',
       href: '/work/',
     },
     {
-      descriptor: 'Chillies Enterprises — ERP-integrated AI engagement',
+      descriptor: 'Chillies Enterprises - ERP-integrated AI engagement',
       summary:
-        'We delivered an AI capability over an existing ERP, with workspace controls, role-based access, and audit trails — the multi-account discipline a B2B platform needs.',
+        'We delivered an AI capability over an existing ERP, with workspace controls, role-based access, and audit trails - the multi-account discipline a B2B platform needs.',
       href: '/work/',
     },
   ],
@@ -100,7 +100,7 @@ const content: LeafContent = {
     {
       question: 'How is this different from SaaS Product Development?',
       answer:
-        'Both ship multi-tenant SaaS. The B2B Multi-Tenant Platforms engagement adds the enterprise-procurement layer — SSO and SCIM, audit-log export, data residency, contract-driven roles — and budgets a longer hardening phase for security review. If your buyer is mid-market or enterprise, pick this engagement. If your buyer is a single user or a small team, SaaS Product Development is the right one.',
+        'Both ship multi-tenant SaaS. The B2B Multi-Tenant Platforms engagement adds the enterprise-procurement layer - SSO and SCIM, audit-log export, data residency, contract-driven roles - and budgets a longer hardening phase for security review. If your buyer is mid-market or enterprise, pick this engagement. If your buyer is a single user or a small team, SaaS Product Development is the right one.',
     },
     {
       question: 'Do you implement SSO yourselves or use a provider?',
@@ -110,7 +110,7 @@ const content: LeafContent = {
     {
       question: 'Can you handle on-call after launch?',
       answer:
-        'We can scope a post-launch retainer covering on-call, incident response, and the first quarter of platform-level changes. We treat that as a separate engagement, not a default rollover from the build. Many clients move on-call to an in-house hire within ninety days and use us only for architecture-level work — both arrangements work fine.',
+        'We can scope a post-launch retainer covering on-call, incident response, and the first quarter of platform-level changes. We treat that as a separate engagement, not a default rollover from the build. Many clients move on-call to an in-house hire within ninety days and use us only for architecture-level work - both arrangements work fine.',
     },
     {
       question: 'Have you actually shipped a multi-tenant platform end-to-end?',

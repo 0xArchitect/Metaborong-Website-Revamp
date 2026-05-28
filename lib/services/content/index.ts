@@ -54,7 +54,7 @@ const registry: Record<string, LeafContent> = {
 
 /**
  * Look up authored content for a leaf. Returns `undefined` when the slug
- * has no registered content — the route is expected to fall back to the
+ * has no registered content - the route is expected to fall back to the
  * noindex stub in that case.
  */
 export function getLeafContent(pillar: string, slug: string): LeafContent | undefined {

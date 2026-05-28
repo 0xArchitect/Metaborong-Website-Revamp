@@ -1,14 +1,14 @@
 // Content contract for a v1 leaf service page.
 //
 // The leaf-service template (`components/services/leaf-service.tsx`) is a
-// presentation surface — it derives everything that can be derived from the
+// presentation surface - it derives everything that can be derived from the
 // taxonomy (pillar label, sub-group label, leaf name, breadcrumb trail,
 // related-leaf filtering) and consumes the rest through this interface.
 //
 // Content streams author one `LeafContent` per v1 slug listed in
 // `lib/services/seo-map.ts`. Authoring lives in `lib/services/content/`
 // (per-slug files) and is wired into the template at render time. The
-// template never reads MDX or markdown — every block is structured data.
+// template never reads MDX or markdown - every block is structured data.
 //
 // Word-budget targets (per SERVICES_PLAN.md § 6) sit in this file as comments
 // next to each field so content authors don't need to bounce to the plan.
@@ -18,7 +18,7 @@ import type { PillarId } from '@/components/sections/services-data'
 export type { PillarId }
 
 /**
- * One concrete artefact the engagement produces — the "what you'll have
+ * One concrete artefact the engagement produces - the "what you'll have
  * at the end" list. Renders as a compact card or bullet row.
  *
  * Hard limits per DESIGN.md § Writing Tone:
@@ -34,7 +34,7 @@ export interface LeafDeliverable {
 }
 
 /**
- * One phase of the engagement — a chunk of authored copy named after the
+ * One phase of the engagement - a chunk of authored copy named after the
  * actual work, not generic "discovery / build / ship".
  *
  * Hard limits:
@@ -83,7 +83,7 @@ export interface LeafFitBlock {
  * metrics. Either reference a real Metaborong engagement by descriptor
  * (e.g., "Series-A DeFi protocol") or omit.
  *
- *   - `descriptor` 4–8 words (e.g., "Mid-market SaaS — RAG copilot").
+ *   - `descriptor` 4–8 words (e.g., "Mid-market SaaS - RAG copilot").
  *   - `summary` ~25 words, one sentence preferred.
  *   - `href` typically points to `/work` or a `/blog/<slug>/` post.
  *
@@ -129,7 +129,7 @@ export interface LeafFaq {
  *
  * Identity (`pillar`, `slug`) is authored alongside the content so the
  * loader can sanity-check against `services-data.ts` and `seo-map.ts` at
- * build time — every `LeafContent` must resolve to a published leaf in
+ * build time - every `LeafContent` must resolve to a published leaf in
  * both registries, otherwise the build fails fast.
  *
  * Block-by-block word budgets sit on each field's typedef above. The
@@ -143,7 +143,7 @@ export interface LeafFaq {
  *   6. When this fits     (`fit`)
  *   7. AEO answer block   (`aeoAnswer`)
  *   8. Related work       (`relatedWork`)
- *   9. Related services   (`relatedServices` — filtered to v1 by template)
+ *   9. Related services   (`relatedServices` - filtered to v1 by template)
  *  10. FAQ                (`faqs`)
  *  11. Contact CTA        (reuses `contact-cta.tsx`)
  *

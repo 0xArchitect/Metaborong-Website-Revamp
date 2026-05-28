@@ -38,7 +38,7 @@ export function ServicesSection() {
       aria-labelledby="services-heading"
       className="services-section-bridge bg-bg"
     >
-      <h2 id="services-heading" className="sr-only">What we build — a small, senior team across three pillars</h2>
+      <h2 id="services-heading" className="sr-only">What we build: a small, senior team across three pillars</h2>
       <ServicesPillarsLazy />
 
       <script

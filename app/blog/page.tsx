@@ -5,9 +5,9 @@ import { listPublishedPosts } from '@/lib/posts'
 import type { PostSummary } from '@/lib/blog-schema'
 
 export const metadata: Metadata = {
-  title: 'Blog — Web3, AI agents, and product engineering — Metaborong',
+  title: 'Blog | Web3, AI agents, and product engineering | Metaborong',
   description:
-    'Notes from the Metaborong studio on shipping Web3 protocols, AI agents, and product systems.',
+    'Technical writing from the Metaborong engineering team. Post-mortem insights from production AI deployments, smart-contract patterns, and SaaS architecture.',
   alternates: {
     // Tag-filtered URLs (?tag=foo) and paginated URLs (?page=2) all
     // canonicalize to /blog so search engines don't index them as
@@ -179,9 +179,11 @@ function EmptyState({ tag }: { tag?: string }) {
       <h2 className="mb-[8px] text-[22px] font-semibold tracking-[-0.02em] text-dark">
         {tag ? `No posts tagged "${tag}" yet` : 'Nothing published yet'}
       </h2>
-      <p className="mx-auto max-w-[480px] text-[14px] leading-[1.55] tracking-[-0.005em] text-gray">
-        Check back soon — we ship faster than we write.
-      </p>
+      <div className="flex flex-col items-center justify-center py-[100px] text-center">
+        <p className="text-[15px] sm:text-[16px] text-gray">
+          Check back soon. We ship faster than we write.
+        </p>
+      </div>
     </div>
   )
 }
