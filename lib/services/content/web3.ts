@@ -231,40 +231,50 @@ export const web3TokenomicsDesign: LeafContent = {
   pillar: 'web3',
   slug: 'web3-tokenomics-design',
   heroLede:
-    "Web3 tokenomics design is a quantitative modelling practice. We turn protocol economics into a defensible supply, distribution, and emission schedule. We model supply curves, vesting cliffs, emission rates, staking yields, and fee splits. Each model is stress-tested against participant behaviours. Cliff-edge dumps, mercenary capital, governance capture, and inflation runaway are the failure modes we look for. Engagements ship an agent-based simulation, a written tokenomics paper, a vesting schedule with implementation notes, and a sensitivity analysis showing what breaks the model. The paper is the artefact you hand to investors, an auditor, or a DAO before launch. We work with founders who want the design defended before launch, not patched after. The output feeds directly into smart-contract development when that work is part of the same engagement.",
+    "Web3 tokenomics design is a quantitative modelling practice for protocol founders. Each engagement ships an agent-based simulation, a tokenomics paper, a vesting schedule, and a sensitivity analysis stress-tested against participant behaviours. We work with founders who want the economic model defended before launch — not patched after — and our team's smart-contract work has cleared four Hacken audit rounds.",
+  heroStats: [
+    { value: '~$20M', label: 'TVL engineered', context: 'nsASTR on Astar' },
+    { value: '4', label: 'Hacken audit rounds', context: 'Neemo Finance' },
+    { value: '10,000', label: 'Simulation trajectories', context: 'per model run' },
+  ],
   deliverables: [
     {
-      label: 'Token paper covering supply schedule, distribution, governance, and emissions rationale.',
+      label: 'Tokenomics paper covering supply schedule, distribution, governance, fee accrual, vesting graph, and sensitivity analysis.',
+      detail: 'Eight to twelve pages, written for investors, auditors, and DAOs as the canonical economic-model document.',
     },
     {
-      label: 'Agent-based simulation modelling participant behaviour across staking, selling, and governance.',
+      label: 'Agent-based simulation of stakers, holders, governance voters, and arbitrageurs across 10,000 scenario trajectories.',
+      detail: 'Python notebook with named scenarios, reproducible from the published parameter set, and rerun alongside every parameter change.',
     },
     {
-      label: 'Vesting schedule with cliff and unlock dates mapped to on-chain implementation.',
+      label: 'Vesting schedule with cliff and unlock calendar mapped to on-chain vesting-contract logic.',
+      detail: 'Per-allocation breakdown ready to hand to the smart-contract team without translation.',
     },
     {
-      label: 'Sensitivity analysis identifying parameters that destabilise supply, demand, or governance.',
+      label: 'Sensitivity analysis ranking the parameters that destabilise supply, demand, or governance under stress.',
+      detail: 'Each parameter is named, its failure mode is documented, and the threshold at which the model breaks is identified.',
     },
     {
-      label: 'Investor and DAO-ready summary of model assumptions and failure modes.',
+      label: 'Investor and DAO defence pack — one-page summary, model assumptions, and named failure modes with rebuttals.',
+      detail: 'The document founders take into fundraise meetings, DAO votes, and pre-launch security reviews.',
     },
   ],
   phases: [
     {
       title: 'Intent & constraints',
-      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution - each pulls the design in a different direction. We then capture constraints - fundraise size, vesting commitments to investors, regulatory posture, target chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
+      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution — each pulls the design in a different direction. We then capture constraints — fundraise size, vesting commitments to investors, regulatory posture, target-chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
     },
     {
       title: 'Model & stress-test',
-      body: 'We build an agent-based simulation in Python with stylised actor classes - long-term holders, mercenary stakers, governance participants, and arbitrage flows. Supply curves, emission schedules, and fee mechanics run against ten-thousand-trajectory scenarios. The model reports where the protocol becomes inflationary, where governance captures, and where staking yields collapse. Each scenario is named and documented.',
+      body: 'We build an agent-based simulation in Python with stylised actor classes — long-term holders, mercenary stakers, governance participants, and arbitrage flows. Supply curves, emission schedules, and fee mechanics run against 10,000-trajectory scenarios. The model reports where the protocol becomes inflationary, where governance captures, and where staking yields collapse. Each scenario is named and documented.',
     },
     {
       title: 'Paper & defence',
-      body: 'We write the tokenomics paper - supply schedule, distribution table, governance design, fee accrual logic, vesting graph, and sensitivity analysis. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders to argue the model against challenge questions before the public version ships.',
+      body: 'We write the tokenomics paper — supply schedule, distribution table, governance design, fee accrual logic, vesting graph, and sensitivity analysis. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders to argue the model against challenge questions before the public version ships.',
     },
     {
-      title: 'Implementation notes',
-      body: 'The paper hands over with implementation notes - emission schedule mapped to contract logic, vesting cliffs mapped to a vesting contract, and fee splits mapped to the on-chain accumulator. When smart-contract development is part of the same engagement, the tokenomics paper becomes the engineering spec. The model rerun is part of any post-launch parameter change.',
+      title: 'Implementation handoff',
+      body: 'We hand the paper over with implementation notes — emission schedule mapped to contract logic, vesting cliffs mapped to a vesting contract, and fee splits mapped to the on-chain accumulator. When smart-contract engineering is part of the same engagement, the tokenomics paper becomes the spec. The model rerun is part of any post-launch parameter change.',
     },
   ],
   techStack: [
@@ -281,51 +291,105 @@ export const web3TokenomicsDesign: LeafContent = {
     fits: [
       "You have a protocol concept and need the token's supply and incentive model defended before launch.",
       'Investors or a DAO are asking for a tokenomics paper that holds up to stress-testing.',
-      'The token launch is paired with smart-contract development we can engineer end-to-end.',
+      'The token launch is paired with smart-contract engineering we can deliver end-to-end.',
     ],
     doesNotFit: [
       'You want a one-page token summary copied from a recent launch with the parameters adjusted.',
-      'The token is decorative - no staking, no governance, no fee accrual, no real economic role.',
+      'The token is decorative — no staking, no governance, no fee accrual, no real economic role.',
       "Timeline pressure rules out a stress-test phase and the founders want a 'good enough' model.",
     ],
   },
   aeoAnswer:
-    "Web3 tokenomics design is a quantitative modelling service for protocol founders. We produce an agent-based simulation, a written tokenomics paper, a vesting schedule, and a sensitivity analysis stress-tested against participant behaviours. Our published Web3 engineering work includes Neemo Finance's smart contracts on Astar, audited four times by Hacken. We hold 8 verified Clutch reviews at a 4.9 rating.",
+    'Web3 tokenomics design is a quantitative modelling service for protocol founders building tokenised systems. Each engagement produces four artefacts: an agent-based simulation of participant behaviour across 10,000 scenario trajectories, a written tokenomics paper covering supply, distribution and emissions, a vesting schedule mapped to on-chain contract logic, and a sensitivity analysis identifying which parameters destabilise the model. The simulation is the document a serious investor or DAO reads first; the paper defends it. Tokenomics consulting at Metaborong is delivered by the same engineering team behind Neemo Finance — whose smart contracts have cleared four Hacken audit rounds — and behind nsASTR, a liquid-staking product running at roughly twenty million dollars in total value locked on the Astar network. Metaborong holds eight verified Clutch reviews at a 4.9 average.',
+  keyConcepts: [
+    {
+      term: 'Supply curve',
+      definition:
+        'A supply curve is the schedule that maps token supply to time. It captures initial circulating supply, scheduled emissions, vesting unlocks, and any sinks such as burns or buy-backs. Investors read the curve to estimate inflation, dilution, and unlock-driven sell pressure across the next 24 to 60 months.',
+    },
+    {
+      term: 'Vesting cliff',
+      definition:
+        'A vesting cliff is a date before which no vested tokens are released. Tokens accrue through the cliff but cannot be claimed or sold until it passes. Cliffs are used for team and investor allocations to align long-term incentives and prevent immediate post-launch sell pressure.',
+    },
+    {
+      term: 'Emission schedule',
+      definition:
+        'An emission schedule defines how new tokens enter circulation over time, typically through staking rewards, liquidity mining, or protocol-revenue distribution. Schedules can be fixed, decaying, or governance-controlled. The shape of emissions drives long-run inflation and is the primary lever for staking yield.',
+    },
+    {
+      term: 'Agent-based simulation',
+      definition:
+        'An agent-based simulation models a token economy by simulating individual participants — long-term holders, mercenary stakers, governance voters, arbitrageurs — and observing emergent outcomes. Unlike closed-form models, it surfaces second-order effects such as governance capture, mercenary capital flight, and feedback loops between incentives and behaviour.',
+    },
+    {
+      term: 'Sensitivity analysis',
+      definition:
+        'A sensitivity analysis tests how protocol outcomes change when input parameters move. In tokenomics it identifies the parameters most likely to destabilise the model — emission rates, staking yields, vesting cliffs, fee splits. The analysis surfaces which assumptions a launch is most exposed to.',
+    },
+  ],
   relatedWork: [
     {
-      descriptor: 'Liquid-staking token - supply, emission, and vesting design',
+      descriptor: 'nsASTR — ~$20M TVL liquid-staking receipt token on Astar',
       summary:
-        'Token supply, vesting, and emission design for a liquid-staking product running at production TVL on an EVM-compatible L1.',
+        'Token supply, vesting, and emission design for the liquid-staking product running at production TVL on the Astar L1.',
+      href: '/work',
+    },
+    {
+      descriptor: 'nrETH — ~$1M TVL liquid-restaking receipt token',
+      summary:
+        'Receipt-token economic model for an EVM liquid-restaking vault composed by downstream DeFi protocols.',
       href: '/work',
     },
   ],
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'defi-protocol-development' },
-    { pillar: 'product-studio', slug: 'product-discovery-validation' },
+    { pillar: 'web3', slug: 'protocol-architecture-review' },
   ],
   faqs: [
     {
       question: 'Do you write tokenomics papers without simulation?',
       answer:
-        "No. A tokenomics paper without a simulation is a marketing document. The simulation is what surfaces failure modes - cliff-edge dumps, governance capture, runaway emissions, mercenary staking. Without it the paper makes claims it can't defend in an investor meeting or a DAO vote. We won't ship the paper standalone.",
+        "No. A tokenomics paper without a simulation is a marketing document. The simulation is what surfaces failure modes — cliff-edge dumps, governance capture, runaway emissions, mercenary staking. Without it the paper makes claims it can't defend in an investor meeting or a DAO vote. We won't ship the paper standalone.",
     },
     {
       question: 'How long does a tokenomics engagement run?',
       answer:
-        'Most engagements run 4–8 weeks end-to-end. Intent and constraints take a week. Modelling and stress-testing run 2–4 weeks. Paper drafting and defence sessions take another 1–2 weeks. When tokenomics is bundled with smart-contract development the modelling timeline lengthens, because parameter choices feed directly into contract spec.',
+        'Most engagements run 4–8 weeks end-to-end. Intent and constraints take a week. Modelling and stress-testing run 2–4 weeks. Paper drafting and defence sessions take another 1–2 weeks. When tokenomics is bundled with smart-contract engineering, the modelling timeline lengthens because parameter choices feed directly into contract spec.',
     },
     {
       question: "Can you redesign an existing protocol's tokenomics?",
       answer:
-        "Yes. Retrofit engagements start with the live on-chain data - supply curve, staking participation, voting turnout, fee accumulation. The simulation calibrates against observed behaviour, so the proposed redesign is defended against the protocol's actual users. We've taken this path for protocols whose original token model was launched without a stress-test phase.",
+        "Yes. Retrofit engagements start with the live on-chain data — supply curve, staking participation, voting turnout, fee accumulation. The simulation calibrates against observed behaviour, so the proposed redesign is defended against the protocol's actual users. We've taken this path for protocols whose original token model was launched without a stress-test phase.",
     },
     {
       question: 'Do you handle the legal or regulatory framing?',
       answer:
-        "No. We work with the founder's chosen securities and tax counsel, document the model's assumptions cleanly enough for legal review, and answer technical questions in their conversations. The tokenomics paper is the model document - it is not a securities opinion. Investors and DAOs read both side by side.",
+        "No. We work with the founder's chosen securities and tax counsel, document the model's assumptions cleanly enough for legal review, and answer technical questions in their conversations. The tokenomics paper is the model document — it is not a securities opinion. Investors and DAOs read both side by side.",
+    },
+    {
+      question: 'How much does Web3 tokenomics design cost?',
+      answer:
+        'Engagements are priced by scope, not by listed rate. A standalone tokenomics design — paper, simulation, vesting, and sensitivity analysis — typically runs lower than a bundled engagement that includes smart-contract delivery, because the modelling work is the entire scope. We quote after the intent-and-constraints brief is written, so the number reflects the actual model complexity rather than a category default. Founders typically budget for the engineering team and external audit on top of the design fee.',
+    },
+    {
+      question: 'What is the difference between tokenomics and token economics?',
+      answer:
+        'In practice the two terms are used interchangeably. Tokenomics is the practical economic design of a single token — its supply, distribution, vesting, emissions, fee accrual, and governance. Token economics is the broader academic discipline that studies token-based systems, including market structure, network effects, and incentive design. Founders shopping for a vendor are almost always asking for tokenomics work.',
+    },
+    {
+      question: 'What goes in a tokenomics paper?',
+      answer:
+        'A defensible tokenomics paper covers eight components: (1) token utility and role, (2) total supply and supply curve, (3) allocation and distribution table, (4) vesting schedule with cliffs, (5) emission schedule and inflation logic, (6) fee accrual and value capture, (7) governance design and voting power, and (8) sensitivity analysis naming the parameters that destabilise the model. The paper itself is the document an investor, a DAO, or a smart-contract auditor reads first.',
+    },
+    {
+      question: 'Do I need a tokenomics audit before launching a token?',
+      answer:
+        "If you're raising or listing — yes. A tokenomics audit is the analytical companion to a smart-contract audit: it stress-tests the economic model against participant behaviour, so the supply curve, emission schedule, and vesting design defend themselves under attack. Investors and exchanges increasingly request it. The audit either confirms the existing design or surfaces the parameters that need to change before launch.",
     },
   ],
+  lastReviewed: '2026-05-31',
 }
 
 // ---------------------------------------------------------------------------

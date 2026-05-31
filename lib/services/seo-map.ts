@@ -111,10 +111,10 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     pillar: 'web3',
     subGroup: 'strategy',
     slug: 'web3-tokenomics-design',
-    keyword: 'tokenomics design and consulting',
+    keyword: 'Web3 tokenomics design',
     title: 'Web3 Tokenomics Design & Consulting | Metaborong',
     description:
-      'Token supply, distribution, emissions, and governance modelling for launch. Stress-tested against real on-chain behaviour, not slide-deck theory.',
+      'Web3 tokenomics design and consulting — agent-based simulation, supply, vesting and emissions modelling, stress-tested before launch. Hacken-audited team.',
   },
   {
     pillar: 'web3',

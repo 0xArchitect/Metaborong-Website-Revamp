@@ -125,6 +125,28 @@ export interface LeafFaq {
 }
 
 /**
+ * One DefinedTerm passage for the optional Key Concepts block. Each definition
+ * is encyclopedic voice (no first-person), opens with "[Term] is a…", and
+ * targets ~40–55 words so each entry stands as a self-contained citable
+ * passage. Emitted both as visible UI and as `DefinedTermSet` JSON-LD.
+ */
+export interface LeafKeyConcept {
+  term: string
+  definition: string
+}
+
+/**
+ * One Hero stats row entry. Verifiable proof numbers surfaced at the top of
+ * the page. Mono treatment. Optional context line for the human-readable
+ * source ("nsASTR on Astar", "Neemo Finance").
+ */
+export interface LeafHeroStat {
+  value: string
+  label: string
+  context?: string
+}
+
+/**
  * Top-level content contract for a single leaf service page.
  *
  * Identity (`pillar`, `slug`) is authored alongside the content so the
@@ -171,4 +193,13 @@ export interface LeafContent {
   relatedWork: readonly LeafRelatedWork[]
   relatedServices: readonly LeafRelatedServiceRef[]
   faqs: readonly LeafFaq[]
+
+  /** Optional. Hero proof numbers (3 entries). Surfaces verifiable trust signals above the fold. */
+  heroStats?: readonly LeafHeroStat[]
+
+  /** Optional. Key concept definitions. Renders as a visible section + DefinedTermSet JSON-LD. */
+  keyConcepts?: readonly LeafKeyConcept[]
+
+  /** Optional. ISO date (YYYY-MM-DD) of last editorial review. Powers `dateModified` schema + visible "Last reviewed" line. */
+  lastReviewed?: string
 }

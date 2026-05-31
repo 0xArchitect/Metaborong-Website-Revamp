@@ -41,14 +41,21 @@ export function LeafServicePage({ pillar, subGroup, leaf, content }: LeafService
     <main className="bg-bg">
       <Breadcrumb pillar={pillar} leaf={leaf} />
       <Hero pillar={pillar} subGroup={subGroup} leaf={leaf} lede={content.heroLede} />
+      {content.heroStats && content.heroStats.length > 0 && (
+        <HeroStatsRow pillar={pillar} stats={content.heroStats} />
+      )}
+      <AeoAnswer pillar={pillar} leaf={leaf} answer={content.aeoAnswer} />
       <WhatWeDeliver pillar={pillar} deliverables={content.deliverables} />
+      {content.keyConcepts && content.keyConcepts.length > 0 && (
+        <KeyConcepts pillar={pillar} concepts={content.keyConcepts} />
+      )}
       <HowWeWork phases={content.phases} />
       <TechStackStrip items={content.techStack} />
       <FitBlock pillar={pillar} fit={content.fit} />
-      <AeoAnswer pillar={pillar} leaf={leaf} answer={content.aeoAnswer} />
       <RelatedWork pillar={pillar} items={content.relatedWork} />
       {relatedLeaves.length > 0 && <RelatedServices items={relatedLeaves} />}
       <FaqBlock faqs={content.faqs} />
+      {content.lastReviewed && <LastReviewedLine date={content.lastReviewed} />}
       <ContactCtaSection />
     </main>
   )
@@ -520,4 +527,115 @@ function ChevronIcon() {
       <path d="M4.5 7L9 11.5L13.5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
     </svg>
   )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Hero stats row — 3 mono-treated verifiable proof numbers, sits directly
+// under Hero. Trust-signal anchor for the top viewport. Pillar-tinted value.
+// ─────────────────────────────────────────────────────────────────────────────
+
+function HeroStatsRow({
+  pillar,
+  stats,
+}: {
+  pillar: Pillar
+  stats: NonNullable<LeafContent['heroStats']>
+}) {
+  return (
+    <section
+      aria-label="Engagement proof"
+      className="border-y border-border bg-bg-subtle px-[16px] py-[24px] sm:px-[24px] md:px-[48px] md:py-[28px] lg:px-[96px] xl:px-[128px]"
+    >
+      <ul
+        role="list"
+        className="mx-auto grid w-full max-w-[1120px] grid-cols-1 gap-[16px] sm:grid-cols-3 sm:gap-[24px]"
+      >
+        {stats.map((stat, i) => (
+          <li key={i} className="flex flex-col gap-[4px]">
+            <span
+              className="font-mono text-[clamp(22px,2.4vw,32px)] font-bold tracking-[-0.02em] leading-[1.1]"
+              style={{ color: pillar.color }}
+            >
+              {stat.value}
+            </span>
+            <span className="text-[13px] font-semibold tracking-[-0.01em] text-dark">
+              {stat.label}
+            </span>
+            {stat.context && (
+              <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-gray-light">
+                {stat.context}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Key concepts — encyclopedic DefinedTerm passages rendered as visible UI.
+// Pairs with `DefinedTermSet` JSON-LD emitted by the route. Each definition
+// is a self-contained citable passage (~45 words).
+// ─────────────────────────────────────────────────────────────────────────────
+
+function KeyConcepts({
+  pillar,
+  concepts,
+}: {
+  pillar: Pillar
+  concepts: NonNullable<LeafContent['keyConcepts']>
+}) {
+  return (
+    <Section maxWidth="wide">
+      <div className="mb-[32px] md:mb-[40px]">
+        <Eyebrow as="p" className="mb-[12px]">Key concepts</Eyebrow>
+        <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.03em] text-dark">
+          Tokenomics terms, defined
+        </h2>
+      </div>
+      <dl className="grid grid-cols-1 gap-[24px] md:grid-cols-2 md:gap-[32px]">
+        {concepts.map((c, i) => (
+          <div
+            key={i}
+            className="border border-border bg-bg p-[24px] border-l-[3px]"
+            style={{ borderLeftColor: pillar.color }}
+          >
+            <dt className="text-[18px] font-bold tracking-[-0.02em] leading-[1.3] text-dark mb-[8px]">
+              {c.term}
+            </dt>
+            <dd className="text-[15px] leading-[1.65] text-gray">{c.definition}</dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Last reviewed line — E-E-A-T freshness signal. Sits between FAQ and Contact
+// CTA. Pairs with `dateModified` + `reviewedBy` in the Service JSON-LD.
+// ─────────────────────────────────────────────────────────────────────────────
+
+function LastReviewedLine({ date }: { date: string }) {
+  // Format YYYY-MM-DD -> "31 May 2026" for visible display. Schema gets ISO.
+  const formatted = formatReviewDate(date)
+  return (
+    <section
+      aria-label="Editorial review"
+      className="border-t border-border-subtle bg-bg px-[16px] py-[20px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
+    >
+      <p className="mx-auto max-w-[1120px] font-mono text-[11px] uppercase tracking-[0.08em] text-gray-light">
+        Last reviewed <time dateTime={date}>{formatted}</time> · Reviewed by Metaborong engineering team
+      </p>
+    </section>
+  )
+}
+
+function formatReviewDate(iso: string): string {
+  // YYYY-MM-DD -> "31 May 2026". Server-rendered, locale-stable.
+  const [y, m, d] = iso.split('-')
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const monthName = months[Number(m) - 1] ?? m
+  return `${Number(d)} ${monthName} ${y}`
 }

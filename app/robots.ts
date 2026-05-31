@@ -11,7 +11,10 @@
 import type { MetadataRoute } from 'next'
 import { SITE_ORIGIN } from '@/lib/seo'
 
-const DISALLOW = ['/api/', '/services/', '/admin/', '/admin/posts/*/preview']
+// `/services/` removed (2026-05-31): published v1 leaves now ship structured
+// content + JSON-LD and need to be reachable by AI crawlers. Coming-soon stubs
+// self-exclude via `robots: { index: false, follow: false }` on the route.
+const DISALLOW = ['/api/', '/admin/', '/admin/posts/*/preview']
 
 export default function robots(): MetadataRoute.Robots {
   const isProd = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
