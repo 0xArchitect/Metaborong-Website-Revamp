@@ -52,7 +52,11 @@ export async function GET(): Promise<Response> {
       lines.push(`#### ${sg.label}`)
       for (const c of sg.children) {
         const marker = c.status === 'coming-soon' ? ' _(coming soon)_' : ''
-        lines.push(`- **${c.name}**${marker}: ${c.description}`)
+        const url =
+          c.status === 'published'
+            ? ` -> ${SITE_ORIGIN}/services/${p.id}/${c.slug}/`
+            : ''
+        lines.push(`- **${c.name}**${marker}${url}: ${c.description}`)
       }
       lines.push('')
     }
