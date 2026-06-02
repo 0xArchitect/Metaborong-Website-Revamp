@@ -31,6 +31,7 @@ import {
   nftMarketplaceDevelopment,
   liquidStakingVaults,
   decentralizedIdentityDidIntegration,
+  tokenLaunchpadDevelopment,
 } from './web3'
 
 const registry: Record<string, LeafContent> = {
@@ -42,10 +43,11 @@ const registry: Record<string, LeafContent> = {
   'ai/llm-integration-architecture': llmIntegrationArchitecture,
   'web3/smart-contract-development': smartContractDevelopment,
   'web3/defi-protocol-development': defiProtocolDevelopment,
-  'web3/web3-tokenomics-design': web3TokenomicsDesign,
+  'web3/tokenomics-design': web3TokenomicsDesign,
   'web3/nft-marketplace-development': nftMarketplaceDevelopment,
   'web3/liquid-staking-vaults': liquidStakingVaults,
   'web3/decentralized-identity-did-integration': decentralizedIdentityDidIntegration,
+  'web3/token-launchpad-development': tokenLaunchpadDevelopment,
   'product-studio/product-discovery-validation': productDiscoveryValidation,
   'product-studio/mvp-development': mvpDevelopment,
   'product-studio/saas-product-development': saasProductDevelopment,

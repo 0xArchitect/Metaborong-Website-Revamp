@@ -10,28 +10,29 @@
 
 ## 1. Decision summary
 
-Consolidate the Web3 pillar to **12 leaves, zero coming-soon stubs**. Each leaf is a real,
+Consolidate the Web3 pillar to **13 leaves, zero coming-soon stubs**. Each leaf is a real,
 published page targeting one distinct head keyword. Depth lives across the cluster, not on
 any one page; every page is **Lean** (~650–850 words) except for a glossary add-on on the
-6 concept-heavy leaves. Nav + homepage feature a curated subset; the pillar hub shows all 12.
+7 concept-heavy leaves. Nav + homepage feature a curated subset; the pillar hub shows all 13.
 
-Net change: **6 new pages** to author · **1 copy revision** (Tokenomics → Lean + launchpad/bonding-curve + Coin-it) · **2 retitles** · **4 removals/folds** · **0 stubs**.
+Net change: **6 new pages** to author · **1 Lean revision + rename + reslug** (Web3 Tokenomics Design → **Tokenomics Design**, slug `tokenomics-design` + 308 redirect) · **1 split-out leaf** (Token Launchpad Development — separated from tokenomics for one-entity-per-page AEO) · **2 retitles** · **3 removals** · **0 stubs**.
 
 ---
 
-## 2. Final taxonomy (12 leaves)
+## 2. Final taxonomy (13 leaves)
 
 Sub-group framing (Strategy / Product / Engineering) is kept — validated against Labrys,
 which uses the same three-bucket cut.
 
 | Group | Leaf | Slug | State | Glossary | Content tier |
 |---|---|---|---|---|---|
-| Strategy | Web3 Tokenomics Design | `web3-tokenomics-design` | keep + **revise** (trim to Lean; fold launchpad + bonding curves; add Coin-it) | yes (has) | Lean |
+| Strategy | Tokenomics Design | `tokenomics-design` | **rename + reslug + Lean trim** (was "Web3 Tokenomics Design" / `web3-tokenomics-design`; 308 redirect) | yes | Lean |
 | Strategy | Blockchain Consulting | `blockchain-consulting` | **new** (absorbs arch-review + product-discovery) | no | Lean |
 | Product | NFT Marketplace Development | `nft-marketplace-development` | keep | no | Lean |
 | Product | Crypto Wallet Development | `crypto-wallet-development` | **promote + new copy** | no | Lean |
 | Product | DEX Development | `dex-development` | **new** | no | Lean |
 | Product | RWA Tokenization | `rwa-tokenization` | **new** | yes | Lean |
+| Product | Token Launchpad Development | `token-launchpad-development` | **new** (split out of tokenomics) | yes | Lean |
 | Engineering | Smart Contract Development | `smart-contract-development` | keep | no | Lean |
 | Engineering | DeFi Protocol Development | `defi-protocol-development` | keep (narrow to lending/perps/yield/vaults) | yes | Lean |
 | Engineering | Liquid Staking & Restaking Vaults | `liquid-staking-vaults` | keep (**retitle**, slug unchanged) | yes | Lean |
@@ -42,7 +43,7 @@ which uses the same three-bucket cut.
 **Removals / folds** (delete from `services-data.ts`):
 - `protocol-architecture-review` (coming-soon) → folded into **Blockchain Consulting**.
 - `web3-product-discovery` (coming-soon) → folded into **Blockchain Consulting**.
-- `token-launchpad-distribution` (coming-soon) → folded into **Tokenomics** (deliverable + FAQ; bonding curve becomes a glossary term).
+- `token-launchpad-distribution` (coming-soon) → **promoted to a standalone leaf, Token Launchpad Development** (`token-launchpad-development`) — *not* folded into tokenomics. A combined "Tokenomics Design and Launchpad" page was tried and reverted: one entity per page wins for AEO/GEO (a clean "What is X?" on each).
 - `dao-governance-systems` (coming-soon) → **dropped**.
 
 **Retitles** (display name only — slugs and SEO equity preserved):
@@ -54,11 +55,11 @@ which uses the same three-bucket cut.
 ## 3. Content model — single Lean baseline + glossary add-on
 
 The locked 14-block order (`leaf-content.ts`) is unchanged; this is a **word-budget
-deviation**, approved by the user. **All 12 leaves use one Lean budget — there is no Deep
+deviation**, approved by the user. **All 13 leaves use one Lean budget — there is no Deep
 tier.** The only thing that varies between leaves is the glossary. (Tokenomics, currently
 ~1,150w, is trimmed down to this budget while keeping its glossary — see §4.0.)
 
-| Block | **Lean (all 12 leaves)** |
+| Block | **Lean (all 13 leaves)** |
 |---|---|
 | Hero lede | 30–45w |
 | Hero stats | only if real numbers |
@@ -74,8 +75,9 @@ tier.** The only thing that varies between leaves is the glossary. (Tokenomics, 
 | Last reviewed | optional |
 | **Total** | **~650–850w (+glossary where present)** |
 
-**Glossary leaves (6):** Tokenomics, DeFi Protocol, Liquid Staking & Restaking,
-DID & ZKP, RWA Tokenization, Cross-Chain & Bridging.
+**Glossary leaves (7):** Tokenomics, DeFi Protocol, Liquid Staking & Restaking,
+DID & ZKP, RWA Tokenization, Cross-Chain & Bridging, Token Launchpad Development
+(bonding curve, fair launch, allowlist, TGE).
 
 **Canonical-definition-owner rule:** each term is defined **once**, on its owner page;
 siblings cross-link instead of re-defining (repeating a passage across siblings dilutes
@@ -97,11 +99,10 @@ nrETH, Sedax/UIDAI partnership, **Coin-it** (live token launchpad / bonding-curv
 case study available — confirm factual descriptor + any public metric at authoring; do not
 fabricate), Clutch 4.9 / 9 reviews.
 
-### 4.0 Web3 Tokenomics Design — `web3-tokenomics-design` (revision, not a new page)
-- **Already published.** This revision does three things: (a) **trim from ~1,150w to the Lean budget** (shorter hero lede, 4 label-only deliverables, 3 phases, 3–4 FAQs) while **keeping the glossary**; (b) **fold in Token Launchpad** (add a deliverable + an FAQ on launchpad / IDO distribution) and **bonding curves** (add a glossary term); (c) add **Coin-it** as real `relatedWork`.
-- **New glossary term:** bonding curve. **New deliverable:** token launchpad / distribution mechanics. **New FAQ:** "Do you build token launchpads / handle token distribution?"
-- **Coin-it** — needs a one-line factual descriptor + any public metric at authoring time; do not fabricate.
-- Keep existing `heroStats` / `lastReviewed` if still accurate; refresh otherwise.
+### 4.0 Tokenomics Design — `tokenomics-design` (revision — DONE)
+- Was "Web3 Tokenomics Design" / `web3-tokenomics-design`. **Renamed → Tokenomics Design**, **reslugged → `tokenomics-design`** (308 redirect from the old path), **trimmed to the Lean budget** (hero lede 37w, 4 deliverables, 3 phases, 4 FAQs) while keeping the glossary (5 modelling terms), `heroStats`, `lastReviewed`, and the nsASTR/nrETH `relatedWork`.
+- Launchpad content was briefly folded in, then **split out** — see §4.7. Tokenomics now cross-links Token Launchpad Development as a sibling.
+- Stays a clean single-entity page: "What is tokenomics design?" → modelling definition only.
 
 ### 4.1 Blockchain Consulting — `blockchain-consulting`
 - **Head kw:** "blockchain consulting services" / "blockchain consulting company". Secondary: protocol architecture review, web3 feasibility, tokenomics review, web3 product discovery.
@@ -163,11 +164,20 @@ fabricate), Clutch 4.9 / 9 reviews.
 - **Glossary:** none.
 - **relatedServices:** `smart-contract-development`, `decentralized-identity-did-integration`, + cross `product-studio/b2b-multi-tenant-platforms`.
 
+### 4.7 Token Launchpad Development — `token-launchpad-development` (DONE — split from tokenomics)
+- **Head kw:** "token launchpad development" / "token sale platform development". Secondary: IDO / fair-launch platform, bonding curve, token distribution, vesting contracts.
+- **AEO angle:** the on-chain platform a project sells + distributes its token through; built end-to-end (sale, vesting, distribution contracts), engineered for audit. Backed by the Hacken proof.
+- **Deliverables (4):** sale contracts (fixed / fair-launch / bonding-curve + allowlist + caps); vesting/distribution contracts; anti-bot/anti-snipe + KYC/allowlist; sale frontend + claim portal + operator dashboard.
+- **Phases (3):** Sale & distribution spec → Contracts & frontend → Audit & launch.
+- **Glossary (4):** bonding curve, fair launch, allowlist, token generation event (TGE). *(bonding curve lives here now, not on tokenomics — canonical-owner rule.)*
+- **relatedServices:** `tokenomics-design`, `smart-contract-development`, `defi-protocol-development`.
+- **Group:** Product. **Surfacing:** hub-only (not featured). **`relatedWork: []`** until the Coin-it descriptor is supplied — do not fabricate.
+
 ---
 
 ## 5. Cluster link map
 
-- **Hub** (`/services/web3/`) lists all 12 and also owns the **"blockchain consulting"** overview intent at the pillar level (in addition to the dedicated leaf).
+- **Hub** (`/services/web3/`) lists all 13 and also owns the **"blockchain consulting"** overview intent at the pillar level (in addition to the dedicated leaf).
 - **relatedServices** per leaf = 3 refs, **published-only** (the resolver in `leaf-service.tsx` silently drops coming-soon/unpublished). Author each leaf's triple with a **mix that resolves to ≥3 published siblings even mid-rollout** — prefer pointing new pages at already-published siblings so links render before all new pages ship.
 - Existing leaves should add 1 ref to a relevant new sibling once it publishes (e.g. DeFi → DEX, Smart Contract → Cross-Chain), tightening the graph. Tracked as a follow-up edit per new page.
 - `relatedWork` stays pointing at `/work` (dedicated case-study pages deferred).
@@ -181,9 +191,9 @@ order and the `slice(0,5)` cap.
 
 Mechanism: numeric `featuredNav` / `featuredHome` rank (1-based display order) on `ChildService`; `getFeaturedLeaves()` sorts ranked leaves, fills from remaining published, caps at N.
 
-- **Nav (5, ranked — all already published, fills now):** 1 `smart-contract-development` · 2 `defi-protocol-development` · 3 `nft-marketplace-development` · 4 `liquid-staking-vaults` · 5 `web3-tokenomics-design`.
+- **Nav (5, ranked — all already published, fills now):** 1 `smart-contract-development` · 2 `defi-protocol-development` · 3 `nft-marketplace-development` · 4 `liquid-staking-vaults` · 5 `tokenomics-design`.
 - **Homepage section (6, ranked):** 1 `blockchain-consulting` · 2 `enterprise-blockchain-development` · 3 `dex-development` · 4 `rwa-tokenization` · 5 `decentralized-identity-did-integration` · 6 `cross-chain-bridging`. Only DID is published today; the rest fill via fallback until authored (Tier 1).
-- **Hub:** shows all 12 (unchanged).
+- **Hub:** shows all 13 (unchanged).
 
 **Render rule:** a slot renders only if the featured leaf is **published**. Until a featured
 new page ships, fall back to the next-best **published** leaf (by featured order, then
@@ -196,13 +206,14 @@ behavior until their own sessions.
 
 **Surfacing (final):** Nav = the proof/core 5 (all published). Homepage = the
 new/commercial set (Consulting, Enterprise & Private, DEX, RWA, DID, Cross-Chain & Bridging).
-**Hub-only:** Crypto Wallet Development.
+**Hub-only:** Crypto Wallet Development + Token Launchpad Development.
 
 ---
 
 ## 7. SEO / AEO / GEO wiring
 
-- **`lib/services/seo-map.ts`:** add **6 new entries** — Blockchain Consulting, Crypto Wallet (promoted, no prior entry), DEX, RWA, Cross-Chain & Bridging, Enterprise & Private — each with head keyword, title, meta description. (Existing 6 unchanged except retitle-driven title tweaks for Liquid Staking + DID.)
+- **`lib/services/seo-map.ts`:** add **7 new entries** — Blockchain Consulting, Crypto Wallet, DEX, RWA, Cross-Chain & Bridging, Enterprise & Private, **Token Launchpad Development** — each with head keyword, title, meta description.
+- **Site-wide title dedupe (DONE):** every `seo-map.ts` title carried a trailing `| Metaborong` while the root layout applies a `%s | Metaborong` template — doubling the brand on all 16 leaf pages (e.g. `… | Metaborong | Metaborong`). Stripped the suffix from all titles; the template now adds it once.
 - **JSON-LD per leaf** (`buildLeafJsonLd`): Service + FAQPage + BreadcrumbList + HowTo on every leaf; **DefinedTermSet** on the 6 glossary leaves; `dateModified`/`reviewedBy` only where `lastReviewed` is set.
 - **`app/sitemap.ts`** + **`app/llms.txt/route.ts`:** auto-include published leaves — no change beyond publishing the new pages.
 - **`app/robots.ts`:** unchanged (AI crawlers already allowed; stubs self-noindex — but we now have no stubs in Web3).
@@ -213,8 +224,9 @@ new/commercial set (Consulting, Enterprise & Private, DEX, RWA, DID, Cross-Chain
 
 Featured-new pages first so the nav/homepage fill out; the one non-featured new page last.
 
-- **Tier 0 (structural — DONE):** 2 retitles + DeFi scope-narrow + taxonomy edits (remove 4 stubs) + numeric `featuredNav`/`featuredHome` ranks + nav/homepage wiring. Nav (proof 5) is all-published → fills completely now.
-- **Tier 1 (homepage-featured — author first):** Blockchain Consulting, Enterprise & Private Blockchain, DEX, RWA, Cross-Chain & Bridging — **5 new pages** — **plus the Tokenomics revision** (§4.0). Enterprise is Tier-3 difficulty but homepage-featured, so authored here.
+- **Tier 0 (structural — DONE):** retitles + DeFi scope-narrow + taxonomy edits (remove 3 stubs) + numeric `featuredNav`/`featuredHome` ranks + nav/homepage wiring + **site-wide leaf-title dedupe** (§7). Nav (proof 5) all-published → fills now.
+- **Tokenomics revision + Token Launchpad split — DONE** (§4.0, §4.7): tokenomics renamed/reslugged/trimmed; Token Launchpad authored as a standalone published leaf (Coin-it `relatedWork` pending).
+- **Tier 1 (homepage-featured — author next):** Blockchain Consulting, Enterprise & Private Blockchain, DEX, RWA, Cross-Chain & Bridging — **5 new pages**. Enterprise is Tier-3 difficulty but homepage-featured, so authored here.
 - **Tier 2 (hub-only — last):** Crypto Wallet Development. = 1 page.
 
 Each page authored as one `LeafContent` object against §4, reviewed before the next.

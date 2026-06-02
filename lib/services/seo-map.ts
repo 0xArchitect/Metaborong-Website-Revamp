@@ -38,7 +38,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'strategy',
     slug: 'ai-audit-opportunity-assessment',
     keyword: 'ai audit and opportunity assessment',
-    title: 'AI Audit & Opportunity Assessment | Metaborong',
+    title: 'AI Audit & Opportunity Assessment',
     description:
       'Inventory AI opportunities across your product and operations, score by impact and feasibility, ship a 90-day roadmap. Senior AI team, India + global.',
   },
@@ -47,7 +47,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'product',
     slug: 'ai-copilots-internal-tools',
     keyword: 'ai copilots and internal tools development',
-    title: 'AI Copilots & Internal Tools Development | Metaborong',
+    title: 'AI Copilots & Internal Tools Development',
     description:
       'Custom AI copilots and internal tools for support, sales, and ops teams. Grounded in your data, wired into your stack, shipped in weeks not quarters.',
   },
@@ -56,7 +56,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'product',
     slug: 'conversational-agents-assistants',
     keyword: 'conversational ai agent development',
-    title: 'Conversational AI Agents & Assistants | Metaborong',
+    title: 'Conversational AI Agents & Assistants',
     description:
       'Voice and chat agents that handle real workflows | discovery, support, scheduling. Built on production-grade LLM and retrieval infrastructure.',
   },
@@ -65,7 +65,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'agentic-ai-systems',
     keyword: 'agentic ai development services',
-    title: 'Agentic AI Systems Development | Metaborong',
+    title: 'Agentic AI Systems Development',
     description:
       'Multi-step autonomous agents that plan, use tools, and report results. Production-grade orchestration, evaluations, and guardrails included.',
   },
@@ -74,7 +74,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'rag-retrieval-pipelines',
     keyword: 'rag pipeline development',
-    title: 'RAG & Retrieval Pipeline Development | Metaborong',
+    title: 'RAG & Retrieval Pipeline Development',
     description:
       'Retrieval pipelines that ground LLMs in your proprietary data. Embeddings, vector stores, reranking, and evaluations | production-tuned, not demoware.',
   },
@@ -83,7 +83,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'llm-integration-architecture',
     keyword: 'llm integration and architecture services',
-    title: 'LLM Integration & Architecture | Metaborong',
+    title: 'LLM Integration & Architecture',
     description:
       'Architect, integrate, and harden LLMs inside your existing product and stack. Auth, routing, fallback, cost controls, and observability included.',
   },
@@ -94,7 +94,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'smart-contract-development',
     keyword: 'smart contract development services',
-    title: 'Smart Contract Development Services | Metaborong',
+    title: 'Smart Contract Development Services',
     description:
       'Solidity, Vyper, and Move smart contracts engineered for third-party audit. Specs, tests, deployment, and post-deploy monitoring all included.',
   },
@@ -103,25 +103,34 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'defi-protocol-development',
     keyword: 'defi protocol development services',
-    title: 'DeFi Protocol Development | Lending, AMM, Vaults | Metaborong',
+    title: 'DeFi Protocol Development | Lending, AMM, Vaults',
     description:
       'Lending, AMM, perp-DEX, and yield protocols engineered for audit and on-chain volume. Multichain across EVM, Solana, and Cosmos.',
   },
   {
     pillar: 'web3',
     subGroup: 'strategy',
-    slug: 'web3-tokenomics-design',
-    keyword: 'Web3 tokenomics design',
-    title: 'Web3 Tokenomics Design & Consulting | Metaborong',
+    slug: 'tokenomics-design',
+    keyword: 'tokenomics design',
+    title: 'Tokenomics Design',
     description:
-      'Web3 tokenomics design and consulting — agent-based simulation, supply, vesting and emissions modelling, stress-tested before launch. Hacken-audited team.',
+      'Tokenomics design — agent-based simulation, supply, vesting, emissions, and governance modelling, stress-tested before launch. Hacken-audited team.',
+  },
+  {
+    pillar: 'web3',
+    subGroup: 'product',
+    slug: 'token-launchpad-development',
+    keyword: 'token launchpad development',
+    title: 'Token Launchpad Development',
+    description:
+      'Token sale and distribution platforms built end-to-end — fair launch, vesting, bonding curves, allowlists, and anti-bot controls. Audit-ready, Hacken-audited team.',
   },
   {
     pillar: 'web3',
     subGroup: 'product',
     slug: 'nft-marketplace-development',
     keyword: 'nft marketplace development',
-    title: 'NFT Marketplace Development | Metaborong',
+    title: 'NFT Marketplace Development',
     description:
       'Custom NFT marketplaces with royalties, lazy-mint, curated drops, and multi-chain support. From storefront to settlement, fully owned by you.',
   },
@@ -130,7 +139,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'liquid-staking-vaults',
     keyword: 'liquid staking and vault development',
-    title: 'Liquid Staking & Vault Systems | Metaborong',
+    title: 'Liquid Staking & Vault Systems',
     description:
       'LST and LRT vault systems with restaking, risk controls, and validator routing. Built for production yields and third-party audit readiness.',
   },
@@ -142,7 +151,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'decentralized-identity-did-integration',
     keyword: 'decentralized identity and aadhaar did integration',
-    title: 'Decentralized Identity & DID Integration | Metaborong',
+    title: 'Decentralized Identity & DID Integration',
     description:
       'Verifiable credentials, Aadhaar-integrated DID stacks, and UIDAI-aware identity systems for GovTech and regulated products. Production-scale deployments.',
   },
@@ -153,7 +162,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'strategy',
     slug: 'product-discovery-validation',
     keyword: 'product discovery and validation services',
-    title: 'Product Discovery & Validation | Metaborong',
+    title: 'Product Discovery & Validation',
     description:
       'Tight-loop discovery sprints for founders: problem framing, hypothesis tests, technical feasibility, and a shipped clickable prototype in weeks.',
   },
@@ -162,7 +171,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'product',
     slug: 'mvp-development',
     keyword: 'mvp development services',
-    title: 'MVP Development Services | Founder-Led Builds | Metaborong',
+    title: 'MVP Development Services | Founder-Led Builds',
     description:
       'Zero-to-launch product builds for founders without an in-house CTO. Architecture, engineering, design, and deployment from one senior team.',
   },
@@ -171,7 +180,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'product',
     slug: 'saas-product-development',
     keyword: 'saas product development services',
-    title: 'SaaS Product Development Services | Metaborong',
+    title: 'SaaS Product Development Services',
     description:
       'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in. Senior team owns architecture through deployment, no vendor fragmentation.',
   },
@@ -180,7 +189,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'product',
     slug: 'b2b-multi-tenant-platforms',
     keyword: 'b2b multi-tenant platform development',
-    title: 'B2B Multi-Tenant Platform Development | Metaborong',
+    title: 'B2B Multi-Tenant Platform Development',
     description:
       'Multi-tenant B2B platforms with SSO, role-based access, audit trails, and admin tooling | built for enterprise procurement from day one.',
   },

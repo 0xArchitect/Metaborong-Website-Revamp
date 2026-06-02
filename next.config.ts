@@ -64,6 +64,11 @@ const nextConfig: NextConfig = {
         destination: '/services/product-studio/b2b-multi-tenant-platforms',
         permanent: true,
       },
+      {
+        source: '/services/web3/web3-tokenomics-design',
+        destination: '/services/web3/tokenomics-design',
+        permanent: true,
+      },
     ]
   },
 };
