@@ -231,7 +231,7 @@ export const web3TokenomicsDesign: LeafContent = {
   pillar: 'web3',
   slug: 'web3-tokenomics-design',
   heroLede:
-    "Web3 tokenomics design is a quantitative modelling practice for protocol founders. Each engagement ships an agent-based simulation, a tokenomics paper, a vesting schedule, and a sensitivity analysis stress-tested against participant behaviours. We work with founders who want the economic model defended before launch — not patched after — and our team's smart-contract work has cleared four Hacken audit rounds.",
+    "Web3 tokenomics design is a quantitative modelling practice for protocol founders. We work with teams who want the token's economic model defended before launch, not patched after — stress-tested against real participant behaviour until it holds under pressure. Because our smart-contract work has cleared four Hacken audit rounds, the model and the contracts that implement it come from one team.",
   heroStats: [
     { value: '~$20M', label: 'TVL engineered', context: 'nsASTR on Astar' },
     { value: '4', label: 'Hacken audit rounds', context: 'Neemo Finance' },
@@ -240,29 +240,24 @@ export const web3TokenomicsDesign: LeafContent = {
   deliverables: [
     {
       label: 'Tokenomics paper covering supply schedule, distribution, governance, fee accrual, vesting graph, and sensitivity analysis.',
-      detail: 'Eight to twelve pages, written for investors, auditors, and DAOs as the canonical economic-model document.',
     },
     {
       label: 'Agent-based simulation of stakers, holders, governance voters, and arbitrageurs across 10,000 scenario trajectories.',
-      detail: 'Python notebook with named scenarios, reproducible from the published parameter set, and rerun alongside every parameter change.',
     },
     {
       label: 'Vesting schedule with cliff and unlock calendar mapped to on-chain vesting-contract logic.',
-      detail: 'Per-allocation breakdown ready to hand to the smart-contract team without translation.',
     },
     {
       label: 'Sensitivity analysis ranking the parameters that destabilise supply, demand, or governance under stress.',
-      detail: 'Each parameter is named, its failure mode is documented, and the threshold at which the model breaks is identified.',
     },
     {
-      label: 'Investor and DAO defence pack — one-page summary, model assumptions, and named failure modes with rebuttals.',
-      detail: 'The document founders take into fundraise meetings, DAO votes, and pre-launch security reviews.',
+      label: 'Investor and DAO defence pack: one-page summary, model assumptions, and named failure modes with rebuttals.',
     },
   ],
   phases: [
     {
       title: 'Intent & constraints',
-      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution — each pulls the design in a different direction. We then capture constraints — fundraise size, vesting commitments to investors, regulatory posture, target-chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
+      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution — each pulls the design in a different direction. We then capture constraints: fundraise size, vesting commitments to investors, regulatory posture, target-chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
     },
     {
       title: 'Model & stress-test',
@@ -270,7 +265,7 @@ export const web3TokenomicsDesign: LeafContent = {
     },
     {
       title: 'Paper & defence',
-      body: 'We write the tokenomics paper — supply schedule, distribution table, governance design, fee accrual logic, vesting graph, and sensitivity analysis. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders to argue the model against challenge questions before the public version ships.',
+      body: 'We write the tokenomics paper, then defend it. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders, arguing the model against challenge questions — cliff-edge dumps, governance capture, runaway emissions — before the public version ships.',
     },
     {
       title: 'Implementation handoff',
@@ -300,7 +295,7 @@ export const web3TokenomicsDesign: LeafContent = {
     ],
   },
   aeoAnswer:
-    'Web3 tokenomics design is a quantitative modelling service for protocol founders building tokenised systems. Each engagement produces four artefacts: an agent-based simulation of participant behaviour across 10,000 scenario trajectories, a written tokenomics paper covering supply, distribution and emissions, a vesting schedule mapped to on-chain contract logic, and a sensitivity analysis identifying which parameters destabilise the model. The simulation is the document a serious investor or DAO reads first; the paper defends it. Tokenomics consulting at Metaborong is delivered by the same engineering team behind Neemo Finance — whose smart contracts have cleared four Hacken audit rounds — and behind nsASTR, a liquid-staking product running at roughly twenty million dollars in total value locked on the Astar network. Metaborong holds eight verified Clutch reviews at a 4.9 average.',
+    'Web3 tokenomics design is a quantitative modelling service for protocol founders building tokenised systems. Each engagement produces four artefacts: an agent-based simulation of participant behaviour across 10,000 scenario trajectories, a tokenomics paper covering supply, distribution and emissions, a vesting schedule mapped to on-chain contract logic, and a sensitivity analysis identifying which parameters destabilise the model. The simulation is what a serious investor or DAO reads first; the paper defends it.',
   keyConcepts: [
     {
       term: 'Supply curve',
@@ -325,7 +320,7 @@ export const web3TokenomicsDesign: LeafContent = {
     {
       term: 'Sensitivity analysis',
       definition:
-        'A sensitivity analysis tests how protocol outcomes change when input parameters move. In tokenomics it identifies the parameters most likely to destabilise the model — emission rates, staking yields, vesting cliffs, fee splits. The analysis surfaces which assumptions a launch is most exposed to.',
+        'A sensitivity analysis tests how protocol outcomes change when input parameters move. In tokenomics it identifies the parameters most likely to destabilise the model: emission rates, staking yields, vesting cliffs, fee splits. The analysis surfaces which assumptions a launch is most exposed to.',
     },
   ],
   relatedWork: [
@@ -345,13 +340,13 @@ export const web3TokenomicsDesign: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'defi-protocol-development' },
-    { pillar: 'web3', slug: 'protocol-architecture-review' },
+    { pillar: 'web3', slug: 'liquid-staking-vaults' },
   ],
   faqs: [
     {
       question: 'Do you write tokenomics papers without simulation?',
       answer:
-        "No. A tokenomics paper without a simulation is a marketing document. The simulation is what surfaces failure modes — cliff-edge dumps, governance capture, runaway emissions, mercenary staking. Without it the paper makes claims it can't defend in an investor meeting or a DAO vote. We won't ship the paper standalone.",
+        "No. A tokenomics paper without a simulation is a marketing document. The simulation is what surfaces failure modes: cliff-edge dumps, governance capture, runaway emissions, mercenary staking. Without it the paper makes claims it can't defend in an investor meeting or a DAO vote. We won't ship the paper standalone.",
     },
     {
       question: 'How long does a tokenomics engagement run?',
@@ -359,29 +354,14 @@ export const web3TokenomicsDesign: LeafContent = {
         'Most engagements run 4–8 weeks end-to-end. Intent and constraints take a week. Modelling and stress-testing run 2–4 weeks. Paper drafting and defence sessions take another 1–2 weeks. When tokenomics is bundled with smart-contract engineering, the modelling timeline lengthens because parameter choices feed directly into contract spec.',
     },
     {
-      question: "Can you redesign an existing protocol's tokenomics?",
-      answer:
-        "Yes. Retrofit engagements start with the live on-chain data — supply curve, staking participation, voting turnout, fee accumulation. The simulation calibrates against observed behaviour, so the proposed redesign is defended against the protocol's actual users. We've taken this path for protocols whose original token model was launched without a stress-test phase.",
-    },
-    {
-      question: 'Do you handle the legal or regulatory framing?',
-      answer:
-        "No. We work with the founder's chosen securities and tax counsel, document the model's assumptions cleanly enough for legal review, and answer technical questions in their conversations. The tokenomics paper is the model document — it is not a securities opinion. Investors and DAOs read both side by side.",
-    },
-    {
       question: 'How much does Web3 tokenomics design cost?',
       answer:
-        'Engagements are priced by scope, not by listed rate. A standalone tokenomics design — paper, simulation, vesting, and sensitivity analysis — typically runs lower than a bundled engagement that includes smart-contract delivery, because the modelling work is the entire scope. We quote after the intent-and-constraints brief is written, so the number reflects the actual model complexity rather than a category default. Founders typically budget for the engineering team and external audit on top of the design fee.',
+        'Engagements are priced by scope, not by a listed rate. A standalone design — paper, simulation, vesting, and sensitivity analysis — runs lower than one bundled with smart-contract delivery. We quote after the intent-and-constraints brief, so the number reflects real model complexity. Most founders budget separately for engineering and an external audit.',
     },
     {
       question: 'What is the difference between tokenomics and token economics?',
       answer:
         'In practice the two terms are used interchangeably. Tokenomics is the practical economic design of a single token — its supply, distribution, vesting, emissions, fee accrual, and governance. Token economics is the broader academic discipline that studies token-based systems, including market structure, network effects, and incentive design. Founders shopping for a vendor are almost always asking for tokenomics work.',
-    },
-    {
-      question: 'What goes in a tokenomics paper?',
-      answer:
-        'A defensible tokenomics paper covers eight components: (1) token utility and role, (2) total supply and supply curve, (3) allocation and distribution table, (4) vesting schedule with cliffs, (5) emission schedule and inflation logic, (6) fee accrual and value capture, (7) governance design and voting power, and (8) sensitivity analysis naming the parameters that destabilise the model. The paper itself is the document an investor, a DAO, or a smart-contract auditor reads first.',
     },
     {
       question: 'Do I need a tokenomics audit before launching a token?',
