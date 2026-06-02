@@ -9,6 +9,13 @@ export type ChildService = {
   description: string
   slug: string
   status: LeafStatus
+  // Curated surfacing rank (1-based display order) for the nav mega-menu and
+  // homepage services section. Decouples the featured sets from taxonomy order
+  // + the old slice(0,5) cap. Optional: leaves without a rank fall back behind
+  // ranked ones (in taxonomy order) via getFeaturedLeaves(). See the Web3 spec
+  // (docs/superpowers/specs/2026-06-02-web3-services-taxonomy-design.md).
+  featuredNav?: number
+  featuredHome?: number
 }
 
 export type SubGroup = {
@@ -52,18 +59,7 @@ export const pillars: Pillar[] = [
             description: 'Token supply, distribution, emissions, and governance modelling stress-tested against on-chain behaviour.',
             slug: 'web3-tokenomics-design',
             status: 'published',
-          },
-          {
-            name: 'Protocol Architecture Review',
-            description: 'Independent reviews of protocol design, economic model, and on-chain risk before launch.',
-            slug: 'protocol-architecture-review',
-            status: 'coming-soon',
-          },
-          {
-            name: 'Web3 Product Discovery',
-            description: 'Discovery sprints for on-chain founders - user research, scoping, and feasibility.',
-            slug: 'web3-product-discovery',
-            status: 'coming-soon',
+            featuredNav: 5,
           },
         ],
       },
@@ -76,18 +72,7 @@ export const pillars: Pillar[] = [
             description: 'Custom marketplaces with royalties, lazy-mint, curated drops, and multi-chain support.',
             slug: 'nft-marketplace-development',
             status: 'published',
-          },
-          {
-            name: 'Crypto Wallet Development',
-            description: 'Custodial and self-custody wallets across EVM, Solana, and Cosmos with key-management UX.',
-            slug: 'crypto-wallet-development',
-            status: 'coming-soon',
-          },
-          {
-            name: 'DAO & Governance Systems',
-            description: 'On-chain governance, treasury management, and voting tooling for live DAOs.',
-            slug: 'dao-governance-systems',
-            status: 'coming-soon',
+            featuredNav: 3,
           },
         ],
       },
@@ -100,30 +85,28 @@ export const pillars: Pillar[] = [
             description: 'Solidity, Vyper, and Move contracts engineered for third-party audit, with tests and monitoring.',
             slug: 'smart-contract-development',
             status: 'published',
+            featuredNav: 1,
           },
           {
             name: 'DeFi Protocol Development',
-            description: 'Lending, AMM, perp-DEX, and yield infrastructure spec\'d for third-party audit.',
+            description: 'Lending, perpetuals, yield, and vault infrastructure spec\'d for third-party audit.',
             slug: 'defi-protocol-development',
             status: 'published',
+            featuredNav: 2,
           },
           {
-            name: 'Liquid Staking Vaults',
+            name: 'Liquid Staking & Restaking Vaults',
             description: 'LST and LRT vault systems with restaking, validator routing, and risk controls.',
             slug: 'liquid-staking-vaults',
             status: 'published',
+            featuredNav: 4,
           },
           {
-            name: 'Decentralized Identity & DID Integration',
+            name: 'DID & ZKP Integration',
             description: 'Verifiable credentials, Aadhaar-integrated DID stacks, and UIDAI-aware identity systems.',
             slug: 'decentralized-identity-did-integration',
             status: 'published',
-          },
-          {
-            name: 'Token Launchpad & Distribution',
-            description: 'Token sale infrastructure, vesting schedules, and distribution mechanics audit-ready.',
-            slug: 'token-launchpad-distribution',
-            status: 'coming-soon',
+            featuredHome: 5,
           },
         ],
       },
@@ -317,4 +300,24 @@ export function getAllLeaves(pillar: Pillar): ChildService[] {
 // OfferCatalog). See SERVICES_PLAN.md § Risk 3.
 export function getPublishedLeaves(pillar: Pillar): ChildService[] {
   return getAllLeaves(pillar).filter((c) => c.status === 'published')
+}
+
+// Curated featured leaves for a surface (nav mega-menu / homepage services
+// section). Flagged leaves come first (in taxonomy order), then the list is
+// topped up from the remaining published leaves and capped at `count`. Pillars
+// with no flags fall back to published order, preserving the prior slice(0,N)
+// behaviour. As new leaves publish with their featured flag set, they take
+// their slot automatically. See the Web3 taxonomy spec.
+export function getFeaturedLeaves(
+  pillar: Pillar,
+  surface: 'nav' | 'home',
+  count: number,
+): ChildService[] {
+  const published = getPublishedLeaves(pillar)
+  const rankOf = (c: ChildService) => (surface === 'nav' ? c.featuredNav : c.featuredHome)
+  const flagged = published
+    .filter((c) => rankOf(c) != null)
+    .sort((a, b) => rankOf(a)! - rankOf(b)!)
+  const rest = published.filter((c) => rankOf(c) == null)
+  return [...flagged, ...rest].slice(0, count)
 }
