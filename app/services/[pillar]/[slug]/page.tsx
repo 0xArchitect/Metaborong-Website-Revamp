@@ -76,10 +76,11 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// JSON-LD — Service + FAQPage + BreadcrumbList + (optional) DefinedTermSet.
+// JSON-LD — Service + FAQPage + BreadcrumbList + HowTo + (optional) DefinedTermSet.
 // Emitted per published leaf to give crawlers and AI search engines the
-// structured surface they need to cite the page. DefinedTermSet only emits
-// when the leaf authored a `keyConcepts` block.
+// structured surface they need to cite the page. HowTo mirrors the visible
+// "How we work" phases (a top AEO schema type). DefinedTermSet only emits when
+// the leaf authored a `keyConcepts` block.
 // ─────────────────────────────────────────────────────────────────────────────
 
 function buildLeafJsonLd({
@@ -141,6 +142,22 @@ function buildLeafJsonLd({
   }
 
   const blocks: Record<string, unknown>[] = [service, faqPage, breadcrumb]
+
+  if (content.phases.length > 0) {
+    const howTo = {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      '@id': `${leafUrl}#howto`,
+      name: `How we deliver ${leaf.name}`,
+      step: content.phases.map((phase, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: phase.title,
+        text: phase.body,
+      })),
+    }
+    blocks.push(howTo)
+  }
 
   if (content.keyConcepts && content.keyConcepts.length > 0) {
     const definedTermSet = {

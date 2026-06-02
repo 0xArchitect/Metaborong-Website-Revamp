@@ -117,7 +117,8 @@ export interface LeafRelatedServiceRef {
  *   - `question` natural question, sentence-cased.
  *   - `answer` ~50–80 words. One short paragraph, no lists.
  *
- * Budget: 3–4 Q&As × ~70 words = 200–280 words total.
+ * Budget: 4–5 Q&As × 50–80 words = 250–400 words total. Mix 1–2
+ * definitional/PAA + 2–3 objection-handling.
  */
 export interface LeafFaq {
   question: string
@@ -154,22 +155,29 @@ export interface LeafHeroStat {
  * build time - every `LeafContent` must resolve to a published leaf in
  * both registries, otherwise the build fails fast.
  *
- * Block-by-block word budgets sit on each field's typedef above. The
- * template renders these blocks in this order:
+ * CANONICAL TEMPLATE (locked 2026-06-02 — see the plan's "Canonical
+ * Service-Leaf Content Spec"). Mandatory = every leaf; conditional = only when
+ * its trigger field is authored. Render order below is the live order.
  *
- *   1. Breadcrumb         (derived from pillar + slug)
- *   2. Hero               (eyebrow + H1 derived; `heroLede` authored)
- *   3. What we deliver    (`deliverables`)
- *   4. How we work        (`phases`)
- *   5. Tech / stack       (`techStack`)
- *   6. When this fits     (`fit`)
- *   7. AEO answer block   (`aeoAnswer`)
- *   8. Related work       (`relatedWork`)
- *   9. Related services   (`relatedServices` - filtered to v1 by template)
- *  10. FAQ                (`faqs`)
- *  11. Contact CTA        (reuses `contact-cta.tsx`)
+ *   #  Block                  Status        Rule
+ *   1  Breadcrumb             mandatory     derived; BreadcrumbList schema
+ *   2  Hero (lede + CTA)      mandatory     `heroLede` 45–70 w, problem-frame then definition
+ *   3  Hero stats row         conditional   `heroStats` — real proof only
+ *   4  "What is X?" AEO       mandatory     `aeoAnswer` 40–60 w, self-contained
+ *   5  What we deliver        mandatory     `deliverables` 4–5, ≤14 w; `detail` only if additive
+ *   6  Key concepts glossary  conditional   `keyConcepts` — concept-heavy leaves only; DefinedTermSet
+ *   7  How we work            mandatory     `phases` 4 × 40–55 w; HowTo schema
+ *   8  Tech / stack           mandatory     `techStack` 6–10
+ *   9  When this fits         mandatory     `fit` 3 + 3 bullets
+ *  10  Related work           conditional   `relatedWork` — real engagements only
+ *  11  Related services       mandatory     `relatedServices`, published refs only (filtered)
+ *  12  FAQ                    mandatory     `faqs` 4–5 × 50–80 w; FAQPage schema
+ *  13  Last reviewed          conditional   `lastReviewed` — keep current
+ *  14  Contact CTA            mandatory     reuses `contact-cta.tsx`
  *
- * Total target: 750–1060 words of authored content. Floor 600.
+ * Total target: ~1,000–1,400 words of authored content (concept-heavy leaves
+ * with a glossary may reach ~1,500). Hard ceiling 1,500 — do not exceed; depth
+ * is added across the cluster, not stacked on one page.
  *
  * For the DID leaf (`decentralized-identity-did-integration`), the
  * `aeoAnswer` paragraph must reference Aadhaar-scale deployment as one of
@@ -179,7 +187,7 @@ export interface LeafContent {
   pillar: PillarId
   slug: string
 
-  /** 120–180 words. Entity-definition opener, 2–3 deliverables. AEO-eligible. */
+  /** 45–70 words. Problem-frame sentence, then entity definition. No artefact enumeration (that lives in `aeoAnswer`). */
   heroLede: string
 
   deliverables: readonly LeafDeliverable[]

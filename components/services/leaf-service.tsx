@@ -14,10 +14,18 @@
 
 import Link from 'next/link'
 import { Section } from '@/components/ui/section'
+import { Reveal } from '@/components/ui/reveal'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
-import { ArrowRight } from 'lucide-react'
+import { clutchProfileUrl } from '@/lib/links'
+import { ArrowRight, Star } from 'lucide-react'
+
+// Company-wide trust figures, mirrored from the Social-proof section
+// (`testimonials.tsx`) and the Organization AggregateRating JSON-LD
+// (`lib/schema.ts`). Keep in sync if the Clutch profile changes.
+const CLUTCH_RATING = '4.9'
+const CLUTCH_REVIEWS = '9'
 import {
   pillars,
   getAllLeaves,
@@ -108,19 +116,39 @@ function Hero({
   lede: string
 }) {
   return (
-    <Section maxWidth="narrow">
-      <Eyebrow tone={pillar.id} as="p" className="mb-[16px]">
-        {pillar.label} · {subGroup.label}
-      </Eyebrow>
-      <h1 className="text-[clamp(32px,4.5vw,56px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark mb-[24px]">
-        {leaf.name}
-      </h1>
-      <p className="text-[17px] md:text-[18px] leading-[1.65] tracking-[-0.01em] text-gray mb-[32px]">
-        {lede}
-      </p>
-      <Button href="/#contact" variant="primary" size="lg" arrow="→">
-        Talk to us
-      </Button>
+    <Section maxWidth="narrow" reveal={false}>
+      <Reveal>
+        <Eyebrow tone={pillar.id} as="p" className="mb-[16px]">
+          {pillar.label} · {subGroup.label}
+        </Eyebrow>
+      </Reveal>
+      <Reveal delay={60}>
+        <h1 className="text-[clamp(32px,4.5vw,56px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark mb-[24px]">
+          {leaf.name}
+        </h1>
+      </Reveal>
+      <Reveal delay={120}>
+        <p className="text-[17px] md:text-[18px] leading-[1.65] tracking-[-0.01em] text-gray mb-[32px]">
+          {lede}
+        </p>
+      </Reveal>
+      <Reveal delay={180} className="flex flex-wrap items-center gap-x-[24px] gap-y-[16px]">
+        <Button href="/#contact" variant="primary" size="lg" arrow="→">
+          Talk to us
+        </Button>
+        <a
+          href={clutchProfileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-[8px] font-mono text-[12px] font-bold uppercase tracking-[0.06em] text-gray hover:text-dark transition-colors duration-[var(--duration-instant)]"
+        >
+          <Star className="h-[14px] w-[14px] fill-current text-accent" aria-hidden="true" />
+          <span>
+            {CLUTCH_RATING}/5 on Clutch
+            <span className="text-gray-light group-hover:text-gray"> · {CLUTCH_REVIEWS} reviews</span>
+          </span>
+        </a>
+      </Reveal>
     </Section>
   )
 }
@@ -149,14 +177,19 @@ function WhatWeDeliver({
         {deliverables.map((d, i) => (
           <li
             key={i}
-            className="border border-border bg-bg p-[24px] border-l-[3px]"
-            style={{ borderLeftColor: pillar.color }}
+            className="flex flex-col gap-[12px] border border-border bg-bg p-[24px]"
           >
+            <span
+              className="font-mono text-[12px] font-bold tracking-[0.06em]"
+              style={{ color: pillar.color }}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
             <p className="text-[15px] font-bold tracking-[-0.015em] leading-[1.35] text-dark">
               {d.label}
             </p>
             {d.detail && (
-              <p className="mt-[8px] text-[14px] leading-[1.6] text-gray">{d.detail}</p>
+              <p className="text-[14px] leading-[1.6] text-gray">{d.detail}</p>
             )}
           </li>
         ))}
@@ -251,12 +284,12 @@ function TechStackStrip({ items }: { items: readonly LeafContent['techStack'][nu
 
   return (
     <section className="bg-bg-subtle py-[32px] md:py-[48px] overflow-hidden border-y border-border">
-      <div className="mx-auto w-full max-w-[1120px] px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px] mb-[24px]">
+      <Reveal className="mx-auto w-full max-w-[1120px] px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px] mb-[24px]">
         <Eyebrow as="p" className="mb-[12px]">Tech stack</Eyebrow>
         <h2 className="text-[clamp(24px,3vw,36px)] font-bold tracking-[-0.025em] text-dark">
           What we build on
         </h2>
-      </div>
+      </Reveal>
       <div className="relative flex w-full overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]">
         <ul className="flex w-max animate-marquee items-center gap-[48px] md:gap-[80px] pr-[48px] md:pr-[80px] m-0 p-0 list-none will-change-transform hover:[animation-play-state:paused]">
           {marqueeItems.map((tech, i) => {
@@ -309,7 +342,7 @@ function FitBlock({ pillar, fit }: { pillar: Pillar; fit: LeafContent['fit'] }) 
           </p>
           <ul role="list" className="space-y-[12px]">
             {fit.fits.map((bullet, i) => (
-              <li key={i} className="flex gap-[10px] text-[15px] leading-[1.55] text-dark">
+              <li key={i} className="flex gap-[12px] text-[15px] leading-[1.55] text-dark">
                 <span aria-hidden="true" className="mt-[8px] block h-[6px] w-[6px] shrink-0" style={{ backgroundColor: pillar.color }} />
                 <span>{bullet}</span>
               </li>
@@ -322,7 +355,7 @@ function FitBlock({ pillar, fit }: { pillar: Pillar; fit: LeafContent['fit'] }) 
           </p>
           <ul role="list" className="space-y-[12px]">
             {fit.doesNotFit.map((bullet, i) => (
-              <li key={i} className="flex gap-[10px] text-[15px] leading-[1.55] text-gray">
+              <li key={i} className="flex gap-[12px] text-[15px] leading-[1.55] text-gray">
                 <span aria-hidden="true" className="mt-[8px] block h-[6px] w-[6px] shrink-0 bg-gray-subtle" />
                 <span>{bullet}</span>
               </li>
@@ -352,11 +385,11 @@ function AeoAnswer({
   return (
     <Section bg="subtle" maxWidth="narrow">
       <Eyebrow as="p" className="mb-[12px]">In short</Eyebrow>
-      <h2 className="text-[clamp(22px,2.5vw,30px)] font-bold tracking-[-0.025em] text-dark mb-[20px]">
+      <h2 className="text-[clamp(22px,2.5vw,30px)] font-bold tracking-[-0.025em] text-dark mb-[24px]">
         What is {leaf.name}?
       </h2>
       <blockquote
-        className="border-l-[3px] pl-[20px] py-[4px] text-[17px] md:text-[18px] leading-[1.65] tracking-[-0.005em] text-dark"
+        className="border-l-[3px] pl-[24px] py-[4px] text-[17px] md:text-[18px] leading-[1.65] tracking-[-0.005em] text-dark"
         style={{ borderLeftColor: pillar.color }}
       >
         <p>{answer}</p>
@@ -396,19 +429,17 @@ function RelatedWork({
               target={work.href.startsWith('http') ? '_blank' : undefined}
               rel={work.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
-              <div className="flex items-center gap-[10px]">
-                <span
-                  className="font-mono text-[11px] font-bold uppercase tracking-[0.1em]"
-                  style={{ color: pillar.color }}
-                >
-                  Live project
-                </span>
-              </div>
-              <p className="mt-[10px] text-[15px] font-semibold text-dark">{work.descriptor}</p>
-              <p className="mt-[8px] text-[14px] leading-[1.6] text-gray">{work.summary}</p>
+              <span
+                className="font-mono text-[11px] font-bold uppercase tracking-[0.1em]"
+                style={{ color: pillar.color }}
+              >
+                Live project
+              </span>
+              <p className="text-[15px] font-semibold text-dark">{work.descriptor}</p>
+              <p className="text-[14px] leading-[1.6] text-gray">{work.summary}</p>
               <span className="mt-auto inline-flex items-center gap-[8px] text-[13px] font-semibold text-dark group-hover:text-[var(--pillar-color)]">
                 View live project
-                <ArrowRight />
+                <ArrowRight className="h-[16px] w-[16px]" />
               </span>
             </Link>
           </li>
@@ -454,7 +485,7 @@ function RelatedServices({ items }: { items: readonly ResolvedRelated[] }) {
           <li key={`${pillar.id}/${leaf.slug}`}>
             <Link
               href={`${pillar.hubHref}${leaf.slug}/`}
-              className="group flex h-full flex-col gap-[12px] border border-border bg-bg p-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:border-[color:var(--pillar-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+              className="group flex h-full flex-col gap-[12px] border border-border bg-bg p-[24px] no-underline transition-colors duration-[var(--duration-fast)] hover:border-[color:var(--pillar-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
               style={{ '--pillar-color': pillar.color } as React.CSSProperties}
             >
               <span
@@ -500,11 +531,11 @@ function FaqBlock({ faqs }: { faqs: readonly LeafContent['faqs'][number][] }) {
             key={i}
             className="group border-b border-border [&_summary::-webkit-details-marker]:hidden"
           >
-            <summary className="flex min-h-[56px] cursor-pointer items-center justify-between gap-[16px] py-[16px] pr-[8px] text-left text-[16px] font-semibold leading-[1.3] tracking-[-0.02em] text-dark sm:py-[20px]">
+            <summary className="flex min-h-[56px] cursor-pointer items-center justify-between gap-[16px] py-[16px] pr-[8px] text-left text-[16px] font-semibold leading-[1.3] tracking-[-0.02em] text-dark sm:py-[24px]">
               <span>{faq.question}</span>
               <ChevronIcon />
             </summary>
-            <div className="pb-[20px] pr-[8px] sm:pr-[32px]">
+            <div className="pb-[24px] pr-[8px] sm:pr-[32px]">
               <p className="text-[15px] leading-[1.7] tracking-[-0.01em] text-gray">{faq.answer}</p>
             </div>
           </details>
@@ -544,31 +575,33 @@ function HeroStatsRow({
   return (
     <section
       aria-label="Engagement proof"
-      className="border-y border-border bg-bg-subtle px-[16px] py-[24px] sm:px-[24px] md:px-[48px] md:py-[28px] lg:px-[96px] xl:px-[128px]"
+      className="border-y border-border bg-bg-subtle px-[16px] py-[24px] sm:px-[24px] md:px-[48px] md:py-[32px] lg:px-[96px] xl:px-[128px]"
     >
-      <ul
-        role="list"
-        className="mx-auto grid w-full max-w-[1120px] grid-cols-1 gap-[16px] sm:grid-cols-3 sm:gap-[24px]"
-      >
-        {stats.map((stat, i) => (
-          <li key={i} className="flex flex-col gap-[4px]">
-            <span
-              className="font-mono text-[clamp(22px,2.4vw,32px)] font-bold tracking-[-0.02em] leading-[1.1]"
-              style={{ color: pillar.color }}
-            >
-              {stat.value}
-            </span>
-            <span className="text-[13px] font-semibold tracking-[-0.01em] text-dark">
-              {stat.label}
-            </span>
-            {stat.context && (
-              <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-gray-light">
-                {stat.context}
+      <Reveal className="mx-auto w-full max-w-[1120px]">
+        <ul
+          role="list"
+          className="grid grid-cols-1 gap-[16px] sm:grid-cols-3 sm:gap-[24px]"
+        >
+          {stats.map((stat, i) => (
+            <li key={i} className="flex flex-col gap-[4px]">
+              <span
+                className="font-mono text-[clamp(22px,2.4vw,32px)] font-bold tracking-[-0.02em] leading-[1.1]"
+                style={{ color: pillar.color }}
+              >
+                {stat.value}
               </span>
-            )}
-          </li>
-        ))}
-      </ul>
+              <span className="text-[13px] font-semibold tracking-[-0.01em] text-dark">
+                {stat.label}
+              </span>
+              {stat.context && (
+                <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-gray-light">
+                  {stat.context}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </Reveal>
     </section>
   )
 }
@@ -594,14 +627,15 @@ function KeyConcepts({
           Tokenomics terms, defined
         </h2>
       </div>
-      <dl className="grid grid-cols-1 gap-[24px] md:grid-cols-2 md:gap-[32px]">
+      <dl className="grid grid-cols-1 gap-x-[48px] gap-y-[32px] md:grid-cols-2">
         {concepts.map((c, i) => (
-          <div
-            key={i}
-            className="border border-border bg-bg p-[24px] border-l-[3px]"
-            style={{ borderLeftColor: pillar.color }}
-          >
-            <dt className="text-[18px] font-bold tracking-[-0.02em] leading-[1.3] text-dark mb-[8px]">
+          <div key={i} className="border-t border-border pt-[16px]">
+            <dt className="mb-[8px] flex items-center gap-[8px] text-[18px] font-bold tracking-[-0.02em] leading-[1.3] text-dark">
+              <span
+                aria-hidden="true"
+                className="block h-[8px] w-[8px] shrink-0"
+                style={{ backgroundColor: pillar.color }}
+              />
               {c.term}
             </dt>
             <dd className="text-[15px] leading-[1.65] text-gray">{c.definition}</dd>
@@ -623,11 +657,13 @@ function LastReviewedLine({ date }: { date: string }) {
   return (
     <section
       aria-label="Editorial review"
-      className="border-t border-border-subtle bg-bg px-[16px] py-[20px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
+      className="border-t border-border-subtle bg-bg px-[16px] py-[24px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
     >
-      <p className="mx-auto max-w-[1120px] font-mono text-[11px] uppercase tracking-[0.08em] text-gray-light">
-        Last reviewed <time dateTime={date}>{formatted}</time> · Reviewed by Metaborong engineering team
-      </p>
+      <Reveal className="mx-auto max-w-[1120px]">
+        <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-gray-light">
+          Last reviewed <time dateTime={date}>{formatted}</time> · Reviewed by Metaborong engineering team
+        </p>
+      </Reveal>
     </section>
   )
 }
