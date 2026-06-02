@@ -55,9 +55,9 @@ export const pillars: Pillar[] = [
         label: 'Strategy',
         children: [
           {
-            name: 'Web3 Tokenomics Design',
+            name: 'Tokenomics Design',
             description: 'Token supply, distribution, emissions, and governance modelling stress-tested against on-chain behaviour.',
-            slug: 'web3-tokenomics-design',
+            slug: 'tokenomics-design',
             status: 'published',
             featuredNav: 5,
           },
@@ -73,6 +73,12 @@ export const pillars: Pillar[] = [
             slug: 'nft-marketplace-development',
             status: 'published',
             featuredNav: 3,
+          },
+          {
+            name: 'Token Launchpad Development',
+            description: 'Token sale and distribution platforms — fair launch, vesting, bonding curves, and allowlists, engineered for audit.',
+            slug: 'token-launchpad-development',
+            status: 'published',
           },
         ],
       },

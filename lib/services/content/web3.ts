@@ -196,7 +196,7 @@ export const defiProtocolDevelopment: LeafContent = {
   ],
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
-    { pillar: 'web3', slug: 'web3-tokenomics-design' },
+    { pillar: 'web3', slug: 'tokenomics-design' },
     { pillar: 'product-studio', slug: 'mvp-development' },
   ],
   faqs: [
@@ -224,14 +224,14 @@ export const defiProtocolDevelopment: LeafContent = {
 }
 
 // ---------------------------------------------------------------------------
-// web3-tokenomics-design
+// tokenomics-design
 // ---------------------------------------------------------------------------
 
 export const web3TokenomicsDesign: LeafContent = {
   pillar: 'web3',
-  slug: 'web3-tokenomics-design',
+  slug: 'tokenomics-design',
   heroLede:
-    "Web3 tokenomics design is a quantitative modelling practice for protocol founders. We work with teams who want the token's economic model defended before launch, not patched after — stress-tested against real participant behaviour until it holds under pressure. Because our smart-contract work has cleared four Hacken audit rounds, the model and the contracts that implement it come from one team.",
+    "Tokenomics design is a quantitative modelling practice for protocol founders who want a token's economic model defended before launch, not patched after. We stress-test supply, emissions, and incentives against real participant behaviour until the design holds.",
   heroStats: [
     { value: '~$20M', label: 'TVL engineered', context: 'nsASTR on Astar' },
     { value: '4', label: 'Hacken audit rounds', context: 'Neemo Finance' },
@@ -239,10 +239,10 @@ export const web3TokenomicsDesign: LeafContent = {
   ],
   deliverables: [
     {
-      label: 'Tokenomics paper covering supply schedule, distribution, governance, fee accrual, vesting graph, and sensitivity analysis.',
+      label: 'Tokenomics paper covering supply schedule, distribution, emissions, governance, fee accrual, and the vesting graph.',
     },
     {
-      label: 'Agent-based simulation of stakers, holders, governance voters, and arbitrageurs across 10,000 scenario trajectories.',
+      label: 'Agent-based simulation of holders, stakers, governance voters, and arbitrageurs across 10,000 scenario trajectories.',
     },
     {
       label: 'Vesting schedule with cliff and unlock calendar mapped to on-chain vesting-contract logic.',
@@ -250,26 +250,19 @@ export const web3TokenomicsDesign: LeafContent = {
     {
       label: 'Sensitivity analysis ranking the parameters that destabilise supply, demand, or governance under stress.',
     },
-    {
-      label: 'Investor and DAO defence pack: one-page summary, model assumptions, and named failure modes with rebuttals.',
-    },
   ],
   phases: [
     {
       title: 'Intent & constraints',
-      body: 'We start by writing down what the token is for. Coordination, governance, fee accrual, security, or distribution — each pulls the design in a different direction. We then capture constraints: fundraise size, vesting commitments to investors, regulatory posture, target-chain economics. The output is a one-page brief that becomes the test every model variant has to pass.',
+      body: 'We write down what the token is for — coordination, governance, fee accrual, or distribution — then capture constraints: fundraise size, investor vesting, regulatory posture, and target-chain economics. The output is a one-page brief every model variant has to pass.',
     },
     {
       title: 'Model & stress-test',
-      body: 'We build an agent-based simulation in Python with stylised actor classes — long-term holders, mercenary stakers, governance participants, and arbitrage flows. Supply curves, emission schedules, and fee mechanics run against 10,000-trajectory scenarios. The model reports where the protocol becomes inflationary, where governance captures, and where staking yields collapse. Each scenario is named and documented.',
+      body: 'We build an agent-based simulation in Python with stylised actors — long-term holders, mercenary stakers, governance voters, and arbitrageurs. Supply curves, emissions, and fees run against 10,000 trajectories, naming where the protocol turns inflationary, where governance captures, and where staking yields collapse.',
     },
     {
-      title: 'Paper & defence',
-      body: 'We write the tokenomics paper, then defend it. The paper is the document an investor, a DAO, or a smart-contract auditor reads first. We sit in defence sessions with the founders, arguing the model against challenge questions — cliff-edge dumps, governance capture, runaway emissions — before the public version ships.',
-    },
-    {
-      title: 'Implementation handoff',
-      body: 'We hand the paper over with implementation notes — emission schedule mapped to contract logic, vesting cliffs mapped to a vesting contract, and fee splits mapped to the on-chain accumulator. When smart-contract engineering is part of the same engagement, the tokenomics paper becomes the spec. The model rerun is part of any post-launch parameter change.',
+      title: 'Paper, defence & handoff',
+      body: 'We write the tokenomics paper and defend it in founder sessions against challenge questions — cliff-edge dumps, governance capture, runaway emissions. On sign-off we map emissions, vesting cliffs, and fee splits to the contracts that enforce them.',
     },
   ],
   techStack: [
@@ -295,7 +288,7 @@ export const web3TokenomicsDesign: LeafContent = {
     ],
   },
   aeoAnswer:
-    'Web3 tokenomics design is a quantitative modelling service for protocol founders building tokenised systems. Each engagement produces four artefacts: an agent-based simulation of participant behaviour across 10,000 scenario trajectories, a tokenomics paper covering supply, distribution and emissions, a vesting schedule mapped to on-chain contract logic, and a sensitivity analysis identifying which parameters destabilise the model. The simulation is what a serious investor or DAO reads first; the paper defends it.',
+    'Tokenomics design is a quantitative modelling service for protocol founders building tokenised systems. Each engagement produces an agent-based simulation across 10,000 scenario trajectories, a tokenomics paper covering supply, distribution and emissions, a vesting schedule mapped to contract logic, and a sensitivity analysis. The simulation is what serious investors and DAOs read first.',
   keyConcepts: [
     {
       term: 'Supply curve',
@@ -339,8 +332,8 @@ export const web3TokenomicsDesign: LeafContent = {
   ],
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'web3', slug: 'token-launchpad-development' },
     { pillar: 'web3', slug: 'defi-protocol-development' },
-    { pillar: 'web3', slug: 'liquid-staking-vaults' },
   ],
   faqs: [
     {
@@ -354,11 +347,6 @@ export const web3TokenomicsDesign: LeafContent = {
         'Most engagements run 4–8 weeks end-to-end. Intent and constraints take a week. Modelling and stress-testing run 2–4 weeks. Paper drafting and defence sessions take another 1–2 weeks. When tokenomics is bundled with smart-contract engineering, the modelling timeline lengthens because parameter choices feed directly into contract spec.',
     },
     {
-      question: 'How much does Web3 tokenomics design cost?',
-      answer:
-        'Engagements are priced by scope, not by a listed rate. A standalone design — paper, simulation, vesting, and sensitivity analysis — runs lower than one bundled with smart-contract delivery. We quote after the intent-and-constraints brief, so the number reflects real model complexity. Most founders budget separately for engineering and an external audit.',
-    },
-    {
       question: 'What is the difference between tokenomics and token economics?',
       answer:
         'In practice the two terms are used interchangeably. Tokenomics is the practical economic design of a single token — its supply, distribution, vesting, emissions, fee accrual, and governance. Token economics is the broader academic discipline that studies token-based systems, including market structure, network effects, and incentive design. Founders shopping for a vendor are almost always asking for tokenomics work.',
@@ -369,7 +357,7 @@ export const web3TokenomicsDesign: LeafContent = {
         "If you're raising or listing — yes. A tokenomics audit is the analytical companion to a smart-contract audit: it stress-tests the economic model against participant behaviour, so the supply curve, emission schedule, and vesting design defend themselves under attack. Investors and exchanges increasingly request it. The audit either confirms the existing design or surfaces the parameters that need to change before launch.",
     },
   ],
-  lastReviewed: '2026-05-31',
+  lastReviewed: '2026-06-02',
 }
 
 // ---------------------------------------------------------------------------
@@ -456,7 +444,7 @@ export const nftMarketplaceDevelopment: LeafContent = {
   ],
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
-    { pillar: 'web3', slug: 'web3-tokenomics-design' },
+    { pillar: 'web3', slug: 'tokenomics-design' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
   ],
   faqs: [
@@ -568,7 +556,7 @@ export const liquidStakingVaults: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'defi-protocol-development' },
-    { pillar: 'web3', slug: 'web3-tokenomics-design' },
+    { pillar: 'web3', slug: 'tokenomics-design' },
   ],
   faqs: [
     {
@@ -712,14 +700,135 @@ export const decentralizedIdentityDidIntegration: LeafContent = {
 }
 
 // ---------------------------------------------------------------------------
+// token-launchpad-development
+//
+// Split out of tokenomics (one-page-per-entity for AEO/GEO). Tokenomics =
+// design the economy; this leaf = build the sale/distribution platform.
+// relatedWork pending the Coin-it case-study descriptor (kept empty, not
+// fabricated). Concept-heavy → carries a glossary (bonding curve, fair
+// launch, allowlist, TGE).
+// ---------------------------------------------------------------------------
+
+export const tokenLaunchpadDevelopment: LeafContent = {
+  pillar: 'web3',
+  slug: 'token-launchpad-development',
+  heroLede:
+    'Token launchpad development is a smart-contract engineering practice that builds the platform a project sells and distributes its token through. We engineer sale, vesting, and distribution contracts — fair-launch, bonding-curve, or allowlist — for third-party audit and mainnet.',
+  deliverables: [
+    {
+      label: 'Token sale contracts: fixed-price, fair-launch, or bonding-curve, with allowlist and per-wallet caps.',
+    },
+    {
+      label: 'Vesting and distribution contracts mapping the cliff and unlock calendar on-chain.',
+    },
+    {
+      label: 'Anti-bot and anti-snipe controls, rate limits, and KYC or allowlist integration where required.',
+    },
+    {
+      label: 'Sale frontend, claim portal, and an operator dashboard for caps, phases, and treasury.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Sale & distribution spec',
+      body: 'We pin down the sale model — fixed price, fair launch, or bonding curve — plus vesting, per-wallet caps, allowlist policy, and KYC posture. Each parameter has a stated range and a failure mode. The spec is the document an auditor reads first.',
+    },
+    {
+      title: 'Contracts & frontend',
+      body: 'We build the sale, vesting, and distribution contracts against the spec with property-based and fork tests, alongside the sale frontend, claim portal, and operator dashboard. Anti-bot and anti-snipe controls are exercised before the contracts go to audit.',
+    },
+    {
+      title: 'Audit & launch',
+      body: 'The contract suite goes to a firm chosen with you. We respond to findings, ship fixes against a second-round review, and run the sale from a reviewed deployment script. The same team that cleared four Hacken audit rounds operates the launch.',
+    },
+  ],
+  techStack: [
+    { name: 'Solidity', category: 'Contracts' },
+    { name: 'Foundry', category: 'Testing' },
+    { name: 'OpenZeppelin', category: 'Libraries' },
+    { name: 'Slither', category: 'Static Analysis' },
+    { name: 'The Graph', category: 'Indexing' },
+    { name: 'Next.js', category: 'Frontend' },
+    { name: 'WalletConnect', category: 'Wallets' },
+    { name: 'Tenderly', category: 'Monitoring' },
+  ],
+  fit: {
+    fits: [
+      'You are launching a token and need the sale, vesting, and distribution contracts built for audit.',
+      'Fair-launch, bonding-curve, or allowlist mechanics need to be engineered rather than forked.',
+      'Budget covers an external audit of the launch contracts before the public sale.',
+    ],
+    doesNotFit: [
+      'You want a copy-paste fork of an existing launchpad with no security review.',
+      'The token has no vesting, caps, or distribution logic and a one-click mint is enough.',
+      'There is no tokenomics model behind the sale yet — start with tokenomics design first.',
+    ],
+  },
+  aeoAnswer:
+    'A token launchpad is the on-chain platform a project uses to sell and distribute its token. Token launchpad development builds the sale, vesting, and distribution contracts — fair launch, bonding curve, allowlist, and anti-bot controls — engineered for third-party audit. We build it end-to-end, from sale mechanics to the vesting calendar that releases tokens after launch.',
+  keyConcepts: [
+    {
+      term: 'Bonding curve',
+      definition:
+        "A bonding curve is a smart-contract pricing mechanism where a token's price is a fixed mathematical function of its circulating supply. Each purchase mints tokens and moves the price up the curve; each sale burns tokens and moves it down. Launchpads use bonding curves to bootstrap liquidity without an order book.",
+    },
+    {
+      term: 'Fair launch',
+      definition:
+        'A fair launch is a token distribution where no tokens are pre-sold or pre-allocated to insiders before the public sale. Supply is released to all participants on equal terms at launch — often through a bonding curve or a capped public sale — to avoid concentrated early ownership.',
+    },
+    {
+      term: 'Allowlist',
+      definition:
+        'An allowlist (or whitelist) is the set of wallet addresses approved to join a token sale, usually gated by KYC, prior community membership, or a registration window. The launch contract checks membership before accepting a contribution, controlling who can buy and enforcing per-wallet limits.',
+    },
+    {
+      term: 'Token generation event',
+      definition:
+        "A token generation event (TGE) is the moment a project's token is created and first distributed to participants. It marks the start of the vesting calendar and circulating supply, and is typically when the sale, claim, and listing contracts go live on mainnet.",
+    },
+  ],
+  relatedWork: [],
+  relatedServices: [
+    { pillar: 'web3', slug: 'tokenomics-design' },
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'web3', slug: 'defi-protocol-development' },
+  ],
+  faqs: [
+    {
+      question: 'What is a token launchpad?',
+      answer:
+        'A token launchpad is the on-chain platform a project uses to sell and distribute its token. It handles the sale mechanics — fixed price, fair launch, or bonding curve — plus allowlists, per-wallet caps, vesting, and the claim flow after the sale. We build launchpads as audited smart-contract systems, not forks.',
+    },
+    {
+      question: 'Do you build the tokenomics model too, or just the launchpad?',
+      answer:
+        "Both, as one team. The token's supply, emissions, and vesting are a tokenomics-design engagement; the launchpad is the platform that executes that model on-chain. We can take a project from the economic model through to the audited sale and distribution contracts.",
+    },
+    {
+      question: 'How do you prevent bots and snipers in a token sale?',
+      answer:
+        'Through contract-level controls: per-wallet and per-transaction caps, allowlist gating, and commit-reveal or batch-auction patterns where they fit the sale. No control is absolute, so we document the trade-offs and tune them to the sale model rather than promising a bot-proof launch.',
+    },
+    {
+      question: 'Is the launch contract audited?',
+      answer:
+        'Yes. Launch contracts hold sale proceeds and enforce vesting, so they go to an external audit before the public sale — the same process behind the four Hacken audit rounds our smart-contract work has cleared. We respond to findings and ship fixes against a second-round review.',
+    },
+  ],
+  lastReviewed: '2026-06-02',
+}
+
+// ---------------------------------------------------------------------------
 // Bundled export - consumed by `./index.ts`.
 // ---------------------------------------------------------------------------
 
 export const web3LeafContent = {
   'smart-contract-development': smartContractDevelopment,
   'defi-protocol-development': defiProtocolDevelopment,
-  'web3-tokenomics-design': web3TokenomicsDesign,
+  'tokenomics-design': web3TokenomicsDesign,
   'nft-marketplace-development': nftMarketplaceDevelopment,
   'liquid-staking-vaults': liquidStakingVaults,
   'decentralized-identity-did-integration': decentralizedIdentityDidIntegration,
+  'token-launchpad-development': tokenLaunchpadDevelopment,
 } satisfies Record<string, LeafContent>
