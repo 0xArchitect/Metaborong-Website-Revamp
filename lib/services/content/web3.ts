@@ -316,20 +316,7 @@ export const web3TokenomicsDesign: LeafContent = {
         'A sensitivity analysis tests how protocol outcomes change when input parameters move. In tokenomics it identifies the parameters most likely to destabilise the model: emission rates, staking yields, vesting cliffs, fee splits. The analysis surfaces which assumptions a launch is most exposed to.',
     },
   ],
-  relatedWork: [
-    {
-      descriptor: 'nsASTR — ~$20M TVL liquid-staking receipt token on Astar',
-      summary:
-        'Token supply, vesting, and emission design for the liquid-staking product running at production TVL on the Astar L1.',
-      href: '/work',
-    },
-    {
-      descriptor: 'nrETH — ~$1M TVL liquid-restaking receipt token',
-      summary:
-        'Receipt-token economic model for an EVM liquid-restaking vault composed by downstream DeFi protocols.',
-      href: '/work',
-    },
-  ],
+  relatedWork: [],
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'token-launchpad-development' },
