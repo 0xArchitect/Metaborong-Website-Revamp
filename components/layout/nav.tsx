@@ -5,7 +5,7 @@ import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { Logo } from '@/components/ui/logo'
 import { Button } from '@/components/ui/button'
 import { BackButton } from '@/components/ui/back-button'
-import { pillars, getPublishedLeaves } from '@/components/sections/services-data'
+import { pillars, getFeaturedLeaves } from '@/components/sections/services-data'
 
 const navLinks = [
   { label: 'Work', href: '/#work' },
@@ -261,7 +261,7 @@ export function Nav() {
           <div className="px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px] pt-[32px] pb-[40px]">
             <div className="grid grid-cols-3 gap-[48px] max-w-[1280px] mx-auto">
               {pillars.map((p, colIdx) => {
-                const visibleChildren = getPublishedLeaves(p).slice(0, 5)
+                const visibleChildren = getFeaturedLeaves(p, 'nav', 5)
                 const childCount = visibleChildren.length
                 return (
                   <div key={p.id} className={colIdx < 2 ? 'pr-[24px] border-r border-border' : ''}>
@@ -363,7 +363,7 @@ export function Nav() {
               <p className="mt-[12px] text-sm leading-[1.5] text-gray">{p.headline}</p>
 
               <ul className="mt-[8px] flex flex-col">
-                {getPublishedLeaves(p).slice(0, 5).map(c => (
+                {getFeaturedLeaves(p, 'nav', 5).map(c => (
                   <li key={c.slug}>
                     <a
                       href={`/services/${p.id}/${c.slug}/`}

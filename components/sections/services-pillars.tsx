@@ -4,11 +4,11 @@ import { useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import { useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'motion/react'
-import { pillars, getPublishedLeaves, type PillarId } from '@/components/sections/services-data'
+import { pillars, getFeaturedLeaves, type PillarId } from '@/components/sections/services-data'
 import { ServicesIsoStage } from '@/components/sections/services-iso-stage'
 import { activeIndexFromProgress, riseForCube } from '@/components/sections/services-scroll'
 
-const TOP_N = 5
+const TOP_N = 6
 const NAV_OFFSET = 56
 
 const H2_PHRASE: Record<PillarId, string> = {
@@ -95,7 +95,7 @@ export function ServicesPillars() {
                   <div className="mt-[clamp(12px,2.4svh,28px)] flex min-h-0 flex-col overflow-y-auto pr-[8px] lg:pr-0 [scrollbar-width:none] md:[&::-webkit-scrollbar]:hidden lg:[scrollbar-width:auto] lg:[&::-webkit-scrollbar]:auto">
                     {pillars.map((pillar, idx) => {
                       const isActive = idx === activeIndex
-                      const children = getPublishedLeaves(pillar)
+                      const children = getFeaturedLeaves(pillar, 'home', TOP_N)
                       return (
                         <div
                           key={pillar.id}
@@ -200,7 +200,7 @@ function MobileStack() {
             </h4>
             <p className="text-[15px] leading-[1.65] text-gray mb-[20px]">{pillar.body}</p>
             <ul role="list" className="space-y-[8px]">
-              {getPublishedLeaves(pillar).slice(0, TOP_N).map((child) => (
+              {getFeaturedLeaves(pillar, 'home', TOP_N).map((child) => (
                 <li key={child.slug}>
                   <Link
                     href={`${pillar.hubHref}${child.slug}/`}
