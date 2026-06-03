@@ -112,7 +112,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'strategy',
     slug: 'tokenomics-design',
     keyword: 'tokenomics design',
-    title: 'Tokenomics Design',
+    title: 'Tokenomics Design & Simulation Services',
     description:
       'Tokenomics design: agent-based simulation, supply, vesting, emissions, and governance modelling, stress-tested before launch. Hacken-audited team.',
   },
