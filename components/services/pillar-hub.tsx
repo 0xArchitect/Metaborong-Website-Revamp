@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Section } from '@/components/ui/section'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import {
@@ -23,7 +24,13 @@ export function PillarHub({ pillar }: { pillar: Pillar }) {
 
   return (
     <main id="main" aria-labelledby="pillar-hub-heading">
-      <Breadcrumb pillar={pillar} />
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/', home: true },
+          { label: 'Services', href: '/services/' },
+          { label: pillar.label },
+        ]}
+      />
       <PillarHero pillar={pillar} copy={copy} />
       {pillar.subGroups.map((sg, i) => (
         <SubGroupSection
@@ -52,29 +59,6 @@ export function PillarHub({ pillar }: { pillar: Pillar }) {
 }
 
 /* ---------- BREADCRUMB ---------- */
-
-function Breadcrumb({ pillar }: { pillar: Pillar }) {
-  return (
-    <nav
-      aria-label="Breadcrumb"
-      className="bg-bg px-[16px] pt-[calc(56px+16px)] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]"
-    >
-      <ol className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-[10px] gap-y-[4px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-gray-light">
-        <li>
-          <Link
-            href="/services/"
-            className="inline-flex items-center gap-[5px] hover:text-dark transition-colors duration-[var(--duration-instant)] group"
-          >
-            <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
-            <span>Services</span>
-          </Link>
-        </li>
-        <li aria-hidden="true" className="text-border">/</li>
-        <li aria-current="page" className="text-dark">{pillar.label}</li>
-      </ol>
-    </nav>
-  )
-}
 
 /* ---------- HERO ---------- */
 
