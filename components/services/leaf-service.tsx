@@ -20,6 +20,7 @@ import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import { TokenomicsSupplyVisual } from '@/components/services/tokenomics-supply-visual'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { clutchProfileUrl } from '@/lib/links'
 import { ArrowRight, Star, Check, X } from 'lucide-react'
 
@@ -60,7 +61,14 @@ export function LeafServicePage({ pillar, subGroup, leaf, content }: LeafService
 
   return (
     <main className="bg-bg">
-      <Breadcrumb pillar={pillar} leaf={leaf} />
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/', home: true },
+          { label: 'Services', href: '/services/' },
+          { label: pillar.label, href: pillar.hubHref },
+          { label: leaf.name },
+        ]}
+      />
       <Hero
         pillar={pillar}
         subGroup={subGroup}
@@ -85,37 +93,6 @@ export function LeafServicePage({ pillar, subGroup, leaf, content }: LeafService
       {content.lastReviewed && <LastReviewedLine date={content.lastReviewed} />}
       <ContactCtaSection />
     </main>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Breadcrumb — visible nav + ARIA semantics. Schema emission is the route's
-// job, not the template's (it composes with other JSON-LD).
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Breadcrumb({ pillar, leaf }: { pillar: Pillar; leaf: ChildService }) {
-  return (
-    <nav
-      aria-label="Breadcrumb"
-      className={`bg-bg border-b border-border-subtle pt-[calc(56px+24px)] pb-[24px] ${BAND_PX}`}
-    >
-      <div className="mx-auto max-w-[1280px]">
-        <ol className="flex flex-wrap items-center gap-x-[10px] gap-y-[4px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-gray">
-          {/* ← arrow link back to pillar hub */}
-          <li>
-            <Link
-              href={pillar.hubHref}
-              className="inline-flex items-center gap-[5px] py-[5px] hover:text-dark transition-colors duration-[var(--duration-instant)] group"
-            >
-              <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
-              <span>{pillar.label}</span>
-            </Link>
-          </li>
-          <li aria-hidden="true" className="text-border">/</li>
-          <li aria-current="page" className="text-dark">{leaf.name}</li>
-        </ol>
-      </div>
-    </nav>
   )
 }
 
