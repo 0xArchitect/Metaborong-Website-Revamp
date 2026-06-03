@@ -27,9 +27,20 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (isPublished && hasContent) {
     const seo = getLeafSeo(pillar, slug)
     if (seo) {
+      const leafUrl = `${SITE_ORIGIN}/services/${pillar}/${slug}/`
       return {
         title: seo.title,
         description: seo.description,
+        alternates: {
+          canonical: leafUrl,
+          types: { 'text/markdown': `${leafUrl}raw.md` },
+        },
+        openGraph: {
+          title: seo.title,
+          description: seo.description,
+          url: leafUrl,
+          type: 'website',
+        },
       }
     }
   }

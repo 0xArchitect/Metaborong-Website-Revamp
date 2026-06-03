@@ -343,6 +343,11 @@ export const web3TokenomicsDesign: LeafContent = {
       answer:
         "If you're raising or listing, yes. A tokenomics audit is the analytical companion to a smart-contract audit: it stress-tests the economic model against participant behaviour, so the supply curve, emission schedule, and vesting design defend themselves under attack. Investors and exchanges increasingly request it. The audit either confirms the existing design or surfaces the parameters that need to change before launch.",
     },
+    {
+      question: 'How much does a tokenomics engagement cost?',
+      answer:
+        'Cost follows scope. The main drivers are how many token mechanisms we model (staking, governance, fee accrual, vesting), how many scenario trajectories and stress dimensions the simulation covers, and whether the work is bundled with smart-contract engineering. We quote a fixed price after the intent-and-constraints week, once the model surface is known. We do not publish a flat rate because a single-mechanism token and a multi-mechanism protocol are different bodies of work.',
+    },
   ],
 }
 

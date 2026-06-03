@@ -318,37 +318,47 @@ function FitBlock({ pillar, fit }: { pillar: Pillar; fit: LeafContent['fit'] }) 
           When this fits and when it doesn&apos;t
         </h2>
       </div>
-      {/* One split panel divided by a center rule — fits (✓, pillar) vs
-          doesn't-fit (✗, muted tint), not two separate cards. */}
-      <div className="grid grid-cols-1 overflow-hidden rounded-[12px] border border-border md:grid-cols-2">
-        <div className="border-b border-border p-[24px] md:border-b-0 md:border-r md:p-[32px]">
-          <p className="mb-[20px] flex items-center gap-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-dark">
-            <Check className="h-[16px] w-[16px] shrink-0" strokeWidth={2.5} style={{ color: pillar.color }} aria-hidden="true" />
-            This fits when
-          </p>
-          <ul role="list" className="space-y-[14px]">
-            {fit.fits.map((bullet, i) => (
-              <li key={i} className="flex gap-[12px] text-[15px] leading-[1.55] text-dark">
-                <Check className="mt-[3px] h-[15px] w-[15px] shrink-0" strokeWidth={2.5} style={{ color: pillar.color }} aria-hidden="true" />
-                <span>{bullet}</span>
-              </li>
+      {/* Semantic comparison table — fits (✓, pillar) vs doesn't-fit (✗, muted
+          tint). A real <table> so AI answer engines lift the markup; full
+          borders only (border-t, md:border-r), never side-stripe accents. */}
+      <div className="overflow-hidden rounded-[12px] border border-border">
+        <table className="w-full border-collapse text-left">
+          <caption className="sr-only">When this engagement fits and when it does not.</caption>
+          <thead>
+            <tr>
+              <th scope="col" className="w-1/2 align-top px-[16px] py-[20px] md:border-r border-border md:p-[32px]">
+                <span className="flex items-center gap-[8px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-dark md:gap-[10px]">
+                  <Check className="h-[16px] w-[16px] shrink-0" strokeWidth={2.5} style={{ color: pillar.color }} aria-hidden="true" />
+                  This fits when
+                </span>
+              </th>
+              <th scope="col" className="w-1/2 align-top bg-bg-subtle px-[16px] py-[20px] md:p-[32px]">
+                <span className="flex items-center gap-[8px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-gray md:gap-[10px]">
+                  <X className="h-[16px] w-[16px] shrink-0 text-gray-light" strokeWidth={2.5} aria-hidden="true" />
+                  This doesn&apos;t fit when
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {[0, 1, 2].map((i) => (
+              <tr key={i}>
+                <td className="align-top border-t border-border px-[16px] py-[20px] md:border-r md:p-[32px]">
+                  <span className="flex gap-[8px] text-[15px] leading-[1.55] text-dark md:gap-[12px]">
+                    <Check className="mt-[3px] h-[15px] w-[15px] shrink-0" strokeWidth={2.5} style={{ color: pillar.color }} aria-hidden="true" />
+                    <span>{fit.fits[i]}</span>
+                  </span>
+                </td>
+                <td className="align-top border-t border-border bg-bg-subtle px-[16px] py-[20px] md:p-[32px]">
+                  <span className="flex gap-[8px] text-[15px] leading-[1.55] text-gray md:gap-[12px]">
+                    <X className="mt-[3px] h-[15px] w-[15px] shrink-0 text-gray-light" strokeWidth={2.5} aria-hidden="true" />
+                    <span>{fit.doesNotFit[i]}</span>
+                  </span>
+                </td>
+              </tr>
             ))}
-          </ul>
-        </div>
-        <div className="bg-bg-subtle p-[24px] md:p-[32px]">
-          <p className="mb-[20px] flex items-center gap-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-gray">
-            <X className="h-[16px] w-[16px] shrink-0 text-gray-light" strokeWidth={2.5} aria-hidden="true" />
-            This doesn&apos;t fit when
-          </p>
-          <ul role="list" className="space-y-[14px]">
-            {fit.doesNotFit.map((bullet, i) => (
-              <li key={i} className="flex gap-[12px] text-[15px] leading-[1.55] text-gray">
-                <X className="mt-[3px] h-[15px] w-[15px] shrink-0 text-gray-light" strokeWidth={2.5} aria-hidden="true" />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          </tbody>
+        </table>
       </div>
     </Section>
   )
