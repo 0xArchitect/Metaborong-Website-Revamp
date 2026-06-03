@@ -114,7 +114,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     keyword: 'tokenomics design',
     title: 'Tokenomics Design',
     description:
-      'Tokenomics design — agent-based simulation, supply, vesting, emissions, and governance modelling, stress-tested before launch. Hacken-audited team.',
+      'Tokenomics design: agent-based simulation, supply, vesting, emissions, and governance modelling, stress-tested before launch. Hacken-audited team.',
   },
   {
     pillar: 'web3',
@@ -123,7 +123,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     keyword: 'token launchpad development',
     title: 'Token Launchpad Development',
     description:
-      'Token sale and distribution platforms built end-to-end — fair launch, vesting, bonding curves, allowlists, and anti-bot controls. Audit-ready, Hacken-audited team.',
+      'Token sale and distribution platforms built end-to-end: fair launch, vesting, bonding curves, allowlists, and anti-bot controls. Audit-ready, Hacken-audited team.',
   },
   {
     pillar: 'web3',
