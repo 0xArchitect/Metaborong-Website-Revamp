@@ -693,6 +693,103 @@ video.hero-ascii-image::-webkit-media-controls-container {
           mask-image: linear-gradient(180deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
 }
 
+/* Leaf-page scroll choreography v1 (one-shot, IO-gated via .is-visible on the
+   <Stagger> wrapper). Gated behind no-preference so reduced-motion + no-JS keep
+   content in its natural visible state. Mirrors the locked one-shot grammar. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Per-item cascade: children carry .stag + --i; parent gets .is-visible on entry. */
+  .stagger > .stag {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--duration-base) cubic-bezier(0.16, 1, 0.3, 1),
+                transform var(--duration-base) cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stagger.is-visible > .stag {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  /* Key-concept tick scales in just after its row lands. */
+  .stagger > .stag .kc-tick {
+    transform: scale(0);
+    transition: transform var(--duration-fast) cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stagger.is-visible > .stag .kc-tick {
+    transform: scale(1);
+    transition-delay: calc(var(--i, 0) * 80ms + 140ms);
+  }
+}
+
+/* ─────────── Process spine (How we work) ───────────
+   Numbered nodes on a connector line. md+: horizontal, the brand progress
+   segment scrubs with scroll (animation-timeline: view); <md: vertical spine.
+   No support / reduced motion: the progress segment is fully drawn (static). */
+.phase-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--color-gray);
+  z-index: 1;
+  transition: border-color var(--duration-fast), color var(--duration-fast);
+  top: 0;
+  left: 0;
+}
+.phase-step:hover .phase-node { border-color: var(--pillar-color); color: var(--pillar-color); }
+
+/* <md: vertical connector down the left rail */
+@media (max-width: 767px) {
+  .phase-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: 44px;
+    width: 2px;
+    height: calc(100% + 40px - 44px);
+    background: var(--color-border);
+  }
+}
+
+/* md+: horizontal connector through node centers, segment per step */
+@media (min-width: 768px) {
+  .phase-step:not(:last-child)::before,
+  .phase-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 21px;
+    left: 44px;
+    width: calc(100% - 44px + 32px);
+    height: 2px;
+  }
+  .phase-step:not(:last-child)::before { background: var(--color-border); }
+  .phase-step:not(:last-child)::after {
+    background: var(--pillar-color);
+    transform-origin: left;
+    transform: scaleX(1); /* fallback: fully drawn */
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .phase-step:not(:last-child)::after {
+      transform: scaleX(0);
+      animation: spineDraw linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 55%;
+    }
+    @keyframes spineDraw { to { transform: scaleX(1); } }
+  }
+}
+
 /* Responsive: tablet */
 @media (max-width: 1023px) {
   .problem-grid {

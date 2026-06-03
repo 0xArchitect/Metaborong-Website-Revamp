@@ -254,15 +254,15 @@ export const web3TokenomicsDesign: LeafContent = {
   phases: [
     {
       title: 'Intent & constraints',
-      body: 'We write down what the token is for — coordination, governance, fee accrual, or distribution — then capture constraints: fundraise size, investor vesting, regulatory posture, and target-chain economics. The output is a one-page brief every model variant has to pass.',
+      body: 'We write down what the token is for (coordination, governance, fee accrual, or distribution), then capture constraints: fundraise size, investor vesting, regulatory posture, and target-chain economics. The output is a one-page brief every model variant has to pass.',
     },
     {
       title: 'Model & stress-test',
-      body: 'We build an agent-based simulation in Python with stylised actors — long-term holders, mercenary stakers, governance voters, and arbitrageurs. Supply curves, emissions, and fees run against 10,000 trajectories, naming where the protocol turns inflationary, where governance captures, and where staking yields collapse.',
+      body: 'We build an agent-based simulation in Python with stylised actors: long-term holders, mercenary stakers, governance voters, and arbitrageurs. Supply curves, emissions, and fees run against 10,000 trajectories, naming where the protocol turns inflationary, where governance captures, and where staking yields collapse.',
     },
     {
       title: 'Paper, defence & handoff',
-      body: 'We write the tokenomics paper and defend it in founder sessions against challenge questions — cliff-edge dumps, governance capture, runaway emissions. On sign-off we map emissions, vesting cliffs, and fee splits to the contracts that enforce them.',
+      body: 'We write the tokenomics paper and defend it in founder sessions against challenge questions: cliff-edge dumps, governance capture, runaway emissions. On sign-off we map emissions, vesting cliffs, and fee splits to the contracts that enforce them.',
     },
   ],
   techStack: [
@@ -283,7 +283,7 @@ export const web3TokenomicsDesign: LeafContent = {
     ],
     doesNotFit: [
       'You want a one-page token summary copied from a recent launch with the parameters adjusted.',
-      'The token is decorative — no staking, no governance, no fee accrual, no real economic role.',
+      'The token is decorative: no staking, no governance, no fee accrual, no real economic role.',
       "Timeline pressure rules out a stress-test phase and the founders want a 'good enough' model.",
     ],
   },
@@ -308,7 +308,7 @@ export const web3TokenomicsDesign: LeafContent = {
     {
       term: 'Agent-based simulation',
       definition:
-        'An agent-based simulation models a token economy by simulating individual participants — long-term holders, mercenary stakers, governance voters, arbitrageurs — and observing emergent outcomes. Unlike closed-form models, it surfaces second-order effects such as governance capture, mercenary capital flight, and feedback loops between incentives and behaviour.',
+        'An agent-based simulation models a token economy by simulating individual participants (long-term holders, mercenary stakers, governance voters, arbitrageurs) and observing emergent outcomes. Unlike closed-form models, it surfaces second-order effects such as governance capture, mercenary capital flight, and feedback loops between incentives and behaviour.',
     },
     {
       term: 'Sensitivity analysis',
@@ -336,15 +336,14 @@ export const web3TokenomicsDesign: LeafContent = {
     {
       question: 'What is the difference between tokenomics and token economics?',
       answer:
-        'In practice the two terms are used interchangeably. Tokenomics is the practical economic design of a single token — its supply, distribution, vesting, emissions, fee accrual, and governance. Token economics is the broader academic discipline that studies token-based systems, including market structure, network effects, and incentive design. Founders shopping for a vendor are almost always asking for tokenomics work.',
+        'In practice the two terms are used interchangeably. Tokenomics is the practical economic design of a single token: its supply, distribution, vesting, emissions, fee accrual, and governance. Token economics is the broader academic discipline that studies token-based systems, including market structure, network effects, and incentive design. Founders shopping for a vendor are almost always asking for tokenomics work.',
     },
     {
       question: 'Do I need a tokenomics audit before launching a token?',
       answer:
-        "If you're raising or listing — yes. A tokenomics audit is the analytical companion to a smart-contract audit: it stress-tests the economic model against participant behaviour, so the supply curve, emission schedule, and vesting design defend themselves under attack. Investors and exchanges increasingly request it. The audit either confirms the existing design or surfaces the parameters that need to change before launch.",
+        "If you're raising or listing, yes. A tokenomics audit is the analytical companion to a smart-contract audit: it stress-tests the economic model against participant behaviour, so the supply curve, emission schedule, and vesting design defend themselves under attack. Investors and exchanges increasingly request it. The audit either confirms the existing design or surfaces the parameters that need to change before launch.",
     },
   ],
-  lastReviewed: '2026-06-02',
 }
 
 // ---------------------------------------------------------------------------
@@ -700,7 +699,7 @@ export const tokenLaunchpadDevelopment: LeafContent = {
   pillar: 'web3',
   slug: 'token-launchpad-development',
   heroLede:
-    'Token launchpad development is a smart-contract engineering practice that builds the platform a project sells and distributes its token through. We engineer sale, vesting, and distribution contracts — fair-launch, bonding-curve, or allowlist — for third-party audit and mainnet.',
+    'Token launchpad development is a smart-contract engineering practice that builds the platform a project sells and distributes its token through. We engineer sale, vesting, and distribution contracts (fair-launch, bonding-curve, or allowlist) for third-party audit and mainnet.',
   deliverables: [
     {
       label: 'Token sale contracts: fixed-price, fair-launch, or bonding-curve, with allowlist and per-wallet caps.',
@@ -718,7 +717,7 @@ export const tokenLaunchpadDevelopment: LeafContent = {
   phases: [
     {
       title: 'Sale & distribution spec',
-      body: 'We pin down the sale model — fixed price, fair launch, or bonding curve — plus vesting, per-wallet caps, allowlist policy, and KYC posture. Each parameter has a stated range and a failure mode. The spec is the document an auditor reads first.',
+      body: 'We pin down the sale model (fixed price, fair launch, or bonding curve) plus vesting, per-wallet caps, allowlist policy, and KYC posture. Each parameter has a stated range and a failure mode. The spec is the document an auditor reads first.',
     },
     {
       title: 'Contracts & frontend',
@@ -748,11 +747,11 @@ export const tokenLaunchpadDevelopment: LeafContent = {
     doesNotFit: [
       'You want a copy-paste fork of an existing launchpad with no security review.',
       'The token has no vesting, caps, or distribution logic and a one-click mint is enough.',
-      'There is no tokenomics model behind the sale yet — start with tokenomics design first.',
+      'There is no tokenomics model behind the sale yet: start with tokenomics design first.',
     ],
   },
   aeoAnswer:
-    'A token launchpad is the on-chain platform a project uses to sell and distribute its token. Token launchpad development builds the sale, vesting, and distribution contracts — fair launch, bonding curve, allowlist, and anti-bot controls — engineered for third-party audit. We build it end-to-end, from sale mechanics to the vesting calendar that releases tokens after launch.',
+    'A token launchpad is the on-chain platform a project uses to sell and distribute its token. Token launchpad development builds the sale, vesting, and distribution contracts (fair launch, bonding curve, allowlist, and anti-bot controls) engineered for third-party audit. We build it end-to-end, from sale mechanics to the vesting calendar that releases tokens after launch.',
   keyConcepts: [
     {
       term: 'Bonding curve',
@@ -762,7 +761,7 @@ export const tokenLaunchpadDevelopment: LeafContent = {
     {
       term: 'Fair launch',
       definition:
-        'A fair launch is a token distribution where no tokens are pre-sold or pre-allocated to insiders before the public sale. Supply is released to all participants on equal terms at launch — often through a bonding curve or a capped public sale — to avoid concentrated early ownership.',
+        'A fair launch is a token distribution where no tokens are pre-sold or pre-allocated to insiders before the public sale. Supply is released to all participants on equal terms at launch (often through a bonding curve or a capped public sale) to avoid concentrated early ownership.',
     },
     {
       term: 'Allowlist',
@@ -785,7 +784,7 @@ export const tokenLaunchpadDevelopment: LeafContent = {
     {
       question: 'What is a token launchpad?',
       answer:
-        'A token launchpad is the on-chain platform a project uses to sell and distribute its token. It handles the sale mechanics — fixed price, fair launch, or bonding curve — plus allowlists, per-wallet caps, vesting, and the claim flow after the sale. We build launchpads as audited smart-contract systems, not forks.',
+        'A token launchpad is the on-chain platform a project uses to sell and distribute its token. It handles the sale mechanics (fixed price, fair launch, or bonding curve) plus allowlists, per-wallet caps, vesting, and the claim flow after the sale. We build launchpads as audited smart-contract systems, not forks.',
     },
     {
       question: 'Do you build the tokenomics model too, or just the launchpad?',
@@ -800,7 +799,7 @@ export const tokenLaunchpadDevelopment: LeafContent = {
     {
       question: 'Is the launch contract audited?',
       answer:
-        'Yes. Launch contracts hold sale proceeds and enforce vesting, so they go to an external audit before the public sale — the same process behind the four Hacken audit rounds our smart-contract work has cleared. We respond to findings and ship fixes against a second-round review.',
+        'Yes. Launch contracts hold sale proceeds and enforce vesting, so they go to an external audit before the public sale, the same process behind the four Hacken audit rounds our smart-contract work has cleared. We respond to findings and ship fixes against a second-round review.',
     },
   ],
   lastReviewed: '2026-06-02',

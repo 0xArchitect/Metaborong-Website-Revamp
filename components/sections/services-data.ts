@@ -76,7 +76,7 @@ export const pillars: Pillar[] = [
           },
           {
             name: 'Token Launchpad Development',
-            description: 'Token sale and distribution platforms — fair launch, vesting, bonding curves, and allowlists, engineered for audit.',
+            description: 'Token sale and distribution platforms: fair launch, vesting, bonding curves, and allowlists, engineered for audit.',
             slug: 'token-launchpad-development',
             status: 'published',
           },
