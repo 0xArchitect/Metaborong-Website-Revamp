@@ -21,6 +21,8 @@ import { Button } from '@/components/ui/button'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import { TokenomicsSupplyVisual } from '@/components/services/tokenomics-supply-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
+import { FaqAccordion } from '@/components/sections/faq-accordion'
 import { clutchProfileUrl } from '@/lib/links'
 import { ArrowRight, Star, Check, X } from 'lucide-react'
 
@@ -498,53 +500,40 @@ function RelatedServices({ items }: { items: readonly ResolvedRelated[] }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// FAQ — native <details>/<summary> accordion. Server-rendered, keyboard-
-// accessible by the platform, no client JS. Schema (`FAQPage`) is emitted
-// by the route from the same data.
+// FAQ — mirrors the homepage FAQ section: sticky two-column layout + the shared
+// <FaqAccordion> (single-open, closed answers kept in DOM so they stay
+// crawlable). Schema (`FAQPage`) is emitted by the route from the same data.
 // ─────────────────────────────────────────────────────────────────────────────
 
 function FaqBlock({ faqs }: { faqs: readonly LeafContent['faqs'][number][] }) {
   if (faqs.length === 0) return null
+  const items = faqs.map((f) => ({ q: f.question, a: f.answer }))
   return (
     <Section maxWidth="xwide">
-      <div className="mb-[32px] md:mb-[40px]">
-        <Eyebrow as="p" className="mb-[12px]">FAQ</Eyebrow>
-        <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.03em] text-dark">
-          Frequently asked questions
-        </h2>
-      </div>
-      <div className="border-t border-border">
-        {faqs.map((faq, i) => (
-          <details
-            key={i}
-            className="group border-b border-border [&_summary::-webkit-details-marker]:hidden"
-          >
-            <summary className="flex min-h-[56px] cursor-pointer items-center justify-between gap-[16px] py-[16px] pr-[8px] text-left text-[16px] font-semibold leading-[1.3] tracking-[-0.02em] text-dark sm:py-[24px]">
-              <span>{faq.question}</span>
-              <ChevronIcon />
-            </summary>
-            <div className="pb-[24px] pr-[8px] sm:pr-[32px]">
-              <p className="max-w-[70ch] text-[15px] leading-[1.7] tracking-[-0.01em] text-gray">{faq.answer}</p>
-            </div>
-          </details>
-        ))}
+      <div className="grid gap-[40px] md:gap-[64px] lg:grid-cols-[minmax(0,360px)_1fr] lg:gap-[96px]">
+        <div className="lg:sticky lg:top-[96px] lg:self-start">
+          <SectionEyebrow className="mb-[16px]">FAQ</SectionEyebrow>
+          <h2 className="text-balance text-[clamp(28px,3.5vw,44px)] font-bold leading-[1.05] tracking-[-0.035em] text-dark">
+            Frequently asked questions
+          </h2>
+          <div className="mt-[32px] hidden border border-border p-[24px] lg:block">
+            <p className="text-[15px] font-semibold leading-[1.4] tracking-[-0.02em] text-dark">
+              Don&apos;t see your question?
+            </p>
+            <p className="mt-[8px] text-[14px] leading-[1.5] text-gray">
+              Email the founders directly: first reply usually lands the same day.
+            </p>
+            <a
+              href="mailto:contact@metaborong.com?subject=Question%20about%20your%20services"
+              className="mt-[18px] inline-flex items-center gap-[6px] text-[13px] font-semibold tracking-[-0.01em] text-dark underline decoration-gray-subtle underline-offset-[3px] transition-colors duration-200 hover:text-brand hover:decoration-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              contact@metaborong.com <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+        <FaqAccordion items={items} />
       </div>
     </Section>
-  )
-}
-
-function ChevronIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      aria-hidden="true"
-      className="shrink-0 text-gray transition-transform duration-[var(--duration-fast)] group-open:rotate-180"
-    >
-      <path d="M4.5 7L9 11.5L13.5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-    </svg>
   )
 }
 

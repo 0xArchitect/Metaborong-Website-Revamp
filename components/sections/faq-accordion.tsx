@@ -2,13 +2,15 @@
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { faqs } from '@/components/sections/faq-data'
+import { faqs as homepageFaqs } from '@/components/sections/faq-data'
 
-export function FaqAccordion() {
+export type FaqAccordionItem = { q: string; a: string }
+
+export function FaqAccordion({ items = homepageFaqs }: { items?: readonly FaqAccordionItem[] }) {
   const [open, setOpen] = useState<number | null>(0)
   return (
     <div className="border-t border-border">
-      {faqs.map((faq, i) => {
+      {items.map((faq, i) => {
         const isOpen = open === i
         return (
           <div key={i} className="border-b border-border">
