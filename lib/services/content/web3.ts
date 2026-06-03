@@ -231,7 +231,7 @@ export const web3TokenomicsDesign: LeafContent = {
   pillar: 'web3',
   slug: 'tokenomics-design',
   heroLede:
-    "Tokenomics design is a quantitative modelling practice for protocol founders who want a token's economic model defended before launch, not patched after. We stress-test supply, emissions, and incentives against real participant behaviour until the design holds.",
+    'Most tokenomics models hold up in the whitepaper and break under real participant behaviour. We simulate supply, emissions, and incentives against thousands of self-interested actors, then stress-test the economics until the design holds and is defended before launch, not patched after.',
   heroStats: [
     { value: '~$20M', label: 'TVL engineered', context: 'nsASTR on Astar' },
     { value: '4', label: 'Hacken audit rounds', context: 'Neemo Finance' },
