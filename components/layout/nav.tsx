@@ -207,7 +207,7 @@ export function Nav() {
               onMouseDown={() => { keyboardOpenRef.current = false }}
               onClick={() => setMegaOpen(v => !v)}
               onKeyDown={onTriggerKeyDown}
-              className="relative flex cursor-pointer items-center gap-[4px] border-0 bg-transparent p-0 text-sm tracking-[-0.01em] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark data-[active=true]:text-dark after:absolute after:-bottom-[6px] after:left-0 after:right-0 after:h-[2px] after:bg-brand after:origin-left after:scale-x-0 after:transition-transform after:duration-[var(--duration-instant)] hover:after:scale-x-100 data-[active=true]:after:scale-x-100 [touch-action:manipulation]"
+              className="relative flex cursor-pointer items-center gap-[4px] border-0 bg-transparent px-0 py-[8px] text-sm tracking-[-0.01em] text-gray transition-colors duration-[var(--duration-instant)] hover:text-dark data-[active=true]:text-dark after:absolute after:bottom-[2px] after:left-0 after:right-0 after:h-[2px] after:bg-brand after:origin-left after:scale-x-0 after:transition-transform after:duration-[var(--duration-instant)] hover:after:scale-x-100 data-[active=true]:after:scale-x-100 [touch-action:manipulation]"
             >
               Services
               <ChevronDown
@@ -222,7 +222,7 @@ export function Nav() {
                 <Divider />
                 <a
                   href={link.href}
-                  className="relative text-sm tracking-[-0.01em] text-gray no-underline transition-colors duration-[var(--duration-instant)] hover:text-dark after:absolute after:-bottom-[6px] after:left-0 after:right-0 after:h-[2px] after:bg-dark after:origin-left after:scale-x-0 after:transition-transform after:duration-[var(--duration-instant)] hover:after:scale-x-100 [touch-action:manipulation]"
+                  className="relative inline-flex items-center py-[8px] text-sm tracking-[-0.01em] text-gray no-underline transition-colors duration-[var(--duration-instant)] hover:text-dark after:absolute after:bottom-[2px] after:left-0 after:right-0 after:h-[2px] after:bg-dark after:origin-left after:scale-x-0 after:transition-transform after:duration-[var(--duration-instant)] hover:after:scale-x-100 [touch-action:manipulation]"
                 >
                   {link.label}
                 </a>
