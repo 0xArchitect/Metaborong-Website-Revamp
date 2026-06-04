@@ -108,8 +108,8 @@ export const pillars: Pillar[] = [
             featuredNav: 4,
           },
           {
-            name: 'DID & ZKP Integration',
-            description: 'Verifiable credentials, Aadhaar-integrated DID stacks, and UIDAI-aware identity systems.',
+            name: 'Decentralized Identity & ZKP',
+            description: 'Verifiable credentials, DID resolvers, and zero-knowledge selective disclosure. Live Aadhaar eKYC integration, portable across identity systems.',
             slug: 'decentralized-identity-did-integration',
             status: 'published',
             featuredHome: 5,

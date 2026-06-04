@@ -27,19 +27,26 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (isPublished && hasContent) {
     const seo = getLeafSeo(pillar, slug)
     if (seo) {
-      const leafUrl = `${SITE_ORIGIN}/services/${pillar}/${slug}/`
+      const leafUrl = `${SITE_ORIGIN}/services/${pillar}/${slug}`
       return {
         title: seo.title,
         description: seo.description,
         alternates: {
           canonical: leafUrl,
-          types: { 'text/markdown': `${leafUrl}raw.md` },
+          types: { 'text/markdown': `${leafUrl}/raw.md` },
         },
         openGraph: {
           title: seo.title,
           description: seo.description,
           url: leafUrl,
           type: 'website',
+          images: [{ url: `${SITE_ORIGIN}/opengraph-image`, width: 1200, height: 630, alt: seo.title }],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: seo.title,
+          description: seo.description,
+          images: [`${SITE_ORIGIN}/opengraph-image`],
         },
       }
     }
@@ -105,7 +112,7 @@ function buildLeafJsonLd({
   content: LeafContent
   description?: string
 }): Record<string, unknown>[] {
-  const leafUrl = `${SITE_ORIGIN}/services/${pillar.id}/${leaf.slug}/`
+  const leafUrl = `${SITE_ORIGIN}/services/${pillar.id}/${leaf.slug}`
 
   const service: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -121,7 +128,9 @@ function buildLeafJsonLd({
       name: 'Metaborong',
       url: SITE_ORIGIN,
     },
-    areaServed: { '@type': 'AdministrativeArea', name: 'Worldwide' },
+    areaServed: content.areaServed
+      ? { '@type': 'Country', name: content.areaServed }
+      : { '@type': 'AdministrativeArea', name: 'Worldwide' },
   }
   if (content.lastReviewed) {
     service.dateModified = content.lastReviewed

@@ -179,9 +179,11 @@ export interface LeafHeroStat {
  * with a glossary may reach ~1,500). Hard ceiling 1,500 — do not exceed; depth
  * is added across the cluster, not stacked on one page.
  *
- * For the DID leaf (`decentralized-identity-did-integration`), the
- * `aeoAnswer` paragraph must reference Aadhaar-scale deployment as one of
- * its two verifiable facts. See SERVICES_PLAN.md § 6.
+ * The DID leaf (`decentralized-identity-did-integration`) leads on the
+ * decentralized-identity + ZKP capability (global); Aadhaar DID is one
+ * live-project angle (Sedax). Its `aeoAnswer` must still reference the
+ * Aadhaar-scale deployment as one of its two verifiable facts. See
+ * SERVICES_PLAN.md § 6.
  */
 export interface LeafContent {
   pillar: PillarId
@@ -210,4 +212,7 @@ export interface LeafContent {
 
   /** Optional. ISO date (YYYY-MM-DD) of last editorial review. Powers `dateModified` schema + visible "Last reviewed" line. */
   lastReviewed?: string
+
+  /** Optional. Country name for `Service.areaServed` when the leaf targets a specific market (e.g. the India-explicit DID leaf). Defaults to Worldwide when unset. */
+  areaServed?: string
 }

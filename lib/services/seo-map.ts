@@ -103,9 +103,9 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'engineering',
     slug: 'defi-protocol-development',
     keyword: 'defi protocol development services',
-    title: 'DeFi Protocol Development | Lending, AMM, Vaults',
+    title: 'DeFi Protocol Development | Lending, AMM',
     description:
-      'Lending, AMM, perp-DEX, and yield protocols engineered for audit and on-chain volume. Multichain across EVM, Solana, and Cosmos.',
+      'DeFi protocol development services for lending, AMM, perp, and yield-vault mechanisms. Audited contracts, keepers, and oracles across EVM, Solana, and Cosmos.',
   },
   {
     pillar: 'web3',
@@ -121,7 +121,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     subGroup: 'product',
     slug: 'token-launchpad-development',
     keyword: 'token launchpad development',
-    title: 'Token Launchpad Development',
+    title: 'Token Launchpad & Bonding Curve Development',
     description:
       'Token sale and distribution platforms built end-to-end: fair launch, vesting, bonding curves, allowlists, and anti-bot controls. Audit-ready, Hacken-audited team.',
   },
@@ -132,28 +132,29 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     keyword: 'nft marketplace development',
     title: 'NFT Marketplace Development',
     description:
-      'Custom NFT marketplaces with royalties, lazy-mint, curated drops, and multi-chain support. From storefront to settlement, fully owned by you.',
+      'Custom NFT marketplaces engineered for audit: royalty enforcement, lazy minting, curated drops, secondary trading, and an indexer. Multi-chain across EVM.',
   },
   {
     pillar: 'web3',
     subGroup: 'engineering',
     slug: 'liquid-staking-vaults',
     keyword: 'liquid staking and vault development',
-    title: 'Liquid Staking & Vault Systems',
+    title: 'Liquid Staking & Vault Development',
     description:
-      'LST and LRT vault systems with restaking, risk controls, and validator routing. Built for production yields and third-party audit readiness.',
+      'Liquid staking and vault development: LST/LRT receipt tokens, validator routing, restaking, and slashing-aware risk controls. nsASTR (~$20M TVL) team.',
   },
   {
-    // GovTech / UIDAI / Aadhaar headline leaf. India-explicit by design | see
-    // SERVICES_PLAN.md § Risk 7. AEO answer block on the page references
-    // Aadhaar-scale deployment as a verifiable fact.
+    // Decentralized identity + ZKP is the headline capability (global). Aadhaar
+    // DID is one live-project angle (Sedax), not the leaf's primary frame | see
+    // SERVICES_PLAN.md § Risk 7. AEO answer still references the Aadhaar-scale
+    // deployment as one of its two verifiable facts.
     pillar: 'web3',
     subGroup: 'engineering',
     slug: 'decentralized-identity-did-integration',
-    keyword: 'decentralized identity and aadhaar did integration',
-    title: 'Decentralized Identity & DID Integration',
+    keyword: 'decentralized identity and zkp development',
+    title: 'Decentralized Identity & ZKP Development',
     description:
-      'Verifiable credentials, Aadhaar-integrated DID stacks, and UIDAI-aware identity systems for GovTech and regulated products. Production-scale deployments.',
+      'Decentralized identity and ZKP development: W3C verifiable credentials, DID resolvers, and zero-knowledge selective disclosure. Live Aadhaar eKYC project.',
   },
 
   // ── Product Studio ──────────────────────────────────────────────────────────
