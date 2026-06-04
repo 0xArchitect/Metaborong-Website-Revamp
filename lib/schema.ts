@@ -51,16 +51,10 @@ export const organizationSchema = {
     areaServed: 'Worldwide',
     availableLanguage: ['English'],
   },
-  // Aggregate of the verified third-party reviews surfaced in the Social-proof
-  // section (clutch.co/profile/metaborong-technologies-private). Mirrors the
-  // visible 4.9 / 9-review figures so the entity graph and the page agree.
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '9',
-    bestRating: '5',
-    worstRating: '1',
-  },
+  // No self-serving `aggregateRating`: the live Clutch figures are surfaced via
+  // the official Clutch widget (iframe) in the Social-proof section, not as a
+  // hardcoded native number. Google ignores self-referential Organization
+  // ratings, so emitting them here adds risk without rich-result benefit.
   sameAs: [
     'https://linkedin.com/company/metaborong-technologies',
     'https://x.com/Metaborong',

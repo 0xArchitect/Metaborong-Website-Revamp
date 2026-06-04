@@ -29,8 +29,8 @@ import { DidVisual } from '@/components/services/did-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
-import { clutchProfileUrl } from '@/lib/links'
-import { ArrowRight, Star, Check, X } from 'lucide-react'
+import { ClutchWidget } from '@/components/sections/clutch-widget'
+import { ArrowRight, Check, X } from 'lucide-react'
 
 // Per-leaf hero signature visual (DESIGN.md: one signature visual per section).
 // Keyed by `${pillar}/${slug}`; leaves without an entry render a text-only hero.
@@ -44,11 +44,6 @@ const heroVisuals: Record<string, React.ComponentType> = {
   'web3/decentralized-identity-did-integration': DidVisual,
 }
 
-// Company-wide trust figures, mirrored from the Social-proof section
-// (`testimonials.tsx`) and the Organization AggregateRating JSON-LD
-// (`lib/schema.ts`). Keep in sync if the Clutch profile changes.
-const CLUTCH_RATING = '4.9'
-const CLUTCH_REVIEWS = '9'
 import {
   pillars,
   getAllLeaves,
@@ -156,18 +151,7 @@ function Hero({
             <Button href="/#contact" variant="primary" size="lg" arrow="→">
               Talk to us
             </Button>
-            <a
-              href={clutchProfileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-[8px] py-[6px] font-mono text-[12px] font-bold uppercase tracking-[0.06em] text-gray hover:text-dark transition-colors duration-[var(--duration-instant)]"
-            >
-              <Star className="h-[14px] w-[14px] fill-current text-accent" aria-hidden="true" />
-              <span>
-                {CLUTCH_RATING}/5 on Clutch
-                <span className="text-gray group-hover:text-dark"> · {CLUTCH_REVIEWS} reviews</span>
-              </span>
-            </a>
+            <ClutchWidget widgetType="2" className="w-[280px] max-w-full" />
           </Reveal>
         </div>
         {Visual && (
