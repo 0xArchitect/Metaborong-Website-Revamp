@@ -26,6 +26,12 @@ import { DefiProtocolVisual } from '@/components/services/defi-protocol-visual'
 import { NftMarketplaceVisual } from '@/components/services/nft-marketplace-visual'
 import { LiquidStakingVisual } from '@/components/services/liquid-staking-visual'
 import { DidVisual } from '@/components/services/did-visual'
+import { BlockchainConsultingVisual } from '@/components/services/blockchain-consulting-visual'
+import { EnterprisePrivateBlockchainVisual } from '@/components/services/enterprise-private-blockchain-visual'
+import { RwaTokenizationVisual } from '@/components/services/rwa-tokenization-visual'
+import { CryptoWalletVisual } from '@/components/services/crypto-wallet-visual'
+import { CrossChainBridgeVisual } from '@/components/services/cross-chain-bridge-visual'
+import { IndexersSubgraphsVisual } from '@/components/services/blockchain-indexers-subgraphs-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
@@ -42,6 +48,12 @@ const heroVisuals: Record<string, React.ComponentType> = {
   'web3/nft-marketplace-development': NftMarketplaceVisual,
   'web3/liquid-staking-vaults': LiquidStakingVisual,
   'web3/decentralized-identity-did-integration': DidVisual,
+  'web3/blockchain-consulting': BlockchainConsultingVisual,
+  'web3/enterprise-private-blockchain': EnterprisePrivateBlockchainVisual,
+  'web3/rwa-tokenization': RwaTokenizationVisual,
+  'web3/crypto-wallet-development': CryptoWalletVisual,
+  'web3/cross-chain-bridge-development': CrossChainBridgeVisual,
+  'web3/blockchain-indexers-subgraphs': IndexersSubgraphsVisual,
 }
 
 import {

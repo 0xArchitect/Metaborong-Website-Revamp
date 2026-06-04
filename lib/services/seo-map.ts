@@ -156,6 +156,60 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     description:
       'Decentralized identity and ZKP development: W3C verifiable credentials, DID resolvers, and zero-knowledge selective disclosure. Live Aadhaar eKYC project.',
   },
+  {
+    pillar: 'web3',
+    subGroup: 'strategy',
+    slug: 'blockchain-consulting',
+    keyword: 'blockchain consulting services',
+    title: 'Blockchain Consulting Services',
+    description:
+      'Blockchain consulting: chain selection, protocol architecture, and technical due diligence for teams building on-chain. Senior engineers, India and global.',
+  },
+  {
+    pillar: 'web3',
+    subGroup: 'strategy',
+    slug: 'enterprise-private-blockchain',
+    keyword: 'enterprise blockchain development',
+    title: 'Enterprise & Private Blockchain',
+    description:
+      'Enterprise and private blockchain development: permissioned networks built on the audited contract engineering we ship to public chains. India and global.',
+  },
+  {
+    pillar: 'web3',
+    subGroup: 'strategy',
+    slug: 'rwa-tokenization',
+    keyword: 'rwa tokenization development',
+    title: 'RWA Tokenization Development',
+    description:
+      'RWA tokenization: issue real-world assets on-chain with compliance-aware token design and ownership records. Built for the live Assetize platform.',
+  },
+  {
+    pillar: 'web3',
+    subGroup: 'product',
+    slug: 'crypto-wallet-development',
+    keyword: 'crypto wallet development',
+    title: 'Crypto Wallet Development',
+    description:
+      'Crypto wallet development: account-abstraction and smart-account wallets with gasless transactions and social recovery. ERC-4337, live on Nero Chain.',
+  },
+  {
+    pillar: 'web3',
+    subGroup: 'engineering',
+    slug: 'cross-chain-bridge-development',
+    keyword: 'cross-chain bridge development',
+    title: 'Cross-Chain Bridge Development',
+    description:
+      'Cross-chain bridge development and interoperability: secure asset and message transfer between chains. We built a live NEAR-to-Solana bridge.',
+  },
+  {
+    pillar: 'web3',
+    subGroup: 'engineering',
+    slug: 'blockchain-indexers-subgraphs',
+    keyword: 'subgraph and blockchain indexer development',
+    title: 'Blockchain Indexers & Subgraphs',
+    description:
+      'Subgraph and blockchain indexer development: turn on-chain events into fast, queryable application data. Built the indexing layer for Assetize.',
+  },
 
   // ── Product Studio ──────────────────────────────────────────────────────────
   {

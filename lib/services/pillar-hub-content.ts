@@ -111,43 +111,43 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
 
   web3: {
     id: 'web3',
-    positioning: 'We design and ship the protocols, wallets, and on-chain systems.',
+    positioning: 'We advise, design, and ship on-chain protocols, products, and infrastructure.',
     heroParagraphs: [
-      'Web3 development at Metaborong is decentralised protocol engineering: smart contracts, DeFi systems, NFT infrastructure, tokenomics, and decentralised identity. The pillar is multichain by default across EVM, Solana, and Cosmos, with delivery shaped by what the protocol actually needs rather than what one chain happens to be loudest about that quarter. We cover three engagement shapes: protocol and tokenomics strategy before launch, product surfaces like marketplaces and wallets, and the core engineering of contracts, vaults, and identity systems audit-ready from day one.',
-      'Every smart contract we ship is specced, tested, and instrumented for third-party audit before deployment. We do not treat security review as a step after launch: it is the architectural constraint that shapes the code. The decentralised-identity practice anchors our GovTech work: we have shipped Aadhaar-integrated DID stacks at production scale, and UIDAI-aware verifiable-credential systems sit alongside the broader Web3 portfolio. India + global delivery, with the senior engineers writing the code present in every scoping conversation.',
+      'Web3 development at Metaborong runs across three sub-groups. Strategy covers tokenomics, blockchain consulting, enterprise and private chains, and real-world-asset tokenization. Product covers NFT marketplaces, token launchpads, and account-abstraction wallets. Engineering covers smart contracts, DeFi protocols, liquid-staking vaults, decentralised identity, cross-chain bridges, and indexers. The pillar is multichain by default across EVM, Solana, Cosmos, Aptos, and NEAR, with delivery shaped by what the protocol actually needs rather than the chain that is loudest that quarter.',
+      'Every smart contract we ship is specced, tested, and instrumented for third-party audit before deployment: security review is the architectural constraint that shapes the code, not a step after launch. The work is grounded in live products: a real-world-asset platform in Assetize, an account-abstraction wallet on Nero Chain, a production NEAR-Solana bridge, and Aadhaar-integrated decentralised identity at production scale. India and global delivery, with the senior engineers writing the code present in every scoping conversation.',
     ],
     subGroups: [
       {
         id: 'strategy',
         description:
-          'Tokenomics, protocol architecture review, and on-chain product discovery. The output is a model stress-tested against on-chain behaviour, not a whitepaper drafted in isolation.',
+          'Tokenomics, blockchain consulting, enterprise and private chains, and real-world-asset tokenization. The output is a decision or model grounded in shipped code, not a whitepaper drafted in isolation.',
         caseStudy: {
-          descriptor: 'Layer-2 DeFi launch: tokenomics design',
+          descriptor: 'Assetize: real-world asset tokenization',
           outcome:
-            'Modelled supply, emissions, and treasury policy across launch and steady-state. Simulated against on-chain behaviour before token-generation event.',
-          href: '/work',
+            'A live platform issuing real-world assets on-chain, with compliance-aware token logic and an ownership registry wired into the contracts.',
+          href: '/services/web3/rwa-tokenization',
         },
       },
       {
         id: 'product',
         description:
-          'NFT marketplaces, wallets, and on-chain product surfaces. The work spans the storefront, settlement, and key-management UX that users actually interact with.',
+          'NFT marketplaces, token launchpads, and account-abstraction wallets. The work spans storefronts, sale mechanics, and the key-management UX users actually touch.',
         caseStudy: {
-          descriptor: 'Multichain NFT platform: marketplace + curation',
+          descriptor: 'Nero Chain: account-abstraction wallet',
           outcome:
-            'Royalty enforcement, lazy-mint, curated drops, and cross-chain settlement across EVM and Solana. Shipped in six weeks from spec to mainnet.',
-          href: '/work',
+            'An ERC-4337 smart-account wallet with paymaster gas sponsorship and recovery, live on Nero Chain, so new users transact without first buying gas.',
+          href: '/services/web3/crypto-wallet-development',
         },
       },
       {
         id: 'engineering',
         description:
-          'Smart contracts, DeFi protocols, liquid-staking vaults, and decentralised identity systems. Every contract is engineered for third-party audit and instrumented for post-deploy monitoring.',
+          'Smart contracts, DeFi protocols, liquid-staking vaults, decentralised identity, cross-chain bridges, and indexers. Every contract is engineered for third-party audit and instrumented for post-deploy monitoring.',
         caseStudy: {
-          descriptor: 'Aadhaar-integrated DID rollout',
+          descriptor: 'NEAR-Solana cross-chain bridge',
           outcome:
-            'Verified-identity layer at production scale, UIDAI-aware credential issuance, and on-chain anchoring. Shipped for a GovTech-adjacent deployment.',
-          href: '/work',
+            'A production bridge connecting NEAR and Solana for a live token project, delivered on a tight timeline with replay-protected message verification.',
+          href: '/services/web3/cross-chain-bridge-development',
         },
       },
     ],

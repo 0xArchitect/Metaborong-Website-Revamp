@@ -135,7 +135,7 @@ export const serviceSchemas = pillars.map((p) => ({
         '@type': 'Service',
         name: c.name,
         description: c.description,
-        url: `${BASE}/services/${p.id}/${c.slug}/`,
+        url: `${BASE}/services/${p.id}/${c.slug}`,
       },
     })),
   },
@@ -164,7 +164,7 @@ const leafServiceId = (pillarId: string, leafSlug: string): string =>
   `${BASE}/#service-${pillarId}-${leafSlug}`
 
 const leafServiceUrl = (pillarId: string, leafSlug: string): string =>
-  `${BASE}/services/${pillarId}/${leafSlug}/`
+  `${BASE}/services/${pillarId}/${leafSlug}`
 
 // "AI Engineering", "Web3 Strategy", "Product Studio Engineering" — used as
 // serviceType per SERVICES_PLAN.md § 5 example ("AI Engineering").

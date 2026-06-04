@@ -1012,6 +1012,847 @@ export const tokenLaunchpadDevelopment: LeafContent = {
 }
 
 // ---------------------------------------------------------------------------
+// blockchain-consulting
+// ---------------------------------------------------------------------------
+
+export const blockchainConsulting: LeafContent = {
+  pillar: 'web3',
+  slug: 'blockchain-consulting',
+  heroLede:
+    'Most failed blockchain projects did not fail at the code, they failed at the decision before it: the wrong chain, an architecture that could never meet the load, an audit firm chosen by reputation alone. Blockchain consulting is the senior advisory practice that resolves those decisions before a build commits. We size feasibility, select chains and protocols, run technical due diligence, and set the security posture an audit will later test.',
+  heroStats: [
+    { value: '4', label: 'chain ecosystems advised across', context: 'EVM, Solana, Cosmos, Aptos' },
+    { value: '4', label: 'Hacken audit rounds behind the advice', context: 'Neemo Finance contracts we shipped' },
+    { value: 'Sedax', label: 'infrastructure advisory engagement', context: 'DID / ZKP build partner' },
+  ],
+  deliverables: [
+    {
+      label: 'Chain and protocol selection memo with the trade-offs and the recommended path.',
+    },
+    {
+      label: 'Technical due-diligence report on an existing codebase, vendor, or token design.',
+    },
+    {
+      label: 'Reference architecture: contracts, off-chain services, data, and trust boundaries.',
+    },
+    {
+      label: 'Security-posture plan naming threat surface and audit-firm shortlist with scope.',
+    },
+    {
+      label: 'Feasibility and cost model mapping the build to budget, timeline, and risk.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Context & constraints',
+      body: 'We start from the decision you actually face, not a generic roadmap. We map the product intent, the regulatory and custody constraints, the team you have, and the budget that bounds the build. Most engagements surface a constraint the brief omitted: a settlement-finality requirement, a compliance boundary, or an existing system the chain has to interoperate with. That constraint usually decides more than the technology does.',
+    },
+    {
+      title: 'Chain & architecture',
+      body: 'We evaluate candidate chains against the constraints rather than the hype: EVM, Solana, Cosmos, and Aptos all sit in our build experience, so the comparison is grounded in code we have shipped. We draft a reference architecture covering contracts, off-chain services, data availability, and trust boundaries, then write the trade-offs down so your team can interrogate the recommendation, not just accept it.',
+    },
+    {
+      title: 'Due diligence & security',
+      body: 'For an existing codebase, vendor, or token model, we run technical due diligence: reading contracts, deployment history, and prior audits the way an attacker and an investor both would. We name the threat surface, flag what a single failure would cost, and shortlist audit firms by track record on your specific pattern. We have shipped contracts through four Hacken rounds, so the advice is calibrated to what audits actually catch.',
+    },
+    {
+      title: 'Decision & handover',
+      body: 'We deliver a written recommendation with the reasoning attached, not a slide that ages out the week after the call. The memo states the chosen path, the rejected alternatives, the feasibility and cost model, and the security plan the build should be held to. Whether your in-house team executes or we build it, the document is the contract both sides reason from afterwards.',
+    },
+  ],
+  techStack: [
+    { name: 'EVM', category: 'Chains' },
+    { name: 'Solana', category: 'Chains' },
+    { name: 'Cosmos', category: 'Chains' },
+    { name: 'Aptos', category: 'Move' },
+    { name: 'Solidity', category: 'Contracts' },
+    { name: 'Move', category: 'Contracts' },
+    { name: 'Hacken', category: 'Audit' },
+    { name: 'Slither', category: 'Static Analysis' },
+    { name: 'Tenderly', category: 'Monitoring' },
+  ],
+  fit: {
+    fits: [
+      'You face a chain or architecture decision before committing budget and want it grounded in shipped code.',
+      'You need independent technical due diligence on an existing protocol, vendor, or token design.',
+      'You want an audit-firm shortlist and security posture set before development, not chosen after.',
+    ],
+    doesNotFit: [
+      'You have already locked the chain and architecture and only need contracts written to spec.',
+      'You want a market-positioning or fundraising deck rather than a technical feasibility judgement.',
+      'You expect advice with no access to your constraints, codebase, or the people who own them.',
+    ],
+  },
+  aeoAnswer:
+    'Blockchain consulting is a senior technical advisory practice for founders and engineering leads that resolves chain selection, protocol architecture, due diligence, and security posture before a build commits. The advice is build-grounded: the same team ships production protocols. We advised Sedax Infrastructure, and the contracts we wrote for Neemo Finance cleared four Hacken audit rounds.',
+  keyConcepts: [
+    {
+      term: 'Technical due diligence',
+      definition:
+        'Technical due diligence is a structured review of a blockchain codebase, vendor, or token design that an investor or acquirer relies on before committing. It reads the contracts, deployment history, prior audits, and open issues to judge whether the system does what its team claims and where a single failure would prove costly.',
+    },
+    {
+      term: 'Chain selection',
+      definition:
+        'Chain selection is the decision of which blockchain a protocol deploys to, weighed against settlement finality, fee economics, ecosystem tooling, auditor coverage, and the trust model the application requires. It is the first architectural commitment, because reversing it after launch usually means rewriting the contracts and migrating users and liquidity.',
+    },
+    {
+      term: 'Security posture',
+      definition:
+        'Security posture is the set of decisions that govern how a protocol resists attack: the named threat surface, access-control model, upgrade strategy, monitoring, and the audit scope. Defining it before development gives engineers a target to build toward and gives the external audit a specification to test against, rather than a finished system to second-guess.',
+    },
+    {
+      term: 'Reference architecture',
+      definition:
+        'A reference architecture is a documented blueprint of how a system fits together: the on-chain contracts, off-chain services, data availability, and the trust boundaries between them. It lets a team interrogate a design before writing code, and gives auditors and new engineers a shared map of where value and authority actually sit.',
+    },
+  ],
+  relatedWork: [
+    {
+      descriptor: 'Sedax Infrastructure: advisory engagement',
+      summary:
+        'We advised Sedax Infrastructure on blockchain infrastructure decisions, the same team we partner with on decentralized-identity and ZKP build work.',
+      href: '/work',
+    },
+    {
+      descriptor: 'Neemo Finance: audit-grounded judgement',
+      summary:
+        'Staking contracts we engineered for Neemo Finance cleared four separate Hacken audit rounds, calibrating the security advice we now give other teams.',
+      href: '/work',
+    },
+  ],
+  relatedServices: [
+    { pillar: 'web3', slug: 'tokenomics-design' },
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'product-studio', slug: 'product-discovery-validation' },
+  ],
+  faqs: [
+    {
+      question: 'How is blockchain consulting different from hiring a development team?',
+      answer:
+        'Consulting resolves the decisions that precede a build: which chain, what architecture, whether the idea is feasible at the budget, and how it should be secured. A development team executes a decision that has already been made. Our advice carries weight because the same engineers ship production protocols, so the recommendation reflects what actually survives an audit and mainnet, not a theoretical best practice. You can take the memo to any builder, including us.',
+    },
+    {
+      question: 'Do you only advise, or can you build what you recommend?',
+      answer:
+        'Both, and they stay decoupled on purpose. The recommendation is written so it stands on its own and your in-house team or any third party can execute it. If you then want us to build, we do, across EVM, Solana, Cosmos, and Aptos. The consulting deliverable is never a sales funnel for the build: it states the rejected alternatives and the reasoning, so you can hold whoever executes to the same standard.',
+    },
+    {
+      question: 'Can you run due diligence on a protocol or vendor we did not build?',
+      answer:
+        'Yes. We read the contracts, deployment history, prior audit reports, and open issues the way an attacker and an investor both would, then report what the system actually does versus what its team claims. We name the threat surface and where a single failure would prove costly. Because we have shipped contracts through four Hacken rounds ourselves, the review is calibrated to what audits catch and what they routinely miss.',
+    },
+    {
+      question: 'How do you choose which chain to recommend?',
+      answer:
+        'The constraints decide, not preference. We weigh settlement finality, fee economics, custody and compliance boundaries, auditor coverage, and the trust model your application needs. EVM, Solana, Cosmos, and Aptos all sit in our build experience, so the comparison rests on code we have shipped rather than documentation. We write the trade-offs down, including the chains we rejected and why, so your team can interrogate the recommendation rather than accept it on trust.',
+    },
+    {
+      question: 'What do we actually receive at the end of the engagement?',
+      answer:
+        'A written recommendation, not a one-off call. It states the chosen chain and architecture, the rejected alternatives with reasoning, a reference architecture covering contracts and off-chain services, a feasibility and cost model, and a security-posture plan with an audit-firm shortlist scoped to your pattern. The document is built to be the contract both sides reason from afterwards, whether your team executes it or we do.',
+    },
+  ],
+  lastReviewed: '2026-06-04',
+}
+
+// ---------------------------------------------------------------------------
+// enterprise-private-blockchain
+// ---------------------------------------------------------------------------
+
+export const enterprisePrivateBlockchain: LeafContent = {
+  pillar: 'web3',
+  slug: 'enterprise-private-blockchain',
+  heroLede:
+    'Enterprises rarely fail at blockchain because the idea is wrong; they fail because a permissioned network is run as a pilot, with no threat model, no audited contracts, and no membership governance. Enterprise blockchain development is the engineering practice that builds permissioned and consortium networks where access, validators, and on-chain logic are controlled by named parties. We bring the same audit-grade contract engineering we ship on public chains to private and consortium deployments.',
+  heroStats: [
+    { value: '4', label: 'Hacken audit rounds cleared', context: 'Neemo Finance contracts' },
+    { value: '4', label: 'chains shipped in production', context: 'EVM, Solana, Cosmos, Aptos' },
+    { value: 'Move', label: 'on Aptos, in production', context: 'KGEN token contracts' },
+  ],
+  deliverables: [
+    {
+      label: 'Permissioned network topology with defined validator set and membership rules.',
+    },
+    {
+      label: 'Audit-grade contracts with threat model, invariant tests, and NatSpec.',
+    },
+    {
+      label: 'Role-based on-chain permissions tied to your consortium governance.',
+    },
+    {
+      label: 'Monitoring for validator health, role changes, and privileged calls.',
+    },
+    {
+      label: 'Operator runbook covering node onboarding, upgrades, and incident response.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Network & trust design',
+      body: 'We map who participates, who validates, and who can read what, before choosing a platform. The output is a permissioned topology: validator set, membership admission rules, data-visibility boundaries, and the off-chain governance that controls them. We name the trust assumptions explicitly, because in a consortium the hard problem is rarely the chain, it is who holds which key and how a member is added or removed.',
+    },
+    {
+      title: 'Contract & permission engineering',
+      body: 'On-chain logic is built against a written specification with property-based invariant tests and the same threat model discipline we apply on public chains. Role-based permissions are encoded as contract-level access control rather than trusted off-chain checks. A second engineer runs an internal audit pass line by line against the threat model before any external review, filing what they could not break.',
+    },
+    {
+      title: 'Network deployment',
+      body: 'We stand up the validator nodes, configure the consensus and membership policy, and deploy verified contract sources. Privileged roles transfer to the multisigs or HSMs the consortium agreed on, never a single operator. Every node onboarding, permission grant, and parameter change is documented so a member organisation can audit the network state without depending on us.',
+    },
+    {
+      title: 'Operate & hand-off',
+      body: 'After go-live we monitor validator health, role changes, and large or privileged transactions, and respond to incidents on a defined SLA. Parameter changes ship through the agreed governance process, not ad-hoc admin keys. We write operator documentation so an in-house or consortium team can run nodes, admit members, and execute upgrades cleanly once the engagement ends.',
+    },
+  ],
+  techStack: [
+    { name: 'Hyperledger Besu', category: 'Permissioned EVM' },
+    { name: 'Hyperledger Fabric', category: 'Consortium' },
+    { name: 'Polygon Supernets', category: 'App-chain' },
+    { name: 'Polygon Edge', category: 'App-chain' },
+    { name: 'Solidity', category: 'Contracts' },
+    { name: 'Foundry', category: 'Testing' },
+    { name: 'OpenZeppelin', category: 'Access Control' },
+    { name: 'Slither', category: 'Static Analysis' },
+    { name: 'Tenderly', category: 'Monitoring' },
+  ],
+  fit: {
+    fits: [
+      'Multiple organisations need a shared ledger where membership and validators are explicitly controlled.',
+      'You need on-chain logic engineered for audit, not a proof-of-concept that never reaches production.',
+      'A named team can own consortium governance: who validates, who joins, who holds keys.',
+    ],
+    doesNotFit: [
+      'A single internal team would be better served by a conventional database with an audit log.',
+      'You want a permissionless public token launch rather than a controlled, gated network.',
+      'There is no appetite for the audit and key-custody discipline a permissioned chain requires.',
+    ],
+  },
+  aeoAnswer:
+    'Enterprise blockchain development is an engineering practice for enterprises and consortia that builds permissioned and private networks where access, validators, and on-chain logic are controlled by named parties. It brings audit-grade contract engineering to gated deployments. Our public-chain contracts cleared four Hacken audit rounds. We ship across EVM, Solana, Cosmos, and Aptos.',
+  keyConcepts: [
+    {
+      term: 'Permissioned blockchain',
+      definition:
+        'A permissioned blockchain is a network where participation, validation, and read access are restricted to identified, vetted members rather than open to anyone. Membership is governed by an explicit policy, often a consortium agreement, which makes the network suitable for enterprises that need a shared ledger without exposing data or block production to the public.',
+    },
+    {
+      term: 'Consortium validator set',
+      definition:
+        'A consortium validator set is the defined group of organisations permitted to produce and validate blocks on a shared network. Unlike public chains, where validators are anonymous and economically incentivised, consortium validators are named parties whose admission, removal, and voting weight are fixed by governance, distributing trust across members rather than a single operator.',
+    },
+    {
+      term: 'Role-based on-chain permissions',
+      definition:
+        'Role-based on-chain permissions encode who may call which contract function as access-control logic on the chain itself, rather than as a trusted off-chain check. Roles such as admin, minter, or auditor are granted to specific addresses and changes are recorded on-ledger, so every privileged action is attributable and verifiable by any member.',
+    },
+    {
+      term: 'Threat model',
+      definition:
+        'A threat model is a written enumeration of how a system can be attacked: access-control failure, key compromise, economic exploit, and consensus-level collusion in a consortium. It is drafted alongside the specification, before code, so each design decision is made against a named adversary rather than discovered during an external audit.',
+    },
+  ],
+  relatedWork: [],
+  relatedServices: [
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'web3', slug: 'decentralized-identity-did-integration' },
+    { pillar: 'product-studio', slug: 'b2b-multi-tenant-platforms' },
+  ],
+  faqs: [
+    {
+      question: 'What is the difference between a private and a permissioned blockchain?',
+      answer:
+        'A private blockchain is operated by a single organisation that controls all nodes. A permissioned, or consortium, blockchain distributes validation across several named organisations under a shared governance policy. Both restrict who can participate, but a consortium network spreads trust so no single member can rewrite history alone. We design for whichever trust model the use case actually needs, and we name those assumptions before choosing a platform.',
+    },
+    {
+      question: 'Have you built enterprise consortium networks before?',
+      answer:
+        'Our shipped record is on public and app-specific chains: audited DeFi and token contracts across EVM, Solana, Cosmos, and Aptos. Permissioned deployment is the same engineering discipline applied to a gated network, with validator and membership control added. We bring the audit-grade contract work and threat modelling that production demands, and platform expertise in Hyperledger Besu, Fabric, and Polygon Supernets, rather than a first-time pilot mindset.',
+    },
+    {
+      question: 'Which permissioned platform should we use?',
+      answer:
+        'It follows the trust and tooling requirements, not preference. Hyperledger Besu suits teams that want EVM compatibility and existing Solidity tooling on a private network. Fabric fits when channels and fine-grained data isolation between members matter more than EVM portability. Polygon Supernets or Edge make sense when you want an app-specific chain that can later bridge to a public network. We document the decision so each consortium member sees the rationale.',
+    },
+    {
+      question: 'How do you keep contracts on a private chain secure?',
+      answer:
+        'The chain being private does not lower the bar. We apply the same practice that cleared four Hacken rounds for Neemo Finance: a written specification, a threat model, property-based invariant tests, and an internal audit pass before external review. Role-based permissions are enforced on-chain, privileged keys live in multisigs or HSMs, and we monitor validator health and privileged calls after go-live on a defined SLA.',
+    },
+    {
+      question: 'Can a permissioned network connect to a public chain later?',
+      answer:
+        'Yes, and we design for it when it is a stated goal. An app-specific or consortium chain can settle proofs or bridge assets to a public network once the membership and contract layers are stable. We treat the bridge as a separate, audited surface with its own threat model, because cross-chain messaging is a common exploit class. We do not bolt a bridge on without that review.',
+    },
+  ],
+  lastReviewed: '2026-06-04',
+}
+
+// ---------------------------------------------------------------------------
+// rwa-tokenization
+// ---------------------------------------------------------------------------
+
+export const rwaTokenization: LeafContent = {
+  pillar: 'web3',
+  slug: 'rwa-tokenization',
+  heroLede:
+    'A tokenized asset that ignores who is allowed to hold it is a compliance incident waiting to settle on-chain. RWA tokenization development is the blockchain engineering practice that issues real-world assets as on-chain tokens with ownership, transfer rules, and redemption wired into the contract itself. We design the issuance, the on-chain registry, and the compliance logic that decides who can hold and trade each token.',
+  heroStats: [
+    { value: 'Assetize', label: 'live RWA tokenization platform', context: 'built by Metaborong' },
+    { value: '4', label: 'Hacken audit rounds cleared', context: 'Neemo Finance contracts' },
+    { value: 'Move', label: 'on Aptos, in production', context: 'audit-grade record' },
+  ],
+  deliverables: [
+    {
+      label: 'Asset-backed token contracts with on-chain ownership registry and supply controls.',
+    },
+    {
+      label: 'Compliance-aware transfer logic: KYC allowlists, jurisdiction rules, holder caps.',
+    },
+    {
+      label: 'Redemption and custody linkage tying each token to its off-chain asset.',
+    },
+    {
+      label: 'Issuance and lifecycle flows for minting, transfer approval, and burn-on-redemption.',
+    },
+    {
+      label: 'Audit-ready contract sources verified on the target chain explorer.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Asset & rule mapping',
+      body: 'We map the real-world asset to an on-chain representation: what one token entitles a holder to, how ownership is recorded, and which off-chain documents back it. In parallel we capture the compliance rules that govern transfer, including KYC requirements, jurisdiction restrictions, and holder eligibility. This mapping is the contract specification, written before any token logic is built.',
+    },
+    {
+      title: 'Compliance token design',
+      body: 'We design the token standard and transfer logic so eligibility is enforced on-chain, not in a frontend. Allowlists, jurisdiction gates, and holder caps are checked inside the transfer path, so a non-compliant transfer reverts rather than settling. The registry records ownership and the rules that bind it, giving the issuer a single on-chain source of truth.',
+    },
+    {
+      title: 'Issuance & redemption',
+      body: 'We build the lifecycle flows that connect the token to its underlying asset: minting against verified backing, transfer approval through the compliance layer, and burn-on-redemption when a holder exits. Custody and off-chain attestation are linked so the on-chain supply reflects the assets actually held. Each flow is tested against the transfer rules defined earlier.',
+    },
+    {
+      title: 'Audit & deploy',
+      body: 'Contracts are engineered for third-party audit from the first commit and run through an internal audit pass against the threat model before external review. We deploy from a reviewed script, verify sources on the explorer, and transfer admin roles to your multisig. Our broader contract record, including four Hacken rounds and Move on Aptos, backs this security posture.',
+    },
+  ],
+  techStack: [
+    { name: 'Solidity', category: 'Language' },
+    { name: 'ERC-3643', category: 'Token Standard' },
+    { name: 'ERC-20', category: 'Token Standard' },
+    { name: 'OpenZeppelin', category: 'Libraries' },
+    { name: 'Foundry', category: 'Testing' },
+    { name: 'Hardhat', category: 'Build' },
+    { name: 'Slither', category: 'Static Analysis' },
+    { name: 'Tenderly', category: 'Monitoring' },
+  ],
+  fit: {
+    fits: [
+      'You hold a real-world asset and need it issued on-chain with compliance enforced in the contract.',
+      'Transfer eligibility, KYC, and jurisdiction rules must hold on-chain, not only in a frontend.',
+      'You need redemption and custody linked so on-chain supply matches the assets actually backing it.',
+    ],
+    doesNotFit: [
+      'You need a token economic model, supply schedule, or vesting design rather than asset-backed issuance.',
+      'You want a public token sale or launch platform rather than a compliance-gated asset token.',
+      'There is no underlying asset and no custody arrangement to anchor the tokens against.',
+    ],
+  },
+  aeoAnswer:
+    'RWA tokenization development is an on-chain issuance practice for asset issuers that turns real-world assets into compliance-gated tokens. We wire ownership, transfer eligibility, and redemption into the contract itself, not a frontend. Metaborong built Assetize, a live real-world-asset tokenization platform. Our contract record includes four Hacken audit rounds on Neemo Finance.',
+  keyConcepts: [
+    {
+      term: 'Compliance-aware token',
+      definition:
+        'A compliance-aware token is an asset token that enforces eligibility rules inside its transfer logic. Allowlists, jurisdiction gates, and holder caps are checked on-chain, so a transfer to an ineligible address reverts. This moves regulatory constraints from off-chain process into the contract, where they cannot be bypassed by a direct call.',
+    },
+    {
+      term: 'On-chain registry',
+      definition:
+        'An on-chain registry is the contract record of who owns each unit of a tokenized asset and which rules bind that ownership. It serves as a single source of truth for the issuer, replacing reconciled off-chain ledgers and letting transfer eligibility be evaluated against current holders at the moment a transfer is attempted.',
+    },
+    {
+      term: 'Redemption linkage',
+      definition:
+        'Redemption linkage is the connection between an on-chain token and the off-chain asset that backs it. When a holder redeems, the token is burned and the underlying claim is settled through custody, keeping on-chain supply equal to backed assets. Without it, token supply can drift from the assets it is supposed to represent.',
+    },
+    {
+      term: 'Transfer restriction',
+      definition:
+        'A transfer restriction is a rule embedded in a token contract that conditions whether a transfer can settle. Common restrictions include KYC verification, jurisdiction allow or deny lists, lock-up periods, and maximum holder counts. Standards such as ERC-3643 formalise these checks so issuers can enforce them consistently across an asset class.',
+    },
+  ],
+  relatedWork: [
+    {
+      descriptor: 'Assetize: live RWA tokenization platform',
+      summary:
+        'We built Assetize, a live platform for tokenizing real-world assets, covering on-chain issuance and compliance-aware token logic.',
+      href: '/work',
+    },
+    {
+      descriptor: 'Neemo Finance: contracts, four audit rounds',
+      summary:
+        'Staking contract suite engineered for Neemo Finance that cleared four separate Hacken audit rounds before mainnet.',
+      href: '/work',
+    },
+  ],
+  relatedServices: [
+    { pillar: 'web3', slug: 'tokenomics-design' },
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'product-studio', slug: 'saas-product-development' },
+  ],
+  faqs: [
+    {
+      question: 'How is RWA tokenization different from tokenomics design?',
+      answer:
+        'They solve different problems. RWA tokenization is asset-backed issuance: each token represents a claim on a real-world asset, and the work centres on ownership, compliance, and redemption. Tokenomics design is the economic model behind a native token, including supply schedule, emissions, and vesting. An asset token does not need an emission curve; it needs a registry and transfer rules. We run them as separate engagements and cross-link where a project needs both.',
+    },
+    {
+      question: 'Do you handle the legal and regulatory side?',
+      answer:
+        'No, we are the engineering team, not your counsel. We build the on-chain logic that enforces the rules your legal advisors define: which jurisdictions are eligible, what KYC is required, and how holders are capped. You bring the regulatory framework and custody arrangement; we encode it into the token so the rules hold on-chain. We coordinate directly with your legal and compliance partners during the rule-mapping phase.',
+    },
+    {
+      question: 'How are transfer restrictions enforced on-chain?',
+      answer:
+        'Eligibility is checked inside the transfer function, not in a frontend that a direct contract call could skip. The token consults an allowlist and rule set before a transfer settles, and reverts if the recipient fails any check, such as missing KYC or a blocked jurisdiction. Standards like ERC-3643 structure this so the same checks apply whether a transfer originates from your app, a wallet, or another contract.',
+    },
+    {
+      question: 'How do you keep token supply matched to the real asset?',
+      answer:
+        'Through redemption linkage and controlled issuance. Tokens are minted only against verified backing, and redemption burns the token as the underlying claim is settled through custody. The on-chain registry records supply against attested backing so the two do not drift. The custody and attestation arrangement is yours; we build the contract flows that bind minting and burning to it.',
+    },
+    {
+      question: 'Are the contracts audited?',
+      answer:
+        'We engineer for third-party audit from the first commit and run an internal audit pass against a written threat model before any external review. The external audit is always a separate firm chosen with you. Our broader contract record backs this posture: the Neemo Finance contracts cleared four separate Hacken rounds, and we wrote the KGEN token contracts in Move on Aptos in production.',
+    },
+  ],
+  lastReviewed: '2026-06-04',
+}
+
+// ---------------------------------------------------------------------------
+// crypto-wallet-development
+// ---------------------------------------------------------------------------
+
+export const cryptoWalletDevelopment: LeafContent = {
+  pillar: 'web3',
+  slug: 'crypto-wallet-development',
+  heroLede:
+    'Seed phrases lose users at the door and one lost backup loses the funds forever, so wallet UX is where most on-chain products quietly bleed retention. Crypto wallet development is the engineering practice that builds key management and transaction UX into a non-custodial product. We build account-abstraction smart-account wallets on ERC-4337, with gas sponsorship, social and multisig recovery, session keys, and batched transactions.',
+  heroStats: [
+    { value: 'ERC-4337', label: 'account abstraction standard', context: 'smart-account wallets' },
+    { value: 'Nero Chain', label: 'AA wallet in production', context: 'aa-platform.nerochain.io' },
+    { value: 'Non-custodial', label: 'keys stay with the user', context: 'no custody of funds' },
+  ],
+  deliverables: [
+    {
+      label: 'ERC-4337 smart-account wallet with gasless transactions via a paymaster.',
+    },
+    {
+      label: 'Social and multisig recovery flows that replace single seed-phrase risk.',
+    },
+    {
+      label: 'Session keys for scoped, time-bound signing without per-action prompts.',
+    },
+    {
+      label: 'Batched transactions that approve and execute in a single user operation.',
+    },
+    {
+      label: 'Bundler and paymaster integration with deployment scripts and monitoring.',
+    },
+  ],
+  keyConcepts: [
+    {
+      term: 'Account abstraction',
+      definition:
+        'Account abstraction is a design where a smart contract, not an externally owned key, governs an account. On ERC-4337 it lets a wallet define its own signing, recovery, and gas rules, so behaviour like social recovery or sponsored gas lives in code rather than being fixed by the protocol.',
+    },
+    {
+      term: 'ERC-4337',
+      definition:
+        'ERC-4337 is the Ethereum standard that adds account abstraction without changing the base protocol. Users sign a UserOperation that a bundler submits through a singleton EntryPoint contract. A smart-account wallet implements the standard, enabling paymasters, session keys, and recovery while keeping the account non-custodial.',
+    },
+    {
+      term: 'Paymaster',
+      definition:
+        'A paymaster is an ERC-4337 contract that pays the gas for a user operation. It lets an application sponsor transactions so a new user transacts without holding the native token, or accepts gas payment in a stablecoin. Sponsorship rules and spending limits are enforced on-chain by the paymaster.',
+    },
+    {
+      term: 'Session key',
+      definition:
+        'A session key is a scoped, temporary signing key a smart-account wallet authorises for a limited set of actions and a fixed time window. It lets a user approve a session once, then transact without re-signing each action, while the smart account enforces the limits the key was granted.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Account model & scope',
+      body: 'We map the wallet to the product: which actions need a signature, what recovery the user expects, and whether gas is sponsored, paid in a stablecoin, or paid normally. From that we choose the smart-account implementation and the bundler and paymaster setup. The output is an account model and threat surface the rest of the build is engineered against.',
+    },
+    {
+      title: 'Smart account & recovery',
+      body: 'We implement the ERC-4337 smart-account contracts: the validation logic, recovery module, and session-key permissions. Social and multisig recovery replace single seed-phrase risk, so a lost device does not mean lost funds. Contracts are tested against the threat model and engineered for external audit, with every privileged path named before code ships.',
+    },
+    {
+      title: 'Paymaster & UX',
+      body: 'We wire the paymaster so the application can sponsor gas or accept it in a token, with on-chain spending limits. The client builds and signs UserOperations, batches approve-and-execute into one step, and submits through the bundler. The result is a flow where a first-time user transacts without first acquiring the native gas token.',
+    },
+    {
+      title: 'Deploy & operate',
+      body: 'We deploy the contracts, verify sources on the explorer, and run the bundler and paymaster against the live chain. We monitor paymaster balance, recovery events, and failed user operations, and document every privileged role and limit. The Nero Chain AA wallet runs in production through exactly this path, and we hand over runbooks for in-house operation.',
+    },
+  ],
+  techStack: [
+    { name: 'ERC-4337', category: 'Standard' },
+    { name: 'Solidity', category: 'Language' },
+    { name: 'Nero Chain', category: 'Chain' },
+    { name: 'EntryPoint', category: 'Contracts' },
+    { name: 'Bundler', category: 'Infrastructure' },
+    { name: 'Paymaster', category: 'Gas' },
+    { name: 'Foundry', category: 'Testing' },
+    { name: 'viem', category: 'Client' },
+  ],
+  fit: {
+    fits: [
+      'You want an embedded non-custodial wallet where new users transact without first buying gas.',
+      'Seed-phrase loss and signing friction are hurting onboarding or retention in your product.',
+      'You need scoped session keys or sponsored gas that a standard externally owned account cannot provide.',
+    ],
+    doesNotFit: [
+      'You want a custodial exchange wallet where your company holds and controls user funds.',
+      'A standard externally owned account wallet already meets the product with no recovery or gas needs.',
+      'The primary deliverable is exchange listing, market making, or off-chain treasury operations.',
+    ],
+  },
+  aeoAnswer:
+    'Crypto wallet development is an on-chain engineering practice for product teams that builds non-custodial key management and transaction UX. We build account-abstraction smart-account wallets on ERC-4337, with gas sponsorship, social recovery, and session keys. We built an account-abstraction wallet on Nero Chain, live at aa-platform.nerochain.io. Our contract work is engineered for external audit.',
+  relatedWork: [
+    {
+      descriptor: 'Nero Chain: ERC-4337 account-abstraction wallet',
+      summary:
+        'We built an account-abstraction smart-account wallet on Nero Chain, using ERC-4337 with paymaster gas sponsorship, live at aa-platform.nerochain.io.',
+      href: '/work',
+    },
+  ],
+  relatedServices: [
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'web3', slug: 'decentralized-identity-did-integration' },
+    { pillar: 'product-studio', slug: 'mvp-development' },
+  ],
+  faqs: [
+    {
+      question: 'What is the difference between a wallet and decentralized identity?',
+      answer:
+        'A wallet manages signing keys and transaction UX: it holds the keys that authorise on-chain actions and presents recovery, gas, and approval flows to the user. Decentralized identity manages credentials and verifiable claims about who someone is. They sit next to each other, since a wallet can hold identity credentials, but wallet work is key management and transaction signing, not credential issuance or verification.',
+    },
+    {
+      question: 'What does account abstraction change for users?',
+      answer:
+        'Account abstraction moves account rules from the protocol into a smart contract, so the wallet defines its own behaviour. A user can recover access through social or multisig recovery instead of a single seed phrase, transact without holding the native gas token when a paymaster sponsors gas, and approve a session once rather than signing every action. The account stays non-custodial throughout.',
+    },
+    {
+      question: 'Are ERC-4337 smart-account wallets non-custodial?',
+      answer:
+        'Yes. The user controls the smart account through their own signing keys, and no third party can move funds on their behalf. Account abstraction changes how signing and recovery work, not who holds the funds. Social recovery distributes the ability to restore access across guardians the user chooses, but neither the application nor we ever take custody of the assets in the account.',
+    },
+    {
+      question: 'Do you audit the wallet contracts?',
+      answer:
+        'We engineer the smart-account contracts for external audit and run an internal audit pass against the threat model, but the external audit is a separate firm, as it should be. We name every privileged path before code ships and test against the threat model. Our smart-contract record includes a contract suite cleared across four Hacken audit rounds, and we coordinate the wallet audit with the firm you choose.',
+    },
+    {
+      question: 'Can you add account abstraction to an existing wallet?',
+      answer:
+        'Often yes, depending on how the current wallet is built. We can add an ERC-4337 smart-account layer alongside an existing externally owned account, introduce a paymaster for sponsored gas, or add session keys and recovery without replacing the whole product. We read the current architecture, signing flow, and key handling first, then scope the smallest change that delivers the account-abstraction features you need.',
+    },
+  ],
+  lastReviewed: '2026-06-04',
+}
+
+// ---------------------------------------------------------------------------
+// cross-chain-bridge-development
+// ---------------------------------------------------------------------------
+
+export const crossChainBridgeDevelopment: LeafContent = {
+  pillar: 'web3',
+  slug: 'cross-chain-bridge-development',
+  heroLede:
+    'Bridges hold more value than almost anything else in crypto, and they are the surface attackers hit first, because a single flaw in message verification can drain both sides at once. Cross-chain bridge development is the engineering practice of building the lock-and-mint contracts, relayers, and message verification that move assets and data between two chains while proving every transfer is genuine.',
+  heroStats: [
+    { value: 'NEAR + Solana', label: 'chains bridged in production', context: 'live NEAR-Solana bridge' },
+    { value: '4', label: 'Hacken audit rounds cleared', context: 'Neemo Finance contracts' },
+    { value: 'Move + EVM', label: 'plus Solana and NEAR', context: 'chains we ship on' },
+  ],
+  deliverables: [
+    {
+      label: 'Lock-and-mint or burn-and-mint contracts on both source and destination chains.',
+    },
+    {
+      label: 'Relayer or attestation layer with replay protection and message ordering.',
+    },
+    {
+      label: 'Message verification logic auditors can read against a stated trust model.',
+    },
+    {
+      label: 'Liveness monitoring for stuck transfers, relayer health, and supply reconciliation.',
+    },
+    {
+      label: 'Threat model and audit-ready spec for the full cross-chain message path.',
+    },
+  ],
+  keyConcepts: [
+    {
+      term: 'Lock-and-mint',
+      definition:
+        'Lock-and-mint is a bridge pattern where an asset is locked in a contract on the source chain and an equivalent wrapped token is minted on the destination chain. Burning the wrapped token releases the original. Supply on both sides must reconcile exactly, or the wrapped token loses its backing.',
+    },
+    {
+      term: 'Attestation',
+      definition:
+        'Attestation is the signed claim that a source-chain event actually happened, produced by relayers, validators, or an oracle network. The destination chain verifies these signatures before minting. The trust model of a bridge is largely the question of who attests and how many of them must collude to forge a transfer.',
+    },
+    {
+      term: 'Replay protection',
+      definition:
+        'Replay protection prevents a single valid cross-chain message from being processed more than once. Each message carries a unique nonce that the destination chain records and rejects on a second submission. Without it, an attacker resubmits one legitimate mint instruction repeatedly to drain reserves.',
+    },
+    {
+      term: 'Liveness',
+      definition:
+        'Liveness is the property that a bridge keeps processing transfers rather than stalling. A bridge can be safe yet unusable if relayers go offline or messages get stuck mid-flight. Monitoring tracks pending transfers, relayer health, and reconciliation so operators catch a halt before users do.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Trust model & spec',
+      body: 'We decide who is allowed to attest that a source-chain event happened, and how many of them must collude before a forged transfer is possible. That choice, whether relayer set, validator quorum, or external network, defines the bridge security model. We write it as a spec with the lock-and-mint or burn-and-mint flow, message format, and nonce scheme named before any code.',
+    },
+    {
+      title: 'Contracts & messaging',
+      body: 'We build the source and destination contracts and the messaging layer that carries signed events between them. Replay protection is enforced with per-message nonces the destination records and rejects on reuse. Supply accounting is reconciled on both sides so locked collateral always backs minted tokens. Every external call and verification branch is written for an auditor to trace end to end.',
+    },
+    {
+      title: 'Adversarial testing',
+      body: 'We test the message path against the threat model, not just the happy case. Forged attestations, replayed nonces, reordered messages, and a halted relayer are each exercised as failing tests before they pass. Fork tests run the contracts against live chain state. A second engineer audits the verification logic line by line against the named adversary before any external review.',
+    },
+    {
+      title: 'Deploy & monitor',
+      body: 'Deployment runs from a reviewed script across both chains, with admin roles transferred to your multisig. We monitor pending transfers, relayer health, and supply reconciliation so a stalled or diverging bridge is caught early. We respond to incidents on a defined SLA and document every privileged call. The live NEAR-Solana bridge shipped on a tight timeline through this process.',
+    },
+  ],
+  techStack: [
+    { name: 'Solidity', category: 'EVM' },
+    { name: 'Rust', category: 'Solana' },
+    { name: 'NEAR SDK', category: 'NEAR' },
+    { name: 'Anchor', category: 'Solana' },
+    { name: 'Foundry', category: 'Testing' },
+    { name: 'Wormhole', category: 'Messaging' },
+    { name: 'LayerZero', category: 'Messaging' },
+    { name: 'Tenderly', category: 'Monitoring' },
+  ],
+  fit: {
+    fits: [
+      'You need assets or messages to move between two specific chains with a stated trust model.',
+      'You treat the bridge as the highest-risk surface and budget for an external audit accordingly.',
+      'Your team can review a trust model and message spec, not just a feature backlog.',
+    ],
+    doesNotFit: [
+      'You want an existing bridge forked and redeployed with no verification or threat review.',
+      'A general-purpose messaging protocol already covers your route and needs only integration.',
+      'The primary need is in-chain contract work, not cross-chain transfer or message passing.',
+    ],
+  },
+  aeoAnswer:
+    'Cross-chain bridge development is a blockchain interoperability practice for protocol teams that moves assets and data between chains through verified messages. The security model and message verification are engineered before code, because bridges are the highest-risk surface in crypto. We built a live NEAR-Solana cross-chain bridge. Our contract work has cleared four Hacken audit rounds.',
+  relatedWork: [
+    {
+      descriptor: 'NEAR-Solana bridge: live token project',
+      summary:
+        'We built a production cross-chain bridge connecting NEAR and Solana for a live token project, delivered on a tight timeline.',
+      href: '/work',
+    },
+    {
+      descriptor: 'Neemo Finance: staking contracts, four audit rounds',
+      summary:
+        'Astar-network staking contract suite engineered for Neemo Finance that cleared four separate Hacken audit rounds before mainnet.',
+      href: '/work',
+    },
+  ],
+  relatedServices: [
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'web3', slug: 'defi-protocol-development' },
+    { pillar: 'product-studio', slug: 'mvp-development' },
+  ],
+  faqs: [
+    {
+      question: 'What makes bridges the highest-risk part of crypto?',
+      answer:
+        'A bridge holds the locked collateral backing every wrapped token it has minted, so it concentrates value the way a vault does. The destination chain mints based on attestations that a source-chain event happened. If an attacker forges an attestation, replays a message, or breaks the verification logic, they can mint unbacked tokens and drain the locked reserves. That is why we engineer the trust model and message verification before any other code.',
+    },
+    {
+      question: 'What is the difference between lock-and-mint and burn-and-mint?',
+      answer:
+        'Lock-and-mint locks the original asset on the source chain and mints a wrapped version on the destination, releasing the lock when the wrapped token is burned. Burn-and-mint burns a native token on one chain and mints the native token on the other, with no wrapped representation. Lock-and-mint suits bridging an existing asset to a new chain; burn-and-mint suits a token that is natively issued on several chains. We choose per asset and document why.',
+    },
+    {
+      question: 'How do you prevent a message from being replayed?',
+      answer:
+        'Every cross-chain message carries a unique nonce. The destination chain records each processed nonce and rejects any second submission of the same one, so a valid mint instruction cannot be replayed to drain reserves. We test this directly: replayed nonces, reordered messages, and forged attestations are each written as failing tests that must be rejected before the contracts pass internal audit.',
+    },
+    {
+      question: 'Which chains have you built a bridge between?',
+      answer:
+        'We built a live cross-chain bridge connecting NEAR and Solana for a token project, delivered on a tight timeline, with assets traded on NEAR through REF Finance. More broadly we ship contracts across EVM chains, Solana in Rust, NEAR, and Move on Aptos, so we can reason about the verification model on both sides of a route rather than treating one chain as a black box.',
+    },
+    {
+      question: 'Do you run the security audit yourselves?',
+      answer:
+        'No, the external audit is always a separate firm. We engineer for audit and run an internal pass where a second engineer reviews the verification logic line by line against the threat model, but the external auditor is the signal investors and users trust on a bridge. Our contract work has cleared four Hacken rounds through this process, and we coordinate the engagement with the firm you choose.',
+    },
+  ],
+  lastReviewed: '2026-06-04',
+}
+
+// ---------------------------------------------------------------------------
+// blockchain-indexers-subgraphs
+// ---------------------------------------------------------------------------
+
+export const blockchainIndexersSubgraphs: LeafContent = {
+  pillar: 'web3',
+  slug: 'blockchain-indexers-subgraphs',
+  heroLede:
+    'Your contracts emit events, but a dApp cannot scan the chain log by log every time a user opens a page. Subgraph and blockchain indexer development is the data-layer practice that turns raw on-chain events and logs into a fast, queryable application API. We write event handlers, handle reorgs, build GraphQL and REST query layers, run backfills, and keep the index in sync with the chain head.',
+  heroStats: [
+    { value: 'Assetize', label: 'live RWA product we index', context: 'on-chain data layer' },
+    { value: 'GraphQL', label: 'and REST query layers', context: 'how apps read the index' },
+    { value: 'Reorg-safe', label: 'handlers that survive reorgs', context: 'chain-head sync' },
+  ],
+  deliverables: [
+    {
+      label: 'Subgraph or custom indexer mapping on-chain events to a queryable schema.',
+    },
+    {
+      label: 'Event handlers with reorg handling and chain-head sync.',
+    },
+    {
+      label: 'GraphQL and REST query layer over the indexed entities.',
+    },
+    {
+      label: 'Backfill pipeline that replays historical blocks from genesis.',
+    },
+    {
+      label: 'Monitoring for indexing lag, failed handlers, and head drift.',
+    },
+  ],
+  phases: [
+    {
+      title: 'Schema & event mapping',
+      body: 'We read your contracts and decide which events, logs, and call traces the application actually needs to read. From that we design the entity schema the front end will query, then map each on-chain event to a handler that writes those entities. The schema is the contract between chain and app, so we shape it around real query paths, not a raw mirror of every log.',
+    },
+    {
+      title: 'Handlers & reorg safety',
+      body: 'We write the handlers that transform events into entities, then make them survive reorgs. When the chain rolls back blocks, the index must roll back with it rather than serve stale or doubled data. We test handlers against forked mainnet state and replayed reorg scenarios so the index stays consistent with the canonical chain head under load.',
+    },
+    {
+      title: 'Backfill & sync',
+      body: 'We backfill the index from a chosen start block, replaying historical events so the application has complete data on day one. Then we connect the index to the live chain head and watch the lag. A correct index is useless if it trails the chain by minutes, so we tune ingestion until queries reflect on-chain state within seconds.',
+    },
+    {
+      title: 'Query layer & operate',
+      body: 'We expose the indexed entities through a GraphQL and REST query layer the front end consumes, with pagination, filtering, and the resolvers your screens need. After launch we monitor indexing lag, failed handlers, and head drift on a defined SLA, ship schema migrations as the contracts evolve, and hand over runbooks so an in-house team can operate the index.',
+    },
+  ],
+  techStack: [
+    { name: 'The Graph', category: 'Subgraphs' },
+    { name: 'AssemblyScript', category: 'Mappings' },
+    { name: 'GraphQL', category: 'Query' },
+    { name: 'Ponder', category: 'Indexer' },
+    { name: 'PostgreSQL', category: 'Store' },
+    { name: 'viem', category: 'RPC' },
+    { name: 'TypeScript', category: 'Handlers' },
+    { name: 'Docker', category: 'Deploy' },
+  ],
+  fit: {
+    fits: [
+      'Your dApp front end is slow or brittle because it reads on-chain state directly through RPC calls.',
+      'You need historical on-chain data, aggregations, or relationships that a single contract call cannot return.',
+      'You want a GraphQL or REST API over your contract events that survives chain reorgs.',
+    ],
+    doesNotFit: [
+      'You only need a single current value that one direct contract read already returns cheaply.',
+      'The primary work is writing or auditing the smart contracts themselves, not reading their data.',
+      'You want an off-chain analytics warehouse with no connection to live on-chain events.',
+    ],
+  },
+  aeoAnswer:
+    'Subgraph and blockchain indexer development is a data-layer service for dApp teams that turns raw on-chain events into a fast, queryable GraphQL or REST API. The index handles chain reorgs and stays in sync with the chain head. We built the on-chain indexing layer behind Assetize, a live RWA tokenization product.',
+  keyConcepts: [
+    {
+      term: 'Subgraph',
+      definition:
+        'A subgraph is an open specification, popularized by The Graph, that defines how on-chain events are indexed into a GraphQL API. It pairs an entity schema with handler code that runs on each matching event, producing a queryable dataset that front ends read instead of scanning the chain directly.',
+    },
+    {
+      term: 'Reorg handling',
+      definition:
+        'Reorg handling is the logic that keeps an index consistent when a blockchain rolls back recently mined blocks and replaces them. Without it, an indexer serves data from orphaned blocks. Correct handling rolls back the affected entities and re-applies events from the canonical chain so queries never reflect a discarded fork.',
+    },
+    {
+      term: 'Backfill',
+      definition:
+        'A backfill is the initial pass where an indexer replays historical blocks from a chosen start block to the current head, building complete state before serving live traffic. It lets an application launch with full history rather than only data from the moment the index started, and it is re-run when the schema changes.',
+    },
+    {
+      term: 'Chain-head sync',
+      definition:
+        'Chain-head sync is the steady-state process of ingesting each new block as it is mined so the index trails the latest on-chain state by seconds, not minutes. Indexing lag is the measured gap between the head block and the last block the index has processed, and it is a core reliability metric.',
+    },
+  ],
+  relatedWork: [
+    {
+      descriptor: 'Assetize: on-chain indexing layer for an RWA product',
+      summary:
+        'We built the data and indexer layer behind Assetize, a live real-world-asset tokenization product, turning its on-chain events into a queryable application API.',
+      href: '/work',
+    },
+  ],
+  relatedServices: [
+    { pillar: 'web3', slug: 'smart-contract-development' },
+    { pillar: 'web3', slug: 'defi-protocol-development' },
+    { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
+  ],
+  faqs: [
+    {
+      question: 'What is the difference between a subgraph and a custom indexer?',
+      answer:
+        'A subgraph follows The Graph specification: an entity schema plus event handlers that produce a hosted GraphQL API, which is the fastest path for most EVM dApps. A custom indexer is purpose-built code, often on Ponder or a dedicated service over PostgreSQL, used when you need control over the database, non-standard sources, or query shapes the subgraph model does not express. We pick based on your query paths and operational constraints.',
+    },
+    {
+      question: 'Why not just read on-chain state directly from the contract?',
+      answer:
+        'Direct contract reads work for a single current value, but they cannot return history, aggregations, or relationships across many events without scanning the chain. That gets slow and expensive fast, and it ties your front end to RPC reliability. An index pre-computes those entities into a database, so a dApp queries an API in milliseconds instead of replaying logs on every page load.',
+    },
+    {
+      question: 'How do you handle chain reorganizations?',
+      answer:
+        'When the chain rolls back recent blocks, the index must roll back with it. Our handlers track which entities each block produced, so a reorg reverts those entities and re-applies events from the canonical chain. We test this against replayed reorg scenarios on forked state. Without reorg handling, an index quietly serves data from orphaned blocks, which is one of the most common indexing bugs.',
+    },
+    {
+      question: 'How fresh is the data, and what happens to history?',
+      answer:
+        'We backfill from a chosen start block so the application launches with complete history, then sync to the chain head and tune ingestion until queries reflect on-chain state within seconds. We monitor indexing lag as a core reliability metric. If the index falls behind the head, alerts fire before users see stale data, and the handlers catch up without losing or doubling events.',
+    },
+    {
+      question: 'Have you built an indexing layer for a production product?',
+      answer:
+        'Yes. We built the on-chain data and indexer layer behind Assetize, a live real-world-asset tokenization product. That work covered mapping its contract events into a queryable schema, exposing the entities the application reads, and keeping the index in sync with the chain. The same engineering discipline behind our audited contract work backs how we build and operate an index.',
+    },
+  ],
+  lastReviewed: '2026-06-04',
+}
+
+// ---------------------------------------------------------------------------
 // Bundled export - consumed by `./index.ts`.
 // ---------------------------------------------------------------------------
 
@@ -1023,4 +1864,10 @@ export const web3LeafContent = {
   'liquid-staking-vaults': liquidStakingVaults,
   'decentralized-identity-did-integration': decentralizedIdentityDidIntegration,
   'token-launchpad-development': tokenLaunchpadDevelopment,
+  'blockchain-consulting': blockchainConsulting,
+  'enterprise-private-blockchain': enterprisePrivateBlockchain,
+  'rwa-tokenization': rwaTokenization,
+  'crypto-wallet-development': cryptoWalletDevelopment,
+  'cross-chain-bridge-development': crossChainBridgeDevelopment,
+  'blockchain-indexers-subgraphs': blockchainIndexersSubgraphs,
 } satisfies Record<string, LeafContent>
