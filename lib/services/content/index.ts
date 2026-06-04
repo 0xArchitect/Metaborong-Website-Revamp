@@ -32,6 +32,12 @@ import {
   liquidStakingVaults,
   decentralizedIdentityDidIntegration,
   tokenLaunchpadDevelopment,
+  blockchainConsulting,
+  enterprisePrivateBlockchain,
+  rwaTokenization,
+  cryptoWalletDevelopment,
+  crossChainBridgeDevelopment,
+  blockchainIndexersSubgraphs,
 } from './web3'
 
 const registry: Record<string, LeafContent> = {
@@ -48,6 +54,12 @@ const registry: Record<string, LeafContent> = {
   'web3/liquid-staking-vaults': liquidStakingVaults,
   'web3/decentralized-identity-did-integration': decentralizedIdentityDidIntegration,
   'web3/token-launchpad-development': tokenLaunchpadDevelopment,
+  'web3/blockchain-consulting': blockchainConsulting,
+  'web3/enterprise-private-blockchain': enterprisePrivateBlockchain,
+  'web3/rwa-tokenization': rwaTokenization,
+  'web3/crypto-wallet-development': cryptoWalletDevelopment,
+  'web3/cross-chain-bridge-development': crossChainBridgeDevelopment,
+  'web3/blockchain-indexers-subgraphs': blockchainIndexersSubgraphs,
   'product-studio/product-discovery-validation': productDiscoveryValidation,
   'product-studio/mvp-development': mvpDevelopment,
   'product-studio/saas-product-development': saasProductDevelopment,
