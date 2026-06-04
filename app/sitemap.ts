@@ -55,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     for (const leaf of getPublishedLeaves(pillar)) {
       entries.push({
-        url: `${SITE_ORIGIN}/services/${pillar.id}/${leaf.slug}/`,
+        url: `${SITE_ORIGIN}/services/${pillar.id}/${leaf.slug}`,
         lastModified: now,
         changeFrequency: 'monthly',
         priority: 0.7,

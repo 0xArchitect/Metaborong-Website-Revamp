@@ -56,7 +56,7 @@ function serializeLeaf(
   const header: string[] = [`# ${seo?.title ?? slug}`]
   if (seo?.description) header.push('', seo.description)
   header.push('')
-  header.push(`Canonical: ${SITE_ORIGIN}/services/${pillar}/${slug}/`)
+  header.push(`Canonical: ${SITE_ORIGIN}/services/${pillar}/${slug}`)
   header.push(`Service: ${pillar}/${slug}`)
 
   const sections: string[] = []

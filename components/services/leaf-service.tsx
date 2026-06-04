@@ -20,6 +20,12 @@ import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import { TokenomicsSupplyVisual } from '@/components/services/tokenomics-supply-visual'
+import { LaunchpadBondingCurveVisual } from '@/components/services/launchpad-bonding-curve-visual'
+import { SmartContractVisual } from '@/components/services/smart-contract-visual'
+import { DefiProtocolVisual } from '@/components/services/defi-protocol-visual'
+import { NftMarketplaceVisual } from '@/components/services/nft-marketplace-visual'
+import { LiquidStakingVisual } from '@/components/services/liquid-staking-visual'
+import { DidVisual } from '@/components/services/did-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
@@ -30,6 +36,12 @@ import { ArrowRight, Star, Check, X } from 'lucide-react'
 // Keyed by `${pillar}/${slug}`; leaves without an entry render a text-only hero.
 const heroVisuals: Record<string, React.ComponentType> = {
   'web3/tokenomics-design': TokenomicsSupplyVisual,
+  'web3/token-launchpad-development': LaunchpadBondingCurveVisual,
+  'web3/smart-contract-development': SmartContractVisual,
+  'web3/defi-protocol-development': DefiProtocolVisual,
+  'web3/nft-marketplace-development': NftMarketplaceVisual,
+  'web3/liquid-staking-vaults': LiquidStakingVisual,
+  'web3/decentralized-identity-did-integration': DidVisual,
 }
 
 // Company-wide trust figures, mirrored from the Social-proof section
@@ -616,22 +628,24 @@ function KeyConcepts({
         <div className="mb-[32px] md:mb-[40px]">
           <Eyebrow as="p" className="mb-[12px]">Key concepts</Eyebrow>
           <h2 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.03em] text-dark">
-            Tokenomics terms, defined
+            Key terms, defined
           </h2>
         </div>
       </Reveal>
-      <Stagger as="dl" className="stagger grid grid-cols-1 gap-x-[48px] gap-y-[32px] md:grid-cols-2">
+      <Stagger as="dl" className="stagger grid grid-cols-1 gap-x-[48px] gap-y-[36px] md:grid-cols-2">
         {concepts.map((c, i) => (
-          <div key={i} style={{ '--i': i } as React.CSSProperties} className="stag border-t border-border pt-[16px]">
-            <dt className="mb-[8px] flex items-center gap-[8px] text-[18px] font-bold tracking-[-0.02em] leading-[1.3] text-dark">
-              <span
-                aria-hidden="true"
-                className="kc-tick block h-[8px] w-[8px] shrink-0"
-                style={{ backgroundColor: pillar.color }}
-              />
+          <div
+            key={i}
+            style={{ '--i': i, borderTopColor: pillar.color } as React.CSSProperties}
+            className="stag border-t-2 pt-[18px]"
+          >
+            <dt className="mb-[10px] flex items-baseline gap-[10px] text-[20px] font-bold tracking-[-0.02em] leading-[1.25] text-dark">
+              <span aria-hidden="true" className="font-mono text-[12px] font-bold tracking-[0.08em] tabular-nums" style={{ color: pillar.color }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
               {c.term}
             </dt>
-            <dd className="text-[15px] leading-[1.65] text-gray">{c.definition}</dd>
+            <dd className="text-[16px] leading-[1.7] text-gray">{c.definition}</dd>
           </div>
         ))}
       </Stagger>
