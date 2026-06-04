@@ -11,7 +11,7 @@ export function WhyUsSection() {
           avoid a duplicate heading in the a11y tree. */}
       <p className="sr-only">{LEDE}</p>
       <a href={clutchProfileUrl} target="_blank" rel="noopener noreferrer" className="sr-only">
-        Metaborong is rated 4.9 out of 5 on Clutch
+        Metaborong is independently rated by verified clients on Clutch
       </a>
       <WhyUsSlider />
     </section>

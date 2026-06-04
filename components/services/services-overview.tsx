@@ -407,7 +407,7 @@ function TrustBand() {
       <Section bg="default" maxWidth="wide" aria-label="Independently rated on Clutch">
         <div className="flex flex-col items-center gap-[16px] text-center">
           <Eyebrow as="p">Independently rated</Eyebrow>
-          <p className="sr-only">Metaborong is rated 4.9 out of 5 on Clutch.</p>
+          <p className="sr-only">Metaborong is independently rated by verified clients on Clutch.</p>
           <ClutchWidget />
         </div>
       </Section>
