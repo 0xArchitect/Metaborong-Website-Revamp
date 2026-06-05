@@ -41,12 +41,12 @@ import {
 } from './web3'
 
 const registry: Record<string, LeafContent> = {
-  'ai/ai-audit-opportunity-assessment': aiAuditOpportunityAssessment,
+  'ai/ai-consulting': aiAuditOpportunityAssessment,
   'ai/ai-copilots-internal-tools': aiCopilotsInternalTools,
-  'ai/conversational-agents-assistants': conversationalAgentsAssistants,
-  'ai/agentic-ai-systems': agenticAiSystems,
+  'ai/conversational-ai-voice-agents': conversationalAgentsAssistants,
+  'ai/ai-agent-development': agenticAiSystems,
   'ai/rag-retrieval-pipelines': ragRetrievalPipelines,
-  'ai/llm-integration-architecture': llmIntegrationArchitecture,
+  'ai/genai-apis-backend-integration': llmIntegrationArchitecture,
   'web3/smart-contract-development': smartContractDevelopment,
   'web3/defi-protocol-development': defiProtocolDevelopment,
   'web3/tokenomics-design': web3TokenomicsDesign,

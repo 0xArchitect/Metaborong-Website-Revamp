@@ -33,9 +33,9 @@ export const organizationSchema = {
   // (AI, Web3, Product Studio) so the entity-graph reads consistently with
   // the rest of the site. Coming-soon leaves are excluded.
   knowsAbout: [
-    'AI Audit & Opportunity Assessment',
+    'AI Consulting & Strategy',
     'AI Copilots & Internal Tools',
-    'Agentic AI Systems',
+    'AI Agent Development',
     'RAG & Retrieval Pipelines',
     'Smart Contract Development',
     'DeFi Protocol Development',

@@ -55,14 +55,14 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
     id: 'ai',
     positioning: 'We add production AI capability to existing products and teams.',
     heroParagraphs: [
-      'AI development at Metaborong is the work of adding production-grade language-model, retrieval, and agentic capability to products and teams that already exist. We do not run an ML research lab: we integrate, fine-tune, and harden off-the-shelf foundation models inside the stack you already ship. The pillar covers three engagement shapes: AI strategy and audits for teams asking where AI fits; AI product builds for copilots, conversational agents, and AI-augmented customer journeys; and AI engineering for agentic systems, RAG pipelines, and LLM integration.',
+      'AI development at Metaborong is the work of adding production-grade language-model, retrieval, and agentic capability to products and teams that already exist. We do not run an ML research lab: we integrate, fine-tune, and harden off-the-shelf foundation models inside the stack you already ship. The pillar spans five areas: AI consulting for teams asking where AI fits; generative AI for copilots, conversational and voice agents, and content; custom AI agents; business-process automation and knowledge bases; and the AI engineering that integrates and hardens it all in production.',
       'Every engagement is owned by senior engineers. The same people who write the production code are the people in the discovery call. We ship behind evaluations, not vibes: production evals, drift monitoring, and cost controls are scoped from day one. Where a buyer arrives with a vague mandate, we open with an audit; where the brief is already concrete, we move straight to architecture and build. India + global delivery, with security and observability defaults already in the boilerplate.',
     ],
     subGroups: [
       {
-        id: 'strategy',
+        id: 'consulting',
         description:
-          'Audit, roadmap, and enablement work for teams sequencing AI adoption. The output is a defensible plan: not a slide deck, anchored in feasibility and operating cost, not hype.',
+          'Advisory work for teams sequencing AI adoption: use-case mapping, feasibility, and a roadmap anchored in operating cost, not hype. The output is a defensible plan, not a slide deck.',
         caseStudy: {
           descriptor: 'Mid-market SaaS: AI opportunity audit',
           outcome:
@@ -71,9 +71,9 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
         },
       },
       {
-        id: 'product',
+        id: 'generative-ai',
         description:
-          'Copilots, conversational agents, and customer-journey AI engineered into products that already have users. The job is to integrate AI without breaking what already works.',
+          'Copilots, conversational and voice agents, content generation, and video engineered into products that already have users. The job is to add generative AI without breaking what already works.',
         caseStudy: {
           descriptor: 'Series-A support platform: RAG copilot',
           outcome:
@@ -82,15 +82,25 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
         },
       },
       {
-        id: 'engineering',
+        id: 'ai-agents',
         description:
-          'Agentic systems, retrieval pipelines, and LLM integration engineered to production standards. Evals, guardrails, observability, and cost controls scoped at the architecture stage.',
+          'Custom autonomous and multi-agent systems that plan, use tools, write to your systems, and report, with evaluations, guardrails, and human-in-the-loop checkpoints scoped from the start.',
         caseStudy: {
           descriptor: 'Enterprise ops team: agentic workflow system',
           outcome:
             'Multi-step agent with tool use and human-in-the-loop checkpoints, deployed behind a production eval harness and per-tenant rate limits.',
           href: '/work',
         },
+      },
+      {
+        id: 'business-automation',
+        description:
+          'Document, email, and reporting workflows automated and wired into CRMs, ERPs, and third-party tools, plus a compounding, LLM-maintained knowledge base your teams and agents query in seconds.',
+      },
+      {
+        id: 'ai-engineering',
+        description:
+          'The production AI layer other features depend on: GenAI APIs and backend integration, retrieval pipelines, and evaluation and monitoring, with auth, routing, fallback, cost controls, and observability engineered in.',
       },
     ],
     engagement: [

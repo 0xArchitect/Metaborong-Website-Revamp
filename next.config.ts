@@ -19,9 +19,41 @@ const nextConfig: NextConfig = {
   // first match wins inside Next's routing.
   async redirects() {
     return [
+      // AI taxonomy revamp — reslugged leaves (4 reframed) + 2 dropped stubs.
+      {
+        source: '/services/ai/ai-audit-opportunity-assessment',
+        destination: '/services/ai/ai-consulting',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/conversational-agents-assistants',
+        destination: '/services/ai/conversational-ai-voice-agents',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/agentic-ai-systems',
+        destination: '/services/ai/ai-agent-development',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/llm-integration-architecture',
+        destination: '/services/ai/genai-apis-backend-integration',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/ai-education-workshops',
+        destination: '/services/ai',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/ai-augmented-customer-journeys',
+        destination: '/services/ai',
+        permanent: true,
+      },
+      // Legacy `/services/ai-agents/*` → point straight at the new slugs (no chains).
       {
         source: '/services/ai-agents/agentic-ai-systems',
-        destination: '/services/ai/agentic-ai-systems',
+        destination: '/services/ai/ai-agent-development',
         permanent: true,
       },
       {
@@ -31,17 +63,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services/ai-agents/generative-ai-development',
-        destination: '/services/ai/llm-integration-architecture',
+        destination: '/services/ai/genai-apis-backend-integration',
         permanent: true,
       },
       {
         source: '/services/ai-agents/voice-agent-integration',
-        destination: '/services/ai/conversational-agents-assistants',
+        destination: '/services/ai/conversational-ai-voice-agents',
         permanent: true,
       },
       {
         source: '/services/ai-agents/ai-systems-integration',
-        destination: '/services/ai/llm-integration-architecture',
+        destination: '/services/ai/genai-apis-backend-integration',
         permanent: true,
       },
       {

@@ -92,7 +92,7 @@ const content: LeafContent = {
   relatedServices: [
     { pillar: 'product-studio', slug: 'mvp-development' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
-    { pillar: 'ai', slug: 'ai-audit-opportunity-assessment' },
+    { pillar: 'ai', slug: 'ai-consulting' },
   ],
 
   faqs: [

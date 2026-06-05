@@ -35,16 +35,16 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
   // ── AI ──────────────────────────────────────────────────────────────────────
   {
     pillar: 'ai',
-    subGroup: 'strategy',
-    slug: 'ai-audit-opportunity-assessment',
-    keyword: 'ai audit and opportunity assessment',
-    title: 'AI Audit & Opportunity Assessment',
+    subGroup: 'consulting',
+    slug: 'ai-consulting',
+    keyword: 'ai consulting services',
+    title: 'AI Consulting & Strategy Services',
     description:
-      'Inventory AI opportunities across your product and operations, score by impact and feasibility, ship a 90-day roadmap. Senior AI team, India + global.',
+      'Map AI use cases, test feasibility, and ship a sequenced adoption roadmap scoped to impact and operating cost. Senior AI team, India + global.',
   },
   {
     pillar: 'ai',
-    subGroup: 'product',
+    subGroup: 'generative-ai',
     slug: 'ai-copilots-internal-tools',
     keyword: 'ai copilots and internal tools development',
     title: 'AI Copilots & Internal Tools Development',
@@ -53,25 +53,25 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
   },
   {
     pillar: 'ai',
-    subGroup: 'product',
-    slug: 'conversational-agents-assistants',
-    keyword: 'conversational ai agent development',
-    title: 'Conversational AI Agents & Assistants',
+    subGroup: 'generative-ai',
+    slug: 'conversational-ai-voice-agents',
+    keyword: 'conversational ai and voice agent development',
+    title: 'Conversational AI & Voice Agents',
     description:
-      'Voice and chat agents that handle real workflows | discovery, support, scheduling. Built on production-grade LLM and retrieval infrastructure.',
+      'Build chat and voice agents that handle real workflows: support, scheduling, qualification. Production LLM, retrieval, and telephony infrastructure.',
   },
   {
     pillar: 'ai',
-    subGroup: 'engineering',
-    slug: 'agentic-ai-systems',
-    keyword: 'agentic ai development services',
-    title: 'Agentic AI Systems Development',
+    subGroup: 'ai-agents',
+    slug: 'ai-agent-development',
+    keyword: 'custom ai agent development',
+    title: 'Custom AI Agent Development',
     description:
-      'Multi-step autonomous agents that plan, use tools, and report results. Production-grade orchestration, evaluations, and guardrails included.',
+      'Build custom autonomous and multi-agent systems that plan, use tools, and report results. Production orchestration, evals, and guardrails included.',
   },
   {
     pillar: 'ai',
-    subGroup: 'engineering',
+    subGroup: 'ai-engineering',
     slug: 'rag-retrieval-pipelines',
     keyword: 'rag pipeline development',
     title: 'RAG & Retrieval Pipeline Development',
@@ -80,12 +80,12 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
   },
   {
     pillar: 'ai',
-    subGroup: 'engineering',
-    slug: 'llm-integration-architecture',
-    keyword: 'llm integration and architecture services',
-    title: 'LLM Integration & Architecture',
+    subGroup: 'ai-engineering',
+    slug: 'genai-apis-backend-integration',
+    keyword: 'genai api and backend integration',
+    title: 'GenAI APIs & Backend Integration',
     description:
-      'Architect, integrate, and harden LLMs inside your existing product and stack. Auth, routing, fallback, cost controls, and observability included.',
+      'Architect and harden LLMs inside your stack: model routing, auth, fallback, cost controls, and observability. GenAI APIs wired into your backend.',
   },
 
   // ── Web3 ────────────────────────────────────────────────────────────────────
