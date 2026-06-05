@@ -99,7 +99,7 @@ export const aiAuditOpportunityAssessment: LeafContent = {
   relatedServices: [
     { pillar: 'ai', slug: 'ai-copilots-internal-tools' },
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
-    { pillar: 'product-studio', slug: 'product-discovery-validation' },
+    { pillar: 'product-studio', slug: 'product-discovery' },
   ],
 
   faqs: [
@@ -202,7 +202,7 @@ export const aiCopilotsInternalTools: LeafContent = {
   relatedServices: [
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
     { pillar: 'ai', slug: 'genai-apis-backend-integration' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
 
   faqs: [
@@ -303,7 +303,7 @@ export const conversationalAgentsAssistants: LeafContent = {
   relatedServices: [
     { pillar: 'ai', slug: 'ai-agent-development' },
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
 
   faqs: [
@@ -405,7 +405,7 @@ export const agenticAiSystems: LeafContent = {
   relatedServices: [
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
     { pillar: 'ai', slug: 'genai-apis-backend-integration' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
 
   faqs: [
@@ -506,7 +506,7 @@ export const ragRetrievalPipelines: LeafContent = {
   relatedServices: [
     { pillar: 'ai', slug: 'ai-copilots-internal-tools' },
     { pillar: 'ai', slug: 'ai-agent-development' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
 
   faqs: [
@@ -607,7 +607,7 @@ export const llmIntegrationArchitecture: LeafContent = {
   relatedServices: [
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
     { pillar: 'ai', slug: 'ai-agent-development' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
 
   faqs: [
