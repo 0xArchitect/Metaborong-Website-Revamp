@@ -48,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // out by getPublishedLeaves() — they stay noindex stubs.
   for (const pillar of pillars) {
     entries.push({
-      url: `${SITE_ORIGIN}${pillar.hubHref}`,
+      url: `${SITE_ORIGIN}${pillar.hubHref.replace(/\/$/, '')}`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.8,

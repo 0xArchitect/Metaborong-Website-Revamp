@@ -34,7 +34,9 @@ export function Breadcrumbs({ items }: { items: readonly Crumb[] }) {
                 ) : (
                   <Link
                     href={crumb.href!}
-                    className="inline-flex items-center py-[5px] transition-colors duration-[var(--duration-instant)] hover:text-dark"
+                    className={`inline-flex items-center py-[5px] transition-colors duration-[var(--duration-instant)] hover:text-dark ${
+                      crumb.home ? 'min-h-[24px] min-w-[24px] justify-center' : ''
+                    }`}
                   >
                     {crumb.home ? (
                       <>

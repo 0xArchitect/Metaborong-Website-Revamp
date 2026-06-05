@@ -20,7 +20,7 @@ const offices = [
   { country: 'USA', address: '16192 Coastal Hwy, Lewes, DE 19958' },
 ]
 
-const colHead = 'mb-[18px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray-light'
+const colHead = 'mb-[18px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-gray'
 const colLink =
   'inline-flex min-h-[40px] items-center text-[14px] tracking-[-0.005em] text-dark no-underline transition-[color] duration-[var(--duration-instant)] hover:text-brand'
 const bottomLink =
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-[16px] py-[28px] font-mono text-[11px] uppercase tracking-[0.12em] text-gray-light text-center md:text-left">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-[16px] py-[28px] font-mono text-[11px] uppercase tracking-[0.12em] text-gray text-center md:text-left">
           <span>© {year} Metaborong Technologies</span>
           <a href="mailto:contact@metaborong.com" className={bottomLink}>contact@metaborong.com</a>
           <div className="flex items-center justify-center gap-[8px] w-full md:w-auto">
