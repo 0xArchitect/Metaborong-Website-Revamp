@@ -258,70 +258,68 @@ export function Nav() {
         >
           {/* L4: asymmetric padding. Top edge is contained by the nav bar above;
               bottom edge needs more breath before the dashed border. */}
+          {/* Services index: three columns split by hairline rules. Each column lists
+              its sub-services as ruled rows. A subtle redirect to the combined
+              /services overview sits above the lists. */}
           <div className="px-[16px] sm:px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px] pt-[32px] pb-[40px]">
-            <div className="grid grid-cols-3 gap-[48px] max-w-[1280px] mx-auto">
-              {pillars.map((p, colIdx) => {
-                const visibleChildren = getFeaturedLeaves(p, 'nav', 5)
-                const childCount = visibleChildren.length
-                return (
-                  <div key={p.id} className={colIdx < 2 ? 'pr-[24px] border-r border-border' : ''}>
-                    <div className="flex items-center gap-[12px]">
-                      <span className="text-[13px] font-mono text-gray tabular-nums">{p.num}</span>
-                      <span
-                        aria-hidden="true"
-                        className="w-[9px] h-[9px] outline outline-[1.5px] outline-offset-[1.5px]"
-                        style={{ background: p.color, outlineColor: p.color }}
-                      />
-                      <h3 className="text-[20px] font-bold tracking-[-0.025em] leading-[1.2] text-dark">
-                        {p.label}
-                      </h3>
-                    </div>
-                    <p className="mt-[6px] text-sm leading-[1.5] text-gray">{p.headline}</p>
-
-                    {/* L2: ul-to-hub gap promoted from 20→32 so hub CTA reads as a separate group, not the next list item. */}
-                    <ul className="mt-[20px] flex flex-col gap-[10px]">
-                      {visibleChildren.map((c, rowIdx) => {
-                        const isActive = activeIdx[0] === colIdx && activeIdx[1] === rowIdx
-                        return (
+            <div className="max-w-[1280px] mx-auto">
+              <div className="flex justify-end pb-[14px] mb-[24px] border-b border-border-subtle">
+                <a
+                  href="/services"
+                  onClick={() => setMegaOpen(false)}
+                  className="group flex items-center gap-[6px] font-mono text-[11px] uppercase tracking-[0.14em] text-gray no-underline transition-colors duration-[var(--duration-instant)] hover:text-dark"
+                >
+                  All services overview
+                  <ArrowRight size={12} className="transition-transform duration-[var(--duration-fast)] group-hover:translate-x-[2px]" />
+                </a>
+              </div>
+              <div className="grid grid-cols-3">
+                {pillars.map((p, colIdx) => {
+                  const leaves = getFeaturedLeaves(p, 'nav', 5)
+                  const hubRow = leaves.length
+                  return (
+                    <div key={p.id} className={colIdx > 0 ? 'pr-[40px] border-l border-border pl-[40px]' : 'pr-[40px]'}>
+                      <div className="flex items-center gap-[12px]">
+                        <span className="text-[13px] font-mono text-gray tabular-nums">{p.num}</span>
+                        <span aria-hidden="true" className="w-[9px] h-[9px] outline outline-[1.5px] outline-offset-[1.5px]" style={{ background: p.color, outlineColor: p.color }} />
+                        <h3 className="text-[20px] font-bold tracking-[-0.025em] leading-[1.2] text-dark">{p.label}</h3>
+                      </div>
+                      <p className="mt-[6px] text-sm leading-[1.5] text-gray">{p.headline}</p>
+                      <ul className="mt-[18px] border-b border-border-subtle">
+                        {leaves.map((c, rowIdx) => (
                           <li key={c.slug}>
                             <a
                               ref={setItemRef(colIdx, rowIdx)}
                               href={`/services/${p.id}/${c.slug}/`}
                               role="menuitem"
-                              tabIndex={isActive ? 0 : -1}
+                              tabIndex={activeIdx[0] === colIdx && activeIdx[1] === rowIdx ? 0 : -1}
                               onClick={() => setMegaOpen(false)}
                               onFocus={() => setActiveIdx([colIdx, rowIdx])}
-                              className="text-sm text-gray no-underline transition-colors duration-[var(--duration-instant)] hover:text-dark focus:text-dark"
+                              className="flex items-center gap-[10px] py-[8px] border-t border-border-subtle text-sm text-gray no-underline transition-colors duration-[var(--duration-instant)] hover:text-dark focus:text-dark"
                             >
-                              {c.name}
+                              <span aria-hidden="true" className="w-[5px] h-[5px] flex-none" style={{ background: p.color }} />
+                              <span>{c.name}</span>
                             </a>
                           </li>
-                        )
-                      })}
-                    </ul>
-
-                    {(() => {
-                      const hubRow = childCount
-                      const isActive = activeIdx[0] === colIdx && activeIdx[1] === hubRow
-                      return (
-                        <a
-                          ref={setItemRef(colIdx, hubRow)}
-                          href={p.hubHref}
-                          role="menuitem"
-                          tabIndex={isActive ? 0 : -1}
-                          onClick={() => setMegaOpen(false)}
-                          onFocus={() => setActiveIdx([colIdx, hubRow])}
-                          style={{ color: p.color }}
-                          className="mt-[32px] inline-flex items-center gap-[4px] font-mono text-[11px] uppercase tracking-[0.1em] no-underline group"
-                        >
-                          All {p.hubCta}
-                          <ArrowRight size={12} className="transition-transform duration-[var(--duration-fast)] group-hover:translate-x-[2px]" />
-                        </a>
-                      )
-                    })()}
-                  </div>
-                )
-              })}
+                        ))}
+                      </ul>
+                      <a
+                        ref={setItemRef(colIdx, hubRow)}
+                        href={p.hubHref}
+                        role="menuitem"
+                        tabIndex={activeIdx[0] === colIdx && activeIdx[1] === hubRow ? 0 : -1}
+                        onClick={() => setMegaOpen(false)}
+                        onFocus={() => setActiveIdx([colIdx, hubRow])}
+                        style={{ color: p.color }}
+                        className="mt-[26px] inline-flex items-center gap-[4px] font-mono text-[11px] uppercase tracking-[0.1em] no-underline group"
+                      >
+                        All {p.hubCta}
+                        <ArrowRight size={12} className="transition-transform duration-[var(--duration-fast)] group-hover:translate-x-[2px]" />
+                      </a>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>

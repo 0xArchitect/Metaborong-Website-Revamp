@@ -45,23 +45,24 @@ export function TestimonialsSection() {
       </div>
 
       <div className="relative [--cw:calc(100vw-32px)] sm:[--cw:calc(100vw-48px)]">
+        {/* Pull-quote mark anchors each card; stars + name sit in a meta row. */}
         <ul className="flex overflow-x-auto snap-x snap-mandatory gap-[16px] md:grid md:gap-x-[clamp(28px,3.5vw,56px)] md:gap-y-[clamp(16px,2.6svh,32px)] md:grid-cols-2 lg:grid-cols-3 pb-[24px] -mx-[16px] px-[16px] sm:-mx-[24px] sm:px-[24px] md:mx-0 md:px-0 md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {reviews.map((r, i) => (
-            <li 
+          {reviews.map((r) => (
+            <li
               key={r.company}
               className="snap-center snap-always shrink-0 w-[calc(100vw-32px)] sm:w-[calc(100vw-48px)] md:w-auto md:max-w-none flex flex-col justify-between border border-border bg-white p-[24px] sm:p-[32px]"
             >
               <figure className="flex h-full flex-col">
-                <span className="font-mono text-[11px] font-bold tracking-[0.14em] text-gray-light">
-                  [{String(i + 1).padStart(2, '0')}]
-                </span>
-                <span aria-hidden="true" className="mt-[10px] text-[14px] tracking-[3px] text-accent">★★★★★</span>
-                <blockquote className="mt-[10px] text-[clamp(13px,1.05vw,16px)] leading-[1.5] tracking-[-0.01em] text-dark">
-                  “{r.quote}”
+                <span aria-hidden="true" className="block font-mono font-bold leading-[0.7] text-accent text-[46px] h-[30px]">“</span>
+                <blockquote className="mt-[4px] text-[clamp(14px,1.2vw,18px)] font-medium leading-[1.45] tracking-[-0.01em] text-dark">
+                  {r.quote}
                 </blockquote>
-                <figcaption className="mt-[24px] pt-[14px] font-mono text-[11px] uppercase tracking-[0.1em] text-gray md:mt-auto">
-                  <b className="font-bold text-dark">{r.role}</b>, {r.company}
-                </figcaption>
+                <div className="mt-[20px] md:mt-auto flex items-center gap-[10px] border-t border-border-subtle pt-[14px]">
+                  <span aria-hidden="true" className="text-[12px] tracking-[2px] text-accent">★★★★★</span>
+                  <figcaption className="font-mono text-[11px] uppercase tracking-[0.1em] text-gray">
+                    <b className="font-bold text-dark">{r.role}</b>, {r.company}
+                  </figcaption>
+                </div>
               </figure>
             </li>
           ))}
