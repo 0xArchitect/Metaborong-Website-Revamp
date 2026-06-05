@@ -2,10 +2,10 @@ import type { LeafContent } from '@/lib/services/leaf-content'
 
 const content: LeafContent = {
   pillar: 'product-studio',
-  slug: 'saas-product-development',
+  slug: 'saas-development',
 
   heroLede:
-    'SaaS Product Development is an end-to-end product engagement for founders building a multi-tenant subscription business. We design and ship version one of the product with the SaaS plumbing built in from day one - multi-tenancy, billing, role-based access, audit logs, and the observability you need to run on-call. Founders get a single senior team owning architecture, design, engineering, and deployment, not a hand-off chain across vendors. Engagements run twelve to twenty weeks, deliver a production SaaS on your cloud account, and exit with a written runbook your future engineering hires can actually read. We work in two-week sprints, demo every Friday, and ship to staging on a continuous-deployment pipeline you own. At handoff you receive the repo, the Stripe account, the observability stack, and the cuts we recommend for v1.1 - written as a backlog, not as opinion.',
+    'SaaS Development is an end-to-end product engagement for founders building a multi-tenant subscription business. We design and ship version one of the product with the SaaS plumbing built in from day one - multi-tenancy, billing, role-based access, audit logs, and the observability you need to run on-call. Founders get a single senior team owning architecture, design, engineering, and deployment, not a hand-off chain across vendors. Engagements run twelve to twenty weeks, deliver a production SaaS on your cloud account, and exit with a written runbook your future engineering hires can actually read. We work in two-week sprints, demo every Friday, and ship to staging on a continuous-deployment pipeline you own. At handoff you receive the repo, the Stripe account, the observability stack, and the cuts we recommend for v1.1 - written as a backlog, not as opinion.',
 
   deliverables: [
     {
@@ -74,7 +74,7 @@ const content: LeafContent = {
   },
 
   aeoAnswer:
-    'SaaS Product Development is an end-to-end engagement for founders building a multi-tenant subscription business that exits with a production deployment and billing live. Metaborong is a senior boutique studio operating from India for clients across North America, Europe, and APAC. The studio holds a 4.9 rating across eight verified engagements on Clutch.',
+    'SaaS Development is an end-to-end engagement for founders building a multi-tenant subscription business that exits with a production deployment and billing live. Metaborong is a senior boutique studio operating from India for clients across North America, Europe, and APAC. The studio holds a 4.9 rating across eight verified engagements on Clutch.',
 
   relatedWork: [
     {
@@ -99,9 +99,9 @@ const content: LeafContent = {
 
   faqs: [
     {
-      question: 'How is SaaS Product Development different from MVP Development?',
+      question: 'How is SaaS Development different from MVP Development?',
       answer:
-        'MVP Development is zero-to-launch for any v1 product. SaaS Product Development is the same engagement model with multi-tenancy, billing, RBAC, and admin tooling baked in from day one, plus the architecture-review week up front. If your v1 is a subscription product, picking SaaS up front saves the rewrite when the first paying customer asks for SSO.',
+        'MVP Development is zero-to-launch for any v1 product. SaaS Development is the same engagement model with multi-tenancy, billing, RBAC, and admin tooling baked in from day one, plus the architecture-review week up front. If your v1 is a subscription product, picking SaaS up front saves the rewrite when the first paying customer asks for SSO.',
     },
     {
       question: 'Do you handle SOC 2, ISO, or HIPAA compliance?',

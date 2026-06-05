@@ -200,14 +200,14 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
     id: 'product-studio',
     positioning: 'We build the first version of your product, end-to-end.',
     heroParagraphs: [
-      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. The pillar exists for teams without an in-house CTO who need one senior engineering group to own the work from architecture through deployment: not a fragmented chain of specialists each handing off the last piece. We cover three engagement shapes: product strategy and discovery for pre-build founders, product engineering for MVP, SaaS, and B2B multi-tenant platforms, and underlying disciplines like frontend, backend, and design-systems engineering that hold the product together.',
+      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. The pillar exists for teams without an in-house CTO who need one senior engineering group to own the work from architecture through deployment, not a fragmented chain of specialists each handing off the last piece. It spans the full build: product discovery, MVP and SaaS development, web and mobile apps, B2B multi-tenant platforms, marketplaces, CRM and custom software, plus the product-design and DevOps disciplines underneath.',
       'Every build is shaped to ship to production, not to demo in a stand-up. Multi-tenancy, billing, observability, authentication, audit logging, and the operational defaults that enterprise procurement asks about are baked in from week one. Founders communicate directly with the engineers writing the code, and architecture decisions happen out in the open. We do not market modernisation, managed services, or v2/v3 retainers: Product Studio is intentionally a greenfield practice. Teams who already have a product can still reach us; we handle that conversation directly.',
     ],
     subGroups: [
       {
-        id: 'strategy',
+        id: 'plan',
         description:
-          'Discovery sprints, architecture planning, and MVP scoping for founders before a single line of production code is written. The output is a shipping plan, not a strategy deck.',
+          'Discovery and validation before a line of production code: problem framing, customer evidence, and a clickable prototype that de-risks the build.',
         caseStudy: {
           descriptor: 'Pre-seed founder: product discovery sprint',
           outcome:
@@ -216,9 +216,9 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
         },
       },
       {
-        id: 'product',
+        id: 'build',
         description:
-          'MVP, SaaS, and B2B multi-tenant platforms shipped end-to-end by one senior team. Architecture, engineering, design, and deployment are owned in-house: not subcontracted.',
+          'The product itself, shipped end-to-end by one senior team: MVP and SaaS builds, web and mobile apps, multi-tenant platforms, marketplaces, and bespoke software, with production defaults baked in from week one.',
         caseStudy: {
           descriptor: 'B2B vertical SaaS: multi-tenant platform',
           outcome:
@@ -227,9 +227,9 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
         },
       },
       {
-        id: 'engineering',
+        id: 'operate',
         description:
-          'Frontend, backend, and design-systems engineering: the underlying disciplines that hold a product together. Used as standalone capacity or as part of a full product build.',
+          'The disciplines that keep a product shippable and scalable: product design systems, plus the CI/CD, observability, and cloud infrastructure underneath.',
         caseStudy: {
           descriptor: 'Founding-team React stack: design system rebuild',
           outcome:

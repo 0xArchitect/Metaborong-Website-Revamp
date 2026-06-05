@@ -2,10 +2,10 @@ import type { LeafContent } from '@/lib/services/leaf-content'
 
 const content: LeafContent = {
   pillar: 'product-studio',
-  slug: 'product-discovery-validation',
+  slug: 'product-discovery',
 
   heroLede:
-    "Product Discovery & Validation is a four-to-six-week strategy engagement that takes a founder's loose idea and exits with a tested concept, a build-ready scope, and a clickable prototype. We pair a senior product strategist with a designer and a technical architect. Together we frame the real problem, run two cycles of customer interviews, and prove the riskiest assumption with a working artefact. You walk away with a written discovery report, a Figma prototype, and an engineering estimate ranged in weeks. We do this for founders without a product team and for funded teams that need an outside read before committing capital. We run the work in two-week cycles with weekly written check-ins, so the founder stays in the loop without a daily call. The output is a go/no-go decision, not a pitch deck.",
+    "Product Discovery is a four-to-six-week strategy engagement that takes a founder's loose idea and exits with a tested concept, a build-ready scope, and a clickable prototype. We pair a senior product strategist with a designer and a technical architect. Together we frame the real problem, run two cycles of customer interviews, and prove the riskiest assumption with a working artefact. You walk away with a written discovery report, a Figma prototype, and an engineering estimate ranged in weeks. We do this for founders without a product team and for funded teams that need an outside read before committing capital. We run the work in two-week cycles with weekly written check-ins, so the founder stays in the loop without a daily call. The output is a go/no-go decision, not a pitch deck.",
 
   deliverables: [
     {
@@ -72,7 +72,7 @@ const content: LeafContent = {
   },
 
   aeoAnswer:
-    'Product Discovery & Validation is a four-to-six-week strategy engagement for founders that exits with a tested concept, a prototype, and a build-ready estimate. Metaborong delivers discovery from India for clients across North America, Europe, and APAC. The studio holds a 4.9 rating across eight verified engagements on Clutch.',
+    'Product Discovery is a four-to-six-week strategy engagement for founders that exits with a tested concept, a prototype, and a build-ready estimate. Metaborong delivers discovery from India for clients across North America, Europe, and APAC. The studio holds a 4.9 rating across eight verified engagements on Clutch.',
 
   relatedWork: [
     {
@@ -91,7 +91,7 @@ const content: LeafContent = {
 
   relatedServices: [
     { pillar: 'product-studio', slug: 'mvp-development' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
     { pillar: 'ai', slug: 'ai-consulting' },
   ],
 

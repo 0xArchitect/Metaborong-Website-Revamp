@@ -214,16 +214,16 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
   // ── Product Studio ──────────────────────────────────────────────────────────
   {
     pillar: 'product-studio',
-    subGroup: 'strategy',
-    slug: 'product-discovery-validation',
-    keyword: 'product discovery and validation services',
-    title: 'Product Discovery & Validation',
+    subGroup: 'plan',
+    slug: 'product-discovery',
+    keyword: 'product discovery services',
+    title: 'Product Discovery for Startups & Founders',
     description:
       'Tight-loop discovery sprints for founders: problem framing, hypothesis tests, technical feasibility, and a shipped clickable prototype in weeks.',
   },
   {
     pillar: 'product-studio',
-    subGroup: 'product',
+    subGroup: 'build',
     slug: 'mvp-development',
     keyword: 'mvp development services',
     title: 'MVP Development Services | Founder-Led Builds',
@@ -232,16 +232,16 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
   },
   {
     pillar: 'product-studio',
-    subGroup: 'product',
-    slug: 'saas-product-development',
-    keyword: 'saas product development services',
-    title: 'SaaS Product Development Services',
+    subGroup: 'build',
+    slug: 'saas-development',
+    keyword: 'saas development services',
+    title: 'SaaS Development Services',
     description:
       'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in. Senior team owns architecture through deployment, no vendor fragmentation.',
   },
   {
     pillar: 'product-studio',
-    subGroup: 'product',
+    subGroup: 'build',
     slug: 'b2b-multi-tenant-platforms',
     keyword: 'b2b multi-tenant platform development',
     title: 'B2B Multi-Tenant Platform Development',

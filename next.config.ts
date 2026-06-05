@@ -96,6 +96,17 @@ const nextConfig: NextConfig = {
         destination: '/services/product-studio/b2b-multi-tenant-platforms',
         permanent: true,
       },
+      // Product Studio head-term reslug (Peiko-aligned taxonomy re-cut).
+      {
+        source: '/services/product-studio/product-discovery-validation',
+        destination: '/services/product-studio/product-discovery',
+        permanent: true,
+      },
+      {
+        source: '/services/product-studio/saas-product-development',
+        destination: '/services/product-studio/saas-development',
+        permanent: true,
+      },
       {
         source: '/services/web3/web3-tokenomics-design',
         destination: '/services/web3/tokenomics-design',

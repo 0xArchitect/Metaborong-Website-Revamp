@@ -11,6 +11,11 @@ export type SubGroupId =
   | 'ai-agents'
   | 'business-automation'
   | 'ai-engineering'
+  // product-studio (lifecycle bands — flat Peiko-style capability list, grouped
+  // into bands for the hub only; nav/homepage flatten leaves regardless)
+  | 'plan'
+  | 'build'
+  | 'operate'
 
 export type LeafStatus = 'published' | 'coming-soon'
 
@@ -296,34 +301,25 @@ export const pillars: Pillar[] = [
     body: 'MVP, SaaS, and B2B multi-tenant platforms for founders without a CTO. One senior team owns architecture through deployment.',
     hubHref: '/services/product-studio/',
     hubCta: 'Product Studio services',
+    // Flat, Peiko-style capability list. Grouped into lifecycle bands
+    // (Plan / Build / Operate) for the hub's visual rhythm only — nav and the
+    // homepage flatten leaves via getFeaturedLeaves/getPublishedLeaves.
     subGroups: [
       {
-        id: 'strategy',
-        label: 'Strategy',
+        id: 'plan',
+        label: 'Plan',
         children: [
           {
-            name: 'Product Discovery & Validation',
-            description: 'Tight-loop discovery sprints: problem framing, hypothesis tests, and a clickable prototype in weeks.',
-            slug: 'product-discovery-validation',
+            name: 'Product Discovery',
+            description: 'Problem framing, customer evidence, and a clickable prototype that de-risks the build before engineering starts.',
+            slug: 'product-discovery',
             status: 'published',
-          },
-          {
-            name: 'Technical Architecture Planning',
-            description: 'Pre-build architecture, data-model, and infrastructure planning for production SaaS.',
-            slug: 'technical-architecture-planning',
-            status: 'coming-soon',
-          },
-          {
-            name: 'MVP Scoping & Roadmapping',
-            description: 'Scope reduction, milestone planning, and engineering estimates for founder-led MVPs.',
-            slug: 'mvp-scoping-roadmapping',
-            status: 'coming-soon',
           },
         ],
       },
       {
-        id: 'product',
-        label: 'Product',
+        id: 'build',
+        label: 'Build',
         children: [
           {
             name: 'MVP Development',
@@ -332,10 +328,16 @@ export const pillars: Pillar[] = [
             status: 'published',
           },
           {
-            name: 'SaaS Product Development',
+            name: 'SaaS Development',
             description: 'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in.',
-            slug: 'saas-product-development',
+            slug: 'saas-development',
             status: 'published',
+          },
+          {
+            name: 'Web Application Development',
+            description: 'Production web apps in React and Next.js, accessible and fast from the first deploy.',
+            slug: 'web-application-development',
+            status: 'coming-soon',
           },
           {
             name: 'B2B Multi-Tenant Platforms',
@@ -343,28 +345,52 @@ export const pillars: Pillar[] = [
             slug: 'b2b-multi-tenant-platforms',
             status: 'published',
           },
+          {
+            name: 'Mobile App Development',
+            description: 'Cross-platform mobile apps from one codebase across iOS and Android.',
+            slug: 'mobile-app-development',
+            status: 'coming-soon',
+          },
+          {
+            name: 'Marketplace Development',
+            description: 'Two-sided marketplace platforms with listings, payments, search, and trust built for liquidity.',
+            slug: 'marketplace-development',
+            status: 'coming-soon',
+          },
+          {
+            name: 'CRM Development',
+            description: 'Custom CRM and internal tools shaped to your sales and ops workflow, not an off-the-shelf template.',
+            slug: 'crm-development',
+            status: 'coming-soon',
+          },
+          {
+            name: 'Fintech App Development',
+            description: 'Fintech products with the audit trails, access controls, and reconciliation regulated money movement needs.',
+            slug: 'fintech-app-development',
+            status: 'coming-soon',
+          },
+          {
+            name: 'Custom Software Development',
+            description: 'Bespoke software for workflows no off-the-shelf tool fits, engineered to production standards.',
+            slug: 'custom-software-development',
+            status: 'coming-soon',
+          },
         ],
       },
       {
-        id: 'engineering',
-        label: 'Engineering',
+        id: 'operate',
+        label: 'Operate',
         children: [
           {
-            name: 'Frontend Engineering',
-            description: 'Production React and Next.js frontends with accessibility, SEO, and performance built in.',
-            slug: 'frontend-engineering',
+            name: 'UX/UI & Product Design',
+            description: 'Token-driven design systems and product UX your team owns, not locked in a design file.',
+            slug: 'ux-ui-product-design',
             status: 'coming-soon',
           },
           {
-            name: 'Backend & API Engineering',
-            description: 'API and data-layer engineering across Postgres, MongoDB, and event-driven systems.',
-            slug: 'backend-api-engineering',
-            status: 'coming-soon',
-          },
-          {
-            name: 'Design Systems & Component Libraries',
-            description: 'Token-driven design systems and component libraries owned by your product team.',
-            slug: 'design-systems-component-libraries',
+            name: 'Cloud & DevOps Engineering',
+            description: 'CI/CD, observability, and cloud infrastructure that make shipping and scaling routine.',
+            slug: 'cloud-devops-engineering',
             status: 'coming-soon',
           },
         ],

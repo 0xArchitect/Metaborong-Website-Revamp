@@ -91,7 +91,7 @@ const content: LeafContent = {
   ],
 
   relatedServices: [
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
     { pillar: 'product-studio', slug: 'mvp-development' },
     { pillar: 'web3', slug: 'decentralized-identity-did-integration' },
   ],

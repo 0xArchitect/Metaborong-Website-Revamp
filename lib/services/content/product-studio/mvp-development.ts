@@ -90,8 +90,8 @@ const content: LeafContent = {
   ],
 
   relatedServices: [
-    { pillar: 'product-studio', slug: 'product-discovery-validation' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'product-discovery' },
+    { pillar: 'product-studio', slug: 'saas-development' },
     { pillar: 'ai', slug: 'genai-apis-backend-integration' },
   ],
 
