@@ -27,7 +27,7 @@ export function ContactCtaSection() {
 
         <div className="relative z-[2] grid grid-cols-1 items-end gap-[32px] px-[32px] pt-[56px] pb-[64px] lg:grid-cols-[1.3fr_1fr] lg:gap-[56px] lg:px-[72px] lg:py-[96px]">
           <div>
-            <div className="mb-[20px] inline-flex items-center gap-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
+            <div className="mb-[20px] inline-flex items-center gap-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-off-white">
               <span aria-hidden="true" className="inline-block h-[8px] w-[8px] bg-brand" />
               Got a project in mind?
             </div>

@@ -13,12 +13,14 @@ import type { PillarId, SubGroupId } from '@/components/sections/services-data'
 export type SubGroupCopy = {
   id: SubGroupId
   description: string
-  caseStudy: { descriptor: string; outcome: string; href: string }
+  /** Optional featured live-project panel. Omitted on hubs (e.g. web3) where
+   * the leaf cards already link the real projects and the panel would just
+   * re-point at leaves listed in the same manifest. */
+  caseStudy?: { descriptor: string; outcome: string; href: string }
 }
 
 export type EngagementPhase = {
   label: string
-  duration: string
   body: string
 }
 
@@ -26,8 +28,23 @@ export type PillarFaq = { q: string; a: string }
 
 export type PillarHubCopy = {
   id: PillarId
+  /**
+   * Optional keyworded H1 for the hub, overriding `pillar.headline` (which is
+   * the editorial tagline reused on the homepage + schema). Lets the hub lead
+   * with the primary search entity without changing the homepage copy.
+   */
+  heading?: string
   positioning: string
-  heroParagraphs: string[]
+  /**
+   * Optional entity-first direct answer (~40-60w) rendered as a highlighted
+   * block after the H1 and serialized into the hub raw.md / schema. Mirrors
+   * the leaf `aeoAnswer` pattern for AI-engine extraction. Fill per pillar as
+   * each pillar's copy reaches the bar.
+   */
+  aeoAnswer?: string
+  /** Prose hero proof paragraphs. Omitted on pillars whose hero carries a
+   * signature visual instead (e.g. web3). */
+  heroParagraphs?: string[]
   subGroups: SubGroupCopy[]
   engagement: EngagementPhase[]
   faqs: PillarFaq[]
@@ -77,9 +94,9 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
       },
     ],
     engagement: [
-      { label: 'Audit', duration: '1–2 wks', body: 'Opportunity mapping, feasibility, and a sequenced roadmap before anyone writes code.' },
-      { label: 'Build', duration: '4–16 wks', body: 'Architecture, integration, evaluations, and a hardened path to production deployment.' },
-      { label: 'Operate & Govern', duration: 'ongoing', body: 'Drift monitoring, eval regressions, cost controls, and per-tenant governance.' },
+      { label: 'Audit', body: 'Opportunity mapping, feasibility, and a sequenced roadmap before anyone writes code.' },
+      { label: 'Build', body: 'Architecture, integration, evaluations, and a hardened path to production deployment.' },
+      { label: 'Operate & Govern', body: 'Drift monitoring, eval regressions, cost controls, and per-tenant governance.' },
     ],
     faqs: [
       {
@@ -111,75 +128,60 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
 
   web3: {
     id: 'web3',
+    heading: 'Web3 Development & Protocol Engineering',
     positioning: 'We advise, design, and ship on-chain protocols, products, and infrastructure.',
-    heroParagraphs: [
-      'Web3 development at Metaborong runs across three sub-groups. Strategy covers tokenomics, blockchain consulting, enterprise and private chains, and real-world-asset tokenization. Product covers NFT marketplaces, token launchpads, and account-abstraction wallets. Engineering covers smart contracts, DeFi protocols, liquid-staking vaults, decentralised identity, cross-chain bridges, and indexers. The pillar is multichain by default across EVM, Solana, Cosmos, Aptos, and NEAR, with delivery shaped by what the protocol actually needs rather than the chain that is loudest that quarter.',
-      'Every smart contract we ship is specced, tested, and instrumented for third-party audit before deployment: security review is the architectural constraint that shapes the code, not a step after launch. The work is grounded in live products: a real-world-asset platform in Assetize, an account-abstraction wallet on Nero Chain, a production NEAR-Solana bridge, and Aadhaar-integrated decentralised identity at production scale. India and global delivery, with the senior engineers writing the code present in every scoping conversation.',
-    ],
+    aeoAnswer:
+      'Web3 development is the design and engineering of blockchain protocols, on-chain products, and the infrastructure that connects them. Metaborong delivers it across three tracks: strategy, product, and engineering, shipping audit-ready smart contracts on EVM, Solana, Cosmos, Aptos, and NEAR. Live work spans a real-world-asset platform, an account-abstraction wallet, and a production NEAR-Solana bridge.',
     subGroups: [
       {
         id: 'strategy',
         description:
-          'Tokenomics, blockchain consulting, enterprise and private chains, and real-world-asset tokenization. The output is a decision or model grounded in shipped code, not a whitepaper drafted in isolation.',
-        caseStudy: {
-          descriptor: 'Assetize: real-world asset tokenization',
-          outcome:
-            'A live platform issuing real-world assets on-chain, with compliance-aware token logic and an ownership registry wired into the contracts.',
-          href: '/services/web3/rwa-tokenization',
-        },
+          'Advisory and design work that lands before any code: tokenomics modelling and blockchain consulting that produce a decision or model you can act on, each grounded in shipped engineering rather than a whitepaper written in isolation.',
       },
       {
         id: 'product',
         description:
-          'NFT marketplaces, token launchpads, and account-abstraction wallets. The work spans storefronts, sale mechanics, and the key-management UX users actually touch.',
-        caseStudy: {
-          descriptor: 'Nero Chain: account-abstraction wallet',
-          outcome:
-            'An ERC-4337 smart-account wallet with paymaster gas sponsorship and recovery, live on Nero Chain, so new users transact without first buying gas.',
-          href: '/services/web3/crypto-wallet-development',
-        },
+          'On-chain products that ship with a surface users actually touch: accounts, storefront or sale mechanics, issuance flows, and the front-end users move through. NFT marketplaces, token launchpads, account-abstraction wallets, and real-world-asset tokenization platforms.',
       },
       {
         id: 'engineering',
         description:
-          'Smart contracts, DeFi protocols, liquid-staking vaults, decentralised identity, cross-chain bridges, and indexers. Every contract is engineered for third-party audit and instrumented for post-deploy monitoring.',
-        caseStudy: {
-          descriptor: 'NEAR-Solana cross-chain bridge',
-          outcome:
-            'A production bridge connecting NEAR and Solana for a live token project, delivered on a tight timeline with replay-protected message verification.',
-          href: '/services/web3/cross-chain-bridge-development',
-        },
+          'Protocol and infrastructure primitives other systems build on, with no consumer-facing surface of their own. Smart contracts, DeFi protocols, liquid-staking vaults, decentralised identity, cross-chain bridges, indexers, and permissioned or private-chain deployments, every contract engineered for third-party audit and post-deploy monitoring.',
       },
     ],
     engagement: [
-      { label: 'Design', duration: '1–3 wks', body: 'Protocol architecture, tokenomics modelling, and pre-launch risk review before any code is written.' },
-      { label: 'Engineer', duration: '6–16 wks', body: 'Contracts and protocol systems engineered for audit, with tests, deployment, and post-deploy monitoring.' },
-      { label: 'Audit & Operate', duration: 'ongoing', body: 'Audit support, post-deploy monitoring, governance tooling, and incident response.' },
+      { label: 'Design', body: 'Protocol architecture, tokenomics modelling, and pre-launch risk review before any code is written.' },
+      { label: 'Engineer', body: 'Contracts and protocol systems engineered for audit, with tests, deployment, and post-deploy monitoring.' },
+      { label: 'Audit & Operate', body: 'Audit support, post-deploy monitoring, governance tooling, and incident response.' },
     ],
     faqs: [
       {
-        q: 'Which blockchain ecosystems do you support?',
-        a: 'EVM chains including Ethereum and Layer-2 rollups, Solana with SPL tokens and Anchor programs, and Cosmos with CosmWasm modules. We pick the chain that fits the protocol, not the chain that fits the conference circuit.',
+        q: 'What does a Web3 development company actually do?',
+        a: 'A Web3 development company designs, builds, audits, and operates blockchain products end to end: protocol and tokenomics design, smart contracts, the application layer, and post-launch operations. Our work spans three tracks (Strategy, Product, Engineering) across 13 services, so a project moves from concept through engineering, third-party audit, deployment, and ongoing operations without handing off between disconnected vendors.',
       },
       {
-        q: 'Are contracts ready for third-party audit?',
-        a: 'Every smart contract we ship is engineered for audit. Specs, invariants, tests, fuzzing, and static-analysis output are all delivered alongside the code. We coordinate with audit firms directly and remediate findings in-band.',
+        q: 'How do you decide which blockchain to build on?',
+        a: 'We are multichain by default and chain-agnostic: we pick the chain the protocol needs, not the loudest. We build across EVM (Ethereum and its L2s), Solana, Cosmos, Aptos, and NEAR, choosing based on your finality, throughput, cost, liquidity, and ecosystem requirements. We have shipped production systems on several of these, including a NEAR to Solana bridge, so the choice comes from delivery experience, not preference.',
       },
       {
-        q: 'Do you handle tokenomics design as well as engineering?',
-        a: 'Yes. The Strategy sub-group covers token supply, emissions, vesting, governance modelling, and stress-tests against on-chain behaviour before launch. Tokenomics and engineering ship through one accountable team rather than two.',
+        q: 'How much does Web3 development cost?',
+        a: 'Cost depends on scope, not a fixed package: how many smart contracts, the chains involved, audit depth, application complexity, and how much protocol or tokenomics design is needed up front. We scope each engagement against your actual requirements rather than quoting a template price. Because senior engineers run scoping directly, the estimate reflects the real build, including audit support, not a sales figure.',
       },
       {
-        q: 'What is the DID and Aadhaar work you reference?',
-        a: 'We engineer decentralised-identity stacks including UIDAI-aware verifiable-credential systems and Aadhaar-integrated DID issuance at production scale. The Decentralized Identity & DID Integration leaf has the full breakdown.',
+        q: 'How do you make sure smart contracts are secure?',
+        a: 'We are audit-first. Every smart contract is specced, tested, fuzzed, and static-analysed, and engineered for third-party audit before it deploys. We coordinate directly with external audit firms and remediate findings in-band rather than treating the audit as a final checkbox. On-chain code is hard to change after launch, so security posture is built into the engineering process, not added at the end.',
       },
       {
-        q: 'Do you provide ongoing protocol operations after launch?',
-        a: 'Yes. Post-deploy monitoring, governance tooling, treasury integrations, and incident response are scoped as part of the Operate phase. Many protocols stay engaged on retainer for ongoing engineering.',
+        q: 'Why hire a Web3 development studio instead of building an in-house team?',
+        a: 'Hiring senior blockchain engineers is slow and expensive, and a single in-house team rarely covers protocol design, multichain engineering, and audit readiness at once. A senior studio gives you that range immediately. We are founder-led and senior-engineer-led: the engineers who write the code are in every scoping call, so you get direct technical ownership without the multi-month cost of recruiting it.',
       },
       {
-        q: 'Can you take a project from idea to mainnet?',
-        a: 'Yes. Tokenomics and protocol design through engineering, audit support, deployment, and post-launch operations are all in scope. Typical end-to-end engagements run twelve to twenty weeks depending on protocol complexity.',
+        q: 'Can you take a project from idea to a live mainnet product?',
+        a: 'Yes. We work end to end across Strategy, Product, and Engineering: protocol and tokenomics design, smart contract and application engineering, third-party audit support, mainnet deployment, and post-launch operations. We have shipped live products this way, including Assetize for real-world-asset tokenization, an ERC-4337 account-abstraction wallet on Nero Chain, and Aadhaar-integrated decentralised identity at production scale.',
+      },
+      {
+        q: 'How do you take over a Web3 project from another development team?',
+        a: 'With a code review first. We run an internal review of the inherited codebase before committing to scope: inherited contracts sometimes need a security review or a refactor before new features can be added safely. If the code has known vulnerabilities, we scope remediation separately before any extension work begins.',
       },
     ],
   },
@@ -227,9 +229,9 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
       },
     ],
     engagement: [
-      { label: 'Discover', duration: '1–2 wks', body: 'Problem framing, hypothesis tests, technical feasibility, and a clickable prototype before the build starts.' },
-      { label: 'Build', duration: '6–16 wks', body: 'Architecture, engineering, design, and deployment from one senior team: through to first paying users.' },
-      { label: 'Ship & Iterate', duration: 'ongoing', body: 'Production support, feature roadmap, and the iteration loop teams need post-launch.' },
+      { label: 'Discover', body: 'Problem framing, hypothesis tests, technical feasibility, and a clickable prototype before the build starts.' },
+      { label: 'Build', body: 'Architecture, engineering, design, and deployment from one senior team: through to first paying users.' },
+      { label: 'Ship & Iterate', body: 'Production support, feature roadmap, and the iteration loop teams need post-launch.' },
     ],
     faqs: [
       {
