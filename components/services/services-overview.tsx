@@ -31,7 +31,7 @@ const OUTCOMES: Outcome[] = [
   {
     title: 'Add AI to your product',
     clarifier: 'Architect and harden LLMs inside your existing product stack.',
-    href: '/services/ai/llm-integration-architecture/',
+    href: '/services/ai/genai-apis-backend-integration/',
   },
   {
     title: 'Launch a token or DeFi protocol',
@@ -246,7 +246,7 @@ function PillarGrid() {
           AI, Web3, and Product Studio
         </h2>
         <p className="mt-[16px] text-[16px] leading-[1.65] tracking-[-0.005em] text-gray">
-          Each pillar runs a Strategy / Product / Engineering triad, using the same shape across all three, so engagements compose cleanly.
+          Each pillar groups its services into clear tracks, so engagements compose cleanly across strategy, build, and engineering.
         </p>
       </div>
 

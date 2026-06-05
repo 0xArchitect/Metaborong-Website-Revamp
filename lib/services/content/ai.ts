@@ -24,7 +24,7 @@ import type { LeafContent } from '@/lib/services/leaf-content'
 // ── AI · STRATEGY ─────────────────────────────────────────────────────────────
 export const aiAuditOpportunityAssessment: LeafContent = {
   pillar: 'ai',
-  slug: 'ai-audit-opportunity-assessment',
+  slug: 'ai-consulting',
 
   heroLede: `AI Audit & Opportunity Assessment is a discovery engagement that inventories candidate AI workflows across your product and operations, scores each against impact and feasibility, and outputs a sequenced 90-day plan. The work starts with the people doing the workflows today - support, sales, ops, engineering - and ends with a defensible list of where AI fits, where it does not, and what to ship first. You leave with a scored opportunity map, a 90-day roadmap pinned to operating cost and team capacity, and an architecture sketch for the lead build candidate. We are senior engineers, not slide-deck consultants - every opportunity is feasibility-tested against the production stack the build engagement will ship into. India + global delivery, founder-led scoping, with one of three Metaborong founders in every working session.`,
 
@@ -201,7 +201,7 @@ export const aiCopilotsInternalTools: LeafContent = {
 
   relatedServices: [
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
-    { pillar: 'ai', slug: 'llm-integration-architecture' },
+    { pillar: 'ai', slug: 'genai-apis-backend-integration' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
   ],
 
@@ -227,7 +227,7 @@ export const aiCopilotsInternalTools: LeafContent = {
 
 export const conversationalAgentsAssistants: LeafContent = {
   pillar: 'ai',
-  slug: 'conversational-agents-assistants',
+  slug: 'conversational-ai-voice-agents',
 
   heroLede: `Conversational Agents & Assistants is the engineering of production voice and chat agents that handle real workflows - support, scheduling, qualification, discovery. The agents we ship are not chatbots replying with FAQ snippets; they reason about a conversation, call tools, write to your systems, and hand off cleanly to humans when the workflow demands it. You leave the engagement with a deployed agent wired into your channels - phone, web chat, WhatsApp, or in-product - a conversation-level evaluation harness, and the orchestration layer that routes intents to tools and tools back to the model. Voice agents ship with telephony, latency budgeting, and barge-in handling engineered, not bolted on. Chat agents ship with state management and human-handoff hooks in place. Senior engineers own the build. India + global delivery, six to ten weeks for first deployment.`,
 
@@ -301,7 +301,7 @@ export const conversationalAgentsAssistants: LeafContent = {
   ],
 
   relatedServices: [
-    { pillar: 'ai', slug: 'agentic-ai-systems' },
+    { pillar: 'ai', slug: 'ai-agent-development' },
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
   ],
@@ -329,7 +329,7 @@ export const conversationalAgentsAssistants: LeafContent = {
 // ── AI · ENGINEERING ──────────────────────────────────────────────────────────
 export const agenticAiSystems: LeafContent = {
   pillar: 'ai',
-  slug: 'agentic-ai-systems',
+  slug: 'ai-agent-development',
 
   heroLede: `Agentic AI Systems is the engineering of multi-step autonomous agents that plan, call tools, write to your systems, and report results. These are not chatbots - they are workflows the model executes against, with explicit checkpoints, deterministic tool layers, and human-in-the-loop wherever risk demands it. You leave the engagement with a deployed agent running scheduled or event-triggered jobs, an orchestration layer with retries and idempotency, a labelled evaluation harness, and per-tenant rate limits and cost ceilings enforced in production. We engineer agentic systems for the workflows that bring real operational lift - research, data extraction, multi-step ops, structured drafting - and we draw the line at workflows where autonomy adds risk without value. Senior engineers own the build end-to-end. India + global delivery, eight to sixteen weeks for first deployment.`,
 
@@ -404,7 +404,7 @@ export const agenticAiSystems: LeafContent = {
 
   relatedServices: [
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
-    { pillar: 'ai', slug: 'llm-integration-architecture' },
+    { pillar: 'ai', slug: 'genai-apis-backend-integration' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
   ],
 
@@ -505,7 +505,7 @@ export const ragRetrievalPipelines: LeafContent = {
 
   relatedServices: [
     { pillar: 'ai', slug: 'ai-copilots-internal-tools' },
-    { pillar: 'ai', slug: 'agentic-ai-systems' },
+    { pillar: 'ai', slug: 'ai-agent-development' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
   ],
 
@@ -531,7 +531,7 @@ export const ragRetrievalPipelines: LeafContent = {
 
 export const llmIntegrationArchitecture: LeafContent = {
   pillar: 'ai',
-  slug: 'llm-integration-architecture',
+  slug: 'genai-apis-backend-integration',
 
   heroLede: `LLM Integration & Architecture is the engineering of the production LLM layer inside an existing product - model routing, auth, rate limits, fallback paths, cost controls, and observability. The work starts where most LLM features quietly fail in production: a single provider with no fallback, no cost visibility, no per-tenant isolation, no eval harness. You leave the engagement with a hardened LLM layer routing across providers, per-tenant rate limits and cost ceilings enforced, a streaming-aware integration into your product, and the observability to catch drift and incidents before users do. We engineer LLM integration for products that already exist and need AI without losing what already works. Senior engineers own the build. India + global delivery, four to ten weeks for first deployment, with one founder in every weekly review.`,
 
@@ -606,7 +606,7 @@ export const llmIntegrationArchitecture: LeafContent = {
 
   relatedServices: [
     { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
-    { pillar: 'ai', slug: 'agentic-ai-systems' },
+    { pillar: 'ai', slug: 'ai-agent-development' },
     { pillar: 'product-studio', slug: 'saas-product-development' },
   ],
 

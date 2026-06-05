@@ -1,6 +1,16 @@
 export type PillarId = 'ai' | 'web3' | 'product-studio'
 
-export type SubGroupId = 'strategy' | 'product' | 'engineering'
+export type SubGroupId =
+  // web3 + product-studio (delivery-mode spine)
+  | 'strategy'
+  | 'product'
+  | 'engineering'
+  // ai (buyer-outcome spine)
+  | 'consulting'
+  | 'generative-ai'
+  | 'ai-agents'
+  | 'business-automation'
+  | 'ai-engineering'
 
 export type LeafStatus = 'published' | 'coming-soon'
 
@@ -160,79 +170,112 @@ export const pillars: Pillar[] = [
     label: 'AI',
     color: '#0F766E',
     headline: 'Production AI capability',
-    body: 'AI copilots, conversational agents, RAG pipelines, and LLM integrations. We add production AI capability to existing products and teams.',
+    body: 'AI agents, copilots, generative AI, knowledge bases, and business-process automation. We add production AI capability to existing products and teams.',
     hubHref: '/services/ai/',
     hubCta: 'AI services',
     subGroups: [
       {
-        id: 'strategy',
-        label: 'Strategy',
+        id: 'consulting',
+        label: 'AI Consulting',
         children: [
           {
-            name: 'AI Audit & Opportunity Assessment',
-            description: 'Inventory AI opportunities across product and operations, scored by impact and feasibility.',
-            slug: 'ai-audit-opportunity-assessment',
+            name: 'AI Consulting & Strategy',
+            description: 'Use-case mapping, feasibility, and a sequenced adoption plan scoped to impact and operating cost.',
+            slug: 'ai-consulting',
             status: 'published',
+            featuredNav: 5,
           },
           {
             name: 'AI Adoption Roadmap',
-            description: 'Phased adoption plan from audit findings to deployment, with team enablement and governance.',
+            description: 'A phased plan from audit findings to deployment, with team enablement and governance built in.',
             slug: 'ai-adoption-roadmap',
             status: 'coming-soon',
           },
-          {
-            name: 'AI Education & Workshops',
-            description: 'Hands-on workshops bringing engineering, product, and ops teams to production-AI literacy.',
-            slug: 'ai-education-workshops',
-            status: 'coming-soon',
-          },
         ],
       },
       {
-        id: 'product',
-        label: 'Product',
+        id: 'generative-ai',
+        label: 'Generative AI Solutions',
         children: [
+          {
+            name: 'Generative AI Development',
+            description: 'GenAI built into your product: content generation, enrichment, and backend integration.',
+            slug: 'generative-ai-development',
+            status: 'coming-soon',
+          },
           {
             name: 'AI Copilots & Internal Tools',
-            description: 'Custom AI copilots for support, sales, and ops teams - grounded in your data, wired into your stack.',
+            description: 'Custom copilots for support, sales, and ops teams, grounded in your data and wired into your stack.',
             slug: 'ai-copilots-internal-tools',
             status: 'published',
+            featuredNav: 2,
+            featuredHome: 2,
           },
           {
-            name: 'Conversational Agents & Assistants',
-            description: 'Voice and chat agents that handle real workflows - discovery, support, scheduling.',
-            slug: 'conversational-agents-assistants',
+            name: 'Conversational AI & Voice Agents',
+            description: 'Chat and voice agents that handle real workflows: discovery, support, and scheduling.',
+            slug: 'conversational-ai-voice-agents',
             status: 'published',
+            featuredNav: 3,
+            featuredHome: 3,
           },
           {
-            name: 'AI-Augmented Customer Journeys',
-            description: 'AI-routed support, sales, and onboarding flows wired into your CRM and product stack.',
-            slug: 'ai-augmented-customer-journeys',
+            name: 'AI Video Generation',
+            description: 'Generative video pipelines engineered into products: scripted, templated, and API-driven.',
+            slug: 'ai-video-generation',
             status: 'coming-soon',
           },
         ],
       },
       {
-        id: 'engineering',
-        label: 'Engineering',
+        id: 'ai-agents',
+        label: 'Custom AI Agents',
         children: [
           {
-            name: 'Agentic AI Systems',
-            description: 'Multi-step autonomous agents that plan, use tools, and report results - with evals and guardrails.',
-            slug: 'agentic-ai-systems',
+            name: 'AI Agent Development',
+            description: 'Custom autonomous and multi-agent systems that plan, use tools, and report, with evals and guardrails.',
+            slug: 'ai-agent-development',
             status: 'published',
+            featuredNav: 1,
+            featuredHome: 1,
+          },
+        ],
+      },
+      {
+        id: 'business-automation',
+        label: 'AI for Business Automation',
+        children: [
+          {
+            name: 'AI Business Process Automation',
+            description: 'Automate document, email, and reporting workflows, with CRM, ERP, and third-party integration.',
+            slug: 'ai-business-process-automation',
+            status: 'coming-soon',
+          },
+          {
+            name: 'AI Knowledge Base',
+            description: 'A compounding, LLM-maintained knowledge base your teams and agents query in seconds.',
+            slug: 'ai-knowledge-base',
+            status: 'coming-soon',
+          },
+        ],
+      },
+      {
+        id: 'ai-engineering',
+        label: 'AI Engineering',
+        children: [
+          {
+            name: 'GenAI APIs & Backend Integration',
+            description: 'Architect, integrate, and harden LLMs in your stack: auth, routing, fallback, cost controls, observability.',
+            slug: 'genai-apis-backend-integration',
+            status: 'published',
+            featuredNav: 4,
           },
           {
             name: 'RAG & Retrieval Pipelines',
-            description: 'Retrieval pipelines that ground LLMs in your proprietary data - embeddings, reranking, evaluations.',
+            description: 'Retrieval pipelines that ground LLMs in your data: embeddings, vector stores, reranking, evaluations.',
             slug: 'rag-retrieval-pipelines',
             status: 'published',
-          },
-          {
-            name: 'LLM Integration & Architecture',
-            description: 'Architect and harden LLMs inside your product - auth, routing, fallback, cost controls, observability.',
-            slug: 'llm-integration-architecture',
-            status: 'published',
+            featuredNav: 6,
           },
           {
             name: 'AI Evaluation & Monitoring',
