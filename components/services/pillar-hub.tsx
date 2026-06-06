@@ -15,6 +15,7 @@ import { serviceSchemas } from '@/lib/schema'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
 import { Web3HubVisualChain } from './web3-hub-visual'
+import { AiHubVisualAgents } from './ai-hub-visual'
 
 const BASE = 'https://www.metaborong.com'
 
@@ -22,6 +23,7 @@ const BASE = 'https://www.metaborong.com'
 // Product-Studio fall back to the prose hero.
 const HUB_VISUALS: Partial<Record<PillarId, () => React.ReactNode>> = {
   web3: Web3HubVisualChain,
+  ai: AiHubVisualAgents,
 }
 
 /* ----------------------------------------------------------------------------
