@@ -19,6 +19,12 @@ import {
   agenticAiSystems,
   ragRetrievalPipelines,
   llmIntegrationArchitecture,
+  generativeAiDevelopment,
+  aiKnowledgeBase,
+  aiBusinessProcessAutomation,
+  aiVideoGeneration,
+  aiAdoptionRoadmap,
+  aiEvaluationMonitoring,
 } from './ai'
 import productDiscoveryValidation from './product-studio/product-discovery-validation'
 import mvpDevelopment from './product-studio/mvp-development'
@@ -47,6 +53,12 @@ const registry: Record<string, LeafContent> = {
   'ai/ai-agent-development': agenticAiSystems,
   'ai/rag-retrieval-pipelines': ragRetrievalPipelines,
   'ai/genai-apis-backend-integration': llmIntegrationArchitecture,
+  'ai/generative-ai-development': generativeAiDevelopment,
+  'ai/ai-knowledge-base': aiKnowledgeBase,
+  'ai/ai-business-process-automation': aiBusinessProcessAutomation,
+  'ai/ai-video-generation': aiVideoGeneration,
+  'ai/ai-adoption-roadmap': aiAdoptionRoadmap,
+  'ai/ai-evaluation-monitoring': aiEvaluationMonitoring,
   'web3/smart-contract-development': smartContractDevelopment,
   'web3/defi-protocol-development': defiProtocolDevelopment,
   'web3/tokenomics-design': web3TokenomicsDesign,
