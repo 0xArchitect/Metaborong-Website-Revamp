@@ -53,44 +53,25 @@ export type PillarHubCopy = {
 export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
   ai: {
     id: 'ai',
+    heading: 'AI Development & Agent Engineering',
     positioning: 'We add production AI capability to existing products and teams.',
-    heroParagraphs: [
-      'AI development at Metaborong is the work of adding production-grade language-model, retrieval, and agentic capability to products and teams that already exist. We do not run an ML research lab: we integrate, fine-tune, and harden off-the-shelf foundation models inside the stack you already ship. The pillar spans five areas: AI consulting for teams asking where AI fits; generative AI for copilots, conversational and voice agents, and content; custom AI agents; business-process automation and knowledge bases; and the AI engineering that integrates and hardens it all in production.',
-      'Every engagement is owned by senior engineers. The same people who write the production code are the people in the discovery call. We ship behind evaluations, not vibes: production evals, drift monitoring, and cost controls are scoped from day one. Where a buyer arrives with a vague mandate, we open with an audit; where the brief is already concrete, we move straight to architecture and build. India + global delivery, with security and observability defaults already in the boilerplate.',
-    ],
+    aeoAnswer:
+      'AI development at Metaborong adds production language-model, retrieval, and agentic capability to products that already exist. We deliver it across five areas: AI consulting, generative AI, custom AI agents, business-process automation, and the AI engineering that integrates and hardens it. Senior engineers own every build, with evaluations and cost controls scoped from day one.',
     subGroups: [
       {
         id: 'consulting',
         description:
           'Advisory work for teams sequencing AI adoption: use-case mapping, feasibility, and a roadmap anchored in operating cost, not hype. The output is a defensible plan, not a slide deck.',
-        caseStudy: {
-          descriptor: 'Mid-market SaaS: AI opportunity audit',
-          outcome:
-            'Inventoried 42 candidate workflows, scored against impact and feasibility, and shipped a 90-day adoption plan with team enablement built in.',
-          href: '/work',
-        },
       },
       {
         id: 'generative-ai',
         description:
           'Copilots, conversational and voice agents, content generation, and video engineered into products that already have users. The job is to add generative AI without breaking what already works.',
-        caseStudy: {
-          descriptor: 'Series-A support platform: RAG copilot',
-          outcome:
-            'Grounded copilot over 2.4M support tickets with retrieval, reranking, and citation. Eval harness and cost controls live in production from week one.',
-          href: '/work',
-        },
       },
       {
         id: 'ai-agents',
         description:
           'Custom autonomous and multi-agent systems that plan, use tools, write to your systems, and report, with evaluations, guardrails, and human-in-the-loop checkpoints scoped from the start.',
-        caseStudy: {
-          descriptor: 'Enterprise ops team: agentic workflow system',
-          outcome:
-            'Multi-step agent with tool use and human-in-the-loop checkpoints, deployed behind a production eval harness and per-tenant rate limits.',
-          href: '/work',
-        },
       },
       {
         id: 'business-automation',
