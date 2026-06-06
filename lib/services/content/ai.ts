@@ -15,9 +15,10 @@
 //     able to self-disqualify.
 //
 // Real Metaborong proofs referenced anonymously in related-work
-// blurbs: eight verified Clutch engagements with a 4.9 rating, a
-// retail BI / data-warehouse deployment, a construction operations
-// AI workflow rollout, and an AI prompt-engineering platform build.
+// blurbs: a retail BI / data-warehouse deployment, a construction
+// operations AI workflow rollout, and an AI prompt-engineering platform
+// build. Live Clutch reviews surface via the on-site widget, not
+// hardcoded numbers.
 
 import type { LeafContent } from '@/lib/services/leaf-content'
 
@@ -26,32 +27,32 @@ export const aiAuditOpportunityAssessment: LeafContent = {
   pillar: 'ai',
   slug: 'ai-consulting',
 
-  heroLede: `AI Audit & Opportunity Assessment is a discovery engagement that inventories candidate AI workflows across your product and operations, scores each against impact and feasibility, and outputs a sequenced 90-day plan. The work starts with the people doing the workflows today - support, sales, ops, engineering - and ends with a defensible list of where AI fits, where it does not, and what to ship first. You leave with a scored opportunity map, a 90-day roadmap pinned to operating cost and team capacity, and an architecture sketch for the lead build candidate. We are senior engineers, not slide-deck consultants - every opportunity is feasibility-tested against the production stack the build engagement will ship into. India + global delivery, founder-led scoping, with one of three Metaborong founders in every working session.`,
+  heroLede: `AI consulting is senior-engineer advisory that decides where AI fits before anyone writes code. We audit candidate workflows across your product and operations, score each by impact and feasibility, then map use cases, data and model strategy, and build-versus-buy into one defensible plan. You leave with a scored opportunity map and an architecture sketch for the lead build candidate, feasibility-tested against the stack it will ship into. We are engineers, not slide-deck consultants. India + global delivery, founder-led scoping, with one of three Metaborong founders in every working session.`,
 
   deliverables: [
-    { label: 'Scored opportunity map - every workflow ranked by impact and feasibility' },
-    { label: '90-day adoption roadmap with team enablement and operating-cost projections' },
+    { label: 'Scored opportunity map - every candidate workflow ranked by impact and feasibility' },
+    { label: 'AI use-case shortlist with data and model strategy per candidate' },
+    { label: 'Build-versus-buy recommendation for each shortlisted workflow' },
     { label: 'Architecture sketch for the lead build candidate' },
     { label: 'Risk register covering data, compliance, and integration constraints' },
-    { label: 'Stakeholder readout deck with founder-level recommendations and decisions' },
   ],
 
   phases: [
     {
-      title: 'Workflow inventory',
+      title: 'Discovery and workflow inventory',
       body: `We run focused sessions with each team that owns a candidate workflow - support, sales, operations, product, engineering. Every workflow is captured with its current volume, manual hours, error rate, and data dependencies. The output is a flat inventory, deliberately exhaustive at this stage, before any scoring or filtering happens.`,
     },
     {
-      title: 'Feasibility scoring',
-      body: `Each workflow is scored against four axes: business impact, data readiness, integration cost, and regulatory exposure. Scoring uses production constraints, not benchmarks - we test whether your data can actually ground a retrieval system before promising one. Low-feasibility opportunities are flagged early so the roadmap stays defensible to engineering and finance.`,
+      title: 'Use-case mapping and feasibility',
+      body: `Each workflow is scored against four axes: business impact, data readiness, integration cost, and regulatory exposure. Scoring uses your production constraints, not benchmarks - we test whether your data can actually ground a retrieval system before recommending one. Low-feasibility ideas are flagged early so the shortlist stays defensible to engineering and finance.`,
     },
     {
-      title: 'Roadmap and architecture',
-      body: `The top three to five workflows are sequenced into a 90-day plan with weekly milestones, owner attribution, and operating-cost projections. For the lead candidate we ship an architecture sketch - model choices, data flow, evaluation strategy, integration points - so the build engagement can start the day the audit closes.`,
+      title: 'Data and model strategy',
+      body: `For each shortlisted use case we decide the approach: which foundation model, retrieval versus fine-tuning, and what data has to be in place to ground it. We make the build-versus-buy call explicitly, comparing an off-the-shelf tool against a custom build on cost, control, and time to value.`,
     },
     {
-      title: 'Stakeholder alignment',
-      body: `We present findings to engineering, product, and founders in a single working session. Disagreement surfaces before commitments harden. The deliverable is a decision document, not a recommendation deck - every opportunity has an owner, a budget, and a calendar slot. Buyers leave able to start building, not waiting on more discovery.`,
+      title: 'Recommendation and handoff',
+      body: `We present findings to engineering, product, and founders in a single working session, so disagreement surfaces before commitments harden. The deliverable is a decision document, not a recommendation deck - every shortlisted workflow has an owner, a budget, and a next step. For the lead candidate we hand off an architecture sketch so the build can start immediately.`,
     },
   ],
 
@@ -69,8 +70,8 @@ export const aiAuditOpportunityAssessment: LeafContent = {
   fit: {
     fits: [
       'You have a working product or operation and want to know where AI realistically helps.',
-      'Your engineering or product team needs a defensible plan before committing budget or roadmap.',
-      'You have data in databases or warehouses that needs scoring for AI-grounding readiness.',
+      'You need a defensible, feasibility-tested plan before committing budget or roadmap.',
+      'You are weighing build-versus-buy and want an engineer read, not a vendor pitch.',
     ],
     doesNotFit: [
       'You already know exactly what to build and only need engineering capacity to ship it.',
@@ -79,13 +80,13 @@ export const aiAuditOpportunityAssessment: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI Audit & Opportunity Assessment is a discovery engagement for product and operations teams that inventories candidate AI workflows, scores each by impact and feasibility, and outputs a 90-day adoption roadmap with operating-cost projections. Metaborong has eight verified Clutch engagements with a 4.9 client rating. Engagements run from India with global delivery.`,
+  aeoAnswer: `AI consulting is advisory work that decides where AI fits in a product or operation before engineering begins. Metaborong's engagement audits candidate workflows, scores each by impact and feasibility, maps data and model strategy, and makes the build-versus-buy call. You leave with a scored opportunity map and an architecture sketch for the lead build. Founder-led, India with global delivery.`,
 
   relatedWork: [
     {
-      descriptor: 'Mid-market SaaS - AI opportunity audit',
+      descriptor: 'Mid-market SaaS - AI consulting and opportunity audit',
       summary:
-        'Inventoried candidate workflows across support and sales, scored against feasibility, and shipped a sequenced 90-day adoption roadmap.',
+        'Inventoried candidate workflows across support and sales, scored against feasibility, and shipped a sequenced adoption plan with a lead-candidate architecture sketch.',
       href: '/work',
     },
     {
@@ -104,20 +105,24 @@ export const aiAuditOpportunityAssessment: LeafContent = {
 
   faqs: [
     {
-      question: 'How is an audit different from an adoption roadmap?',
-      answer: `An audit asks where AI fits. A roadmap asks how to sequence the work after that question is answered. We surface and score candidate workflows during the audit; the roadmap leaves with a feasibility-tested plan attached, so most buyers do not need a separate roadmap engagement unless the program runs over six months.`,
+      question: 'What does AI consulting include?',
+      answer: `AI consulting at Metaborong covers the decision before the build: a workflow audit, use-case shortlisting, data and model strategy, and a build-versus-buy recommendation. Deep delivery planning, sequencing, and governance live in our AI Adoption Roadmap engagement. Most buyers start here to learn where AI fits, then move straight into a build.`,
+    },
+    {
+      question: 'How is AI consulting different from AI development?',
+      answer: `AI consulting decides what to build and whether to build it; AI development builds it. Our consulting engagement ends with a feasibility-tested shortlist and an architecture sketch for the lead candidate. If you already know what you want and only need engineering capacity, you can skip consulting and start with a build engagement directly.`,
     },
     {
       question: 'Do you need access to production data?',
       answer: `Read-only sampled access to representative datasets, not full production. We score workflows against the schema and a representative slice - enough to test retrieval, embeddings, and routing without taking on production risk. Where security review is required first, we work behind an NDA inside whatever data-room arrangement your compliance team prefers.`,
     },
     {
-      question: 'What does an audit cost and how long does it take?',
-      answer: `Audit engagements run one to two weeks of senior engineering with one founder leading. We scope fixed-bid based on the number of teams and candidate workflows. Most engagements include the architecture sketch for the lead candidate at no additional cost so the build engagement can start without a second scoping round.`,
+      question: 'What does AI consulting cost and how long does it take?',
+      answer: `Consulting engagements run one to two weeks of senior engineering with one founder leading. We scope fixed-bid based on the number of teams and candidate workflows. Most engagements include the architecture sketch for the lead candidate at no additional cost, so the build can start without a second scoping round.`,
     },
     {
-      question: 'Who actually runs the audit?',
-      answer: `One of three Metaborong founders runs every audit, supported by the engineer who will own the eventual build. We do not hand audits to junior consultants - the people writing the production code are the people in the discovery room. India + global delivery, with timezone overlap arranged around the buyer.`,
+      question: 'Who actually runs the consulting engagement?',
+      answer: `One of three Metaborong founders runs every engagement, supported by the engineer who will own the eventual build. We do not hand consulting to junior associates - the people writing the production code are the people in the discovery room. India + global delivery, with timezone overlap arranged around the buyer.`,
     },
   ],
 }
@@ -182,7 +187,7 @@ export const aiCopilotsInternalTools: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI Copilots & Internal Tools is an engineering engagement for support, sales, and operations teams that builds grounded AI assistants inside the tools the team already uses - Slack, CRM, or custom interfaces. Builds typically ship in six to twelve weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `AI Copilots & Internal Tools is an engineering engagement for support, sales, and operations teams that builds grounded AI assistants inside the tools the team already uses - Slack, CRM, or custom interfaces. Builds typically ship in six to twelve weeks. Senior engineers own the work end-to-end, delivered from India with global reach.`,
 
   relatedWork: [
     {
@@ -229,7 +234,7 @@ export const conversationalAgentsAssistants: LeafContent = {
   pillar: 'ai',
   slug: 'conversational-ai-voice-agents',
 
-  heroLede: `Conversational Agents & Assistants is the engineering of production voice and chat agents that handle real workflows - support, scheduling, qualification, discovery. The agents we ship are not chatbots replying with FAQ snippets; they reason about a conversation, call tools, write to your systems, and hand off cleanly to humans when the workflow demands it. You leave the engagement with a deployed agent wired into your channels - phone, web chat, WhatsApp, or in-product - a conversation-level evaluation harness, and the orchestration layer that routes intents to tools and tools back to the model. Voice agents ship with telephony, latency budgeting, and barge-in handling engineered, not bolted on. Chat agents ship with state management and human-handoff hooks in place. Senior engineers own the build. India + global delivery, six to ten weeks for first deployment.`,
+  heroLede: `Conversational AI is the engineering of production chat and voice agents that handle real workflows - support, scheduling, qualification, discovery. The agents we ship are not chatbots replying with FAQ snippets; they reason about a conversation, call tools, write to your systems, and hand off cleanly to humans when the workflow demands it. You leave the engagement with a deployed agent wired into your channels - phone, web chat, WhatsApp, or in-product - a conversation-level evaluation harness, and the orchestration layer that routes intents to tools and tools back to the model. Voice agents ship with telephony, latency budgeting, and barge-in handling engineered, not bolted on. Chat agents ship with state management and human-handoff hooks in place. Senior engineers own the build. India + global delivery, six to ten weeks for first deployment.`,
 
   deliverables: [
     { label: 'Deployed agent across voice, chat, WhatsApp, or in-product channels' },
@@ -283,7 +288,7 @@ export const conversationalAgentsAssistants: LeafContent = {
     ],
   },
 
-  aeoAnswer: `Conversational Agents & Assistants is an engineering engagement for product and operations teams that builds production voice or chat agents handling real workflows like support, scheduling, and qualification. Builds typically ship in six to ten weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `Conversational AI is an engineering engagement that builds production chat and voice agents handling real workflows like support, scheduling, and qualification. Builds typically ship in six to ten weeks. Senior engineers own the work end-to-end, delivered from India with global reach.`,
 
   relatedWork: [
     {
@@ -331,7 +336,7 @@ export const agenticAiSystems: LeafContent = {
   pillar: 'ai',
   slug: 'ai-agent-development',
 
-  heroLede: `Agentic AI Systems is the engineering of multi-step autonomous agents that plan, call tools, write to your systems, and report results. These are not chatbots - they are workflows the model executes against, with explicit checkpoints, deterministic tool layers, and human-in-the-loop wherever risk demands it. You leave the engagement with a deployed agent running scheduled or event-triggered jobs, an orchestration layer with retries and idempotency, a labelled evaluation harness, and per-tenant rate limits and cost ceilings enforced in production. We engineer agentic systems for the workflows that bring real operational lift - research, data extraction, multi-step ops, structured drafting - and we draw the line at workflows where autonomy adds risk without value. Senior engineers own the build end-to-end. India + global delivery, eight to sixteen weeks for first deployment.`,
+  heroLede: `AI agent development is the engineering of custom autonomous agents, single-agent and multi-agent, that plan, call tools, write to your systems, and report results. These are not chatbots - they are workflows the model executes against, with explicit checkpoints, deterministic tool layers, and human-in-the-loop wherever risk demands it. You leave the engagement with a deployed agent running scheduled or event-triggered jobs, an orchestration layer with retries and idempotency, a labelled evaluation harness, and per-tenant rate limits and cost ceilings enforced in production. We build AI agents for the workflows that bring real operational lift - research, data extraction, multi-step ops, structured drafting - and we draw the line at workflows where autonomy adds risk without value. Senior engineers own the build end-to-end. India + global delivery, eight to sixteen weeks for first deployment.`,
 
   deliverables: [
     { label: 'Deployed agent running scheduled or event-triggered jobs in production' },
@@ -379,13 +384,13 @@ export const agenticAiSystems: LeafContent = {
       'You can tolerate the latency and cost profile of a multi-step LLM workflow at scale.',
     ],
     doesNotFit: [
-      'You want a single-turn assistant - that is a copilot or conversational agent, not an agentic system.',
+      'You want a single-turn assistant - that is a copilot or conversational agent, not a custom AI agent.',
       'The workflow demands sub-second latency throughout - multi-step agents are not a real-time pattern.',
       'You expect the agent to operate without human checkpoints on high-risk steps - we will not ship that.',
     ],
   },
 
-  aeoAnswer: `Agentic AI Systems is an engineering engagement for product and operations teams that builds multi-step autonomous agents with orchestration, tool calling, evaluation harnesses, and human-in-the-loop checkpoints. Builds typically ship in eight to sixteen weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `AI agent development is an engineering engagement that builds custom multi-step autonomous agents, single-agent and multi-agent, with orchestration, tool calling, evaluation harnesses, and human-in-the-loop checkpoints. Builds typically ship in eight to sixteen weeks. Senior engineers own the work end-to-end, delivered from India with global reach.`,
 
   relatedWork: [
     {
@@ -410,7 +415,7 @@ export const agenticAiSystems: LeafContent = {
 
   faqs: [
     {
-      question: 'When is an agentic system actually the right answer?',
+      question: 'When is a custom AI agent actually the right answer?',
       answer: `When the workflow has multiple steps, real tool boundaries, and the reasoning between steps benefits from a model. Drafting, research, multi-step ops, and structured data extraction all qualify. Single-turn classification, retrieval-grounded Q&A, and deterministic pipelines do not - those are cheaper and more reliable without an agentic layer wrapping them.`,
     },
     {
@@ -486,7 +491,7 @@ export const ragRetrievalPipelines: LeafContent = {
     ],
   },
 
-  aeoAnswer: `RAG & Retrieval Pipelines is an engineering engagement for product teams that builds production retrieval systems grounding LLMs in proprietary data through ingestion, embedding, reranking, and evaluation. Builds typically ship in six to twelve weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `RAG & Retrieval Pipelines is an engineering engagement for product teams that builds production retrieval systems grounding LLMs in proprietary data through ingestion, embedding, reranking, and evaluation. Builds typically ship in six to twelve weeks. Senior engineers own the work end-to-end, delivered from India with global reach.`,
 
   relatedWork: [
     {
@@ -533,7 +538,7 @@ export const llmIntegrationArchitecture: LeafContent = {
   pillar: 'ai',
   slug: 'genai-apis-backend-integration',
 
-  heroLede: `LLM Integration & Architecture is the engineering of the production LLM layer inside an existing product - model routing, auth, rate limits, fallback paths, cost controls, and observability. The work starts where most LLM features quietly fail in production: a single provider with no fallback, no cost visibility, no per-tenant isolation, no eval harness. You leave the engagement with a hardened LLM layer routing across providers, per-tenant rate limits and cost ceilings enforced, a streaming-aware integration into your product, and the observability to catch drift and incidents before users do. We engineer LLM integration for products that already exist and need AI without losing what already works. Senior engineers own the build. India + global delivery, four to ten weeks for first deployment, with one founder in every weekly review.`,
+  heroLede: `GenAI APIs and backend integration is the engineering of the production LLM layer inside an existing product - model routing, auth, rate limits, fallback paths, cost controls, and observability. The work starts where most LLM features quietly fail in production: a single provider with no fallback, no cost visibility, no per-tenant isolation, no eval harness. You leave the engagement with a hardened LLM layer routing across providers, per-tenant rate limits and cost ceilings enforced, a streaming-aware integration into your product, and the observability to catch drift and incidents before users do. We engineer LLM integration for products that already exist and need AI without losing what already works. Senior engineers own the build. India + global delivery, four to ten weeks for first deployment, with one founder in every weekly review.`,
 
   deliverables: [
     { label: 'Production LLM gateway routing across OpenAI, Anthropic, and open-weights providers' },
@@ -587,7 +592,7 @@ export const llmIntegrationArchitecture: LeafContent = {
     ],
   },
 
-  aeoAnswer: `LLM Integration & Architecture is an engineering engagement for product teams that hardens the production LLM layer inside an existing product - gateway, routing, rate limits, observability, and evaluation. Builds typically ship in four to ten weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `GenAI APIs and backend integration is an engineering engagement that hardens the production LLM layer inside an existing product - gateway, model routing, rate limits, fallback, observability, and evaluation. Builds typically ship in four to ten weeks. Senior engineers own the work end-to-end, delivered from India with global reach.`,
 
   relatedWork: [
     {
@@ -628,4 +633,619 @@ export const llmIntegrationArchitecture: LeafContent = {
       answer: `Yes. The gateway lands behind a feature flag and traffic shifts incrementally from the legacy path. Application code changes are small - typically a different client import. Existing features keep shipping throughout. We do not do stop-the-world rewrites unless the buyer asks for one and the timeline supports it.`,
     },
   ],
+}
+
+// ── AI · GENERATIVE AI ────────────────────────────────────────────────────────
+export const generativeAiDevelopment: LeafContent = {
+  pillar: 'ai',
+  slug: 'generative-ai-development',
+
+  heroLede: `Generative AI development is the engineering of product features that generate text, structured content, and media with foundation models. We build the feature, not a demo - prompt and retrieval design, output validation, streaming, and the evaluation that keeps generations on-spec. Typical work covers content generation and enrichment, summarisation, and drafting, grounded in your data and brand rules. Senior engineers own the build. India + global delivery.`,
+
+  deliverables: [
+    { label: 'Generative feature shipped into your product, streaming and production-ready' },
+    { label: 'Prompt and retrieval design with versioning and regression tests' },
+    { label: 'Output validation and schema enforcement on every generation' },
+    { label: 'Evaluation harness scoring quality, safety, and on-spec adherence' },
+    { label: 'Cost controls: per-tenant ceilings, caching, and model routing' },
+  ],
+
+  phases: [
+    {
+      title: 'Use-case and prompt design',
+      body: `We define the generation task precisely: inputs, desired outputs, tone, and the failure modes that matter. Prompts and retrieval are designed and versioned, with a labelled test set built before any feature ships. The output contract is fixed early so downstream systems can depend on it.`,
+    },
+    {
+      title: 'Generation and grounding',
+      body: `We build the generation pipeline: model selection, retrieval grounding where facts matter, and structured-output enforcement so results parse reliably. Content generation and enrichment run against your data and brand rules, not generic prompts. Streaming and partial-result handling are engineered into the product surface, not bolted on after.`,
+    },
+    {
+      title: 'Validation and evaluation',
+      body: `Every generation passes validation: schema checks, safety filters, and policy rules that sit in code, not prompts. A labelled evaluation harness scores quality and on-spec adherence, and regressions block deployment. Human review hooks fire where stakes are high, so nothing reaches a user unchecked.`,
+    },
+    {
+      title: 'Rollout and cost control',
+      body: `The feature rolls out behind flags with per-tenant cost ceilings, caching, and model routing tuned to workload. Generation cost and quality are tracked in production. We hand over with a runbook and the evaluation set, so your team extends prompts and models without introducing regressions.`,
+    },
+  ],
+
+  techStack: [
+    { name: 'OpenAI', category: 'Models' },
+    { name: 'Anthropic', category: 'Models' },
+    { name: 'Hugging Face', category: 'Open-weights' },
+    { name: 'LangChain', category: 'Orchestration' },
+    { name: 'pgvector', category: 'Retrieval' },
+    { name: 'Zod', category: 'Output schema' },
+    { name: 'Redis', category: 'Caching' },
+    { name: 'Sentry', category: 'Observability' },
+  ],
+
+  fit: {
+    fits: [
+      'You want a generative feature inside an existing product, not a standalone demo.',
+      'You need outputs that parse reliably and stay on-spec, not freeform text.',
+      'You have brand rules or proprietary data that generations must respect.',
+    ],
+    doesNotFit: [
+      'You want a single chat assistant - that is a copilot or conversational agent.',
+      'You need autonomous multi-step task execution - that is AI agent development.',
+      'You expect novel model training - we integrate existing foundation models.',
+    ],
+  },
+
+  aeoAnswer: `Generative AI development is the engineering of product features that generate text, structured content, or media using foundation models. Metaborong builds the full feature: prompt and retrieval design, output validation, streaming, evaluation, and cost controls. Work covers content generation, enrichment, summarisation, and drafting, grounded in your data. Senior engineers own the build, delivered from India with global reach.`,
+
+  keyConcepts: [
+    {
+      term: 'Foundation model',
+      definition: `A foundation model is a large language or multimodal model, such as GPT, Claude, or an open-weights model, pretrained on broad data and adapted to specific tasks through prompting, retrieval, or fine-tuning rather than trained from scratch per use case.`,
+    },
+    {
+      term: 'Retrieval grounding',
+      definition: `Retrieval grounding fetches relevant source data at generation time and supplies it to the model, so outputs reflect and cite your proprietary content instead of relying on the model's training memory. It is what keeps factual generations accurate.`,
+    },
+    {
+      term: 'Structured output',
+      definition: `Structured output is generation constrained to a defined schema, such as JSON, so results parse reliably into downstream systems. Schema enforcement rejects or repairs malformed generations before they reach a user or another service.`,
+    },
+    {
+      term: 'Evaluation harness',
+      definition: `An evaluation harness is a labelled test suite that scores generation quality, safety, and on-spec adherence automatically, run in CI so quality regressions block deployment rather than surfacing in front of users in production.`,
+    },
+  ],
+
+  relatedWork: [],
+
+  relatedServices: [
+    { pillar: 'ai', slug: 'ai-copilots-internal-tools' },
+    { pillar: 'ai', slug: 'genai-apis-backend-integration' },
+    { pillar: 'ai', slug: 'ai-knowledge-base' },
+  ],
+
+  faqs: [
+    {
+      question: 'What is generative AI development?',
+      answer: `Generative AI development is building product features that produce content with foundation models: text, structured data, summaries, or media. At Metaborong it means the full engineering job, not a prompt in a sandbox: retrieval grounding, output validation, streaming, evaluation, and cost controls, shipped into your product so the feature is reliable enough to put in front of users.`,
+    },
+    {
+      question: 'How is this different from using ChatGPT directly?',
+      answer: `ChatGPT is a product; generative AI development builds the capability into yours. We control the prompts, ground outputs in your data, enforce output schemas, and run evaluations so results stay on-spec at scale. The model is one part: the validation, retrieval, and cost engineering around it are what make a generation feature production-safe.`,
+    },
+    {
+      question: 'How do you stop the model producing wrong or off-brand output?',
+      answer: `Validation sits in code, not prompts. Outputs pass schema enforcement, safety filters, and brand-rule checks before they reach a user, and a labelled evaluation harness scores quality so regressions block deployment. Where stakes are high, a human review hook fires. Retrieval grounding keeps factual generations tied to your data, not model memory.`,
+    },
+    {
+      question: 'Which models do you build on?',
+      answer: `OpenAI, Anthropic, Google, and open-weights via Hugging Face or self-hosted inference. We route per task: different models for drafting, structured extraction, and long-form generation, with fallback paths between providers for resilience and cost. Model choice is a workload decision made during architecture, not a default applied everywhere.`,
+    },
+  ],
+
+  lastReviewed: '2026-06-05',
+}
+
+// ── AI · BUSINESS AUTOMATION ──────────────────────────────────────────────────
+export const aiKnowledgeBase: LeafContent = {
+  pillar: 'ai',
+  slug: 'ai-knowledge-base',
+
+  heroLede: `An AI knowledge base turns scattered documents, wikis, and tickets into answers your teams and agents can trust. We build it the compounding way: instead of only chunking files for vector search, an LLM compiles your sources into a maintained, interlinked knowledge library that improves as it is used. You leave with grounded, cited answers, access controls, and an architecture that keeps the knowledge current. Senior engineers own the build, India + global delivery.`,
+
+  deliverables: [
+    { label: 'Deployed knowledge base answering from your documents, wikis, and tickets' },
+    { label: 'LLM-compiled, interlinked knowledge library that compounds over time' },
+    { label: 'Role-based access control and per-source permission boundaries' },
+    { label: 'Answer-quality evaluation harness with citation and freshness checks' },
+    { label: 'Update and versioning pipeline that keeps the library current' },
+  ],
+
+  phases: [
+    {
+      title: 'Source mapping and ingest',
+      body: `We map every knowledge source: documents, wikis, databases, help centres, ticket history, and the APIs behind them. Ingestion captures content with its permissions and provenance intact. We decide per source whether it is indexed for retrieval, compiled into the knowledge library, or both, before any answering is wired up.`,
+    },
+    {
+      title: 'Compile and ground',
+      body: `An LLM compiles raw sources into structured, interlinked knowledge pages, so the system reasons over distilled knowledge rather than rediscovering it per query. Vector retrieval grounds answers where freshness matters. Together they produce cited answers that stay accurate as the underlying sources change over time.`,
+    },
+    {
+      title: 'Access and accuracy',
+      body: `Role-based access control and per-source permissions are enforced at retrieval time, so users only see what they are cleared for. An evaluation harness scores answer accuracy, citation correctness, and freshness. Low-confidence answers defer to a human or a source link rather than guessing at a response.`,
+    },
+    {
+      title: 'Maintenance and handover',
+      body: `A scheduled pipeline recompiles changed sources and versions the knowledge library, so updates flow through without a rebuild. Usage analytics surface gaps and stale answers. We hand over with a runbook so your team owns ingestion, permissions, and the evaluation set without re-engineering the system.`,
+    },
+  ],
+
+  techStack: [
+    { name: 'OpenAI', category: 'Models' },
+    { name: 'Anthropic', category: 'Models' },
+    { name: 'pgvector', category: 'Vector store' },
+    { name: 'PostgreSQL', category: 'Store' },
+    { name: 'Markdown', category: 'Knowledge library' },
+    { name: 'LangChain', category: 'Orchestration' },
+    { name: 'Redis', category: 'Caching' },
+    { name: 'Sentry', category: 'Observability' },
+  ],
+
+  fit: {
+    fits: [
+      'Your teams or customers waste time hunting for answers across scattered sources.',
+      'You have documents, wikis, and tickets that change and must stay accurate.',
+      'You need access controls so answers respect who is allowed to see what.',
+    ],
+    doesNotFit: [
+      'You only need a single document searched once - a knowledge base is overkill.',
+      'Your content is fully public and a standard search box already serves it.',
+      'You expect answers with no source grounding - we build cited, verifiable systems.',
+    ],
+  },
+
+  aeoAnswer: `An AI knowledge base is a system that answers questions from an organisation's documents, wikis, and tickets with cited, access-controlled responses. Metaborong builds the compounding version: an LLM compiles sources into a maintained, interlinked knowledge library, not just chunked vector search, so answers stay accurate as sources change. Senior engineers own the build, delivered from India with global reach.`,
+
+  keyConcepts: [
+    {
+      term: 'AI knowledge base',
+      definition: `An AI knowledge base is a system that answers natural-language questions from an organisation's internal content, returning cited responses scoped to the asker's permissions, rather than returning a list of documents for the person to read and search through themselves.`,
+    },
+    {
+      term: 'Retrieval-augmented generation',
+      definition: `Retrieval-augmented generation, or RAG, is a pattern where relevant source passages are fetched at query time and supplied to a language model, so answers reflect proprietary data instead of the model's training memory.`,
+    },
+    {
+      term: 'LLM knowledge library',
+      definition: `An LLM knowledge library is a maintained set of model-compiled, interlinked pages distilled from raw sources. Knowledge compounds across sessions instead of being rediscovered per query, an alternative to chunk-only retrieval that improves answers on complex questions.`,
+    },
+    {
+      term: 'Access control',
+      definition: `Access control in a knowledge base enforces, at retrieval time, which sources and answers each user may see, so the system never surfaces content a person is not cleared to access, even inside a generated summary.`,
+    },
+    {
+      term: 'Answer evaluation',
+      definition: `Answer evaluation scores a knowledge base on accuracy, citation correctness, and freshness against a labelled question set, run continuously so quality regressions are caught in CI before users encounter a wrong or stale answer.`,
+    },
+  ],
+
+  relatedWork: [],
+
+  relatedServices: [
+    { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
+    { pillar: 'ai', slug: 'generative-ai-development' },
+    { pillar: 'ai', slug: 'ai-copilots-internal-tools' },
+  ],
+
+  faqs: [
+    {
+      question: 'What is an AI knowledge base?',
+      answer: `An AI knowledge base answers questions from your organisation's documents, wikis, and tickets, returning cited answers scoped to each user's permissions. Instead of returning a list of files to read, it gives a direct, grounded answer with links to the source, so teams and customers find accurate information in seconds rather than searching.`,
+    },
+    {
+      question: 'How is your approach different from a standard RAG chatbot?',
+      answer: `Standard RAG chunks your files and retrieves passages per query, rediscovering knowledge every time. We add a compounding layer: an LLM compiles sources into a maintained, interlinked knowledge library, so the system reasons over distilled knowledge. Retrieval still grounds time-sensitive facts. The result is more accurate on complex, cross-document questions.`,
+    },
+    {
+      question: 'How do you keep answers accurate as our content changes?',
+      answer: `A scheduled pipeline recompiles changed sources and versions the knowledge library, so updates flow through without a rebuild, and an evaluation harness scores freshness and citation correctness continuously. Where a source is stale or confidence is low, the system links to the source or defers to a human rather than answering with outdated information.`,
+    },
+    {
+      question: 'Can it respect who is allowed to see what?',
+      answer: `Yes. Role-based access control and per-source permissions are enforced at retrieval time, not bolted on after. A user only receives answers built from sources they are cleared to access, and the system never leaks restricted content through a generated summary. Permission boundaries are an architecture decision, scoped at ingest.`,
+    },
+  ],
+
+  lastReviewed: '2026-06-05',
+}
+
+export const aiBusinessProcessAutomation: LeafContent = {
+  pillar: 'ai',
+  slug: 'ai-business-process-automation',
+
+  heroLede: `AI business process automation puts language models to work on the repetitive operations that drain your team: document processing, email triage, reporting, and the handoffs between systems. We automate the workflow end to end, with human checkpoints where judgment matters, then wire it into your CRM, ERP, and the tools your team already runs. You leave with a deployed automation, monitoring, and a clear audit trail. Senior engineers own the build.`,
+
+  deliverables: [
+    { label: 'Deployed automation for a target workflow, running in production' },
+    { label: 'Document and data processing with extraction, classification, and validation' },
+    { label: 'Integrations into your CRM, ERP, and third-party tools' },
+    { label: 'Human-in-the-loop checkpoints and an audit trail on every run' },
+    { label: 'Monitoring with per-run cost, latency, and success tracking' },
+  ],
+
+  phases: [
+    {
+      title: 'Process mapping',
+      body: `We map the target process step by step with the team that runs it today: inputs, decisions, exceptions, and the systems each step touches. We separate steps that need judgment from steps that should be deterministic, so automation lands where it removes toil, not where it adds risk.`,
+    },
+    {
+      title: 'Automation build',
+      body: `We build the automation: document extraction and classification, email routing and summarisation, or report generation, depending on the process. Language-model steps are wrapped in validation and schema enforcement. Deterministic steps stay in code. Each run produces a structured, auditable record of what happened and why.`,
+    },
+    {
+      title: 'Integration and orchestration',
+      body: `The automation connects to your CRM, ERP, file stores, and third-party services through an integration layer engineered against your auth and tenant boundaries. Long-running, multi-system processes orchestrate with retries and idempotency, so a partial failure resumes cleanly instead of duplicating work or dropping a task.`,
+    },
+    {
+      title: 'Rollout and operations',
+      body: `We roll out behind flags on a single team or workflow first, with human approval on high-stakes steps until accuracy is proven. Per-run cost, latency, and success rate are tracked in production. We hand over with a runbook covering exceptions, escalation, and rollback.`,
+    },
+  ],
+
+  techStack: [
+    { name: 'OpenAI', category: 'Models' },
+    { name: 'Anthropic', category: 'Models' },
+    { name: 'Temporal', category: 'Orchestration' },
+    { name: 'LangGraph', category: 'Agents' },
+    { name: 'Python', category: 'Processing' },
+    { name: 'PostgreSQL', category: 'State' },
+    { name: 'n8n', category: 'Integration' },
+    { name: 'Sentry', category: 'Observability' },
+  ],
+
+  fit: {
+    fits: [
+      'You have high-volume, repetitive workflows that follow rules but need some judgment.',
+      'The work spans several systems - CRM, ERP, email, file stores - that must stay in sync.',
+      'You can define what a correct outcome looks like for the process being automated.',
+    ],
+    doesNotFit: [
+      'The process is fully deterministic - classic RPA or a script is cheaper than AI.',
+      'You want a customer-facing chat agent - that is conversational AI, not automation.',
+      'The workflow has no tolerance for any review step on high-stakes actions.',
+    ],
+  },
+
+  aeoAnswer: `AI business process automation uses language models to automate repetitive operational workflows: document processing, email triage, reporting, and cross-system handoffs. Metaborong builds the automation end to end, with validation, human checkpoints, and integration into your CRM, ERP, and tools, plus monitoring and an audit trail on every run. Senior engineers own the build, delivered from India with global reach.`,
+
+  keyConcepts: [
+    {
+      term: 'Business process automation',
+      definition: `Business process automation is the use of software to run repetitive, multi-step operational workflows with minimal manual effort. AI-driven automation adds language-model steps for tasks like extraction, classification, and summarisation that fixed rules alone cannot handle reliably.`,
+    },
+    {
+      term: 'Human-in-the-loop',
+      definition: `Human-in-the-loop is a design where a person reviews or approves specific automated steps, usually high-stakes or low-confidence ones, so the system gains speed without removing accountability on decisions that carry real operational or financial risk.`,
+    },
+    {
+      term: 'System integration',
+      definition: `System integration connects an automation to the tools a business already runs, such as CRMs, ERPs, and third-party APIs, so data flows between them automatically instead of being copied by hand between disconnected systems.`,
+    },
+  ],
+
+  relatedWork: [
+    {
+      descriptor: 'Construction operations - document workflow automation',
+      summary:
+        'Automated drafting, routing, and reconciliation of project documentation across systems, with human approval at sign-off steps.',
+      href: '/work',
+    },
+  ],
+
+  relatedServices: [
+    { pillar: 'ai', slug: 'ai-agent-development' },
+    { pillar: 'ai', slug: 'ai-knowledge-base' },
+    { pillar: 'ai', slug: 'genai-apis-backend-integration' },
+  ],
+
+  faqs: [
+    {
+      question: 'What is AI business process automation?',
+      answer: `AI business process automation uses language models to run repetitive operational workflows that pure rules cannot handle alone: reading and classifying documents, triaging email, generating reports, and moving data between systems. At Metaborong it means the workflow is built end to end, with validation, human checkpoints, integration, and monitoring, so it runs reliably in production.`,
+    },
+    {
+      question: 'How is this different from RPA?',
+      answer: `Traditional RPA follows fixed rules and breaks when inputs vary. AI automation adds language-model steps that read unstructured documents, classify ambiguous cases, and summarise, so the workflow handles real-world variation. Where a step is genuinely deterministic we still use plain code, because it is cheaper and more reliable. The two approaches combine.`,
+    },
+    {
+      question: 'How do you keep an automated process from making costly mistakes?',
+      answer: `Judgment-heavy and high-stakes steps run through human-in-the-loop checkpoints until accuracy is proven, and language-model outputs pass validation before any action lands. Every run produces an audit trail, and success rate is tracked in production. We start on one team or workflow, prove it, then widen, rather than automating everything at once.`,
+    },
+    {
+      question: 'Which systems can you integrate with?',
+      answer: `CRMs, ERPs, file stores, help desks, email, and most third-party services with an API. The integration layer is engineered against your auth and tenant boundaries, with retries and idempotency so multi-system processes resume cleanly after a failure. Where a system has no API, we work with the access method your team already uses.`,
+    },
+  ],
+
+  lastReviewed: '2026-06-06',
+}
+
+export const aiVideoGeneration: LeafContent = {
+  pillar: 'ai',
+  slug: 'ai-video-generation',
+
+  heroLede: `AI video generation is the engineering of pipelines that produce video programmatically - scripted, templated, and API-driven - inside your product or content operation. We build the pipeline, not one-off clips: prompt and asset orchestration across generation models, render queuing, brand and policy checks, and the backend that serves it at volume. You leave with a production pipeline, cost controls, and review hooks. Senior engineers own the build.`,
+
+  deliverables: [
+    { label: 'Video generation pipeline integrated into your product or content stack' },
+    { label: 'Model orchestration across text-to-video and asset generation providers' },
+    { label: 'Templated, scripted, and API-driven generation, not manual one-offs' },
+    { label: 'Brand, safety, and policy checks on every render before publish' },
+    { label: 'Render queue with cost controls and per-job tracking' },
+  ],
+
+  phases: [
+    {
+      title: 'Pipeline scoping',
+      body: `We define the generation task: formats, durations, aspect ratios, brand constraints, and the volume the pipeline must sustain. We map which steps are model-generated and which are templated or composited, and fix the output spec so the pipeline produces consistent, on-brand video rather than unpredictable clips.`,
+    },
+    {
+      title: 'Generation and assembly',
+      body: `We build the pipeline: prompt and asset orchestration across text-to-video, image, and voice models, with templating and compositing for the deterministic parts. Render jobs queue and scale, and partial failures retry without restarting a whole batch. The output is engineered to a fixed spec, not a one-off experiment.`,
+    },
+    {
+      title: 'Review and policy',
+      body: `Every render passes brand, safety, and policy checks before it is eligible to publish: rights, content rules, and quality thresholds enforced in the pipeline, not by eye. A human approval hook fires where stakes are high. Rejected renders route back with a reason rather than silently shipping.`,
+    },
+    {
+      title: 'Rollout and cost control',
+      body: `The pipeline rolls out behind flags with per-job cost ceilings and provider routing tuned to format and budget. Generation cost, render time, and approval rate are tracked in production. We hand over with a runbook so your team adds templates and swaps models without re-engineering the pipeline.`,
+    },
+  ],
+
+  techStack: [
+    { name: 'OpenAI', category: 'Models' },
+    { name: 'Runway', category: 'Video models' },
+    { name: 'ElevenLabs', category: 'Voice' },
+    { name: 'FFmpeg', category: 'Compositing' },
+    { name: 'Temporal', category: 'Render queue' },
+    { name: 'Python', category: 'Pipeline' },
+    { name: 'Vercel Blob', category: 'Asset store' },
+    { name: 'Sentry', category: 'Observability' },
+  ],
+
+  fit: {
+    fits: [
+      'You need video produced at volume, on a repeatable spec, not bespoke one-offs.',
+      'Generation should run inside your product or content pipeline, via an API.',
+      'You have brand and policy rules that every output must pass before publish.',
+    ],
+    doesNotFit: [
+      'You want a single marketing video made for you - that is a creative studio, not us.',
+      'You need real-time, live video synthesis - that is a different latency problem.',
+      'You expect us to train a novel video model - we orchestrate existing providers.',
+    ],
+  },
+
+  aeoAnswer: `AI video generation is the engineering of pipelines that produce video programmatically using generative models, inside a product or content operation. Metaborong builds the pipeline end to end: model orchestration, templating, brand and policy checks, render queuing, and cost controls, so video is generated to a consistent spec at volume rather than as manual one-offs. Senior engineers own the build, delivered from India.`,
+
+  relatedWork: [],
+
+  relatedServices: [
+    { pillar: 'ai', slug: 'generative-ai-development' },
+    { pillar: 'ai', slug: 'genai-apis-backend-integration' },
+    { pillar: 'ai', slug: 'ai-business-process-automation' },
+  ],
+
+  faqs: [
+    {
+      question: 'What is AI video generation?',
+      answer: `AI video generation is producing video with generative models - text-to-video, image, and voice synthesis - assembled programmatically. At Metaborong it means an engineered pipeline rather than manual clips: prompt orchestration, templating, brand and policy checks, render queuing, and cost controls, so your product or content team generates video to a consistent spec and at volume.`,
+    },
+    {
+      question: 'Do you make videos for us, or build the system that makes them?',
+      answer: `We build the system. Metaborong engineers the generation pipeline your product or content operation runs, integrated via API, not a creative studio producing finished clips by hand. If you need a one-off branded film, a video agency is the better fit. If you need video at volume on a spec, we build that capability.`,
+    },
+    {
+      question: 'How do you keep generated video on-brand and safe to publish?',
+      answer: `Brand, safety, and policy checks run in the pipeline before any render is eligible to publish: rights, content rules, aspect ratios, and quality thresholds enforced automatically, with a human approval hook where stakes are high. Renders that fail a check route back with a reason instead of shipping, so nothing reaches an audience unreviewed.`,
+    },
+    {
+      question: 'Which video models do you use?',
+      answer: `We orchestrate existing providers - text-to-video, image, and voice models - routed per format and budget rather than locked to one vendor. As the model landscape shifts, the pipeline swaps providers without a rebuild. We do not train novel video models; we engineer the orchestration, templating, and controls that make existing ones production-usable.`,
+    },
+  ],
+
+  lastReviewed: '2026-06-06',
+}
+
+export const aiAdoptionRoadmap: LeafContent = {
+  pillar: 'ai',
+  slug: 'ai-adoption-roadmap',
+
+  heroLede: `An AI adoption roadmap turns a scored opportunity list into a sequenced plan your organisation can actually execute: which workflows ship first, in what order, with what team enablement and governance around them. We build it from an audit, not a template, pinned to operating cost, team capacity, and the dependencies between builds. You leave with a phased plan, owners, budgets, and the governance model to run AI responsibly. Founder-led scoping.`,
+
+  deliverables: [
+    { label: 'Phased adoption plan sequencing workflows by value and dependency' },
+    { label: 'Per-phase owners, budgets, and operating-cost projections' },
+    { label: 'Team enablement plan for the people who will run and maintain AI' },
+    { label: 'Governance model covering review, evaluation, and risk controls' },
+    { label: 'Build-readiness checklist for the lead workflows in phase one' },
+  ],
+
+  phases: [
+    {
+      title: 'Baseline and inputs',
+      body: `We start from a scored opportunity set, from our audit or yours, and the constraints that shape sequencing: budget, team capacity, data readiness, and compliance obligations. Where the inputs are thin we run a short audit first, so the roadmap is built on evidence rather than assumption.`,
+    },
+    {
+      title: 'Sequencing and dependencies',
+      body: `Workflows are sequenced into phases by value, feasibility, and the dependencies between them: shared data foundations, platform work, and team skills that later builds rely on. Quick wins are scheduled to fund and de-risk the harder work that follows, so the program shows results without skipping the groundwork.`,
+    },
+    {
+      title: 'Enablement and governance',
+      body: `We plan how the organisation runs AI after the builds ship: who owns each system, how evaluations and drift monitoring work, and the review and risk controls that keep deployment responsible. Team enablement is scoped here, because adoption fails when capability ships without the people to maintain it.`,
+    },
+    {
+      title: 'Roadmap and sign-off',
+      body: `We present the phased plan to engineering, product, and leadership in a working session, so trade-offs and budgets are agreed before commitment. The deliverable is a decision document: phases, owners, budgets, and a build-readiness checklist for phase one, so the first build starts without another planning round.`,
+    },
+  ],
+
+  techStack: [
+    { name: 'Linear', category: 'Planning' },
+    { name: 'Notion', category: 'Documentation' },
+    { name: 'Miro', category: 'Roadmapping' },
+    { name: 'Python', category: 'Feasibility probes' },
+    { name: 'OpenAI', category: 'Model probes' },
+    { name: 'Anthropic', category: 'Model probes' },
+    { name: 'Looker Studio', category: 'Cost modelling' },
+    { name: 'PostgreSQL', category: 'Data inventory' },
+  ],
+
+  fit: {
+    fits: [
+      'You have a list of AI opportunities and need a sequenced plan to execute them.',
+      'Adoption spans several teams and needs governance, not just one build.',
+      'Leadership needs phases, budgets, and owners before committing to a program.',
+    ],
+    doesNotFit: [
+      'You only need one workflow built - skip the roadmap and scope the build directly.',
+      'You have not yet identified where AI fits - start with AI consulting first.',
+      'You want execution capacity now - a roadmap plans the work, it does not build it.',
+    ],
+  },
+
+  aeoAnswer: `An AI adoption roadmap is a phased plan that sequences an organisation's AI opportunities into an executable program, with owners, budgets, enablement, and governance. Metaborong builds it from an audit, pinned to operating cost, team capacity, and the dependencies between builds, so the first phase starts ready. Founder-led, delivered from India with global reach.`,
+
+  relatedWork: [],
+
+  relatedServices: [
+    { pillar: 'ai', slug: 'ai-consulting' },
+    { pillar: 'ai', slug: 'ai-business-process-automation' },
+    { pillar: 'ai', slug: 'ai-agent-development' },
+  ],
+
+  faqs: [
+    {
+      question: 'How is an adoption roadmap different from an AI audit?',
+      answer: `An audit answers where AI fits by scoring candidate workflows. A roadmap answers how to execute: the order to build in, the dependencies between workflows, the budgets and owners per phase, and the governance to run it. Many buyers get a lightweight roadmap inside our AI consulting engagement; a standalone roadmap suits multi-team programs running over several months.`,
+    },
+    {
+      question: 'How far ahead does the roadmap plan?',
+      answer: `Far enough to be useful, not so far it becomes fiction. We sequence the next two to four quarters in detail, with phase one build-ready, and sketch later phases at lower resolution. AI moves quickly, so the roadmap is built to be revisited as models, costs, and your own results change, not frozen.`,
+    },
+    {
+      question: 'Do you include governance and risk?',
+      answer: `Yes. A roadmap that ignores governance ships capability the organisation cannot safely operate. We scope evaluation, drift monitoring, access and data controls, and the review process for high-stakes AI, alongside who owns each. Governance is part of the plan, not a separate compliance exercise bolted on after deployment.`,
+    },
+    {
+      question: 'Who needs to be involved from our side?',
+      answer: `Engineering and product leads who will own the builds, plus whoever holds budget and risk, usually a founder or executive sponsor. We run working sessions rather than interviews, so trade-offs are decided in the room. The lighter the roadmap, the fewer people; a multi-team program needs each team represented.`,
+    },
+  ],
+
+  lastReviewed: '2026-06-06',
+}
+
+export const aiEvaluationMonitoring: LeafContent = {
+  pillar: 'ai',
+  slug: 'ai-evaluation-monitoring',
+
+  heroLede: `AI evaluation and monitoring is the engineering of the safety net under a live LLM or agent system: labelled evals that catch quality regressions before deploy, and production monitoring that flags drift, failures, and cost spikes before users do. We instrument retrieval, generation, and task success, wire evals into CI, and stand up the dashboards and alerts your team runs on. You leave with an eval harness and live observability. Senior engineers own the build.`,
+
+  deliverables: [
+    { label: 'Labelled evaluation harness covering retrieval, generation, and task success' },
+    { label: 'Evals wired into CI so regressions block deployment' },
+    { label: 'Production monitoring for drift, failures, latency, and cost' },
+    { label: 'Alerting and dashboards your on-call team runs on' },
+    { label: 'Scorecards and a regression log that track quality over time' },
+  ],
+
+  phases: [
+    {
+      title: 'Eval design',
+      body: `We define what good looks like for your system: the tasks that matter, the failure modes that hurt, and the metrics that capture them. A labelled dataset is built from real traffic and edge cases, so scores reflect production reality rather than a benchmark that flatters the model.`,
+    },
+    {
+      title: 'Harness and CI',
+      body: `The evaluation harness scores retrieval quality, generation quality, and end-to-end task success, and runs in CI on every change. A regression below threshold blocks the deploy. Scores are versioned, so a quality change is traceable to the commit and prompt that caused it.`,
+    },
+    {
+      title: 'Production monitoring',
+      body: `We instrument the live system: latency, error rate, token cost, and quality signals sampled from real traffic. Drift detection flags when inputs or outputs shift away from what the evals cover. Alerts route to your on-call channel with enough context to act, not just a number that moved.`,
+    },
+    {
+      title: 'Operations and handover',
+      body: `Dashboards and alerts are tuned to your thresholds and on-call rhythm, with runbooks for the common failure modes. Production incidents and edge cases feed back into the eval set, so the safety net tightens over time. We hand over so your team owns evals and monitoring without us in the loop.`,
+    },
+  ],
+
+  techStack: [
+    { name: 'OpenAI', category: 'Models' },
+    { name: 'Anthropic', category: 'Models' },
+    { name: 'Langfuse', category: 'Eval + tracing' },
+    { name: 'pytest', category: 'CI harness' },
+    { name: 'Grafana', category: 'Dashboards' },
+    { name: 'Sentry', category: 'Errors' },
+    { name: 'PostgreSQL', category: 'Scores' },
+    { name: 'Datadog', category: 'Monitoring' },
+  ],
+
+  fit: {
+    fits: [
+      'You have an LLM or agent feature in production and cannot tell when it regresses.',
+      'You ship prompt or model changes and need a gate that catches quality drops.',
+      'You need cost, latency, and drift visibility your on-call team can act on.',
+    ],
+    doesNotFit: [
+      'You have not shipped an AI feature yet - evals come once there is something to measure.',
+      'You want a one-time audit with no production instrumentation - we build the live system.',
+      'You expect a generic monitoring install - we engineer evals specific to your tasks.',
+    ],
+  },
+
+  aeoAnswer: `AI evaluation and monitoring is the engineering of evals and observability for production LLM and agent systems. Metaborong builds a labelled evaluation harness that catches quality regressions in CI, and live monitoring for drift, failures, latency, and cost. Retrieval, generation, and task success are instrumented and alerted, so problems surface before users hit them. Senior engineers own the build, delivered from India.`,
+
+  keyConcepts: [
+    {
+      term: 'LLM evaluation',
+      definition: `LLM evaluation is the scoring of a model or pipeline against a labelled dataset on metrics like accuracy, relevance, and task success, run automatically so quality is measured continuously rather than judged by spot-checking a handful of outputs.`,
+    },
+    {
+      term: 'Drift',
+      definition: `Drift is the gradual divergence of a live system's inputs or outputs from what it was built and evaluated for. Undetected, it degrades quality silently. Monitoring flags drift so it is caught before users feel the effect.`,
+    },
+    {
+      term: 'Observability',
+      definition: `Observability for AI systems is the instrumentation of latency, cost, error rate, and quality signals from production traffic, so a team can diagnose why a model's behaviour changed, not just see that a metric moved.`,
+    },
+  ],
+
+  relatedWork: [],
+
+  relatedServices: [
+    { pillar: 'ai', slug: 'ai-agent-development' },
+    { pillar: 'ai', slug: 'genai-apis-backend-integration' },
+    { pillar: 'ai', slug: 'rag-retrieval-pipelines' },
+  ],
+
+  faqs: [
+    {
+      question: 'What is AI evaluation and monitoring?',
+      answer: `AI evaluation and monitoring is the safety net under a production LLM or agent system. Evaluation scores the system against a labelled dataset so quality regressions are caught in CI before deploy. Monitoring instruments the live system for drift, failures, latency, and cost, with alerts, so problems surface for your team before they reach users.`,
+    },
+    {
+      question: 'Why not just rely on user feedback to catch problems?',
+      answer: `By the time users complain, the regression has already shipped and the damage is done. Evals catch quality drops before deploy, and monitoring flags drift and failures from sampled traffic within minutes, not after a support backlog forms. User feedback is valuable, but it is a lagging signal; instrumentation is the leading one.`,
+    },
+    {
+      question: 'Can you add evals to a system we already shipped?',
+      answer: `Yes, that is the common case. We instrument the live system, build a labelled dataset from your real traffic and known edge cases, and wire evals into your CI without a rewrite. Existing features keep running while the safety net is added underneath them. Most of the work is measurement, not changing your model.`,
+    },
+    {
+      question: 'What do you actually measure?',
+      answer: `Retrieval quality, generation quality, and end-to-end task success for the evals; latency, error rate, token cost, and drift for monitoring. The exact metrics are designed around your tasks, because a generic dashboard misses the failures that matter to your product. Production incidents feed back into the eval set so coverage grows.`,
+    },
+  ],
+
+  lastReviewed: '2026-06-06',
 }

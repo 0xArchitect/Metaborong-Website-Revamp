@@ -87,6 +87,60 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     description:
       'Architect and harden LLMs inside your stack: model routing, auth, fallback, cost controls, and observability. GenAI APIs wired into your backend.',
   },
+  {
+    pillar: 'ai',
+    subGroup: 'generative-ai',
+    slug: 'generative-ai-development',
+    keyword: 'generative ai development services',
+    title: 'Generative AI Development Services',
+    description:
+      'Build generative AI features into your product: content generation, enrichment, and drafting with output validation, evaluation, and cost controls.',
+  },
+  {
+    pillar: 'ai',
+    subGroup: 'business-automation',
+    slug: 'ai-knowledge-base',
+    keyword: 'ai knowledge base',
+    title: 'AI Knowledge Base Development',
+    description:
+      'Build an AI knowledge base answering from your docs, wikis, and tickets with cited, access-controlled responses and a compounding LLM knowledge library.',
+  },
+  {
+    pillar: 'ai',
+    subGroup: 'business-automation',
+    slug: 'ai-business-process-automation',
+    keyword: 'ai business process automation',
+    title: 'AI Business Process Automation',
+    description:
+      'Automate document, email, and reporting workflows with language models, integrated into your CRM and ERP, with human checkpoints and an audit trail.',
+  },
+  {
+    pillar: 'ai',
+    subGroup: 'generative-ai',
+    slug: 'ai-video-generation',
+    keyword: 'ai video generation',
+    title: 'AI Video Generation Pipelines',
+    description:
+      'Engineer AI video generation pipelines into your product: model orchestration, templating, brand and policy checks, render queuing, and cost controls.',
+  },
+  {
+    pillar: 'ai',
+    subGroup: 'consulting',
+    slug: 'ai-adoption-roadmap',
+    keyword: 'ai adoption roadmap',
+    title: 'AI Adoption Roadmap',
+    description:
+      'Turn scored AI opportunities into a sequenced adoption plan with phases, owners, budgets, team enablement, and governance. Founder-led, India + global.',
+  },
+  {
+    pillar: 'ai',
+    subGroup: 'ai-engineering',
+    slug: 'ai-evaluation-monitoring',
+    keyword: 'llm evaluation and monitoring',
+    title: 'AI Evaluation & Monitoring',
+    description:
+      'Catch LLM quality regressions before deploy and monitor production for drift, failures, latency, and cost. Labelled eval harness wired into your CI.',
+  },
 
   // ── Web3 ────────────────────────────────────────────────────────────────────
   {
