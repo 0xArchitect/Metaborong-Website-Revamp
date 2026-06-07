@@ -27,7 +27,7 @@ export const aiAuditOpportunityAssessment: LeafContent = {
   pillar: 'ai',
   slug: 'ai-consulting',
 
-  heroLede: `AI consulting is senior-engineer advisory that decides where AI fits before anyone writes code. We audit candidate workflows across your product and operations, score each by impact and feasibility, then map use cases, data and model strategy, and build-versus-buy into one defensible plan. You leave with a scored opportunity map and an architecture sketch for the lead build candidate, feasibility-tested against the stack it will ship into. We are engineers, not slide-deck consultants. India + global delivery, founder-led scoping, with one of three Metaborong founders in every working session.`,
+  heroLede: `AI consulting is senior-engineer advisory that decides where AI fits before anyone writes code. We audit candidate workflows across your product and operations, score each by impact and feasibility, and map use cases, data, model strategy, and build-versus-buy into one defensible plan. You leave with a scored opportunity map and an architecture sketch for the lead build candidate. We are engineers, not slide-deck consultants. Founder-led scoping, India + global delivery.`,
 
   deliverables: [
     { label: 'Scored opportunity map - every candidate workflow ranked by impact and feasibility' },
@@ -132,7 +132,7 @@ export const aiCopilotsInternalTools: LeafContent = {
   pillar: 'ai',
   slug: 'ai-copilots-internal-tools',
 
-  heroLede: `AI Copilots & Internal Tools is the engineering of bespoke AI assistants for the teams inside your company - support agents, sales operations, recruiting, internal ops. The work covers the copilot interface, the retrieval and routing layer that grounds it in your data, and the integration into the tools the team already uses every day. You leave the engagement with a deployed copilot wired into Slack, your CRM, or a custom interface, an evaluation harness measuring task completion against a labelled set, and a maintenance handover so internal engineers can extend it. We build copilots that survive production use - instrumented, observable, cost-controlled - not internal-tool demos that drift after a quarter. Senior engineers own the build end-to-end. India + global delivery, six to twelve weeks for first deployment, with one founder in every weekly review.`,
+  heroLede: `AI Copilots & Internal Tools is the engineering of bespoke AI assistants for the teams inside your company — support, sales operations, recruiting, internal ops. The work covers the copilot interface, the retrieval layer that grounds it in your data, and integration into the tools the team already uses. We build copilots that survive production — instrumented, observable, cost-controlled — not demos that drift. Senior engineers own the build, India + global delivery.`,
 
   deliverables: [
     { label: 'Deployed copilot wired into Slack, your CRM, or a custom Next.js interface' },
@@ -234,7 +234,7 @@ export const conversationalAgentsAssistants: LeafContent = {
   pillar: 'ai',
   slug: 'conversational-ai-voice-agents',
 
-  heroLede: `Conversational AI is the engineering of production chat and voice agents that handle real workflows - support, scheduling, qualification, discovery. The agents we ship are not chatbots replying with FAQ snippets; they reason about a conversation, call tools, write to your systems, and hand off cleanly to humans when the workflow demands it. You leave the engagement with a deployed agent wired into your channels - phone, web chat, WhatsApp, or in-product - a conversation-level evaluation harness, and the orchestration layer that routes intents to tools and tools back to the model. Voice agents ship with telephony, latency budgeting, and barge-in handling engineered, not bolted on. Chat agents ship with state management and human-handoff hooks in place. Senior engineers own the build. India + global delivery, six to ten weeks for first deployment.`,
+  heroLede: `Conversational AI is the engineering of production chat and voice agents that handle real workflows — support, scheduling, qualification, discovery. These are not chatbots replying with FAQ snippets; they reason, call tools, write to your systems, and hand off cleanly to humans when the workflow demands it. Voice agents ship with telephony, latency budgeting, and barge-in engineered, not bolted on. Senior engineers own the build, India + global delivery.`,
 
   deliverables: [
     { label: 'Deployed agent across voice, chat, WhatsApp, or in-product channels' },
@@ -336,7 +336,7 @@ export const agenticAiSystems: LeafContent = {
   pillar: 'ai',
   slug: 'ai-agent-development',
 
-  heroLede: `AI agent development is the engineering of custom autonomous agents, single-agent and multi-agent, that plan, call tools, write to your systems, and report results. These are not chatbots - they are workflows the model executes against, with explicit checkpoints, deterministic tool layers, and human-in-the-loop wherever risk demands it. You leave the engagement with a deployed agent running scheduled or event-triggered jobs, an orchestration layer with retries and idempotency, a labelled evaluation harness, and per-tenant rate limits and cost ceilings enforced in production. We build AI agents for the workflows that bring real operational lift - research, data extraction, multi-step ops, structured drafting - and we draw the line at workflows where autonomy adds risk without value. Senior engineers own the build end-to-end. India + global delivery, eight to sixteen weeks for first deployment.`,
+  heroLede: `AI agent development is the engineering of custom autonomous agents that plan, call tools, write to your systems, and report results. These are not chatbots — they are workflows the model executes against, with checkpoints, tool layers, and human-in-the-loop wherever risk demands it. We build for the workflows that bring real operational lift and draw the line where autonomy adds risk without value. Senior engineers own the build, India + global delivery.`,
 
   deliverables: [
     { label: 'Deployed agent running scheduled or event-triggered jobs in production' },
@@ -437,7 +437,7 @@ export const ragRetrievalPipelines: LeafContent = {
   pillar: 'ai',
   slug: 'rag-retrieval-pipelines',
 
-  heroLede: `RAG & Retrieval Pipelines is the engineering of production retrieval systems that ground LLMs in your proprietary data - documents, support tickets, product catalogues, knowledge bases. The work covers ingestion, chunking, embedding, vector storage, reranking, and evaluation, with the latency and cost profile tuned for production traffic. You leave the engagement with a deployed pipeline indexed against your corpus, retrieval evaluations measuring recall and answer faithfulness, and the orchestration layer wired into your copilot, agent, or chat surface. We engineer retrieval for the failure modes that matter in production - stale data, hallucinated citations, tenant leakage, cost spikes - not the failure modes that look good in a demo. Senior engineers own the build end-to-end. India + global delivery, six to twelve weeks for first deployment.`,
+  heroLede: `RAG & Retrieval Pipelines is the engineering of production retrieval systems that ground LLMs in your proprietary data — documents, tickets, catalogues, knowledge bases. The work covers ingestion, chunking, embedding, vector storage, reranking, and evaluation, tuned for production latency. We engineer retrieval for the failure modes that matter in production — stale data, hallucinated citations, tenant leakage, cost spikes — not the demo-friendly ones. Senior engineers own the build, India + global delivery.`,
 
   deliverables: [
     { label: 'Deployed retrieval pipeline indexed against your corpus on a scheduled cadence' },
@@ -538,7 +538,7 @@ export const llmIntegrationArchitecture: LeafContent = {
   pillar: 'ai',
   slug: 'genai-apis-backend-integration',
 
-  heroLede: `GenAI APIs and backend integration is the engineering of the production LLM layer inside an existing product - model routing, auth, rate limits, fallback paths, cost controls, and observability. The work starts where most LLM features quietly fail in production: a single provider with no fallback, no cost visibility, no per-tenant isolation, no eval harness. You leave the engagement with a hardened LLM layer routing across providers, per-tenant rate limits and cost ceilings enforced, a streaming-aware integration into your product, and the observability to catch drift and incidents before users do. We engineer LLM integration for products that already exist and need AI without losing what already works. Senior engineers own the build. India + global delivery, four to ten weeks for first deployment, with one founder in every weekly review.`,
+  heroLede: `GenAI APIs and backend integration is the engineering of the production LLM layer inside an existing product — model routing, auth, rate limits, fallback paths, cost controls, and observability. The work starts where most LLM features fail: a single provider, no cost visibility, no per-tenant isolation, no eval harness. We engineer LLM integration for products that need AI without losing what works. Senior engineers own the build, India + global delivery.`,
 
   deliverables: [
     { label: 'Production LLM gateway routing across OpenAI, Anthropic, and open-weights providers' },
