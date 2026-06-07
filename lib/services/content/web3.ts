@@ -833,7 +833,7 @@ export const decentralizedIdentityDidIntegration: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'defi-protocol-development' },
-    { pillar: 'product-studio', slug: 'b2b-multi-tenant-platforms' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
   faqs: [
     {
@@ -1256,7 +1256,7 @@ export const enterprisePrivateBlockchain: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'decentralized-identity-did-integration' },
-    { pillar: 'product-studio', slug: 'b2b-multi-tenant-platforms' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
   faqs: [
     {

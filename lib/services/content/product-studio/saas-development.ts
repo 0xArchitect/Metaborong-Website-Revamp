@@ -93,7 +93,7 @@ const content: LeafContent = {
 
   relatedServices: [
     { pillar: 'product-studio', slug: 'mvp-development' },
-    { pillar: 'product-studio', slug: 'b2b-multi-tenant-platforms' },
+    { pillar: 'product-studio', slug: 'web-application-development' },
     { pillar: 'ai', slug: 'genai-apis-backend-integration' },
   ],
 

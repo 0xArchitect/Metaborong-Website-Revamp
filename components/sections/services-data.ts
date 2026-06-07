@@ -13,9 +13,9 @@ export type SubGroupId =
   | 'ai-engineering'
   // product-studio (lifecycle bands — flat Peiko-style capability list, grouped
   // into bands for the hub only; nav/homepage flatten leaves regardless)
-  | 'plan'
+  | 'discover'
   | 'build'
-  | 'operate'
+  | 'scale'
 
 export type LeafStatus = 'published' | 'coming-soon'
 
@@ -306,8 +306,8 @@ export const pillars: Pillar[] = [
     // homepage flatten leaves via getFeaturedLeaves/getPublishedLeaves.
     subGroups: [
       {
-        id: 'plan',
-        label: 'Plan',
+        id: 'discover',
+        label: 'Discover',
         children: [
           {
             name: 'Product Discovery',
@@ -340,57 +340,27 @@ export const pillars: Pillar[] = [
             status: 'coming-soon',
           },
           {
-            name: 'B2B Multi-Tenant Platforms',
-            description: 'Multi-tenant B2B platforms with SSO, role-based access, audit trails, and admin tooling.',
-            slug: 'b2b-multi-tenant-platforms',
-            status: 'published',
-          },
-          {
             name: 'Mobile App Development',
             description: 'Cross-platform mobile apps from one codebase across iOS and Android.',
             slug: 'mobile-app-development',
             status: 'coming-soon',
           },
-          {
-            name: 'Marketplace Development',
-            description: 'Two-sided marketplace platforms with listings, payments, search, and trust built for liquidity.',
-            slug: 'marketplace-development',
-            status: 'coming-soon',
-          },
-          {
-            name: 'CRM Development',
-            description: 'Custom CRM and internal tools shaped to your sales and ops workflow, not an off-the-shelf template.',
-            slug: 'crm-development',
-            status: 'coming-soon',
-          },
-          {
-            name: 'Fintech App Development',
-            description: 'Fintech products with the audit trails, access controls, and reconciliation regulated money movement needs.',
-            slug: 'fintech-app-development',
-            status: 'coming-soon',
-          },
-          {
-            name: 'Custom Software Development',
-            description: 'Bespoke software for workflows no off-the-shelf tool fits, engineered to production standards.',
-            slug: 'custom-software-development',
-            status: 'coming-soon',
-          },
         ],
       },
       {
-        id: 'operate',
-        label: 'Operate',
+        id: 'scale',
+        label: 'Scale',
         children: [
-          {
-            name: 'UX/UI & Product Design',
-            description: 'Token-driven design systems and product UX your team owns, not locked in a design file.',
-            slug: 'ux-ui-product-design',
-            status: 'coming-soon',
-          },
           {
             name: 'Cloud & DevOps Engineering',
             description: 'CI/CD, observability, and cloud infrastructure that make shipping and scaling routine.',
             slug: 'cloud-devops-engineering',
+            status: 'coming-soon',
+          },
+          {
+            name: 'UI/UX & Web Design',
+            description: 'Product UX and web design your team owns - shipped as a living, token-driven system, not a static file.',
+            slug: 'ux-ui-web-design',
             status: 'coming-soon',
           },
         ],

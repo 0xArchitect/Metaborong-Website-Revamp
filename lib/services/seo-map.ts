@@ -214,7 +214,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
   // ── Product Studio ──────────────────────────────────────────────────────────
   {
     pillar: 'product-studio',
-    subGroup: 'plan',
+    subGroup: 'discover',
     slug: 'product-discovery',
     keyword: 'product discovery services',
     title: 'Product Discovery for Startups & Founders',
@@ -238,15 +238,6 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     title: 'SaaS Development Services',
     description:
       'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in. Senior team owns architecture through deployment, no vendor fragmentation.',
-  },
-  {
-    pillar: 'product-studio',
-    subGroup: 'build',
-    slug: 'b2b-multi-tenant-platforms',
-    keyword: 'b2b multi-tenant platform development',
-    title: 'B2B Multi-Tenant Platform Development',
-    description:
-      'Multi-tenant B2B platforms with SSO, role-based access, audit trails, and admin tooling | built for enterprise procurement from day one.',
   },
 ] as const
 
