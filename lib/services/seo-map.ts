@@ -248,6 +248,15 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     description:
       'Custom web application development for workflows no off-the-shelf tool fits. One senior team designs, builds, and ships a production app to your own cloud.',
   },
+  {
+    pillar: 'product-studio',
+    subGroup: 'build',
+    slug: 'mobile-app-development',
+    keyword: 'mobile app development services',
+    title: 'Mobile App Development Services',
+    description:
+      'Cross-platform mobile app development for iOS and Android from one codebase. One senior team designs, builds, and ships both stores - the source code is yours.',
+  },
 ] as const
 
 // Pre-built key for O(1) lookup by `${pillar}/${slug}` (the canonical
