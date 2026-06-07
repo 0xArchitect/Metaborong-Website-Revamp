@@ -343,7 +343,7 @@ export const pillars: Pillar[] = [
             name: 'Mobile App Development',
             description: 'Cross-platform mobile apps from one codebase across iOS and Android.',
             slug: 'mobile-app-development',
-            status: 'coming-soon',
+            status: 'published',
           },
         ],
       },
