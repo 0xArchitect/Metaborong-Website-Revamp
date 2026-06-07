@@ -21,7 +21,7 @@ export function ConversationalAiVoiceAgentsVisual() {
         {/* turn edges */}
         <g className="cva-edge" stroke="var(--color-ai)" strokeWidth="2" fill="none" strokeLinecap="round">
           <path className="cva-draw" pathLength={1} d="M168,120 H214" markerEnd="url(#cva-ar)" />
-          <path className="cva-draw" pathLength={1} d="M214,196 H168" markerEnd="url(#cva-ar)" />
+          <path className="cva-draw" pathLength={1} d="M220,174 H150" markerEnd="url(#cva-ar)" />
           <path className="cva-draw" pathLength={1} d="M300,210 Q330,250 330,276" markerEnd="url(#cva-ar)" />
         </g>
 
