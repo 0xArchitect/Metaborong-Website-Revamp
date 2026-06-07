@@ -81,7 +81,7 @@ export function LeafServicePage({ pillar, subGroup, leaf, content }: LeafService
   const relatedLeaves = resolveRelatedServices(content.relatedServices)
 
   return (
-    <main className="bg-bg">
+    <main className={`bg-bg pillar-theme-${pillar.id}`}>
       <Breadcrumbs
         items={[
           { label: 'Home', href: '/', home: true },

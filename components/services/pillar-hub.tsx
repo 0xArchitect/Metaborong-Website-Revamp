@@ -65,7 +65,7 @@ export function PillarHub({ pillar }: { pillar: Pillar }) {
   )
 
   return (
-    <main id="main" aria-labelledby="pillar-hub-heading">
+    <main id="main" aria-labelledby="pillar-hub-heading" className={`pillar-theme-${pillar.id}`}>
       <Breadcrumbs
         items={[
           { label: 'Home', href: '/', home: true },
@@ -115,7 +115,7 @@ function PillarHero({ pillar, copy }: { pillar: Pillar; copy: PillarHubCopy }) {
     <div className="flex flex-col items-stretch gap-[12px] sm:flex-row sm:items-center">
       <a
         href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
-        className="inline-flex min-h-[44px] items-stretch justify-center bg-brand text-[14px] font-semibold tracking-[-0.005em] text-white no-underline"
+        className="inline-flex min-h-[44px] items-stretch justify-center bg-[var(--cta-color,var(--color-brand))] text-[14px] font-semibold tracking-[-0.005em] text-white no-underline"
       >
         <span className="px-[20px] py-[12px]">Talk to us</span>
         <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[14px] py-[12px]">→</span>

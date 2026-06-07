@@ -181,9 +181,26 @@ html.lenis body {
 
 /* ── Focus ring (DESIGN.md mandate, applies to interactive elements) ─────── */
 :where(a, button, [role="button"], input, select, textarea, summary):focus-visible {
-  outline: 2px solid var(--color-brand);
+  outline: 2px solid var(--cta-color, var(--color-brand));
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ── Pillar CTA theming (DESIGN.md pillar color rule) ──────────────────────
+   Each pillar owns its color on its own service surfaces: the primary action,
+   secondary action, and focus ring localize to the pillar accent. Set on the
+   pillar <main>; cascades to every descendant CTA. Shared/neutral surfaces
+   (homepage, nav, blog) set no --cta-color and keep the brand-blue fallback.
+   Web3 == brand, so .pillar-theme-web3 is intentionally a no-op. */
+.pillar-theme-ai {
+  --cta-color: var(--color-ai);
+  --cta-hover: color-mix(in srgb, var(--color-ai) 86%, #000);
+  --cta-active: color-mix(in srgb, var(--color-ai) 74%, #000);
+}
+.pillar-theme-product-studio {
+  --cta-color: var(--color-accent);
+  --cta-hover: color-mix(in srgb, var(--color-accent) 86%, #000);
+  --cta-active: color-mix(in srgb, var(--color-accent) 74%, #000);
 }
 
 
