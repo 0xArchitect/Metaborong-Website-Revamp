@@ -23,7 +23,6 @@ import {
 import productDiscovery from './product-studio/product-discovery'
 import mvpDevelopment from './product-studio/mvp-development'
 import saasDevelopment from './product-studio/saas-development'
-import b2bMultiTenantPlatforms from './product-studio/b2b-multi-tenant-platforms'
 import {
   smartContractDevelopment,
   defiProtocolDevelopment,
@@ -63,7 +62,6 @@ const registry: Record<string, LeafContent> = {
   'product-studio/product-discovery': productDiscovery,
   'product-studio/mvp-development': mvpDevelopment,
   'product-studio/saas-development': saasDevelopment,
-  'product-studio/b2b-multi-tenant-platforms': b2bMultiTenantPlatforms,
 }
 
 /**
