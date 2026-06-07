@@ -34,6 +34,16 @@ import { CrossChainBridgeVisual } from '@/components/services/cross-chain-bridge
 import { IndexersSubgraphsVisual } from '@/components/services/blockchain-indexers-subgraphs-visual'
 import { AiKnowledgeBaseVisual } from '@/components/services/ai-knowledge-base-visual'
 import { AiAgentDevelopmentVisual } from '@/components/services/ai-agent-development-visual'
+import { AiConsultingVisual } from '@/components/services/ai-consulting-visual'
+import { AiAdoptionRoadmapVisual } from '@/components/services/ai-adoption-roadmap-visual'
+import { GenerativeAiDevelopmentVisual } from '@/components/services/generative-ai-development-visual'
+import { AiCopilotsInternalToolsVisual } from '@/components/services/ai-copilots-internal-tools-visual'
+import { ConversationalAiVoiceAgentsVisual } from '@/components/services/conversational-ai-voice-agents-visual'
+import { AiVideoGenerationVisual } from '@/components/services/ai-video-generation-visual'
+import { AiBusinessProcessAutomationVisual } from '@/components/services/ai-business-process-automation-visual'
+import { GenaiApisBackendIntegrationVisual } from '@/components/services/genai-apis-backend-integration-visual'
+import { RagRetrievalPipelinesVisual } from '@/components/services/rag-retrieval-pipelines-visual'
+import { AiEvaluationMonitoringVisual } from '@/components/services/ai-evaluation-monitoring-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
@@ -58,6 +68,16 @@ const heroVisuals: Record<string, React.ComponentType> = {
   'web3/blockchain-indexers-subgraphs': IndexersSubgraphsVisual,
   'ai/ai-knowledge-base': AiKnowledgeBaseVisual,
   'ai/ai-agent-development': AiAgentDevelopmentVisual,
+  'ai/ai-consulting': AiConsultingVisual,
+  'ai/ai-adoption-roadmap': AiAdoptionRoadmapVisual,
+  'ai/generative-ai-development': GenerativeAiDevelopmentVisual,
+  'ai/ai-copilots-internal-tools': AiCopilotsInternalToolsVisual,
+  'ai/conversational-ai-voice-agents': ConversationalAiVoiceAgentsVisual,
+  'ai/ai-video-generation': AiVideoGenerationVisual,
+  'ai/ai-business-process-automation': AiBusinessProcessAutomationVisual,
+  'ai/genai-apis-backend-integration': GenaiApisBackendIntegrationVisual,
+  'ai/rag-retrieval-pipelines': RagRetrievalPipelinesVisual,
+  'ai/ai-evaluation-monitoring': AiEvaluationMonitoringVisual,
 }
 
 import {
