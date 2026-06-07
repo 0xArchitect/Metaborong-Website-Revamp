@@ -361,7 +361,7 @@ export const pillars: Pillar[] = [
             name: 'UI/UX & Web Design',
             description: 'Product UX and web design your team owns - shipped as a living, token-driven system, not a static file.',
             slug: 'ux-ui-web-design',
-            status: 'coming-soon',
+            status: 'published',
           },
         ],
       },

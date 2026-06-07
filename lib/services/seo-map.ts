@@ -257,6 +257,15 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     description:
       'Cross-platform mobile app development for iOS and Android from one codebase. One senior team designs, builds, and ships both stores - the source code is yours.',
   },
+  {
+    pillar: 'product-studio',
+    subGroup: 'scale',
+    slug: 'ux-ui-web-design',
+    keyword: 'ui ux design services',
+    title: 'UI/UX & Web Design Services',
+    description:
+      'UI/UX and web design delivered as a coded, living design system your team owns. User research, a distinctive visual identity, and an accessible component library.',
+  },
 ] as const
 
 // Pre-built key for O(1) lookup by `${pillar}/${slug}` (the canonical
