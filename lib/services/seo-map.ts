@@ -266,6 +266,15 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     description:
       'UI/UX and web design delivered as a coded, living design system your team owns. User research, a distinctive visual identity, and an accessible component library.',
   },
+  {
+    pillar: 'product-studio',
+    subGroup: 'scale',
+    slug: 'cloud-devops-engineering',
+    keyword: 'devops engineering services',
+    title: 'Cloud & DevOps Engineering Services',
+    description:
+      'DevOps and cloud engineering: CI/CD pipelines, infrastructure-as-code, and observability so deploys to production are fast, safe, and routine instead of risky.',
+  },
 ] as const
 
 // Pre-built key for O(1) lookup by `${pillar}/${slug}` (the canonical

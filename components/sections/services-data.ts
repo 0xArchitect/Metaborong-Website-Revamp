@@ -355,7 +355,7 @@ export const pillars: Pillar[] = [
             name: 'Cloud & DevOps Engineering',
             description: 'CI/CD, observability, and cloud infrastructure that make shipping and scaling routine.',
             slug: 'cloud-devops-engineering',
-            status: 'coming-soon',
+            status: 'published',
           },
           {
             name: 'UI/UX & Web Design',

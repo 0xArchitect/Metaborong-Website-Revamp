@@ -26,6 +26,7 @@ import saasDevelopment from './product-studio/saas-development'
 import webApplicationDevelopment from './product-studio/web-application-development'
 import mobileAppDevelopment from './product-studio/mobile-app-development'
 import uxUiWebDesign from './product-studio/ux-ui-web-design'
+import cloudDevopsEngineering from './product-studio/cloud-devops-engineering'
 import {
   smartContractDevelopment,
   defiProtocolDevelopment,
@@ -68,6 +69,7 @@ const registry: Record<string, LeafContent> = {
   'product-studio/web-application-development': webApplicationDevelopment,
   'product-studio/mobile-app-development': mobileAppDevelopment,
   'product-studio/ux-ui-web-design': uxUiWebDesign,
+  'product-studio/cloud-devops-engineering': cloudDevopsEngineering,
 }
 
 /**
