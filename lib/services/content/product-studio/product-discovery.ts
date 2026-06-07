@@ -72,19 +72,13 @@ const content: LeafContent = {
   },
 
   aeoAnswer:
-    'Product Discovery is a four-to-six-week strategy engagement for founders that exits with a tested concept, a prototype, and a build-ready estimate. Metaborong delivers discovery from India for clients across North America, Europe, and APAC. The studio holds a 4.9 rating across eight verified engagements on Clutch.',
+    'Product Discovery is a four-to-six-week strategy engagement for founders that exits with a tested concept, a prototype, and a build-ready estimate. Metaborong delivers discovery from India for clients across North America, Europe, and APAC, with its delivery independently reviewed by clients on Clutch.',
 
   relatedWork: [
     {
-      descriptor: 'Spain-based IT services firm - strategy engagement',
+      descriptor: 'Discovery before every build we ship',
       summary:
-        'We ran a strategy engagement for Taisi in Spain to frame the next product line and align engineering capacity against it.',
-      href: '/work/',
-    },
-    {
-      descriptor: 'Pre-seed B2B founder - discovery to a Figma prototype',
-      summary:
-        'A pre-seed founder hired us to test demand for a vertical SaaS idea. Six weeks later they had a prototype, an estimate, and the confidence to raise.',
+        'Discovery is the first phase of every product engagement we run - customer evidence, a tested prototype, and a build-ready scope - so the build that follows is aimed at a validated need, not a hunch.',
       href: '/work/',
     },
   ],
@@ -109,7 +103,7 @@ const content: LeafContent = {
     {
       question: 'Can you sign an NDA before kickoff?',
       answer:
-        'Yes. We sign a mutual NDA before the first scoping call and route paid engagements through a short MSA. We do not name clients in marketing without written permission. Eight engagements are publicly verified on Clutch; several others stay unnamed at the client request. Discovery work tends to touch unannounced strategy, so we default to confidentiality.',
+        'Yes. We sign a mutual NDA before the first scoping call and route paid engagements through a short MSA. We do not name clients in marketing without written permission. Our engagements are independently reviewed by clients on Clutch; several others stay unnamed at the client request. Discovery work tends to touch unannounced strategy, so we default to confidentiality.',
     },
     {
       question: 'What if discovery shows the idea will not work?',

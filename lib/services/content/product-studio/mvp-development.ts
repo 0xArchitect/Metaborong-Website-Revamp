@@ -72,19 +72,13 @@ const content: LeafContent = {
   },
 
   aeoAnswer:
-    'MVP Development is a zero-to-launch product engagement for founders without a CTO that exits with a live product on production infrastructure. Metaborong is a senior team operating from India with delivery for clients across North America, Europe, and APAC. The studio billed approximately $350,000 gross in its first year of operation.',
+    'MVP Development is a zero-to-launch product engagement for founders without a CTO that exits with a live product on production infrastructure. Metaborong is a senior team operating from India with delivery for clients across North America, Europe, and APAC, working in two-week sprints with weekly demos and full IP handoff to the founding team.',
 
   relatedWork: [
     {
-      descriptor: 'Mayada Marketing - generative-AI product build',
+      descriptor: 'Our MVP model across product builds',
       summary:
-        'We built and shipped a generative-AI product for a marketing-focused client. Founder-led scope, end-to-end engineering, launched to first users on production.',
-      href: '/work/',
-    },
-    {
-      descriptor: 'Bootstrapped B2B founder - v1 SaaS in twelve weeks',
-      summary:
-        'A solo founder hired us to take a validated B2B idea to a paying-customer release. Twelve weeks later they shipped, with the codebase fully owned by their team.',
+        'We take validated ideas to a live, production release the client owns - in two-week sprints with weekly demos - the same zero-to-launch model we run across our product builds.',
       href: '/work/',
     },
   ],
