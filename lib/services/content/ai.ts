@@ -640,7 +640,7 @@ export const generativeAiDevelopment: LeafContent = {
   pillar: 'ai',
   slug: 'generative-ai-development',
 
-  heroLede: `Generative AI development is the engineering of product features that generate text, structured content, and media with foundation models. We build the feature, not a demo - prompt and retrieval design, output validation, streaming, and the evaluation that keeps generations on-spec. Typical work covers content generation and enrichment, summarisation, and drafting, grounded in your data and brand rules. Senior engineers own the build. India + global delivery.`,
+  heroLede: `Generative AI development is the engineering of product features that generate text, structured content, and media with foundation models. We build the feature, not a demo - prompt and retrieval design, output validation, streaming, and evaluation that keeps generations on-spec. Work covers content generation, enrichment, summarisation, and drafting, grounded in your data and brand rules. Senior engineers own the build, India + global delivery.`,
 
   deliverables: [
     { label: 'Generative feature shipped into your product, streaming and production-ready' },
@@ -749,7 +749,7 @@ export const aiKnowledgeBase: LeafContent = {
   pillar: 'ai',
   slug: 'ai-knowledge-base',
 
-  heroLede: `An AI knowledge base turns scattered documents, wikis, and tickets into answers your teams and agents can trust. We build it the compounding way: instead of only chunking files for vector search, an LLM compiles your sources into a maintained, interlinked knowledge library that improves as it is used. You leave with grounded, cited answers, access controls, and an architecture that keeps the knowledge current. Senior engineers own the build, India + global delivery.`,
+  heroLede: `An AI knowledge base turns scattered documents, wikis, and tickets into answers your teams and agents trust. We build it the compounding way: instead of only chunking files for vector search, an LLM compiles your sources into a maintained, interlinked library that improves as it is used. You leave with grounded, cited answers, access controls, and a pipeline that keeps it current. Senior engineers own the build.`,
 
   deliverables: [
     { label: 'Deployed knowledge base answering from your documents, wikis, and tickets' },
@@ -861,7 +861,7 @@ export const aiBusinessProcessAutomation: LeafContent = {
   pillar: 'ai',
   slug: 'ai-business-process-automation',
 
-  heroLede: `AI business process automation puts language models to work on the repetitive operations that drain your team: document processing, email triage, reporting, and the handoffs between systems. We automate the workflow end to end, with human checkpoints where judgment matters, then wire it into your CRM, ERP, and the tools your team already runs. You leave with a deployed automation, monitoring, and a clear audit trail. Senior engineers own the build.`,
+  heroLede: `AI business process automation puts language models to work on the repetitive operations that drain your team: document processing, email triage, reporting, and cross-system handoffs. We automate the workflow end to end, with human checkpoints where judgment matters, then wire it into your CRM, ERP, and the tools your team already runs. You leave with a deployed automation, monitoring, and a clear audit trail. Senior engineers own the build.`,
 
   deliverables: [
     { label: 'Deployed automation for a target workflow, running in production' },
@@ -914,7 +914,7 @@ export const aiBusinessProcessAutomation: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI business process automation uses language models to automate repetitive operational workflows: document processing, email triage, reporting, and cross-system handoffs. Metaborong builds the automation end to end, with validation, human checkpoints, and integration into your CRM, ERP, and tools, plus monitoring and an audit trail on every run. Senior engineers own the build, delivered from India with global reach.`,
+  aeoAnswer: `AI business process automation uses language models to automate repetitive operational workflows: document processing, email triage, reporting, and cross-system handoffs. Metaborong builds the automation end to end, with validation, human checkpoints, and integration into your CRM, ERP, and tools, plus monitoring and an audit trail on every run. Senior engineers own the build.`,
 
   keyConcepts: [
     {
@@ -1025,7 +1025,7 @@ export const aiVideoGeneration: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI video generation is the engineering of pipelines that produce video programmatically using generative models, inside a product or content operation. Metaborong builds the pipeline end to end: model orchestration, templating, brand and policy checks, render queuing, and cost controls, so video is generated to a consistent spec at volume rather than as manual one-offs. Senior engineers own the build, delivered from India.`,
+  aeoAnswer: `AI video generation is the engineering of pipelines that produce video programmatically with generative models, inside a product or content operation. Metaborong builds the pipeline end to end - model orchestration, templating, brand and policy checks, render queuing, and cost controls - so video is generated to a consistent spec at volume, not as manual one-offs. Senior engineers own the build.`,
 
   relatedWork: [],
 
@@ -1050,7 +1050,7 @@ export const aiVideoGeneration: LeafContent = {
     },
     {
       question: 'Which video models do you use?',
-      answer: `We orchestrate existing providers - text-to-video, image, and voice models - routed per format and budget rather than locked to one vendor. As the model landscape shifts, the pipeline swaps providers without a rebuild. We do not train novel video models; we engineer the orchestration, templating, and controls that make existing ones production-usable.`,
+      answer: `We orchestrate existing providers - text-to-video, image, and voice models - routed per format and budget rather than locked to one vendor. As the available models change, the pipeline swaps providers without a rebuild. We do not train novel video models; we engineer the orchestration, templating, and controls that make existing ones production-usable.`,
     },
   ],
 
@@ -1061,7 +1061,7 @@ export const aiAdoptionRoadmap: LeafContent = {
   pillar: 'ai',
   slug: 'ai-adoption-roadmap',
 
-  heroLede: `An AI adoption roadmap turns a scored opportunity list into a sequenced plan your organisation can actually execute: which workflows ship first, in what order, with what team enablement and governance around them. We build it from an audit, not a template, pinned to operating cost, team capacity, and the dependencies between builds. You leave with a phased plan, owners, budgets, and the governance model to run AI responsibly. Founder-led scoping.`,
+  heroLede: `An AI adoption roadmap turns a scored opportunity list into a sequenced plan your organisation can actually execute: which workflows ship first, in what order, with what team enablement and governance around them. We build it from an audit, not a template, pinned to operating cost, team capacity, and the dependencies between builds. You leave with a phased plan, owners, budgets, and governance to run AI responsibly. Founder-led scoping.`,
 
   deliverables: [
     { label: 'Phased adoption plan sequencing workflows by value and dependency' },
@@ -1150,7 +1150,7 @@ export const aiEvaluationMonitoring: LeafContent = {
   pillar: 'ai',
   slug: 'ai-evaluation-monitoring',
 
-  heroLede: `AI evaluation and monitoring is the engineering of the safety net under a live LLM or agent system: labelled evals that catch quality regressions before deploy, and production monitoring that flags drift, failures, and cost spikes before users do. We instrument retrieval, generation, and task success, wire evals into CI, and stand up the dashboards and alerts your team runs on. You leave with an eval harness and live observability. Senior engineers own the build.`,
+  heroLede: `AI evaluation and monitoring is the engineering of the safety net under a live LLM or agent system: labelled evals that catch quality regressions before deploy, and production monitoring that flags drift, failures, and cost spikes before users do. We instrument retrieval, generation, and task success, wire evals into CI, and stand up the dashboards and alerts your team runs on. Senior engineers own the build.`,
 
   deliverables: [
     { label: 'Labelled evaluation harness covering retrieval, generation, and task success' },
@@ -1203,7 +1203,7 @@ export const aiEvaluationMonitoring: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI evaluation and monitoring is the engineering of evals and observability for production LLM and agent systems. Metaborong builds a labelled evaluation harness that catches quality regressions in CI, and live monitoring for drift, failures, latency, and cost. Retrieval, generation, and task success are instrumented and alerted, so problems surface before users hit them. Senior engineers own the build, delivered from India.`,
+  aeoAnswer: `AI evaluation and monitoring is engineering evals and observability for production LLM and agent systems. Metaborong builds a labelled evaluation harness that catches regressions in CI, and live monitoring for drift, failures, latency, and cost. Retrieval, generation, and task success are instrumented and alerted, so problems surface before users hit them. Senior engineers own the build, delivered from India.`,
 
   keyConcepts: [
     {

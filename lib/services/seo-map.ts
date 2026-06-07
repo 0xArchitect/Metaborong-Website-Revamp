@@ -40,7 +40,7 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     keyword: 'ai consulting services',
     title: 'AI Consulting & Strategy Services',
     description:
-      'Map AI use cases, test feasibility, and ship a sequenced adoption roadmap scoped to impact and operating cost. Senior AI team, India + global.',
+      'Map AI use cases, test feasibility, and ship a scored opportunity plan with build-versus-buy calls. Senior AI team, India + global.',
   },
   {
     pillar: 'ai',
