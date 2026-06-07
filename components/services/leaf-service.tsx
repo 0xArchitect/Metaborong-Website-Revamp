@@ -32,6 +32,8 @@ import { RwaTokenizationVisual } from '@/components/services/rwa-tokenization-vi
 import { CryptoWalletVisual } from '@/components/services/crypto-wallet-visual'
 import { CrossChainBridgeVisual } from '@/components/services/cross-chain-bridge-visual'
 import { IndexersSubgraphsVisual } from '@/components/services/blockchain-indexers-subgraphs-visual'
+import { AiKnowledgeBaseVisual } from '@/components/services/ai-knowledge-base-visual'
+import { AiAgentDevelopmentVisual } from '@/components/services/ai-agent-development-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
@@ -54,6 +56,8 @@ const heroVisuals: Record<string, React.ComponentType> = {
   'web3/crypto-wallet-development': CryptoWalletVisual,
   'web3/cross-chain-bridge-development': CrossChainBridgeVisual,
   'web3/blockchain-indexers-subgraphs': IndexersSubgraphsVisual,
+  'ai/ai-knowledge-base': AiKnowledgeBaseVisual,
+  'ai/ai-agent-development': AiAgentDevelopmentVisual,
 }
 
 import {
