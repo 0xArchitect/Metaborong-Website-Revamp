@@ -150,7 +150,7 @@ canonical.
 #### Brand
 | Alias                 | CSS var          | Hex       | Use                                          |
 |-----------------------|------------------|-----------|----------------------------------------------|
-| `color.brand.primary` | `--color-brand`  | `#296ff0` | Web3 pillar, primary CTA, hub                |
+| `color.brand.primary` | `--color-brand`  | `#296ff0` | Web3 pillar, hub; primary CTA on neutral/shared surfaces (homepage, nav, blog) |
 | `color.brand.accent`  | `--color-accent` | `#C2410C` | Product Studio pillar, HUD — burnt orange (avoids MetaMask wallet-orange) |
 | `color.brand.ai`      | `--color-ai`     | `#0F766E` | AI Agents pillar (only) — institutional teal (replaces Tailwind emerald) |
 
@@ -180,6 +180,19 @@ canonical.
 ### Pillar color rule
 Pillars own their color globally — Web3 is brand-blue, AI is `#0F766E`, Product Studio
 is `#C2410C`. Must not introduce new pillar-tinted UI without updating `services-data.ts`.
+
+**Primary CTA follows the pillar on pillar surfaces.** Since equal-weight positioning
+forbids any pillar's color (brand-blue *is* Web3's) dominating another's pages, the primary
+action localizes to the active pillar on its own hub + leaf pages: AI CTAs render teal, PS
+orange, Web3 blue. Mechanism: the pillar `<main>` carries `.pillar-theme-<id>` (globals.css),
+which sets `--cta-color` / `--cta-hover` / `--cta-active`; the `Button` primary + secondary
+variants, the hub's hand-rolled CTA, the Contact-CTA dot, and the focus ring all read
+`var(--cta-color, var(--color-brand))`. Neutral/shared surfaces (homepage, nav, blog,
+`/services` overview) set no `--cta-color` and keep the brand-blue fallback — so the master
+brand stays blue on shared ground while no pillar borrows another's color on its own turf.
+`.pillar-theme-web3` is a deliberate no-op (Web3 == brand). Hover/active are token-derived
+via `color-mix(... 86%/74%, #000)`, not new hex. Teal CTA white-text contrast ≈ 5.5:1 (vs
+brand-blue ≈ 4.55:1), so this also clears AA more comfortably.
 
 ### Inactive / structural slate
 Used for inactive glyphs and dashed spokes in `services-glyphs.tsx`. Component-local,

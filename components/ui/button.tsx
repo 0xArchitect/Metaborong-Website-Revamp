@@ -20,10 +20,13 @@ const sizeClass: Record<ButtonSize, { text: string; pad: string; arrowPad: strin
 }
 
 const variantClass: Record<ButtonVariant, { base: string; hover: string; active: string }> = {
+  // Primary + secondary action colors resolve from --cta-color, which pillar
+  // service surfaces localize (AI=teal, PS=orange). Neutral surfaces have no
+  // --cta-color set, so the brand-blue fallbacks below apply unchanged.
   primary: {
-    base:   'bg-brand text-white border border-brand',
-    hover:  'hover:bg-[#1a3fdb] hover:border-[#1a3fdb]',
-    active: 'active:bg-[#0f2eb8] active:border-[#0f2eb8]',
+    base:   'bg-[var(--cta-color,var(--color-brand))] text-white border border-[var(--cta-color,var(--color-brand))]',
+    hover:  'hover:bg-[var(--cta-hover,#1a3fdb)] hover:border-[var(--cta-hover,#1a3fdb)]',
+    active: 'active:bg-[var(--cta-active,#0f2eb8)] active:border-[var(--cta-active,#0f2eb8)]',
   },
   ghost: {
     base:   'bg-transparent text-dark border border-border',
@@ -31,9 +34,9 @@ const variantClass: Record<ButtonVariant, { base: string; hover: string; active:
     active: 'active:bg-border-subtle',
   },
   secondary: {
-    base:   'bg-bg-subtle text-brand border border-brand/20',
-    hover:  'hover:border-brand/40',
-    active: 'active:bg-[#eef2ff]',
+    base:   'bg-bg-subtle text-[var(--cta-color,var(--color-brand))] border border-[color-mix(in_srgb,var(--cta-color,var(--color-brand))_20%,transparent)]',
+    hover:  'hover:border-[color-mix(in_srgb,var(--cta-color,var(--color-brand))_40%,transparent)]',
+    active: 'active:bg-[color-mix(in_srgb,var(--cta-color,var(--color-brand))_8%,#fff)]',
   },
 }
 
