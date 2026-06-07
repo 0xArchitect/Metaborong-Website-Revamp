@@ -74,7 +74,7 @@ const content: LeafContent = {
   },
 
   aeoAnswer:
-    'SaaS Development is an end-to-end engagement for founders building a multi-tenant subscription business that exits with a production deployment and billing live. Metaborong is a senior boutique studio operating from India for clients across North America, Europe, and APAC. The studio holds a 4.9 rating across eight verified engagements on Clutch.',
+    'SaaS Development is an end-to-end engagement for founders building a multi-tenant subscription business that exits with a production deployment and billing live. Metaborong is a senior boutique studio operating from India for clients across North America, Europe, and APAC, with its delivery independently reviewed by clients on Clutch.',
 
   relatedWork: [
     {
@@ -117,6 +117,11 @@ const content: LeafContent = {
       question: 'Can we add custom enterprise features after launch?',
       answer:
         'Yes, but as a separate engagement, not a quiet rollover. Post-launch work - SSO, custom SLAs, dedicated tenants, white-label - is a v2 conversation we scope based on the contract that triggered it. If you are already shipped and need that work, write to us at /contact rather than starting a new MVP engagement.',
+    },
+    {
+      question: 'Do you build B2B multi-tenant platforms?',
+      answer:
+        'Yes - that is the core of SaaS Development here. Multi-tenancy, with each customer’s data isolated by workspace, plus SSO, role-based access, audit trails, and admin tooling, is built in from the architecture-review week rather than retrofitted when your first enterprise buyer asks. CropXcel, our own permissioned-platform build, is where we proved the tenant-isolation patterns we now use on client work.',
     },
   ],
 }
