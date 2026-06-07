@@ -239,6 +239,15 @@ export const v1LeafSeo: readonly LeafSeoEntry[] = [
     description:
       'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in. Senior team owns architecture through deployment, no vendor fragmentation.',
   },
+  {
+    pillar: 'product-studio',
+    subGroup: 'build',
+    slug: 'web-application-development',
+    keyword: 'web application development services',
+    title: 'Web Application Development Services',
+    description:
+      'Custom web application development for workflows no off-the-shelf tool fits. One senior team designs, builds, and ships a production app to your own cloud.',
+  },
 ] as const
 
 // Pre-built key for O(1) lookup by `${pillar}/${slug}` (the canonical

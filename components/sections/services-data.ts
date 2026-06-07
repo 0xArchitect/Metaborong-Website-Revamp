@@ -337,7 +337,7 @@ export const pillars: Pillar[] = [
             name: 'Web Application Development',
             description: 'Production web apps in React and Next.js, accessible and fast from the first deploy.',
             slug: 'web-application-development',
-            status: 'coming-soon',
+            status: 'published',
           },
           {
             name: 'Mobile App Development',
