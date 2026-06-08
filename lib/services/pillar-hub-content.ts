@@ -181,40 +181,40 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
     id: 'product-studio',
     positioning: 'We build the first version of your product, end-to-end.',
     heroParagraphs: [
-      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. The pillar exists for teams without an in-house CTO who need one senior engineering group to own the work from architecture through deployment: not a fragmented chain of specialists each handing off the last piece. We cover three engagement shapes: product strategy and discovery for pre-build founders, product engineering for MVP, SaaS, and B2B multi-tenant platforms, and underlying disciplines like frontend, backend, and design-systems engineering that hold the product together.',
+      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. The pillar exists for teams without an in-house CTO who need one senior engineering group to own the work from architecture through deployment, not a fragmented chain of specialists each handing off the last piece. It spans the full lifecycle: product discovery, then MVP, SaaS, web, and mobile builds, then the cloud, DevOps, and design disciplines that keep a product shippable as it scales.',
       'Every build is shaped to ship to production, not to demo in a stand-up. Multi-tenancy, billing, observability, authentication, audit logging, and the operational defaults that enterprise procurement asks about are baked in from week one. Founders communicate directly with the engineers writing the code, and architecture decisions happen out in the open. We do not market modernisation, managed services, or v2/v3 retainers: Product Studio is intentionally a greenfield practice. Teams who already have a product can still reach us; we handle that conversation directly.',
     ],
     subGroups: [
       {
-        id: 'strategy',
+        id: 'discover',
         description:
-          'Discovery sprints, architecture planning, and MVP scoping for founders before a single line of production code is written. The output is a shipping plan, not a strategy deck.',
+          'Discovery and validation before a line of production code: problem framing, customer evidence, and a clickable prototype that de-risks the build.',
         caseStudy: {
-          descriptor: 'Pre-seed founder: product discovery sprint',
+          descriptor: 'Product discovery sprint',
           outcome:
-            'Two-week discovery: problem framing, hypothesis tests, technical feasibility, and a clickable prototype the founder used to close the seed round.',
+            'A two-week loop: problem framing, hypothesis tests, technical feasibility, and a clickable prototype a founder can take to customers or investors.',
           href: '/work',
         },
       },
       {
-        id: 'product',
+        id: 'build',
         description:
-          'MVP, SaaS, and B2B multi-tenant platforms shipped end-to-end by one senior team. Architecture, engineering, design, and deployment are owned in-house: not subcontracted.',
+          'The product itself, shipped end-to-end by one senior team: MVP, SaaS, web, and mobile builds with multi-tenancy, billing, and observability baked in from week one.',
         caseStudy: {
-          descriptor: 'B2B vertical SaaS: multi-tenant platform',
+          descriptor: 'GetSmart: on-chain credentialing platform',
           outcome:
-            'Multi-tenant platform with SSO, role-based access, audit trails, and admin tooling shipped to enterprise procurement readiness in fourteen weeks.',
+            'A multi-role web app with embedded smart wallets, IPFS-backed evidence, NFT credentials, and token escrow shipped end-to-end by one team.',
           href: '/work',
         },
       },
       {
-        id: 'engineering',
+        id: 'scale',
         description:
-          'Frontend, backend, and design-systems engineering: the underlying disciplines that hold a product together. Used as standalone capacity or as part of a full product build.',
+          'The disciplines that keep a product shippable as it grows: cloud and DevOps engineering, plus the product and web design systems your team owns.',
         caseStudy: {
-          descriptor: 'Founding-team React stack: design system rebuild',
+          descriptor: 'Absolveme: Web3 product frontend & design',
           outcome:
-            'Token-driven design system and component library rebuilt from a Figma reference set. Owned by the in-house team within six weeks of handoff.',
+            'A distinctive dark, atmospheric frontend and design language built for a multi-chain Web3 product and handed to the team to run.',
           href: '/work',
         },
       },

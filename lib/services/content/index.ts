@@ -26,10 +26,13 @@ import {
   aiAdoptionRoadmap,
   aiEvaluationMonitoring,
 } from './ai'
-import productDiscoveryValidation from './product-studio/product-discovery-validation'
+import productDiscovery from './product-studio/product-discovery'
 import mvpDevelopment from './product-studio/mvp-development'
-import saasProductDevelopment from './product-studio/saas-product-development'
-import b2bMultiTenantPlatforms from './product-studio/b2b-multi-tenant-platforms'
+import saasDevelopment from './product-studio/saas-development'
+import webApplicationDevelopment from './product-studio/web-application-development'
+import mobileAppDevelopment from './product-studio/mobile-app-development'
+import uxUiWebDesign from './product-studio/ux-ui-web-design'
+import cloudDevopsEngineering from './product-studio/cloud-devops-engineering'
 import {
   smartContractDevelopment,
   defiProtocolDevelopment,
@@ -72,10 +75,13 @@ const registry: Record<string, LeafContent> = {
   'web3/crypto-wallet-development': cryptoWalletDevelopment,
   'web3/cross-chain-bridge-development': crossChainBridgeDevelopment,
   'web3/blockchain-indexers-subgraphs': blockchainIndexersSubgraphs,
-  'product-studio/product-discovery-validation': productDiscoveryValidation,
+  'product-studio/product-discovery': productDiscovery,
   'product-studio/mvp-development': mvpDevelopment,
-  'product-studio/saas-product-development': saasProductDevelopment,
-  'product-studio/b2b-multi-tenant-platforms': b2bMultiTenantPlatforms,
+  'product-studio/saas-development': saasDevelopment,
+  'product-studio/web-application-development': webApplicationDevelopment,
+  'product-studio/mobile-app-development': mobileAppDevelopment,
+  'product-studio/ux-ui-web-design': uxUiWebDesign,
+  'product-studio/cloud-devops-engineering': cloudDevopsEngineering,
 }
 
 /**

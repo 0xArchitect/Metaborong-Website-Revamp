@@ -93,7 +93,24 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services/product-studio/b2b-software-development',
-        destination: '/services/product-studio/b2b-multi-tenant-platforms',
+        destination: '/services/product-studio/saas-development',
+        permanent: true,
+      },
+      // Product Studio head-term reslug (Peiko-aligned taxonomy re-cut).
+      {
+        source: '/services/product-studio/product-discovery-validation',
+        destination: '/services/product-studio/product-discovery',
+        permanent: true,
+      },
+      {
+        source: '/services/product-studio/saas-product-development',
+        destination: '/services/product-studio/saas-development',
+        permanent: true,
+      },
+      // B2B Multi-Tenant folded into SaaS Development.
+      {
+        source: '/services/product-studio/b2b-multi-tenant-platforms',
+        destination: '/services/product-studio/saas-development',
         permanent: true,
       },
       {
