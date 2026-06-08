@@ -37,7 +37,7 @@ all three pillars.
   tokenomics, and decentralised identity." 226 words across two
   paragraphs. References Aadhaar-integrated DID stacks as the
   GovTech anchor without leaning India-only.
-- **Product Studio** — "Product Studio at Metaborong is greenfield
+- **Product Studio** — "Product Studio at Metaborong is
   product engineering for founders building from zero." 224 words
   across two paragraphs. Explicitly disowns modernisation /
   managed-services to mitigate the SERVICES_PLAN § Risk 6 cannibalisation

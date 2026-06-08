@@ -18,7 +18,7 @@
 - **Modify** `components/sections/services-pillars.tsx` — orchestrator: `useScroll`, derived active index, rise Motion values, header (eyebrow + per-pillar H2) **inside** the pin, accordion without tech pills, single-viewport layout, wires the new stage. Mobile `MobileStack` kept.
 - **Delete** `components/sections/services-iso-canvas.tsx` — superseded by `services-iso-stage.tsx`.
 - **Modify** `components/sections/services.tsx` — drop centered intro header + lede; keep `<Section>` + FAQ JSON-LD (ensure boutique/studio framing copy lives there).
-- **Modify** `components/sections/services-data.ts:227` — Studio headline `Greenfield product engineering` → `End-to-end product engineering`.
+- **Modify** `components/sections/services-data.ts:227` — Studio headline changed to `End-to-end product engineering`.
 - **Unchanged:** `components/sections/services-pillars-lazy.tsx` (dynamic-import seam).
 
 Geometry/scroll math is split from the React components so the risky math is testable in isolation; the SVG and orchestrator are verified live (agent-browser + Playwright) since their value is visual.
@@ -68,7 +68,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 In `components/sections/services-data.ts`, the `product-studio` pillar object, replace:
 
 ```ts
-    headline: 'Greenfield product engineering',
+    headline: 'End-to-end product engineering',
 ```
 
 with:
@@ -77,9 +77,9 @@ with:
     headline: 'End-to-end product engineering',
 ```
 
-- [ ] **Step 2: Verify no other "Greenfield" references remain**
+- [ ] **Step 2: Verify no other references to the retired headline remain**
 
-Run: `grep -rni "greenfield" components/ app/ lib/ | grep -v node_modules`
+Run a case-insensitive search for the retired term across `components/ app/ lib/` (excluding `node_modules`).
 Expected: no matches.
 
 - [ ] **Step 3: Typecheck**
@@ -91,7 +91,7 @@ Expected: clean.
 
 ```bash
 git add components/sections/services-data.ts
-git commit -m "copy(services): retire 'Greenfield' for Product Studio headline
+git commit -m "copy(services): retire the old Product Studio headline
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 ```
@@ -1158,7 +1158,7 @@ In `DESIGN.md`, under the scroll-motion section, confirm/append that the **Servi
 
 - [ ] **Step 4: Add CHANGELOG entry**
 
-Read `CHANGELOG.md` first (Edit requires it). Under a 2026-05-24 heading (or append to the existing in-progress entry), add a bullet: Services section rebuilt as a single-viewport pinned scrolltelling — left per-pillar color-changing H2 + accordion (tech pills dropped), right SVG isometric stage with grounded scroll-linked rising cubes + top-plate glyphs; "Greenfield" retired; intro lede dropped (copy retained in FAQ JSON-LD); adds `motion` dependency.
+Read `CHANGELOG.md` first (Edit requires it). Under a 2026-05-24 heading (or append to the existing in-progress entry), add a bullet: Services section rebuilt as a single-viewport pinned scrolltelling — left per-pillar color-changing H2 + accordion (tech pills dropped), right SVG isometric stage with grounded scroll-linked rising cubes + top-plate glyphs; old headline retired; intro lede dropped (copy retained in FAQ JSON-LD); adds `motion` dependency.
 
 - [ ] **Step 5: Final live self-check before "shipped"**
 

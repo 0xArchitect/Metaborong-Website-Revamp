@@ -69,7 +69,7 @@ services
 │       ├── decentralized-identity-did-integration      [v1] ★ new
 │       └── token-launchpad-distribution
 │
-└── product-studio/                  Greenfield product engineering
+└── product-studio/                  End-to-end product engineering
     ├── strategy/
     │   ├── product-discovery-validation                [v1]
     │   ├── technical-architecture-planning
@@ -285,7 +285,7 @@ is the one exception — it leans India-explicit because Aadhaar is the keyword 
 | Target keyword     | `ai and web3 development services` (head term, brand-adjacent)                     |
 | Secondary terms    | `boutique software studio`, `mvp development studio india`                         |
 | Meta title         | `Services — AI, Web3, Product Studio — Metaborong`                                 |
-| Meta description   | `AI integration, Web3 protocols, and greenfield product builds from a senior boutique studio. India + global delivery.` (≤160 chars) |
+| Meta description   | `AI integration, Web3 protocols, and end-to-end product builds from a senior boutique studio. India + global delivery.` (≤160 chars) |
 | Internal links to  | All 3 pillar hubs, top 4 outcome leaves, `/work`, `/blog`, `/contact`              |
 | Linked from        | Main nav, footer, all pillar hubs (breadcrumb), every leaf (breadcrumb)            |
 
@@ -295,7 +295,7 @@ is the one exception — it leans India-explicit because Aadhaar is the keyword 
 |----------------|---------------------------------------------|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | AI             | `ai development services`                   | `AI Development Services — Copilots, Agents, RAG — Metaborong`     | `Production AI capability: copilots, RAG, agentic systems, integration, and evaluation. Senior team, India + global.` |
 | Web3           | `web3 development services`                 | `Web3 Development Services — Smart Contracts, DeFi, DID — Metaborong` | `Smart-contract, DeFi, NFT, DID, and tokenomics engineering. Multichain protocol studio from India, global delivery.` |
-| Product Studio | `mvp development services`                  | `Product Studio — MVP, SaaS, B2B Product Builds — Metaborong`     | `Greenfield product builds for founders without a CTO. MVP, SaaS, and B2B multi-tenant platforms, end-to-end.` |
+| Product Studio | `mvp development services`                  | `Product Studio — MVP, SaaS, B2B Product Builds — Metaborong`     | `Product builds for founders without a CTO. MVP, SaaS, and B2B multi-tenant platforms, end-to-end.` |
 
 Internal-link policy on every pillar hub: all of its **v1** leaves linked normally,
 **coming-soon** leaves shown as dimmed cards with no link, 1 link to each of the other
@@ -537,7 +537,7 @@ The atomic refactor must:
 
 Plan: do the data refactor first, in a single commit, with consumers updated in lockstep.
 
-### Risk 6 — Greenfield-only Product Studio means lost leads
+### Risk 6 — New-build-only Product Studio means lost leads
 
 Buyers who arrive with "we have a v1 SaaS, need v2 features" don't have a clean home
 in the public taxonomy (IT Services is no longer marketed). **Mitigation.** Contact CTA
