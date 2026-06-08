@@ -19,7 +19,7 @@ to render it at `/services/`.
 ## Hero copy — entity-definition opener
 
 143-word lede opening `Metaborong is a boutique engineering studio that
-builds production AI systems, on-chain protocols, and greenfield SaaS
+builds production AI systems, on-chain protocols, and SaaS
 products for founders and crypto-native teams.` Fits the 130–180 word
 band per § 3 Template A. References three verifiable proof points:
 agentic AI at PredictRAM and SunsetML, the Aadhaar-integrated DID stack

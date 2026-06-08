@@ -21,7 +21,7 @@ Skill names are slash-commands. Skip a step only when explicitly noted.
 |---|---|---|
 | `brainstorming` | Explore intent, reject directions | Step 1 of any creative session |
 | `frontend-design` | Distinctive section/component code in existing stack | Default implementation skill |
-| `landing-page-generator` | Greenfield Next.js+Tailwind page scaffold | Skip — we have a shell already |
+| `landing-page-generator` | New-project Next.js+Tailwind page scaffold | Skip — we have a shell already |
 | `design-shotgun` | Multiple visual variants in parallel | When direction is uncertain |
 | `impeccable critique` | a11y, focus management, role/aria, tap targets, correctness | Post-impl, **always** |
 | `impeccable layout` | Spacing rhythm, alignment, visual hierarchy | Post-impl, only if needed. Cross-ref `web-design-guidelines` |
@@ -56,7 +56,7 @@ Skill names are slash-commands. Skip a step only when explicitly noted.
 
 ## Context A1 — New homepage section (from scratch)
 
-For greenfield sections where copy doesn't exist and visual direction is open.
+For new sections where copy doesn't exist and visual direction is open.
 
 ```
 [ ] 1. brainstorming                       — intent, rejected directions

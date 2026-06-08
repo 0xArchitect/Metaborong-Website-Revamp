@@ -56,7 +56,7 @@ credential per § Risk 7.
 - Web3: `label` `'Web3 / Blockchain'` → `'Web3'`; body rewritten to add
   tokenomics and DID. Headline and `hubHref` unchanged.
 - Product Studio: `headline` `'Your full SaaS engineering team'` →
-  `'Greenfield product engineering'` (matches plan § Pillar identity);
+  `'End-to-end product engineering'` (matches plan § Pillar identity);
   body rewritten. `hubHref` and `hubCta` unchanged.
 
 Data array order preserved as `[web3, ai, product-studio]` so existing

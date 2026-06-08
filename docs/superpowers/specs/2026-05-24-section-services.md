@@ -38,7 +38,7 @@ stage so grid and cubes share a coordinate space. Everything visible fits in one
 6. **Single viewport:** bar → (H2 + accordion | iso stage) → scroll hint, all inside
    `calc(100svh - 56px nav)`. The intro lede paragraph is **dropped** (equivalent copy
    preserved in the FAQ JSON-LD for SEO/AEO).
-7. **Data:** `services-data.ts:227` Studio headline `Greenfield product engineering` →
+7. **Data:** `services-data.ts:227` Studio headline changed to
    `End-to-end product engineering`.
 
 ## Components
