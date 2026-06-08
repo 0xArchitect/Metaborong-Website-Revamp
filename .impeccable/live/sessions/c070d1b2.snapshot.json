@@ -1,0 +1,37 @@
+{
+  "id": "c070d1b2",
+  "phase": "completed",
+  "pageUrl": "/services/web3/tokenomics-design",
+  "sourceFile": "components/services/leaf-service.tsx",
+  "expectedVariants": 2,
+  "arrivedVariants": 2,
+  "visibleVariant": 1,
+  "paramValues": {
+    "density": 1,
+    "numbers": true
+  },
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 31,
+  "activeOwner": "35667022",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "annotationArtifacts": [],
+  "diagnostics": [
+    {
+      "error": "stale_checkpoint_ignored",
+      "revision": 1
+    },
+    {
+      "error": "stale_checkpoint_ignored",
+      "revision": 2
+    },
+    {
+      "error": "carbonize_cleanup_required",
+      "file": "components/services/leaf-service.tsx",
+      "message": "Accepted variant still has carbonize markers that must be folded into source CSS."
+    }
+  ],
+  "updatedAt": "2026-06-04T07:26:26.684Z"
+}

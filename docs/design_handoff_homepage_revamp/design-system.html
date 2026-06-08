@@ -1,0 +1,2649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Metaborong — Design System v1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800,900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" />
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Tokens — verbatim from app/globals.css :17–53
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* brand */
+  --color-brand:        #296ff0;
+  --color-accent:       #C2410C;
+  --color-ai:           #0F766E;
+
+  /* text */
+  --color-dark:         #303030;
+  --color-gray:         #676767;
+  --color-gray-light:   #999999;
+  --color-gray-subtle:  #D9D9D9;
+  --color-off-white:    #FEFEFE;
+
+  /* surface */
+  --color-bg:           #ffffff;
+  --color-bg-subtle:    #f5f7ff;
+  --color-bg-raised:    #fafbff;
+  --color-canvas:       #0a0a0a;
+
+  /* border */
+  --color-border:         #e5e7eb;
+  --color-border-subtle:  #f3f4f6;
+
+  /* type */
+  --font-brand: 'Switzer','Inter','Helvetica Neue',sans-serif;
+  --font-mono:  'JetBrains Mono','Courier New',monospace;
+
+  /* spacing */
+  --spacing-1: 4px;   --spacing-2: 8px;   --spacing-3: 12px;  --spacing-4: 16px;
+  --spacing-5: 24px;  --spacing-6: 32px;  --spacing-7: 48px;  --spacing-8: 64px;
+  --spacing-9: 96px;  --spacing-10: 128px;
+
+  /* radius */
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+
+  /* elevation */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / .04), 0 1px 3px 0 rgb(0 0 0 / .06);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / .08), 0 2px 6px -1px rgb(0 0 0 / .04);
+  --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / .12), 0 6px 16px -4px rgb(0 0 0 / .06);
+
+  /* motion */
+  --duration-instant: 150ms;
+  --duration-fast: 250ms;
+  --duration-base: 400ms;
+  --duration-slow: 620ms;
+  --duration-deliberate: 900ms;
+
+  /* canonical horizontal section padding (PR #33 chain) */
+  --section-px: 16px;
+}
+@media (min-width:640px)  { :root { --section-px: 24px; } }
+@media (min-width:768px)  { :root { --section-px: 40px; } }
+@media (min-width:1024px) { :root { --section-px: 48px; } }
+@media (min-width:1280px) { :root { --section-px: 80px; } }
+@media (min-width:1536px) { :root { --section-px: 128px; } }
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-family: var(--font-brand); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body {
+  background: var(--color-bg);
+  color: var(--color-dark);
+  line-height: 1.5;
+  letter-spacing: -.01em;
+  font-feature-settings: 'tnum';
+}
+:where(a,button,[role=button],input,select,textarea,summary):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── layout primitives ───────────────────────────────────── */
+.section {
+  padding: 48px var(--section-px);
+  border-top: 1px solid var(--color-border);
+}
+@media (min-width:768px)  { .section { padding-top: 64px; padding-bottom: 64px; } }
+@media (min-width:1024px) { .section { padding-top: 72px; padding-bottom: 72px; } }
+.section--subtle { background: var(--color-bg-subtle); }
+.section--dark   { background: var(--color-canvas); color: var(--color-off-white); }
+.wrap { max-width: 1280px; margin: 0 auto; }
+.wrap--narrow { max-width: 880px; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  line-height: 1;
+  color: var(--color-gray-light);
+}
+.eyebrow--brand { color: var(--color-brand); }
+.eyebrow--ai    { color: var(--color-ai); }
+.eyebrow--ps    { color: var(--color-accent); }
+
+.h2 {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  color: var(--color-dark);
+  text-wrap: balance;
+}
+@media (max-width: 768px) { .h2 { font-size: 40px; } }
+.h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+}
+.lede {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.55;
+  color: var(--color-gray);
+  max-width: 62ch;
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+.section-header > .eyebrow { margin-bottom: 4px; }
+
+/* ─── ribbon / running banner under each H2 ─────────────────── */
+.ribbon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-gray-light);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px 0;
+  margin-bottom: 48px;
+}
+.ribbon-dot { width: 6px; height: 6px; background: var(--color-brand); border-radius: 999px; flex: none; }
+
+/* ─── COVER ──────────────────────────────────────────────────── */
+.cover {
+  background: var(--color-bg);
+  padding: 24px var(--section-px) 64px;
+  border-bottom: 1px solid var(--color-border);
+}
+.cover-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 96px;
+}
+.cover-bar-meta {
+  display: flex; gap: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: var(--color-gray-light);
+  text-transform: uppercase;
+}
+.cover-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+@media (min-width: 1024px) {
+  .cover-grid { grid-template-columns: 1.4fr 1fr; gap: 72px; align-items: end; }
+}
+.cover h1 {
+  font-size: clamp(56px, 9vw, 112px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: .95;
+  color: var(--color-dark);
+}
+.cover h1 .brand { color: var(--color-brand); }
+.cover-meta-block {
+  display: flex; flex-direction: column;
+  gap: 18px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+}
+.cover-meta-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: baseline;
+  gap: 16px;
+}
+.cover-meta-row dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-gray-light);
+}
+.cover-meta-row dd { font-size: 15px; color: var(--color-dark); }
+
+.cover-quote {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -.015em;
+  line-height: 1.4;
+  max-width: 880px;
+  color: var(--color-dark);
+}
+.cover-quote em { color: var(--color-brand); font-style: normal; }
+
+/* M-mark logo */
+.mark-square {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-brand);
+  border-radius: 5px;
+}
+.mark-square--lg { width: 44px; height: 44px; border-radius: 7px; }
+.wordmark {
+  font-family: var(--font-brand);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -.03em;
+  line-height: 1;
+  color: var(--color-dark);
+  margin-left: 6px;
+}
+.wordmark--lg { font-size: 26px; }
+.logo-row { display: inline-flex; align-items: center; }
+
+/* ─── TYPE SCALE TABLE ────────────────────────────────────── */
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.type-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 32px;
+  align-items: baseline;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+.type-row dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-gray-light);
+}
+.type-row dd { color: var(--color-dark); }
+.type-meta {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-gray-light);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* font specimens (two large blocks) */
+.specimen-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 64px;
+}
+@media (min-width: 1024px) { .specimen-grid { grid-template-columns: 1fr 1fr; } }
+.specimen {
+  border: 1px solid var(--color-border);
+  padding: 28px 32px;
+  display: flex; flex-direction: column;
+  gap: 16px;
+  min-height: 320px;
+}
+.specimen-aa { font-size: 144px; line-height: .85; font-weight: 900; letter-spacing: -.04em; color: var(--color-dark); }
+.specimen-aa-mono { font-family: var(--font-mono); font-weight: 400; }
+.specimen-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+.specimen-meta b { color: var(--color-dark); font-weight: 700; }
+.specimen-weights {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  font-size: 22px;
+  letter-spacing: -.015em;
+  line-height: 1;
+  margin-top: auto;
+}
+.specimen-weights span { color: var(--color-dark); }
+.w300 { font-weight: 300; } .w400 { font-weight: 400; } .w500 { font-weight: 500; } .w700 { font-weight: 700; } .w900 { font-weight: 900; }
+
+/* ─── COLOR ────────────────────────────────────────────────── */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.swatch {
+  border: 1px solid var(--color-border);
+  display: flex; flex-direction: column;
+  background: var(--color-bg);
+}
+.swatch-chip {
+  height: 120px;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+.swatch-chip::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(0,0,0,.04) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,0,.04) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(0,0,0,.04) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0,0,0,.04) 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+  opacity: 0;
+}
+.swatch-chip.is-white::after { opacity: 1; }
+.swatch-chip.is-white { z-index: 1; }
+.swatch-chip.is-white > div { position: relative; z-index: 2; height: 100%; background: #fff; border: 1px solid var(--color-border-subtle); border-width: 0; }
+.swatch-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  padding: 14px 16px 16px;
+}
+.swatch-alias {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+.swatch-hex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--color-gray);
+  justify-self: end;
+}
+.swatch-use {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--color-gray);
+  letter-spacing: -.005em;
+  line-height: 1.45;
+}
+
+.color-group-h {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--color-gray-light);
+  margin: 40px 0 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.color-group-h::after {
+  content: ''; flex: 1; height: 1px; background: var(--color-border);
+}
+.color-group-h:first-of-type { margin-top: 0; }
+
+/* pillar callouts */
+.pillar-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 24px;
+  border: 1px solid var(--color-border);
+}
+@media (min-width: 768px) { .pillar-strip { grid-template-columns: repeat(3, 1fr); } }
+.pillar-cell {
+  padding: 24px;
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  background: var(--color-bg);
+}
+.pillar-cell + .pillar-cell { border-top: 0; }
+@media (min-width: 768px) {
+  .pillar-cell { border-bottom: 0; border-right: 1px solid var(--color-border); }
+  .pillar-cell:last-child { border-right: 0; }
+}
+.pillar-cell::before {
+  content: '';
+  position: absolute; left: 0; top: 24px; bottom: 24px;
+  width: 3px;
+  background: var(--p);
+}
+.pillar-cell { padding-left: 28px; }
+.pillar-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--p);
+  text-transform: uppercase;
+}
+.pillar-name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  margin: 8px 0 6px;
+}
+.pillar-body { font-size: 14px; color: var(--color-gray); }
+.pillar-hex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-gray-light);
+  letter-spacing: .04em;
+  margin-top: 12px;
+}
+
+/* ─── SPACING ───────────────────────────────────────────────── */
+.spacing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid var(--color-border);
+}
+.spacing-row {
+  display: grid;
+  grid-template-columns: 90px 60px 1fr 110px;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+.spacing-row:last-child { border-bottom: 0; }
+.spacing-token {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--color-dark);
+}
+.spacing-px {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-gray);
+}
+.spacing-bar {
+  height: 12px;
+  background: var(--color-brand);
+}
+.spacing-use {
+  font-size: 13px;
+  color: var(--color-gray);
+  letter-spacing: -.005em;
+}
+
+/* ─── RADII ─────────────────────────────────────────────────── */
+.radii-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.radius-card {
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.radius-shape {
+  height: 80px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+}
+
+/* ─── SHADOWS ──────────────────────────────────────────────── */
+.shadow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 32px 0;
+}
+.shadow-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  height: 140px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.shadow-card.sm { box-shadow: var(--shadow-sm); }
+.shadow-card.md { box-shadow: var(--shadow-md); }
+.shadow-card.lg { box-shadow: var(--shadow-lg); }
+
+/* ─── MOTION ────────────────────────────────────────────────── */
+.motion-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--color-border);
+}
+.motion-row {
+  display: grid;
+  grid-template-columns: 170px 90px 1fr;
+  gap: 24px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+}
+.motion-row:last-child { border-bottom: 0; }
+.motion-row > div:first-child {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--color-dark);
+}
+.motion-row > div:nth-child(2) {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-gray);
+}
+.motion-row > div:last-child {
+  font-size: 13px;
+  color: var(--color-gray);
+}
+
+/* easing demos */
+.easing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 32px;
+}
+@media (min-width: 768px) { .easing-grid { grid-template-columns: 1fr 1fr; } }
+.easing-card {
+  border: 1px solid var(--color-border);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.easing-card-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--color-gray);
+  text-transform: uppercase;
+}
+.easing-card-meta b { color: var(--color-dark); font-weight: 700; }
+.easing-track {
+  position: relative;
+  height: 32px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-subtle);
+}
+.easing-dot {
+  position: absolute;
+  top: 50%;
+  width: 24px; height: 24px;
+  background: var(--color-brand);
+  border-radius: 999px;
+  transform: translate(-12px, -50%);
+  animation-duration: 1.6s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.e-1 .easing-dot { animation-name: ride; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+.e-2 .easing-dot { animation-name: ride; animation-timing-function: cubic-bezier(0.32, 0, 0.16, 1); background: var(--color-accent); }
+.e-3 .easing-dot { animation-name: ride; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); background: var(--color-ai); }
+.e-4 .easing-dot { animation-name: ride; animation-timing-function: linear; }
+@keyframes ride {
+  from { left: 0%; }
+  to   { left: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .easing-dot { animation: none !important; left: 50%; }
+}
+
+/* ─── BUTTONS ──────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: stretch;
+  font-family: var(--font-brand);
+  font-weight: 600;
+  letter-spacing: -.01em;
+  cursor: pointer;
+  border-radius: 0;
+  text-decoration: none;
+  border: 1px solid transparent;
+  font-feature-settings: 'tnum';
+  transition: background-color var(--duration-instant), border-color var(--duration-instant), color var(--duration-instant);
+}
+.btn-md { font-size: 15px; }
+.btn-sm { font-size: 13px; }
+.btn-lg { font-size: 15px; }
+.btn-md > .btn-label { padding: 8px 18px; }
+.btn-sm > .btn-label { padding: 6px 14px; }
+.btn-lg > .btn-label { padding: 10px 22px; }
+.btn-md > .btn-arrow { padding: 0 12px; display: inline-flex; align-items: center; }
+.btn-sm > .btn-arrow { padding: 0 10px; display: inline-flex; align-items: center; }
+.btn-lg > .btn-arrow { padding: 0 14px; display: inline-flex; align-items: center; }
+.btn-label, .btn-arrow { display: inline-flex; align-items: center; }
+.btn-label { gap: 6px; }
+.btn--primary {
+  background: var(--color-brand); color: #fff;
+  border-color: var(--color-brand);
+}
+.btn--primary:hover { background: #1a3fdb; border-color: #1a3fdb; }
+.btn--primary:active { background: #0f2eb8; border-color: #0f2eb8; }
+.btn--primary .btn-arrow {
+  background: rgba(255,255,255,0.10);
+  border-left: 1px solid rgba(255,255,255,0.15);
+}
+.btn--ghost {
+  background: transparent; color: var(--color-dark);
+  border-color: var(--color-border);
+}
+.btn--ghost:hover { background: var(--color-bg-subtle); border-color: var(--color-gray-subtle); }
+.btn--ghost:active { background: var(--color-border-subtle); }
+.btn--secondary {
+  background: var(--color-bg-subtle);
+  color: var(--color-brand);
+  border-color: rgba(41,111,240,.20);
+}
+.btn--secondary:hover { border-color: rgba(41,111,240,.40); }
+.btn--secondary:active { background: #eef2ff; }
+.btn--disabled, .btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn--disabled:hover, .btn[disabled]:hover { background: var(--color-brand); border-color: var(--color-brand); }
+
+/* button matrix */
+.matrix {
+  border: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 140px repeat(3, 1fr);
+}
+.matrix-cell {
+  padding: 24px;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: flex-start;
+  background: var(--color-bg);
+  min-height: 96px;
+}
+.matrix-cell:nth-child(4n) { border-right: 0; }
+.matrix-cell--head {
+  background: var(--color-bg-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+.matrix-row-label {
+  background: var(--color-bg-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+.matrix-cell:last-child, .matrix-cell:nth-last-child(2), .matrix-cell:nth-last-child(3), .matrix-cell:nth-last-child(4) {
+  border-bottom: 0;
+}
+/* simulated states */
+.btn--state-hover { background: #1a3fdb; border-color: #1a3fdb; }
+.btn--state-active { background: #0f2eb8; border-color: #0f2eb8; }
+.btn--state-focus { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+.btn--state-loading .btn-label::before {
+  content: '';
+  width: 14px; height: 14px;
+  border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 999px;
+  display: inline-block;
+  animation: spin 700ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── CARDS ───────────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 1024px) { .card-grid { grid-template-columns: 1fr 1fr 1fr; align-items: stretch; } }
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex; flex-direction: column;
+  gap: 16px;
+  transition: border-color var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(41,111,240,.30);
+  box-shadow: var(--shadow-sm);
+}
+.card--featured {
+  border-radius: var(--radius-lg);
+  border-left: 3px solid var(--p, var(--color-brand));
+}
+.card--quote {
+  background: var(--color-bg-subtle);
+  border-color: transparent;
+}
+.card-h { font-size: 20px; font-weight: 700; letter-spacing: -.025em; line-height: 1.2; }
+.card-body { font-size: 14px; color: var(--color-gray); line-height: 1.55; }
+.card-quote-mark {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-brand);
+  line-height: 1;
+}
+.card-attr {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+.card-attr b { color: var(--color-dark); font-weight: 700; }
+
+/* ─── 7 STATES ──────────────────────────────────────────────── */
+.states-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--color-border);
+}
+.states-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: 24px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+}
+.states-row:last-child { border-bottom: 0; }
+.states-row > div:first-child {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+.states-row > div:nth-child(2) { font-size: 14px; color: var(--color-gray); }
+.states-row > div:last-child { display: flex; gap: 12px; align-items: center; }
+
+/* ─── ASSETS / clients wall ────────────────────────────────── */
+.clients-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  border: 1px solid var(--color-border);
+}
+.client-cell {
+  height: 96px;
+  display: flex; align-items: center; justify-content: center;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 20px;
+  background: var(--color-bg);
+}
+.client-cell img {
+  max-width: 100%; max-height: 36px;
+  filter: grayscale(100%);
+  opacity: .65;
+  transition: opacity var(--duration-fast), filter var(--duration-fast);
+}
+.client-cell:hover img { filter: grayscale(0); opacity: 1; }
+
+/* ─── rules table do / don't ───────────────────────────────── */
+.rules {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 1024px) { .rules { grid-template-columns: 1fr 1fr; } }
+.rule-card {
+  border: 1px solid var(--color-border);
+  padding: 28px;
+}
+.rule-card h4 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.rule-card.do h4    { color: var(--color-brand); }
+.rule-card.dont h4  { color: var(--color-accent); }
+.rule-card h4::before {
+  content: ''; width: 8px; height: 8px;
+  background: currentColor;
+}
+.rule-card.dont h4::before {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+.rule-card ul {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 14px;
+}
+.rule-card li {
+  font-size: 14px;
+  letter-spacing: -.005em;
+  line-height: 1.5;
+  color: var(--color-dark);
+  padding-left: 20px;
+  position: relative;
+}
+.rule-card li::before {
+  content: '·';
+  position: absolute;
+  left: 0; top: -2px;
+  color: var(--color-gray-light);
+  font-weight: 700;
+}
+.rule-card li b { color: var(--color-brand); font-weight: 700; }
+.rule-card.dont li b { color: var(--color-accent); }
+
+/* ─── Footer / decisions ─────────────────────────────────── */
+.footer {
+  background: var(--color-canvas);
+  color: var(--color-off-white);
+  padding: 96px var(--section-px) 48px;
+}
+.footer-wrap { max-width: 1280px; margin: 0 auto; }
+.footer-h {
+  font-size: clamp(72px, 12vw, 168px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: .85;
+  color: rgba(254,254,254,.10);
+  text-transform: uppercase;
+  margin-bottom: 64px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+@media (min-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 48px; } }
+.footer-col h5 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(254,254,254,.55);
+  margin-bottom: 16px;
+}
+.footer-col p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(254,254,254,.78);
+}
+.footer-bar {
+  border-top: 1px solid rgba(254,254,254,.10);
+  padding-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(254,254,254,.55);
+}
+
+/* ─── focus / inline elements ──────────────────────────────── */
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  padding: 2px 6px;
+  color: var(--color-dark);
+}
+
+/* tone strip helper */
+.tone-strip {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-top: 16px;
+}
+.tone-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 0;
+}
+
+/* badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+
+/* helper grid for signature visual chips */
+.sig-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+@media (min-width: 1024px) { .sig-grid { grid-template-columns: 1fr 1fr; } }
+.sig-card {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding: 28px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+}
+.sig-card-head { display: flex; justify-content: space-between; align-items: baseline; }
+
+/* trefoil-mini */
+.trefoil {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--color-bg-subtle);
+  border: 1px dashed var(--color-border);
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.trefoil svg { width: 100%; height: 100%; }
+
+/* split chrome chip */
+.chrome-chip {
+  display: inline-flex; align-items: center;
+  background: #fff; border: 1px solid var(--color-border-subtle);
+  height: 26px; gap: 9px; padding: 0 8px;
+}
+.chrome-dot { width: 14px; height: 14px; }
+.chrome-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color:#040404; letter-spacing: -.3px; margin-left: 4px; }
+
+/* hr small */
+.hr { height: 1px; background: var(--color-border); margin: 32px 0; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: .35; transform: scale(.85); }
+  50%      { opacity: 1;   transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [style*="pulseDot"] { animation: none !important; }
+}
+
+/* ─── Dark mode preview ─── */
+.dm-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--color-border);
+}
+@media (min-width: 768px) { .dm-grid { grid-template-columns: 1fr 1fr; } }
+.dm-row {
+  display: grid;
+  grid-template-columns: 220px 110px 110px 1fr;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-gray);
+}
+.dm-row:last-child { border-bottom: 0; }
+.dm-row > div:first-child {
+  font-weight: 700;
+  color: var(--color-dark);
+  letter-spacing: .08em;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.dm-swatch {
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.dm-swatch span:first-child {
+  width: 18px; height: 18px;
+  border: 1px solid var(--color-border-subtle);
+  flex: none;
+}
+.dm-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--color-border);
+  min-height: 320px;
+}
+.dm-side {
+  padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.dm-side.light { background: #ffffff; color: #303030; }
+.dm-side.dark  { background: #0a0a0a; color: #FAFAFA; }
+.dm-side h6 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.dm-side .dm-title {
+  font-size: 24px; font-weight: 700; letter-spacing: -.025em; line-height: 1.15;
+}
+.dm-side .dm-body { font-size: 13px; line-height: 1.55; opacity: .8; }
+.dm-side .dm-cta {
+  display: inline-flex; align-self: flex-start; align-items: stretch;
+  font-family: var(--font-brand); font-weight: 600; font-size: 13px;
+  border-radius: 0;
+}
+.dm-side .dm-cta-label { padding: 6px 14px; background: var(--color-brand); color: #fff; }
+.dm-side .dm-cta-arrow { padding: 6px 10px; background: rgba(255,255,255,.10); color: #fff; border-left: 1px solid rgba(255,255,255,.15); }
+.dm-side .dm-card {
+  padding: 14px 16px;
+  border: 1px solid;
+  border-radius: 12px;
+  margin-top: auto;
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 12px;
+}
+.dm-side.light .dm-card { border-color: #e5e7eb; background: #ffffff; }
+.dm-side.dark .dm-card  { border-color: #1F2128; background: #14161D; }
+.dm-side .dm-card-eyebrow {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+}
+.dm-side.light .dm-card-eyebrow { color: #676767; }
+.dm-side.dark .dm-card-eyebrow  { color: #A8A8A8; }
+.dm-side .dm-card-num {
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: .04em;
+}
+.dm-side.light .dm-card-num { color: #296ff0; }
+.dm-side.dark .dm-card-num  { color: #4D8FFA; }
+
+/* ─── LOCK STRIP ─── */
+.lock-strip {
+  background: var(--color-canvas);
+  color: var(--color-off-white);
+  padding: 56px var(--section-px);
+  border-top: 1px solid rgba(255,255,255,.10);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+.lock-strip .wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.lock-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+@media (min-width: 768px) {
+  .lock-head { grid-template-columns: 1fr auto; align-items: end; }
+}
+.lock-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  border: 1px solid var(--color-brand);
+  padding: 4px 10px;
+  margin-bottom: 18px;
+}
+.lock-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.05;
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+.lock-sub {
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(255,255,255,.65);
+  max-width: 56ch;
+}
+.lock-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+.lock-pin-dot { width: 8px; height: 8px; background: var(--color-brand); flex: none; }
+.lock-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.10);
+}
+@media (min-width: 768px)  { .lock-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .lock-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.lock-cell {
+  background: var(--color-canvas);
+  padding: 24px 22px;
+}
+.lock-cell-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--color-brand);
+  margin-bottom: 12px;
+}
+.lock-cell-h {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.lock-cell-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255,255,255,.7);
+}
+.lock-cell-body b { color: var(--color-off-white); font-weight: 700; }
+.lock-cell-body .kbd { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); color: var(--color-off-white); }
+
+/* TOC */
+.toc {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 12px var(--section-px);
+  z-index: 50;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.toc-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex; gap: 24px; overflow-x: auto;
+  align-items: center;
+  scrollbar-width: none;
+}
+.toc-inner::-webkit-scrollbar { display: none; }
+.toc a {
+  color: var(--color-gray);
+  text-decoration: none;
+  white-space: nowrap;
+  flex: none;
+}
+.toc a:hover { color: var(--color-brand); }
+.toc-tick { color: var(--color-gray-light); }
+.toc-mark {
+  display: inline-flex; align-items: center;
+  color: var(--color-brand);
+  font-weight: 700;
+  gap: 8px;
+}
+.toc-mark::before {
+  content: ''; width: 8px; height: 8px; background: currentColor;
+}
+</style>
+</head>
+<body style="font-family: Switzer">
+
+<!-- ────────────────────────── COVER ────────────────────────── -->
+<div class="cover">
+  <div class="cover-bar">
+    <div class="logo-row">
+      <span class="mark-square mark-square--lg">
+        <svg width="25" height="14" viewBox="0 0 52.082 30.457" aria-hidden="true">
+          <path fill="#fff" fill-rule="evenodd" d="M 10.421 5.234 C 10.421 2.343 12.754 0 15.631 0 C 18.509 0 20.842 2.343 20.842 5.234 L 20.842 10.326 C 20.842 10.326 21.153 12.766 22.164 13.809 C 23.206 14.886 25.723 15.229 25.723 15.229 L 26.382 15.229 C 26.382 15.229 28.898 14.886 29.941 13.809 C 30.799 12.924 31.153 11.031 31.24 10.48 L 31.24 5.234 C 31.24 2.343 33.573 0 36.451 0 C 39.328 0 41.661 2.343 41.661 5.234 L 41.661 10.326 C 41.661 10.326 41.972 12.766 42.983 13.809 C 44.026 14.886 46.542 15.229 46.542 15.229 L 47.852 15.229 C 50.188 15.229 52.082 17.131 52.082 19.477 L 52.082 30.457 L 41.661 30.457 L 41.661 15.229 L 36.121 15.229 C 36.121 15.229 33.605 15.571 32.562 16.648 C 31.704 17.534 31.35 19.426 31.263 19.977 L 31.263 25.224 C 31.263 28.114 28.93 30.457 26.052 30.457 C 23.175 30.457 20.842 28.114 20.842 25.224 L 20.842 20.131 C 20.842 20.131 20.501 17.604 19.429 16.556 C 18.39 15.541 15.961 15.229 15.961 15.229 L 10.421 15.229 L 10.421 30.457 L 0 30.457 L 0 19.477 C 0 17.131 1.894 15.229 4.23 15.229 L 5.54 15.229 C 5.54 15.229 8.056 14.886 9.099 13.809 C 10.11 12.766 10.421 10.326 10.421 10.326 L 10.421 5.234 Z"/>
+        </svg>
+      </span>
+      <span class="wordmark wordmark--lg">Metaborong</span>
+    </div>
+    <div class="cover-bar-meta">
+      <span>v1.0 · 2026</span>
+      <span>metaborong.com</span>
+    </div>
+  </div>
+
+  <div class="cover-grid">
+    <h1>Designed, <br />not <span class="brand">assembled</span>.</h1>
+    <dl class="cover-meta-block">
+      <div class="cover-meta-row"><dt>System</dt><dd>Metaborong.com marketing site — single source of truth</dd></div>
+      <div class="cover-meta-row"><dt>Direction</dt><dd>Swiss-engineered modernism with technical / blueprint accents</dd></div>
+      <div class="cover-meta-row"><dt>Stack</dt><dd>Next.js 16 · React 19 · Tailwind v4 · Fontshare + Google Fonts</dd></div>
+      <div class="cover-meta-row"><dt>Audience</dt><dd>Web3 / AI / SaaS founders evaluating a senior dev studio</dd></div>
+      <div class="cover-meta-row"><dt>Owner</dt><dd>Design + Engineering — flag drift; log deviations per spec</dd></div>
+    </dl>
+  </div>
+
+  <p class="cover-quote" style="font-family: Switzer">
+    A technical-engineering posture: type, grid, structure do most of the work; <em>ASCII art and live code do the rest</em>. No ambient blobs, no decorative gradients, no flourish for its own sake. Aligned with how Vercel, Linear, Stripe and supermemory build, not how agencies pose.
+  </p>
+</div>
+
+<!-- ────────────────────────── TOC ────────────────────────── -->
+<div class="lock-strip">
+  <div class="wrap">
+    <div class="lock-head">
+      <div>
+        <div class="lock-badge">Locked · v1.0 · 2026-05-22</div>
+        <div class="lock-title">Six decisions that don't move.</div>
+        <div class="lock-sub">The system below is fully editable — spacing scales, motion curves, copy, individual swatches can all be reconsidered per section. The six items in this block are not. New sections, new pages, and new components must conform.</div>
+      </div>
+      <div class="lock-pin">
+        <span class="lock-pin-dot"></span>
+        <span>Metaborong · design · v1.0</span>
+      </div>
+    </div>
+    <div class="lock-grid">
+      <div class="lock-cell">
+        <div class="lock-cell-num">01 · Color</div>
+        <div class="lock-cell-h">One chromatic signature</div>
+        <div class="lock-cell-body"><b>#296ff0</b> is the only color that does brand work — logo, primary CTA, focus, hero. Service categories use quieter hues to label themselves <i>inside</i> their own contexts. They never appear in nav, footer, or chrome.</div>
+      </div>
+      <div class="lock-cell">
+        <div class="lock-cell-num">02 · Type</div>
+        <div class="lock-cell-h">Two faces, no third</div>
+        <div class="lock-cell-body"><b>Switzer</b> for display and body (Indian Type Foundry, free). <b>JetBrains Mono</b> for data, eyebrows, and code. No serif. No italic display moments. The grid carries the editorial work.</div>
+      </div>
+      <div class="lock-cell">
+        <div class="lock-cell-num">03 · Surface</div>
+        <div class="lock-cell-h">Borders before shadows</div>
+        <div class="lock-cell-body">1px borders separate by default. Shadows are reserved for surfaces that truly lift — card hover (sm), dropdown (md), modal (lg). No decorative depth, no glow, no idle-state shadow.</div>
+      </div>
+      <div class="lock-cell">
+        <div class="lock-cell-num">04 · Shape</div>
+        <div class="lock-cell-h">Square on action, soft on surface</div>
+        <div class="lock-cell-body">Buttons <b>radius-0</b>. Cards and panels <b>radius-lg</b> (12 px). No <span class="kbd">radius-xl</span> upgrade for featured cards — a 3px left accent bar does that job instead.</div>
+      </div>
+      <div class="lock-cell">
+        <div class="lock-cell-num">05 · Motion</div>
+        <div class="lock-cell-h">One-shot, then still</div>
+        <div class="lock-cell-body">Animations play once and stop. IO-gated, reduced-motion-honored. Three exceptions only: trust-bar marquee, orb HUD blink, at-top scroll cue. Anything else is a deviation requiring a section spec.</div>
+      </div>
+      <div class="lock-cell">
+        <div class="lock-cell-num">06 · Imagery</div>
+        <div class="lock-cell-h">Four sources only</div>
+        <div class="lock-cell-body">Type & structure → code-rendered SVG → <b>ASCII art / ASCII video</b> (our signature) → real photographs of real people. No stock. No AI imagery. No painterly photography. No isometric raster. No 3D renders.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-inner">
+    <span class="toc-mark">DESIGN.md</span>
+    <span class="toc-tick">/</span>
+    <a href="#type">01 Type</a>
+    <a href="#color">02 Color</a>
+    <a href="#spacing">03 Spacing</a>
+    <a href="#radii">04 Radii</a>
+    <a href="#shadow">05 Shadow</a>
+    <a href="#motion">06 Motion</a>
+    <a href="#layout">07 Layout</a>
+    <a href="#buttons">08 Buttons</a>
+    <a href="#cards">09 Cards</a>
+    <a href="#states">10 States</a>
+    <a href="#patterns">11 Patterns</a>
+    <a href="#brand">12 Brand</a>
+    <a href="#rules">13 Rules</a>
+    <a href="#dark">14 Dark mode</a>
+  </div>
+</div>
+
+<!-- ────────────────────────── TYPOGRAPHY ────────────────────────── -->
+<section class="section" id="type">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">01 — Type</span>
+      <h2 class="h2">Two faces. <br />Two jobs.</h2>
+      <p class="lede">Switzer carries display and body — a humanist grotesque by Indian Type Foundry in Ahmedabad. JetBrains Mono carries eyebrows, numbers, and anything that wants to read as data. No serif. No italics. The structure does the work the flourishes would.</p>
+    </header>
+
+    <div class="ribbon">
+      <span class="ribbon-dot"></span>
+      <span>Production: self-host .woff2 from <span class="kbd">/public/fonts</span></span>
+      <span>·</span>
+      <span>Dev only: Fontshare + Google CDN</span>
+    </div>
+
+    <div class="specimen-grid">
+      <div class="specimen">
+        <div class="eyebrow eyebrow--brand">Switzer — display + body</div>
+        <div class="specimen-aa">Aa</div>
+        <div class="specimen-weights">
+          <span class="w300">300</span>
+          <span class="w400">400</span>
+          <span class="w500">500</span>
+          <span class="w700">700</span>
+          <span class="w900">900</span>
+        </div>
+        <div class="specimen-meta">
+          <div>Family</div><div><b>Switzer</b></div>
+          <div>Foundry</div><div><b>Indian Type Foundry</b></div>
+          <div>Source</div><div><b>Fontshare · free</b></div>
+          <div>Var</div><div><b>--font-brand</b></div>
+        </div>
+      </div>
+      <div class="specimen">
+        <div class="eyebrow">JetBrains Mono — data + eyebrow</div>
+        <div class="specimen-aa specimen-aa-mono">Aa</div>
+        <div class="specimen-weights">
+          <span class="w400" style="font-family:var(--font-mono)">400</span>
+          <span class="w700" style="font-family:var(--font-mono)">700</span>
+        </div>
+        <div class="specimen-meta">
+          <div>Family</div><div><b>JetBrains Mono</b></div>
+          <div>Source</div><div><b>Google Fonts · OFL</b></div>
+          <div>Var</div><div><b>--font-mono</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="type-grid">
+      <div class="type-row">
+        <dt>display</dt>
+        <dd>
+          <div style="font-size:96px; font-weight:900; letter-spacing:-.04em; line-height:.95;">Hero H1.</div>
+          <span class="type-meta">Switzer · 96 / 900 / -0.04em · page-driver only</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>h2</dt>
+        <dd>
+          <div class="h2">Section heading</div>
+          <span class="type-meta">56 / 700 / -0.03em · "What we build", "The problem"</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>h3</dt>
+        <dd>
+          <div class="h3">Pillar headline / card title</div>
+          <span class="type-meta">20 / 700 / -0.025em · cards, FAQ, panels</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>lg</dt>
+        <dd>
+          <div style="font-size:18px; font-weight:400; letter-spacing:-.01em; line-height:1.55; color:var(--color-gray);">Body large — for lede paragraphs that introduce a section. Sits between the H2 and the first body paragraph and earns its own line-height.</div>
+          <span class="type-meta">18 / 400 / -0.01em · lede paragraphs</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>base</dt>
+        <dd>
+          <div style="font-size:16px;">Default body. 12–14 words per sentence. Em-dashes and colons in place of connective phrases. Telegraphic over flowery.</div>
+          <span class="type-meta">16 / 400 / -0.005em · default</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>sm</dt>
+        <dd>
+          <div style="font-size:14px;">Small body. Card descriptions, child-link copy.</div>
+          <span class="type-meta">14 / 400 / -0.005em · card body, link descriptions</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>xs</dt>
+        <dd>
+          <div style="font-size:13px; color:var(--color-gray);">Caption — description text, dense rows.</div>
+          <span class="type-meta">13 / 400 / -0.005em · caption</span>
+        </dd>
+      </div>
+      <div class="type-row">
+        <dt>eyebrow</dt>
+        <dd>
+          <div class="eyebrow">Three pillars · 01 / 03</div>
+          <span class="type-meta">11–13 / 700 / +0.10–0.18em · uppercase mono</span>
+        </dd>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">Tonal eyebrows</div>
+      <div class="tone-strip">
+        <span class="tone-pill eyebrow">Default · #999999</span>
+        <span class="tone-pill eyebrow eyebrow--brand">Web3 · #296ff0</span>
+        <span class="tone-pill eyebrow eyebrow--ai">AI · #0F766E</span>
+        <span class="tone-pill eyebrow eyebrow--ps">Product Studio · #C2410C</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── COLOR ────────────────────────── -->
+<section class="section section--subtle" id="color">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">02 — Color</span>
+      <h2 class="h2">One chromatic <br/>signature.</h2>
+      <p class="lede">Tokens, never raw hex. <b style="color:var(--color-brand);">#296ff0</b> — derived from the M-mark logo — is the only color that does branding work. Service categories use quieter, more institutional hues to label themselves inside their own contexts. They never appear in nav, footer, hero, or buttons.</p>
+    </header>
+
+    <div class="color-group-h">Brand — single chromatic signature</div>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#296ff0;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">color.brand</span>
+          <span class="swatch-hex">#296ff0</span>
+          <span class="swatch-use">The only chromatic statement the brand makes. Logo, primary CTA, focus rings, link hover, the brand square, hero accents. Locked.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group-h">Service categories — navigation, not branding</div>
+    <p class="lede" style="margin-bottom:24px; font-size:15px;">Used <i>only</i> inside their own pillar contexts — service hub pages, the trefoil glyph, the accordion accent bar, a small marker next to the pillar name. Never in nav, footer, eyebrows on the homepage, or chrome. They mark categories the way Stripe marks API method colors — functional, not brand.</p>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#296ff0;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">category.web3</span>
+          <span class="swatch-hex">#296ff0</span>
+          <span class="swatch-use">Same as brand. Web3 is the lead service, so the category and the brand share a hue — no separate token needed.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#0F766E;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">category.ai</span>
+          <span class="swatch-hex">#0F766E</span>
+          <span class="swatch-use">Institutional teal. Replaces the prior <span class="kbd">#10b981</span> (Tailwind emerald-500) which read as a UI-library default rather than an owned color.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#C2410C;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">category.product-studio</span>
+          <span class="swatch-hex">#C2410C</span>
+          <span class="swatch-use">Burnt orange. Replaces the prior <span class="kbd">#F6851B</span> which sat adjacent to MetaMask's wallet-orange and undermined distinctiveness for a Web3 studio.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group-h">Text</div>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#303030;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">text.primary</span>
+          <span class="swatch-hex">#303030</span>
+          <span class="swatch-use">Body, headings. AA-clean on white.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#676767;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">text.secondary</span>
+          <span class="swatch-hex">#676767</span>
+          <span class="swatch-use">Secondary copy, captions, supporting body.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#999999;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">text.tertiary</span>
+          <span class="swatch-hex">#999999</span>
+          <span class="swatch-use">Tertiary labels, disabled state. Must not carry body copy.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#D9D9D9;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">text.divider</span>
+          <span class="swatch-hex">#D9D9D9</span>
+          <span class="swatch-use">Quiet dividers between dense rows.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip is-white"><div></div></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">text.inverse</span>
+          <span class="swatch-hex">#FEFEFE</span>
+          <span class="swatch-use">Off-white. Text on dark surfaces — hero, footer.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group-h">Surface</div>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-chip is-white"><div></div></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">surface.base</span>
+          <span class="swatch-hex">#ffffff</span>
+          <span class="swatch-use">Default canvas. Most sections sit here.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#f5f7ff;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">surface.subtle</span>
+          <span class="swatch-hex">#f5f7ff</span>
+          <span class="swatch-use">Section alternation, secondary buttons.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#fafbff;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">surface.raised</span>
+          <span class="swatch-hex">#fafbff</span>
+          <span class="swatch-use">Elevated cards on subtle backgrounds.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#0a0a0a;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">surface.dark</span>
+          <span class="swatch-hex">#0a0a0a</span>
+          <span class="swatch-use">Hero canvas. Dark surfaces must be designed, not inverted.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group-h">Border</div>
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#e5e7eb;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">border.default</span>
+          <span class="swatch-hex">#e5e7eb</span>
+          <span class="swatch-use">1px borders, card outlines, table rules.</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-chip" style="background:#f3f4f6;"></div>
+        <div class="swatch-body">
+          <span class="swatch-alias">border.subtle</span>
+          <span class="swatch-hex">#f3f4f6</span>
+          <span class="swatch-use">Internal dividers, hover backgrounds.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group-h">Pillar markers — in use</div>
+    <p class="lede" style="margin-bottom:24px; font-size:15px;">Where the service category colors actually appear. New pillar-tinted UI must update <span class="kbd">services-data.ts</span> and must justify itself against the four allowed surfaces above.</p>
+    <div class="pillar-strip">
+      <div class="pillar-cell" style="--p:#296ff0;">
+        <div class="pillar-num">01 — Web3</div>
+        <div class="pillar-name">Decentralised protocol engineering</div>
+        <div class="pillar-body">Smart contracts, DeFi protocols, NFT marketplaces, tokenomics, DID integration. Multichain across EVM, Solana, Cosmos.</div>
+        <div class="pillar-hex">color.brand.primary · #296ff0</div>
+      </div>
+      <div class="pillar-cell" style="--p:#0F766E;">
+        <div class="pillar-num">02 — AI</div>
+        <div class="pillar-name">Production AI capability</div>
+        <div class="pillar-body">AI copilots, conversational agents, RAG pipelines, LLM integrations. Adds production AI to existing products and teams.</div>
+        <div class="pillar-hex">color.brand.ai · #0F766E</div>
+      </div>
+      <div class="pillar-cell" style="--p:#C2410C;">
+        <div class="pillar-num">03 — Product Studio</div>
+        <div class="pillar-name">Greenfield product engineering</div>
+        <div class="pillar-body">MVP, SaaS, and B2B multi-tenant platforms for founders without a CTO. One senior team owns architecture through deploy.</div>
+        <div class="pillar-hex">color.brand.accent · #C2410C</div>
+      </div>
+    </div>
+
+    <div class="color-group-h">Structural slate (component-local)</div>
+    <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:center;">
+      <span style="display:inline-flex; gap:8px; align-items:center;"><span style="width:24px; height:24px; background:#cbd5e1;"></span><span class="eyebrow">stroke · #cbd5e1</span></span>
+      <span style="display:inline-flex; gap:8px; align-items:center;"><span style="width:24px; height:24px; background:#e2e8f0;"></span><span class="eyebrow">fill · #e2e8f0</span></span>
+      <span style="display:inline-flex; gap:8px; align-items:center;"><span style="width:24px; height:24px; background:#94a3b8;"></span><span class="eyebrow">dot · #94a3b8</span></span>
+      <span class="eyebrow" style="color:var(--color-gray);">Inactive glyphs & dashed spokes in <span class="kbd">services-glyphs.tsx</span>.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── SPACING ────────────────────────── -->
+<section class="section" id="spacing">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">03 — Spacing</span>
+      <h2 class="h2">A scale of ten.</h2>
+      <p class="lede">Every spacing value lives on the scale. No intermediates. Mix vertical rhythm by stepping up; never invent <span class="kbd">22px</span> when <span class="kbd">24</span> or <span class="kbd">32</span> will do.</p>
+    </header>
+
+    <div class="spacing-grid">
+      <div class="spacing-row"><span class="spacing-token">space.1</span><span class="spacing-px">4 px</span><span class="spacing-bar" style="width:4px;"></span><span class="spacing-use">Tight inner gaps</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.2</span><span class="spacing-px">8 px</span><span class="spacing-bar" style="width:8px;"></span><span class="spacing-use">Icon-to-text gap</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.3</span><span class="spacing-px">12 px</span><span class="spacing-bar" style="width:12px;"></span><span class="spacing-use">Tight rhythm between siblings</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.4</span><span class="spacing-px">16 px</span><span class="spacing-bar" style="width:16px;"></span><span class="spacing-use">Default body spacing</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.5</span><span class="spacing-px">24 px</span><span class="spacing-bar" style="width:24px;"></span><span class="spacing-use">Section internal padding</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.6</span><span class="spacing-px">32 px</span><span class="spacing-bar" style="width:32px;"></span><span class="spacing-use">Card padding, large gap</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.7</span><span class="spacing-px">48 px</span><span class="spacing-bar" style="width:48px;"></span><span class="spacing-use">Section column gaps</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.8</span><span class="spacing-px">64 px</span><span class="spacing-bar" style="width:64px;"></span><span class="spacing-use">Major block separators</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.9</span><span class="spacing-px">96 px</span><span class="spacing-bar" style="width:96px;"></span><span class="spacing-use">Section vertical padding (default)</span></div>
+      <div class="spacing-row"><span class="spacing-token">space.10</span><span class="spacing-px">128 px</span><span class="spacing-bar" style="width:128px;"></span><span class="spacing-use">XL horizontal padding · 2xl breakpoint only</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── RADII ────────────────────────── -->
+<section class="section section--subtle" id="radii">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">04 — Radii</span>
+      <h2 class="h2">Three corners.</h2>
+      <p class="lede">Card variants <span class="kbd">default</span>, <span class="kbd">featured</span>, and <span class="kbd">quote</span> all take <span class="kbd">radius-lg</span>. <span class="kbd">featured</span> earns its distinction from a 3px left accent bar, not a bigger radius. Buttons are square — <span class="kbd">radius-0</span> is the Bauhaus restraint.</p>
+    </header>
+
+    <div class="radii-grid">
+      <div class="radius-card">
+        <div class="radius-shape" style="border-radius:4px;"></div>
+        <div>
+          <div class="eyebrow">radius.sm</div>
+          <div style="margin-top:6px; font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">4 px · chips, inputs</div>
+        </div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-shape" style="border-radius:8px;"></div>
+        <div>
+          <div class="eyebrow">radius.md</div>
+          <div style="margin-top:6px; font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">8 px · buttons, panels, boxes</div>
+        </div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-shape" style="border-radius:12px;"></div>
+        <div>
+          <div class="eyebrow">radius.lg</div>
+          <div style="margin-top:6px; font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">12 px · default cards, quote cards</div>
+        </div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-shape" style="border-radius:0;"></div>
+        <div>
+          <div class="eyebrow">radius.0</div>
+          <div style="margin-top:6px; font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">0 px · buttons, square chrome chips</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── SHADOWS ────────────────────────── -->
+<section class="section" id="shadow">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">05 — Elevation</span>
+      <h2 class="h2">Borders first. <br/>Shadow when it lifts.</h2>
+      <p class="lede">Shadows are reserved for surfaces that genuinely lift off the canvas — card hover, dropdown, modal. Default separation is a 1px border.</p>
+    </header>
+
+    <div class="shadow-grid">
+      <div class="shadow-card sm">
+        <div class="eyebrow">shadow.sm</div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray); letter-spacing:.04em;">Card hover</div>
+      </div>
+      <div class="shadow-card md">
+        <div class="eyebrow">shadow.md</div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray); letter-spacing:.04em;">Dropdown menu, popover</div>
+      </div>
+      <div class="shadow-card lg">
+        <div class="eyebrow">shadow.lg</div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray); letter-spacing:.04em;">Modal, mega-menu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── MOTION ────────────────────────── -->
+<section class="section section--subtle" id="motion">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">06 — Motion</span>
+      <h2 class="h2">One-shot, then still.</h2>
+      <p class="lede">Motion happens once and stops. Only the trust-bar marquee, the orb HUD blink, and the hero scroll-cue loop — and the last is at-top-only. Everything else is IO-gated, single-fire, reduced-motion-honored.</p>
+    </header>
+
+    <div class="motion-grid">
+      <div class="motion-row"><div>duration.instant</div><div>150 ms</div><div>Hover state changes, tooltip in/out</div></div>
+      <div class="motion-row"><div>duration.fast</div><div>250 ms</div><div>Button press, accordion expand, card hover</div></div>
+      <div class="motion-row"><div>duration.base</div><div>400 ms</div><div>Reveal, default transitions, section enter</div></div>
+      <div class="motion-row"><div>duration.slow</div><div>620 ms</div><div>Stroke-draw, halo-in on signature visuals</div></div>
+      <div class="motion-row"><div>duration.deliberate</div><div>900 ms</div><div>Pulse-dot travel, spoke s-curve</div></div>
+      <div class="motion-row"><div>duration.marquee</div><div>24 000 ms</div><div>Trust-bar (linear, infinite — only approved loop)</div></div>
+    </div>
+
+    <div class="easing-grid">
+      <div class="easing-card e-1">
+        <div class="easing-card-meta"><span>out-expo</span><b>cubic-bezier(0.16, 1, 0.3, 1)</b></div>
+        <div class="easing-track"><span class="easing-dot"></span></div>
+        <div style="font-size:13px; color:var(--color-gray);">Reveal · halo-in · hero scroll</div>
+      </div>
+      <div class="easing-card e-2">
+        <div class="easing-card-meta"><span>s-curve</span><b>cubic-bezier(0.32, 0, 0.16, 1)</b></div>
+        <div class="easing-track"><span class="easing-dot"></span></div>
+        <div style="font-size:13px; color:var(--color-gray);">Spoke transitions · pulse travel</div>
+      </div>
+      <div class="easing-card e-3">
+        <div class="easing-card-meta"><span>in-out</span><b>cubic-bezier(0.65, 0, 0.35, 1)</b></div>
+        <div class="easing-track"><span class="easing-dot"></span></div>
+        <div style="font-size:13px; color:var(--color-gray);">Stroke-draw on glyph activation</div>
+      </div>
+      <div class="easing-card e-4">
+        <div class="easing-card-meta"><span>linear</span><b>linear</b></div>
+        <div class="easing-track"><span class="easing-dot"></span></div>
+        <div style="font-size:13px; color:var(--color-gray);">Trust-bar marquee · orb scan</div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div style="margin-bottom:32px;">
+      <div class="eyebrow eyebrow--brand" style="margin-bottom:10px;">Scroll-driven · the second motion layer</div>
+      <p class="lede">Your anchors lean on scroll. Linear's sticky stacks, Stripe's pinned API explainer, Vercel's reveal cadence, supermemory's section transitions. Locked stack below — all open-source, all aligned with the one-shot rule (scroll plays the animation; it doesn't replay it).</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr; gap:16px; margin-bottom:32px;">
+      <div style="border:1px solid var(--color-border); padding:20px 24px; background:var(--color-bg-subtle); display:grid; grid-template-columns:160px 1fr; gap:24px; align-items:center;">
+        <div>
+          <div class="eyebrow eyebrow--brand">Lenis</div>
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray); margin-top:6px; letter-spacing:.06em;">2.0+ · MIT · free</div>
+        </div>
+        <div>
+          <div style="font-size:15px; font-weight:700; letter-spacing:-.015em; margin-bottom:4px;">Smooth-scroll baseline</div>
+          <div style="font-size:14px; color:var(--color-gray); line-height:1.5;">Wraps native scroll with eased momentum. Used by Stripe, Vercel, Linear. Zero config, auto-disables on reduced-motion. <span class="kbd">pnpm add lenis</span></div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--color-border); padding:20px 24px; background:var(--color-bg-subtle); display:grid; grid-template-columns:160px 1fr; gap:24px; align-items:center;">
+        <div>
+          <div class="eyebrow eyebrow--brand">Framer Motion</div>
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray); margin-top:6px; letter-spacing:.06em;">12.0+ · MIT · free</div>
+        </div>
+        <div>
+          <div style="font-size:15px; font-weight:700; letter-spacing:-.015em; margin-bottom:4px;">React-idiomatic scroll triggers</div>
+          <div style="font-size:14px; color:var(--color-gray); line-height:1.5;">Powers every pattern below — <span class="kbd">useScroll</span>, <span class="kbd">useTransform</span>, <span class="kbd">useInView</span>. Replaces the current Reveal component. <span class="kbd">pnpm add framer-motion</span></div>
+        </div>
+      </div>
+      <div style="border:1px dashed var(--color-border); padding:20px 24px; display:grid; grid-template-columns:160px 1fr; gap:24px; align-items:center;">
+        <div>
+          <div class="eyebrow" style="color:var(--color-accent);">Not GSAP</div>
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); margin-top:6px; letter-spacing:.06em;">paid above $5k / yr</div>
+        </div>
+        <div>
+          <div style="font-size:14px; color:var(--color-gray); line-height:1.5;">GSAP + ScrollTrigger is excellent, but the commercial license becomes paid above $5,000 revenue / year. Framer Motion + Lenis cover everything we need without that cliff.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Scroll patterns — allowed</div>
+    <div class="motion-grid" style="margin-bottom:32px;">
+      <div class="motion-row"><div>reveal.fade-up</div><div>400 ms · out-expo</div><div>IO-gated single-fire fade + 8 px upward translate. Default for every section enter.</div></div>
+      <div class="motion-row"><div>reveal.stagger</div><div>per-child 40 ms</div><div>For card grids, founder rows, client wall. Children fade in 40 ms apart. Cap at 8 items per stagger.</div></div>
+      <div class="motion-row"><div>counter.tally</div><div>900 ms · ease-out</div><div>Stat numbers tick up to value on scroll-in. Tabular numerals required. Single-fire.</div></div>
+      <div class="motion-row"><div>path.draw</div><div>1200 ms · in-out</div><div><span class="kbd">strokeDashoffset</span> on code-rendered SVG (sparklines, the delivery velocity chart, geometry). Single-fire.</div></div>
+      <div class="motion-row"><div>section.pin</div><div>scroll-scrubbed</div><div>Pin a section, scrub through content as user scrolls. Max 2 per page. Reserved for storytelling moments.</div></div>
+      <div class="motion-row"><div>stack.sticky</div><div>scroll-scrubbed</div><div>Cards stack and push the previous up. Max 1 per page. Reserved for comparison or why-us.</div></div>
+      <div class="motion-row"><div>ascii.compute</div><div>signature</div><div>ASCII text rebuilds character-by-character as it enters viewport. Our distinctive scroll moment. Cap at 2 per page.</div></div>
+      <div class="motion-row"><div>parallax.restraint</div><div>0.2× max</div><div>Single element per section. ≤ 0.2 movement multiplier. No background-image parallax. No multi-layer.</div></div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px; color:var(--color-accent);">Scroll motion — forbidden</div>
+    <ul style="list-style:none; display:grid; grid-template-columns:1fr; gap:10px; padding:20px 24px; border:1px dashed var(--color-border);">
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Scroll-jacking that overrides natural scroll velocity for storytelling.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Spring / bounce easing. We're precise, not playful.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>3D transforms past 5 deg rotation. No mouse-tilt cards.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Background-image parallax — fights the SVG-on-grid posture.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Animations longer than 1500 ms — past the deliberate ceiling.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Cursor-following blob backgrounds, gradient followers.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ────────────────────────── LAYOUT ────────────────────────── -->
+<section class="section" id="layout">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">07 — Layout</span>
+      <h2 class="h2">One Section primitive. <br/>Four widths.</h2>
+      <p class="lede">Every section wraps in <span class="kbd">&lt;Section&gt;</span>. Vertical padding is locked to <span class="kbd">py-[48/64/72]</span> at sm/md/lg. Horizontal padding follows the six-step PR #33 chain. Content caps at one of four max-widths.</p>
+    </header>
+
+    <div style="display:grid; grid-template-columns:1fr; gap:24px; margin-bottom:48px;">
+      <div style="border:1px solid var(--color-border); padding:0; background:var(--color-bg);">
+        <div style="background:var(--color-bg-subtle); padding:12px 20px; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--color-dark); border-bottom:1px solid var(--color-border);">
+          <span>Horizontal padding chain</span>
+          <span style="color:var(--color-gray);">PR #33 — 2026-05-20</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:0;">
+          <div style="padding:20px; border-right:1px solid var(--color-border);"><div class="eyebrow">base</div><div style="font-family:var(--font-mono); margin-top:8px; font-size:13px;">16px</div><div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); letter-spacing:.06em; margin-top:4px;">&lt;640</div></div>
+          <div style="padding:20px; border-right:1px solid var(--color-border);"><div class="eyebrow">sm</div><div style="font-family:var(--font-mono); margin-top:8px; font-size:13px;">24px</div><div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); letter-spacing:.06em; margin-top:4px;">≥640</div></div>
+          <div style="padding:20px; border-right:1px solid var(--color-border);"><div class="eyebrow">md</div><div style="font-family:var(--font-mono); margin-top:8px; font-size:13px;">40px</div><div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); letter-spacing:.06em; margin-top:4px;">≥768</div></div>
+          <div style="padding:20px; border-right:1px solid var(--color-border);"><div class="eyebrow">lg</div><div style="font-family:var(--font-mono); margin-top:8px; font-size:13px;">48px</div><div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); letter-spacing:.06em; margin-top:4px;">≥1024</div></div>
+          <div style="padding:20px; border-right:1px solid var(--color-border);"><div class="eyebrow">xl</div><div style="font-family:var(--font-mono); margin-top:8px; font-size:13px;">80px</div><div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); letter-spacing:.06em; margin-top:4px;">≥1280</div></div>
+          <div style="padding:20px;"><div class="eyebrow">2xl</div><div style="font-family:var(--font-mono); margin-top:8px; font-size:13px;">128px</div><div style="font-family:var(--font-mono); font-size:11px; color:var(--color-gray-light); letter-spacing:.06em; margin-top:4px;">≥1536</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr; gap:16px;">
+      <div style="border:1px solid var(--color-border); padding:16px 20px; display:grid; grid-template-columns:130px 1fr 100px; gap:24px; align-items:center;">
+        <div class="eyebrow">prose</div>
+        <div style="height:8px; background:var(--color-brand); max-width:56.25%;"></div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray); text-align:right;">720 px</div>
+      </div>
+      <div style="border:1px solid var(--color-border); padding:16px 20px; display:grid; grid-template-columns:130px 1fr 100px; gap:24px; align-items:center;">
+        <div class="eyebrow">narrow</div>
+        <div style="height:8px; background:var(--color-brand); max-width:68.75%;"></div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray); text-align:right;">880 px</div>
+      </div>
+      <div style="border:1px solid var(--color-border); padding:16px 20px; display:grid; grid-template-columns:130px 1fr 100px; gap:24px; align-items:center;">
+        <div class="eyebrow">wide</div>
+        <div style="height:8px; background:var(--color-brand); max-width:87.5%;"></div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray); text-align:right;">1120 px</div>
+      </div>
+      <div style="border:1px solid var(--color-border); padding:16px 20px; display:grid; grid-template-columns:130px 1fr 100px; gap:24px; align-items:center;">
+        <div class="eyebrow">xwide</div>
+        <div style="height:8px; background:var(--color-brand); max-width:100%;"></div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray); text-align:right;">1280 px</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── BUTTONS ────────────────────────── -->
+<section class="section section--subtle" id="buttons">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">08 — Buttons</span>
+      <h2 class="h2">Square. <br/>Single signature mark.</h2>
+      <p class="lede">Bauhaus restraint. Radius-0, flat fills, no gradients, no shadow growth on hover. The split-arrow primary is our one distinctive button mark — never apply it to ghost or secondary.</p>
+    </header>
+
+    <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; margin-bottom:48px;">
+      <a class="btn btn--primary btn-md" href="#">
+        <span class="btn-label">Email us</span>
+        <span class="btn-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="btn btn--primary btn-lg" href="#">
+        <span class="btn-label">Talk to a founder</span>
+        <span class="btn-arrow" aria-hidden="true">→</span>
+      </a>
+      <button class="btn btn--ghost btn-md">View case studies</button>
+      <button class="btn btn--secondary btn-md">Read the brief</button>
+      <button class="btn btn--primary btn-sm">
+        <span class="btn-label">Ship it</span>
+        <span class="btn-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Variant × state matrix</div>
+    <div class="matrix">
+      <div class="matrix-cell matrix-cell--head"></div>
+      <div class="matrix-cell matrix-cell--head">Primary</div>
+      <div class="matrix-cell matrix-cell--head">Ghost</div>
+      <div class="matrix-cell matrix-cell--head">Secondary</div>
+
+      <div class="matrix-cell matrix-row-label">Default</div>
+      <div class="matrix-cell"><a class="btn btn--primary btn-md" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      <div class="matrix-cell"><button class="btn btn--ghost btn-md">Read the brief</button></div>
+      <div class="matrix-cell"><button class="btn btn--secondary btn-md">View work</button></div>
+
+      <div class="matrix-cell matrix-row-label">Hover</div>
+      <div class="matrix-cell"><a class="btn btn--primary btn-md btn--state-hover" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      <div class="matrix-cell"><button class="btn btn--ghost btn-md" style="background:var(--color-bg-subtle); border-color:var(--color-gray-subtle);">Read the brief</button></div>
+      <div class="matrix-cell"><button class="btn btn--secondary btn-md" style="border-color:rgba(41,111,240,.40);">View work</button></div>
+
+      <div class="matrix-cell matrix-row-label">Active</div>
+      <div class="matrix-cell"><a class="btn btn--primary btn-md btn--state-active" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      <div class="matrix-cell"><button class="btn btn--ghost btn-md" style="background:var(--color-border-subtle);">Read the brief</button></div>
+      <div class="matrix-cell"><button class="btn btn--secondary btn-md" style="background:#eef2ff;">View work</button></div>
+
+      <div class="matrix-cell matrix-row-label">Focus-visible</div>
+      <div class="matrix-cell"><a class="btn btn--primary btn-md btn--state-focus" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      <div class="matrix-cell"><button class="btn btn--ghost btn-md btn--state-focus">Read the brief</button></div>
+      <div class="matrix-cell"><button class="btn btn--secondary btn-md btn--state-focus">View work</button></div>
+
+      <div class="matrix-cell matrix-row-label">Loading</div>
+      <div class="matrix-cell"><a class="btn btn--primary btn-md btn--state-loading" href="#" aria-busy="true"><span class="btn-label"></span><span class="btn-arrow">→</span></a></div>
+      <div class="matrix-cell"><button class="btn btn--ghost btn-md btn--state-loading" aria-busy="true"><span class="btn-label"></span></button></div>
+      <div class="matrix-cell"><button class="btn btn--secondary btn-md btn--state-loading" aria-busy="true"><span class="btn-label"></span></button></div>
+
+      <div class="matrix-cell matrix-row-label" style="border-bottom:0;">Disabled</div>
+      <div class="matrix-cell" style="border-bottom:0;"><a class="btn btn--primary btn-md btn--disabled" aria-disabled="true"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      <div class="matrix-cell" style="border-bottom:0;"><button class="btn btn--ghost btn-md btn--disabled" disabled>Read the brief</button></div>
+      <div class="matrix-cell" style="border-bottom:0; border-right:0;"><button class="btn btn--secondary btn-md btn--disabled" disabled>View work</button></div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">Type specifics</div>
+      <p class="lede" style="margin-bottom:24px;">15 px / weight 600 / -0.01em tracking at <span class="kbd">md</span> and <span class="kbd">lg</span>. 13 px at <span class="kbd">sm</span>. All buttons render <span class="kbd">font-feature-settings: 'tnum'</span> — tabular numerals are part of the technical-blueprint posture.</p>
+      <p style="font-size:18px; font-family:var(--font-brand); font-feature-settings:'tnum'; letter-spacing:-.01em; line-height:1.4; color:var(--color-dark);">
+        $12,480.50 · 25+ products · 7 chains · 4–12 weeks · v1.0.0 · 2026-05-21
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── CARDS ────────────────────────── -->
+<section class="section" id="cards">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">09 — Cards</span>
+      <h2 class="h2">Three variants. <br/>One hover rule.</h2>
+      <p class="lede">Hover lifts <span class="kbd">-2px</span>, tints the border at <span class="kbd">brand/30</span>, adds <span class="kbd">shadow.sm</span>. 250 ms (<span class="kbd">duration.fast</span>). Featured cards gain a 3px left bar in the pillar color.</p>
+    </header>
+
+    <div class="card-grid">
+      <article class="card">
+        <span class="eyebrow">default</span>
+        <div class="card-h">Senior team, not a marketplace.</div>
+        <p class="card-body">Three co-founders own architecture through deployment. No staff augmentation, no offshore handoff. Same people in week 1 and week 12.</p>
+        <div class="card-attr"><span class="eyebrow">radius · 12 px</span><b>WHY US · 01 / 03</b></div>
+      </article>
+
+      <article class="card card--featured" style="--p:#296ff0;">
+        <span class="eyebrow eyebrow--brand">featured · web3</span>
+        <div class="card-h">Multichain depth.</div>
+        <p class="card-body">7 chains shipped — Ethereum, Solana, Base, Arbitrum, Hyperledger, Polygon, Avalanche. 25+ products in production.</p>
+        <div class="card-attr"><span class="eyebrow">radius · 12 px · 3px bar</span><b>accentColor · #296ff0</b></div>
+      </article>
+
+      <article class="card card--quote">
+        <div class="card-quote-mark">"</div>
+        <p style="font-size:18px; font-weight:500; letter-spacing:-.01em; line-height:1.4; color:var(--color-dark);">
+          They shipped our staking vault in 9 weeks. Audit-ready, monitored, handed over with runbooks. We rebuilt the rest of our stack around their style.
+        </p>
+        <div class="card-attr">
+          <span class="eyebrow">quote variant</span>
+          <b>P. Mukherjee · CTO, Diamante</b>
+        </div>
+      </article>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="sig-grid">
+      <div class="sig-card">
+        <div class="sig-card-head">
+          <span class="eyebrow">Section pattern · Services boxing</span>
+          <span class="eyebrow">supermemory-style enclosure</span>
+        </div>
+        <div style="border:1px solid var(--color-border); border-radius:var(--radius-md); padding:0; position:relative; overflow:hidden;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid var(--color-border);">
+            <span class="eyebrow">Three pillars</span>
+            <span class="eyebrow eyebrow--brand">01 / 03</span>
+          </div>
+          <div style="padding:24px 20px 24px 28px; position:relative;">
+            <span style="position:absolute; left:0; top:24px; bottom:24px; width:3px; background:var(--color-brand);"></span>
+            <div class="eyebrow eyebrow--brand">Web3 · #296ff0</div>
+            <div class="card-h" style="margin-top:8px;">Decentralised protocol engineering</div>
+            <p class="card-body" style="margin-top:8px;">3px bar inside the active panel only — never on the inactive pillars.</p>
+          </div>
+          <div style="padding:18px 20px; border-top:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:center; color:var(--color-gray-light);">
+            <span class="eyebrow">02 · AI</span>
+            <span style="font-family:var(--font-mono); font-size:16px;">+</span>
+          </div>
+          <div style="padding:18px 20px; border-top:1px solid var(--color-border); display:flex; justify-content:space-between; align-items:center; color:var(--color-gray-light);">
+            <span class="eyebrow">03 · Product Studio</span>
+            <span style="font-family:var(--font-mono); font-size:16px;">+</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-card-head">
+          <span class="eyebrow">Section pattern · Problem chrome chip</span>
+          <span class="eyebrow">brand on canvas</span>
+        </div>
+        <div style="background:#296ff0; border:1px solid rgba(255,255,255,.6); padding:0;">
+          <div style="height:26px; display:flex; align-items:center; gap:9px; padding:0 8px; background:#fffffc; border-bottom:1px solid rgba(255,255,255,.6);">
+            <span style="display:inline-block; width:14px; height:14px; background:#040404;"></span>
+            <span class="chrome-label">METABORONG · DELIVERY-TIMELINE.SVG</span>
+          </div>
+          <div style="padding:32px; color:#fffffc;">
+            <span style="display:inline-block; padding:7px 10px; background:rgba(255,255,255,.1); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;">THE PROBLEM · 01</span>
+            <div style="font-family:var(--font-brand); font-weight:700; font-size:32px; line-height:1.05; letter-spacing:-.014em; text-transform:uppercase; margin-top:20px;">12 months later, <br/>still no product.</div>
+            <p style="margin-top:16px; font-size:16px; line-height:1.4;">Static white "chrome" strip + brand-on-canvas body. Signature pattern from <span class="kbd" style="background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.25);">section-problem.md</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── STATES ────────────────────────── -->
+<section class="section section--subtle" id="states">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">10 — States</span>
+      <h2 class="h2">Seven for every primitive.</h2>
+      <p class="lede">Every interactive primitive ships all seven. No exceptions. Loading and error are the two most-forgotten — they ship.</p>
+    </header>
+
+    <div class="states-grid">
+      <div class="states-row">
+        <div>default</div>
+        <div>Idle. Token-driven base.</div>
+        <div><a class="btn btn--primary btn-md" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      </div>
+      <div class="states-row">
+        <div>hover</div>
+        <div>Pointer over. Background darkens ~10% on primary.</div>
+        <div><a class="btn btn--primary btn-md btn--state-hover" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      </div>
+      <div class="states-row">
+        <div>focus-visible</div>
+        <div>Keyboard focus only. 2 px solid brand ring + 2 px offset.</div>
+        <div><a class="btn btn--primary btn-md btn--state-focus" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      </div>
+      <div class="states-row">
+        <div>active</div>
+        <div>Pressed. Background darkens further (~15%).</div>
+        <div><a class="btn btn--primary btn-md btn--state-active" href="#"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      </div>
+      <div class="states-row">
+        <div>loading</div>
+        <div>Async work. Spinner + <span class="kbd">aria-busy</span>; pointer events suspended.</div>
+        <div><a class="btn btn--primary btn-md btn--state-loading" aria-busy="true"><span class="btn-label"></span><span class="btn-arrow">→</span></a></div>
+      </div>
+      <div class="states-row">
+        <div>disabled</div>
+        <div>Opacity .5, <span class="kbd">cursor:not-allowed</span>, no hover.</div>
+        <div><a class="btn btn--primary btn-md btn--disabled" aria-disabled="true"><span class="btn-label">Email us</span><span class="btn-arrow">→</span></a></div>
+      </div>
+      <div class="states-row">
+        <div>error</div>
+        <div>Brand-coded error fill or border + screen-reader message.</div>
+        <div>
+          <button class="btn btn--md" style="background:#fff; color:#b91c1c; border:1px solid #b91c1c; padding:0;">
+            <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 18px;">Send failed · retry</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">Focus ring token</div>
+      <div style="display:grid; grid-template-columns:1fr; gap:12px; max-width:520px;">
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">focus.ring &nbsp;&nbsp;= 2px solid var(--color-brand)</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">focus.offset = 2px</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-gray);">applied via <b style="color:var(--color-dark);">:focus-visible</b> — never <b style="color:var(--color-accent);">:focus</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── PATTERNS / SIGNATURE VISUALS ────────────────────────── -->
+<section class="section" id="patterns">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">11 — Signature visuals</span>
+      <h2 class="h2">ASCII as posture.</h2>
+      <p class="lede">No three-color hub-and-spoke. No glowing hero orb. The signature is type-as-image — ASCII art and ASCII video, rendered from real source material. None of our anchors use this. That's the point — it's what makes us recognizable in a sea of monochrome engineering-premium sites.</p>
+    </header>
+
+    <div class="sig-grid">
+      <div class="sig-card">
+        <div class="sig-card-head">
+          <span class="eyebrow eyebrow--brand">Hero · ASCII video</span>
+          <span class="eyebrow">loop · poster fallback</span>
+        </div>
+        <div style="position:relative; background:#0a0a0a; aspect-ratio:3/4; overflow:hidden;">
+          <img src="public/hero-ascii-poster.webp" alt="ASCII video poster — figure rendered in monospace characters" style="width:100%; height:100%; object-fit:cover;" />
+          <div style="position:absolute; bottom:14px; left:14px; display:inline-flex; gap:8px; align-items:center; padding:5px 10px; background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.18);">
+            <span style="width:6px; height:6px; background:var(--color-brand); border-radius:999px; animation:pulseDot 1.6s ease-in-out infinite;"></span>
+            <span style="font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; color:#fff; text-transform:uppercase;">hero-ascii.mp4 · loop</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">
+          <div>Source · MP4 video</div>
+          <div>Cap · ≤ 500 KB / 8 s loop</div>
+          <div>Poster · .webp fallback</div>
+          <div>Plays · at-top of page only</div>
+        </div>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-card-head">
+          <span class="eyebrow eyebrow--brand">Contact-CTA · ASCII landscape</span>
+          <span class="eyebrow">brand close</span>
+        </div>
+        <div style="position:relative; background:#000; aspect-ratio:16/9; overflow:hidden;">
+          <img src="public/contact/landscape.webp" alt="ASCII-rendered landscape" style="width:100%; height:100%; object-fit:cover;" />
+          <div style="position:absolute; inset:0; background:radial-gradient(closest-side at 50% 55%, rgba(0,0,0,.55), rgba(0,0,0,.2) 60%, rgba(0,0,0,0) 100%);"></div>
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center; color:#fff;">
+            <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.7); text-transform:uppercase; margin-bottom:8px;">[ brand close ]</div>
+            <div style="font-size:clamp(20px, 3vw, 30px); font-weight:700; letter-spacing:-.02em; line-height:1.1; text-shadow:0 1px 18px rgba(0,0,0,.5);">Got a project in mind?</div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">
+          <div>Source · landscape photo</div>
+          <div>Rendered · ASCII → .webp</div>
+          <div>Overlay · radial vignette</div>
+          <div>Use · section closers</div>
+        </div>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-card-head">
+          <span class="eyebrow eyebrow--brand">Problem · ASCII chrome strip</span>
+          <span class="eyebrow">brand-on-canvas pattern</span>
+        </div>
+        <div style="background:#296ff0; border:1px solid rgba(255,255,255,.6); padding:0;">
+          <div style="height:26px; display:flex; align-items:center; gap:9px; padding:0 8px; background:#fffffc; border-bottom:1px solid rgba(255,255,255,.6);">
+            <span style="display:inline-block; width:14px; height:14px; background:#040404;"></span>
+            <span class="chrome-label">METABORONG · DELIVERY-TIMELINE.SVG</span>
+          </div>
+          <pre style="margin:0; padding:24px 28px; color:#fffffc; font-family:var(--font-mono); font-size:11px; line-height:1.6; white-space:pre; overflow:auto;"><span style="color:rgba(255,255,255,.55);">$ </span>spec.delivery
+  weeks_to_first_ship:    4
+  weeks_to_handover:     12
+  team_size:              3
+  pillars:               <span style="color:#fff; font-weight:700;">web3 · ai · studio</span>
+<span style="color:rgba(255,255,255,.55);">$ </span><span style="color:#fff;">ok</span></pre>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">
+          <div>Chrome bar · white</div>
+          <div>Body · brand blue</div>
+          <div>Type · JetBrains Mono</div>
+          <div>Use · technical moments</div>
+        </div>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-card-head">
+          <span class="eyebrow eyebrow--brand">Live SVG · data + geometry</span>
+          <span class="eyebrow">draws on scroll-in</span>
+        </div>
+        <div style="background:var(--color-bg-subtle); aspect-ratio:16/10; padding:24px; display:flex; align-items:center; justify-content:center; border:1px solid var(--color-border);">
+          <svg viewBox="0 0 480 220" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+            <defs>
+              <pattern id="dotgrid11" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#cbd5e1"/>
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="480" height="220" fill="url(#dotgrid11)"/>
+            <line x1="40" y1="180" x2="440" y2="180" stroke="#94a3b8" stroke-width="1"/>
+            <line x1="40" y1="40" x2="40" y2="180" stroke="#94a3b8" stroke-width="1"/>
+            <polyline fill="none" stroke="#296ff0" stroke-width="2" points="40,150 100,130 160,90 220,100 280,70 340,80 400,50 440,60"/>
+            <g fill="#296ff0">
+              <circle cx="40" cy="150" r="3"/>
+              <circle cx="100" cy="130" r="3"/>
+              <circle cx="160" cy="90" r="3"/>
+              <circle cx="220" cy="100" r="3"/>
+              <circle cx="280" cy="70" r="3"/>
+              <circle cx="340" cy="80" r="3"/>
+              <circle cx="400" cy="50" r="3"/>
+              <circle cx="440" cy="60" r="3"/>
+            </g>
+            <text x="40" y="200" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#94a3b8" text-anchor="start" letter-spacing="0.06em">W1</text>
+            <text x="440" y="200" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#94a3b8" text-anchor="end" letter-spacing="0.06em">W12</text>
+            <text x="240" y="28" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="#296ff0" text-anchor="middle" letter-spacing="0.14em">DELIVERY VELOCITY</text>
+            <text x="240" y="208" font-family="JetBrains Mono" font-size="9" font-weight="400" fill="#94a3b8" text-anchor="middle" letter-spacing="0.04em">weeks-to-ship · 25+ products in production</text>
+          </svg>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">
+          <div>Drawn in DOM</div>
+          <div>Brand line · structural slate frame</div>
+          <div>Path-draw · 1200 ms in-out</div>
+          <div>Use · stats, timelines, geometry</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div style="border:1px dashed var(--color-border); padding:24px 28px; background:var(--color-bg);">
+      <div class="eyebrow" style="color:var(--color-accent); margin-bottom:12px;">Retired · 2026-05-22</div>
+      <div style="font-size:15px; color:var(--color-gray); line-height:1.55;">
+        Two prior signature visuals are out: the <b style="color:var(--color-dark);">hero orb HUD</b> and the <b style="color:var(--color-dark);">services trefoil</b>. Both removed from the codebase. They served during 2026-Q1 but read as decorative against the new direction. ASCII art and live SVG take their place. Their CSS, components, and pillar topology references in <span class="kbd">DESIGN.md</span> should be marked deprecated.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── BRAND / ASSETS ────────────────────────── -->
+<section class="section section--subtle" id="brand">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">12 — Brand & assets</span>
+      <h2 class="h2">Logo. Founders. Wall.</h2>
+      <p class="lede">The M-mark is the brand. Brand-blue square + Switzer medium wordmark. Founder portraits are pure-CSS dashed blueprint frames around an SVG monogram or photo. Client wall shipped greyscale, full-color on hover.</p>
+    </header>
+
+    <div class="eyebrow" style="margin-bottom:24px;">Logo · three sizes</div>
+    <div style="display:flex; align-items:flex-end; gap:48px; flex-wrap:wrap; padding:32px; background:var(--color-bg); border:1px solid var(--color-border); margin-bottom:48px;">
+      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:8px;">
+        <span class="logo-row">
+          <span class="mark-square" style="width:36px; height:36px;">
+            <svg width="20" height="11" viewBox="0 0 52.082 30.457" aria-hidden="true">
+              <path fill="#fff" fill-rule="evenodd" d="M 10.421 5.234 C 10.421 2.343 12.754 0 15.631 0 C 18.509 0 20.842 2.343 20.842 5.234 L 20.842 10.326 C 20.842 10.326 21.153 12.766 22.164 13.809 C 23.206 14.886 25.723 15.229 25.723 15.229 L 26.382 15.229 C 26.382 15.229 28.898 14.886 29.941 13.809 C 30.799 12.924 31.153 11.031 31.24 10.48 L 31.24 5.234 C 31.24 2.343 33.573 0 36.451 0 C 39.328 0 41.661 2.343 41.661 5.234 L 41.661 10.326 C 41.661 10.326 41.972 12.766 42.983 13.809 C 44.026 14.886 46.542 15.229 46.542 15.229 L 47.852 15.229 C 50.188 15.229 52.082 17.131 52.082 19.477 L 52.082 30.457 L 41.661 30.457 L 41.661 15.229 L 36.121 15.229 C 36.121 15.229 33.605 15.571 32.562 16.648 C 31.704 17.534 31.35 19.426 31.263 19.977 L 31.263 25.224 C 31.263 28.114 28.93 30.457 26.052 30.457 C 23.175 30.457 20.842 28.114 20.842 25.224 L 20.842 20.131 C 20.842 20.131 20.501 17.604 19.429 16.556 C 18.39 15.541 15.961 15.229 15.961 15.229 L 10.421 15.229 L 10.421 30.457 L 0 30.457 L 0 19.477 C 0 17.131 1.894 15.229 4.23 15.229 L 5.54 15.229 C 5.54 15.229 8.056 14.886 9.099 13.809 C 10.11 12.766 10.421 10.326 10.421 10.326 L 10.421 5.234 Z"/>
+            </svg>
+          </span>
+          <span class="wordmark" style="font-size:16px; font-weight:600;">Metaborong</span>
+        </span>
+        <span class="eyebrow" style="margin-top:6px;">sm · 36 px · nav default</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:8px;">
+        <span class="logo-row">
+          <span class="mark-square" style="width:44px; height:44px; border-radius:7px;">
+            <svg width="25" height="14" viewBox="0 0 52.082 30.457" aria-hidden="true">
+              <path fill="#fff" fill-rule="evenodd" d="M 10.421 5.234 C 10.421 2.343 12.754 0 15.631 0 C 18.509 0 20.842 2.343 20.842 5.234 L 20.842 10.326 C 20.842 10.326 21.153 12.766 22.164 13.809 C 23.206 14.886 25.723 15.229 25.723 15.229 L 26.382 15.229 C 26.382 15.229 28.898 14.886 29.941 13.809 C 30.799 12.924 31.153 11.031 31.24 10.48 L 31.24 5.234 C 31.24 2.343 33.573 0 36.451 0 C 39.328 0 41.661 2.343 41.661 5.234 L 41.661 10.326 C 41.661 10.326 41.972 12.766 42.983 13.809 C 44.026 14.886 46.542 15.229 46.542 15.229 L 47.852 15.229 C 50.188 15.229 52.082 17.131 52.082 19.477 L 52.082 30.457 L 41.661 30.457 L 41.661 15.229 L 36.121 15.229 C 36.121 15.229 33.605 15.571 32.562 16.648 C 31.704 17.534 31.35 19.426 31.263 19.977 L 31.263 25.224 C 31.263 28.114 28.93 30.457 26.052 30.457 C 23.175 30.457 20.842 28.114 20.842 25.224 L 20.842 20.131 C 20.842 20.131 20.501 17.604 19.429 16.556 C 18.39 15.541 15.961 15.229 15.961 15.229 L 10.421 15.229 L 10.421 30.457 L 0 30.457 L 0 19.477 C 0 17.131 1.894 15.229 4.23 15.229 L 5.54 15.229 C 5.54 15.229 8.056 14.886 9.099 13.809 C 10.11 12.766 10.421 10.326 10.421 10.326 L 10.421 5.234 Z"/>
+            </svg>
+          </span>
+          <span class="wordmark wordmark--lg">Metaborong</span>
+        </span>
+        <span class="eyebrow" style="margin-top:6px;">md · 44 px · nav at lg+</span>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:8px;">
+        <span class="logo-row">
+          <span class="mark-square" style="width:48px; height:48px; border-radius:7px;">
+            <svg width="28" height="16" viewBox="0 0 52.082 30.457" aria-hidden="true">
+              <path fill="#fff" fill-rule="evenodd" d="M 10.421 5.234 C 10.421 2.343 12.754 0 15.631 0 C 18.509 0 20.842 2.343 20.842 5.234 L 20.842 10.326 C 20.842 10.326 21.153 12.766 22.164 13.809 C 23.206 14.886 25.723 15.229 25.723 15.229 L 26.382 15.229 C 26.382 15.229 28.898 14.886 29.941 13.809 C 30.799 12.924 31.153 11.031 31.24 10.48 L 31.24 5.234 C 31.24 2.343 33.573 0 36.451 0 C 39.328 0 41.661 2.343 41.661 5.234 L 41.661 10.326 C 41.661 10.326 41.972 12.766 42.983 13.809 C 44.026 14.886 46.542 15.229 46.542 15.229 L 47.852 15.229 C 50.188 15.229 52.082 17.131 52.082 19.477 L 52.082 30.457 L 41.661 30.457 L 41.661 15.229 L 36.121 15.229 C 36.121 15.229 33.605 15.571 32.562 16.648 C 31.704 17.534 31.35 19.426 31.263 19.977 L 31.263 25.224 C 31.263 28.114 28.93 30.457 26.052 30.457 C 23.175 30.457 20.842 28.114 20.842 25.224 L 20.842 20.131 C 20.842 20.131 20.501 17.604 19.429 16.556 C 18.39 15.541 15.961 15.229 15.961 15.229 L 10.421 15.229 L 10.421 30.457 L 0 30.457 L 0 19.477 C 0 17.131 1.894 15.229 4.23 15.229 L 5.54 15.229 C 5.54 15.229 8.056 14.886 9.099 13.809 C 10.11 12.766 10.421 10.326 10.421 10.326 L 10.421 5.234 Z"/>
+            </svg>
+          </span>
+          <span class="wordmark" style="font-size:20px; font-weight:600;">Metaborong</span>
+        </span>
+        <span class="eyebrow" style="margin-top:6px;">lg · 48 px · footer / about</span>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:24px;">Imagery direction — locked</div>
+    <div style="border:1px solid var(--color-border); background:var(--color-bg); padding:0; margin-bottom:48px;">
+      <div style="display:grid; grid-template-columns:1fr; gap:0;">
+        <div style="padding:28px 32px; border-bottom:1px solid var(--color-border);">
+          <div style="display:flex; gap:16px; align-items:baseline; margin-bottom:14px;">
+            <span style="font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--color-brand); text-transform:uppercase;">Allowed</span>
+            <span style="font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--color-gray-light); text-transform:uppercase;">four sources, in this order of preference</span>
+          </div>
+          <ol style="list-style:none; counter-reset:imglist; display:grid; grid-template-columns:1fr; gap:14px;">
+            <li style="counter-increment:imglist; padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-gray-light); letter-spacing:.08em;">01</span><b>Type and structure.</b> The default. Sections carry themselves on the grid, the eyebrows, the numerals, the negative space. If a section feels empty, that's a layout problem to solve — not a hole to fill with imagery.</li>
+            <li style="counter-increment:imglist; padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-gray-light); letter-spacing:.08em;">02</span><b>Code-rendered SVG.</b> Live diagrams, sparklines, timelines, blueprint frames — drawn in the DOM, accessible, scalable, themable. Reserved for technical content, not decoration.</li>
+            <li style="counter-increment:imglist; padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-gray-light); letter-spacing:.08em;">03</span><b>ASCII art and ASCII video — our signature.</b> Rendered from real source material (a video, a photograph, a 3D scene) into mp4/webp via an ASCII renderer. Hero ASCII loop, contact-CTA ASCII landscape, ASCII chrome chips. This is the visual move none of our anchors make — it's what differentiates us.</li>
+            <li style="counter-increment:imglist; padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-gray-light); letter-spacing:.08em;">04</span><b>Real photographs of real people.</b> Founders, team, an office, a whiteboard. One consistent edit — LUT locked separately. No stock. No models. If it isn't of someone we employ, it doesn't ship.</li>
+          </ol>
+        </div>
+        <div style="padding:28px 32px;">
+          <div style="display:flex; gap:16px; align-items:baseline; margin-bottom:14px;">
+            <span style="font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.14em; color:var(--color-accent); text-transform:uppercase;">Forbidden</span>
+            <span style="font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--color-gray-light); text-transform:uppercase;">do not introduce</span>
+          </div>
+          <ul style="list-style:none; display:grid; grid-template-columns:1fr; gap:10px;">
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Raster isometric illustrations (the prior <span class="kbd">why-us/*.webp</span> set — retired).</li>
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Stock photography of any kind. People at laptops. Handshakes. Server racks. Glowing brains. Hands on keyboards.</li>
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>AI-generated imagery of any kind — illustration, photography, or video. No exceptions, even for backgrounds.</li>
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>3D rendered scenes — Blender hero compositions, glass-blob hero imagery, abstract 3D shapes.</li>
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Cartoon, hand-drawn, or character illustration. Even commissioned. Doesn't fit engineering-premium grammar.</li>
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Decorative gradients used as backdrops, ambient blobs, abstract "design" filler.</li>
+            <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Lottie animations. Static SVG and code-rendered motion only.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Founder frames</div>
+    <p class="lede" style="margin-bottom:24px;">Pure-CSS dashed blueprint frame around portrait SVG. Square (radius-0) LinkedIn + X buttons in brand blue — never the platform-native colors.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px; margin-bottom:48px;">
+      <div style="border:1px solid var(--color-border); padding:16px; background:var(--color-bg);">
+        <div style="aspect-ratio:1/1; border:1px dashed var(--color-border); padding:8px; position:relative;">
+          <div style="position:absolute; top:-1px; left:-1px; width:10px; height:10px; border-top:2px solid var(--color-brand); border-left:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; top:-1px; right:-1px; width:10px; height:10px; border-top:2px solid var(--color-brand); border-right:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; bottom:-1px; left:-1px; width:10px; height:10px; border-bottom:2px solid var(--color-brand); border-left:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; bottom:-1px; right:-1px; width:10px; height:10px; border-bottom:2px solid var(--color-brand); border-right:2px solid var(--color-brand);"></div>
+          <div style="width:100%; height:100%; background:url('public/founders/anik.svg') center/cover no-repeat; background-color:var(--color-bg-subtle);"></div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="font-size:18px; font-weight:700; letter-spacing:-.02em;">Anik Das</div>
+          <div style="display:inline-block; margin-top:6px; padding:3px 8px; border:1px solid var(--color-border); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">Co-founder · CEO</div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <a href="#" class="mark-square" style="width:32px; height:32px; border-radius:0;" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.881 3.87 6 2.5 6S0 4.881 0 3.5C0 2.12 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM5 8H0v16h5V8zm7.982 0H8.014v16h4.969v-8.399c0-4.67 6.052-5.055 6.052 0V24H24V13.869C24 6.135 15.144 6.417 12.982 10.219V8z"/></svg>
+          </a>
+          <a href="#" class="mark-square" style="width:32px; height:32px; border-radius:0;" aria-label="X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="border:1px solid var(--color-border); padding:16px; background:var(--color-bg);">
+        <div style="aspect-ratio:1/1; border:1px dashed var(--color-border); padding:8px; position:relative;">
+          <div style="position:absolute; top:-1px; left:-1px; width:10px; height:10px; border-top:2px solid var(--color-brand); border-left:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; top:-1px; right:-1px; width:10px; height:10px; border-top:2px solid var(--color-brand); border-right:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; bottom:-1px; left:-1px; width:10px; height:10px; border-bottom:2px solid var(--color-brand); border-left:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; bottom:-1px; right:-1px; width:10px; height:10px; border-bottom:2px solid var(--color-brand); border-right:2px solid var(--color-brand);"></div>
+          <div style="width:100%; height:100%; background:url('public/founders/arnab.svg') center/cover no-repeat; background-color:var(--color-bg-subtle);"></div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="font-size:18px; font-weight:700; letter-spacing:-.02em;">Arnab Ray</div>
+          <div style="display:inline-block; margin-top:6px; padding:3px 8px; border:1px solid var(--color-border); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">Co-founder · CTO</div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <a href="#" class="mark-square" style="width:32px; height:32px; border-radius:0;" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.881 3.87 6 2.5 6S0 4.881 0 3.5C0 2.12 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM5 8H0v16h5V8zm7.982 0H8.014v16h4.969v-8.399c0-4.67 6.052-5.055 6.052 0V24H24V13.869C24 6.135 15.144 6.417 12.982 10.219V8z"/></svg>
+          </a>
+          <a href="#" class="mark-square" style="width:32px; height:32px; border-radius:0;" aria-label="X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="border:1px solid var(--color-border); padding:16px; background:var(--color-bg);">
+        <div style="aspect-ratio:1/1; border:1px dashed var(--color-border); padding:8px; position:relative;">
+          <div style="position:absolute; top:-1px; left:-1px; width:10px; height:10px; border-top:2px solid var(--color-brand); border-left:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; top:-1px; right:-1px; width:10px; height:10px; border-top:2px solid var(--color-brand); border-right:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; bottom:-1px; left:-1px; width:10px; height:10px; border-bottom:2px solid var(--color-brand); border-left:2px solid var(--color-brand);"></div>
+          <div style="position:absolute; bottom:-1px; right:-1px; width:10px; height:10px; border-bottom:2px solid var(--color-brand); border-right:2px solid var(--color-brand);"></div>
+          <div style="width:100%; height:100%; background:var(--color-bg-subtle); display:flex; align-items:center; justify-content:center; font-family:var(--font-brand); font-weight:900; font-size:80px; color:var(--color-brand); letter-spacing:-.04em;">SM</div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="font-size:18px; font-weight:700; letter-spacing:-.02em;">Soumojit Mandal</div>
+          <div style="display:inline-block; margin-top:6px; padding:3px 8px; border:1px solid var(--color-border); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--color-gray);">Co-founder · COO</div>
+          <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-gray-light); margin-top:8px; letter-spacing:.04em;">monogram fallback when portrait unavailable</div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <a href="#" class="mark-square" style="width:32px; height:32px; border-radius:0;" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M4.98 3.5C4.98 4.881 3.87 6 2.5 6S0 4.881 0 3.5C0 2.12 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM5 8H0v16h5V8zm7.982 0H8.014v16h4.969v-8.399c0-4.67 6.052-5.055 6.052 0V24H24V13.869C24 6.135 15.144 6.417 12.982 10.219V8z"/></svg>
+          </a>
+          <a href="#" class="mark-square" style="width:32px; height:32px; border-radius:0;" aria-label="X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Clients · trust-bar wall</div>
+    <p class="lede" style="margin-bottom:24px;">Greyscale at rest, full colour on hover. Marquee at 24 s linear — the only approved infinite animation outside the orb HUD blink.</p>
+    <div class="clients-wall">
+      <div class="client-cell"><img src="public/clients/near.svg" alt="NEAR" /></div>
+      <div class="client-cell"><img src="public/clients/kgen.svg" alt="KGeN" /></div>
+      <div class="client-cell"><img src="public/clients/sedax.svg" alt="Sedax" /></div>
+      <div class="client-cell"><img src="public/clients/diamante.webp" alt="Diamante" /></div>
+      <div class="client-cell"><img src="public/clients/magic.svg" alt="Magic" /></div>
+      <div class="client-cell"><img src="public/clients/nero.svg" alt="Nero" /></div>
+      <div class="client-cell"><img src="public/clients/getsmart.svg" alt="GetSmart" /></div>
+      <div class="client-cell"><img src="public/clients/ddaf.svg" alt="DDAF" /></div>
+      <div class="client-cell" style="border-right:0;"><img src="public/clients/orbitx.svg" alt="OrbitX" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── RULES ────────────────────────── -->
+<section class="section" id="rules">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">13 — Rules</span>
+      <h2 class="h2">Do. Don't. <br/>Log deviations.</h2>
+      <p class="lede">Hard constraints first. Sections may deviate when a signature visual demands it — log the deviation at <span class="kbd">docs/superpowers/specs/&lt;date&gt;-section-&lt;name&gt;.md</span>.</p>
+    </header>
+
+    <div class="rules">
+      <div class="rule-card do">
+        <h4>Do</h4>
+        <ul>
+          <li><b>Must</b> reference tokens — alias or CSS var. Never raw hex / px.</li>
+          <li><b>Must</b> document all seven states for every interactive primitive.</li>
+          <li><b>Must</b> render mobile fallbacks server-side when content has SEO value.</li>
+          <li><b>Must</b> honour <span class="kbd">prefers-reduced-motion: reduce</span>.</li>
+          <li><b>Must</b> apply the focus-visible ring on every interactive primitive.</li>
+          <li><b>Must</b> keep tap targets ≥ 44 × 44 px on touch.</li>
+          <li><b>Should</b> prefer borders over shadows for separation.</li>
+          <li><b>Should</b> prefer CSS over JS where a media query suffices.</li>
+        </ul>
+      </div>
+      <div class="rule-card dont">
+        <h4>Don't</h4>
+        <ul>
+          <li><b>Must not</b> introduce one-off spacing or typography exceptions.</li>
+          <li><b>Must not</b> hardcode horizontal section padding in inline styles.</li>
+          <li><b>Must not</b> use <span class="kbd">color.text.tertiary</span> for body copy.</li>
+          <li><b>Must not</b> add a second <span class="kbd">html { @apply font-sans }</span> — it breaks Switzer.</li>
+          <li><b>Must not</b> use <span class="kbd">display:none</span> to hide content with SEO value.</li>
+          <li><b>Must not</b> introduce new pillar-tinted UI without updating <span class="kbd">services-data.ts</span>.</li>
+          <li><b>Must not</b> ship infinite animations outside the trust-bar marquee + orb HUD blink.</li>
+          <li><b>Must not</b> invert dark mode — dark surfaces are redesigned, not inverted.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">Writing guardrails — top banned tokens</div>
+      <p class="lede" style="margin-bottom:24px;">From <span class="kbd">uploads/writing-guardrails.md</span>. LLMs regress to the statistical mean — these words and constructions are how that mean reveals itself. Specific over impressive.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">leverage</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">delve</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">crucial</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">robust</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">synergy</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">pivotal</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">landscape</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">tapestry</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">vibrant</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">underscore</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">enhance</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">foster</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">testament</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">groundbreaking</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">renowned</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">interplay</span>
+        <span class="badge" style="color:var(--color-accent); border-color:rgba(194, 65, 12, .4);">intricate</span>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">QA checklist · run before shipping</div>
+      <ul style="list-style:none; display:grid; grid-template-columns:1fr; gap:12px; max-width:780px;">
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">All values use tokens — no raw hex / px</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Seven states implemented for every interactive primitive</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Focus-visible ring renders on keyboard nav</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Body copy contrast ≥ 4.5:1 (AA)</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Tap targets ≥ 44 × 44 px on touch</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Pillar colors match <span class="kbd">services-data.ts</span></span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Mobile fallback renders server-side if SEO-relevant</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;"><span class="kbd">prefers-reduced-motion: reduce</span> short-circuits all non-essential motion</span></li>
+        <li style="display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:center;"><span style="width:14px; height:14px; border:1.5px solid var(--color-border); display:inline-block;"></span><span style="font-size:14px;">Deviations logged in section spec</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────── FOOTER ────────────────────────── -->
+<!-- ────────────────────────── DARK MODE ────────────────────────── -->
+<section class="section section--subtle" id="dark">
+  <div class="wrap">
+    <header class="section-header">
+      <span class="eyebrow">14 — Dark mode</span>
+      <h2 class="h2">Same system, <br/>lit differently.</h2>
+      <p class="lede">Dark mode redesigns surfaces; it doesn't invert them. Brand <span class="kbd">#296ff0</span> stays — it pops more on dark, no shift needed. Category colors lift one tier so they hold AA contrast at body sizes. Toggle sits top-right in the nav; preference persists in <span class="kbd">localStorage</span>; <span class="kbd">prefers-color-scheme</span> is the first-visit default.</p>
+    </header>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Token mapping</div>
+    <div style="border:1px solid var(--color-border); margin-bottom:48px; background:var(--color-bg);">
+      <div style="display:grid; grid-template-columns:220px 110px 110px 1fr; gap:16px; padding:14px 20px; border-bottom:1px solid var(--color-border); background:var(--color-bg-subtle); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--color-dark); align-items:center;">
+        <div>Token</div><div>Light</div><div>Dark</div><div>Notes</div>
+      </div>
+      <div class="dm-row">
+        <div>color.brand</div>
+        <div class="dm-swatch"><span style="background:#296ff0;"></span><span>#296ff0</span></div>
+        <div class="dm-swatch"><span style="background:#296ff0;"></span><span>#296ff0</span></div>
+        <div>Unchanged. Already AAA on dark.</div>
+      </div>
+      <div class="dm-row">
+        <div>category.ai</div>
+        <div class="dm-swatch"><span style="background:#0F766E;"></span><span>#0F766E</span></div>
+        <div class="dm-swatch"><span style="background:#14B89A;"></span><span>#14B89A</span></div>
+        <div>Lifted to teal-400. AA at 14 px on dark.</div>
+      </div>
+      <div class="dm-row">
+        <div>category.product-studio</div>
+        <div class="dm-swatch"><span style="background:#C2410C;"></span><span>#C2410C</span></div>
+        <div class="dm-swatch"><span style="background:#FB923C;"></span><span>#FB923C</span></div>
+        <div>Lifted to orange-400. Holds at body sizes.</div>
+      </div>
+      <div class="dm-row">
+        <div>surface.base</div>
+        <div class="dm-swatch"><span style="background:#ffffff; border-color:#e5e7eb;"></span><span>#ffffff</span></div>
+        <div class="dm-swatch"><span style="background:#0a0a0a;"></span><span>#0a0a0a</span></div>
+        <div>Hero canvas in light becomes default canvas in dark.</div>
+      </div>
+      <div class="dm-row">
+        <div>surface.subtle</div>
+        <div class="dm-swatch"><span style="background:#f5f7ff;"></span><span>#f5f7ff</span></div>
+        <div class="dm-swatch"><span style="background:#0F1117;"></span><span>#0F1117</span></div>
+        <div>Slight cool cast preserved.</div>
+      </div>
+      <div class="dm-row">
+        <div>surface.raised</div>
+        <div class="dm-swatch"><span style="background:#fafbff;"></span><span>#fafbff</span></div>
+        <div class="dm-swatch"><span style="background:#14161D;"></span><span>#14161D</span></div>
+        <div>Card on canvas — one step up.</div>
+      </div>
+      <div class="dm-row">
+        <div>text.primary</div>
+        <div class="dm-swatch"><span style="background:#303030;"></span><span>#303030</span></div>
+        <div class="dm-swatch"><span style="background:#FAFAFA;"></span><span>#FAFAFA</span></div>
+        <div>Off-white, not pure white. Less eye strain at body size.</div>
+      </div>
+      <div class="dm-row">
+        <div>text.secondary</div>
+        <div class="dm-swatch"><span style="background:#676767;"></span><span>#676767</span></div>
+        <div class="dm-swatch"><span style="background:#A8A8A8;"></span><span>#A8A8A8</span></div>
+        <div>Lifted ~2 tiers. AA on canvas.</div>
+      </div>
+      <div class="dm-row">
+        <div>text.tertiary</div>
+        <div class="dm-swatch"><span style="background:#999999;"></span><span>#999999</span></div>
+        <div class="dm-swatch"><span style="background:#6E6E6E;"></span><span>#6E6E6E</span></div>
+        <div>Still tertiary-only. Never body copy.</div>
+      </div>
+      <div class="dm-row">
+        <div>border.default</div>
+        <div class="dm-swatch"><span style="background:#e5e7eb;"></span><span>#e5e7eb</span></div>
+        <div class="dm-swatch"><span style="background:#1F2128;"></span><span>#1F2128</span></div>
+        <div>Visible at 1px on canvas.</div>
+      </div>
+      <div class="dm-row">
+        <div>border.subtle</div>
+        <div class="dm-swatch"><span style="background:#f3f4f6;"></span><span>#f3f4f6</span></div>
+        <div class="dm-swatch"><span style="background:#161821;"></span><span>#161821</span></div>
+        <div>Internal dividers; barely visible.</div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Side-by-side preview</div>
+    <div class="dm-pair" style="margin-bottom:48px;">
+      <div class="dm-side light">
+        <h6 style="color:#999;">Light</h6>
+        <div class="dm-title">Senior team, not a marketplace.</div>
+        <div class="dm-body">Three co-founders own architecture through deployment. Same people in week 1 and week 12.</div>
+        <div class="dm-cta">
+          <span class="dm-cta-label">Talk to a founder</span>
+          <span class="dm-cta-arrow">→</span>
+        </div>
+        <div class="dm-card">
+          <span class="dm-card-eyebrow">DELIVERY · WEEKS</span>
+          <span class="dm-card-num">4 → 12</span>
+          <span style="font-size:12px; color:#676767;">First ship to handover</span>
+        </div>
+      </div>
+      <div class="dm-side dark">
+        <h6 style="color:rgba(255,255,255,.55);">Dark</h6>
+        <div class="dm-title">Senior team, not a marketplace.</div>
+        <div class="dm-body">Three co-founders own architecture through deployment. Same people in week 1 and week 12.</div>
+        <div class="dm-cta">
+          <span class="dm-cta-label">Talk to a founder</span>
+          <span class="dm-cta-arrow">→</span>
+        </div>
+        <div class="dm-card">
+          <span class="dm-card-eyebrow">DELIVERY · WEEKS</span>
+          <span class="dm-card-num">4 → 12</span>
+          <span style="font-size:12px; color:#A8A8A8;">First ship to handover</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:16px;">Implementation rules</div>
+    <ul style="list-style:none; display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:32px;">
+      <li style="padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-brand); letter-spacing:.08em;">01</span><b>Class-based toggle.</b> Apply <span class="kbd">.dark</span> to <span class="kbd">&lt;html&gt;</span>. All token overrides live under <span class="kbd">.dark { --color-bg: ...; }</span>. No per-component dark logic — components consume the same tokens.</li>
+      <li style="padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-brand); letter-spacing:.08em;">02</span><b>First-visit default.</b> Read <span class="kbd">prefers-color-scheme</span> on first load, set the class before paint to avoid the FOUC flash. Persist user toggle in <span class="kbd">localStorage.theme</span> and prefer it over OS afterwards.</li>
+      <li style="padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-brand); letter-spacing:.08em;">03</span><b>Toggle placement.</b> Top-right of the nav, sibling to "Talk to us". 16 px sun/moon icon in a 36 px square. Same focus-ring rules as every other interactive primitive.</li>
+      <li style="padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-brand); letter-spacing:.08em;">04</span><b>Transitions.</b> <span class="kbd">color</span>, <span class="kbd">background-color</span>, <span class="kbd">border-color</span> transition at <span class="kbd">duration.fast</span> (250 ms) when the class flips. Nothing else animates — no layout shift, no fade-cascade.</li>
+      <li style="padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-brand); letter-spacing:.08em;">05</span><b>Imagery on dark.</b> ASCII renders need a darker re-render — the same WebP at 50% opacity on dark looks anemic. Ship two variants: <span class="kbd">landscape.webp</span> + <span class="kbd">landscape.dark.webp</span>, swap via <span class="kbd">picture</span> media query.</li>
+      <li style="padding-left:36px; position:relative; font-size:15px; line-height:1.55; color:var(--color-dark);"><span style="position:absolute; left:0; top:0; font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--color-brand); letter-spacing:.08em;">06</span><b>Photographs on dark.</b> Founder photos with white backgrounds will look like cutouts. Re-edit with dark backdrop or use a 1 px brand-blue border to hold the frame.</li>
+    </ul>
+
+    <div class="eyebrow" style="margin-bottom:16px; color:var(--color-accent);">Dark mode — anti-patterns</div>
+    <ul style="list-style:none; display:grid; grid-template-columns:1fr; gap:10px; padding:20px 24px; border:1px dashed var(--color-border);">
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Pure black <span class="kbd">#000</span> backgrounds — too sharp. We use <span class="kbd">#0a0a0a</span>.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Pure white <span class="kbd">#FFF</span> body text — too high contrast. We use <span class="kbd">#FAFAFA</span>.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Brightness inversion (CSS <span class="kbd">filter: invert()</span>) anywhere. Surfaces are redesigned, not flipped.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>Glowing accent halos behind text or cards. The brand pops without help.</li>
+      <li style="padding-left:20px; position:relative; font-size:14px; line-height:1.5; color:var(--color-dark);"><span style="position:absolute; left:0; top:6px; width:8px; height:1.5px; background:var(--color-accent);"></span>"Cyberpunk" neon edges, scan lines, CRT effects. Engineering-premium, not gamer-aesthetic.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-h">METABORONG</div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>This document</h5>
+        <p>The single source of truth for visual decisions on metaborong.com.</p>
+        <p style="margin-top:8px;">Supersedes · <span style="color:#fff;">DESIGN.md</span> in the repo</p>
+        <p style="margin-top:8px;">GitHub · <span style="color:#fff;">Anyx30 / Metaborong-Portfolio</span></p>
+      </div>
+      <div class="footer-col">
+        <h5>Stack</h5>
+        <p>Next.js 16 · React 19 · Tailwind v4</p>
+        <p style="margin-top:8px;">MongoDB (native driver) · TipTap · MCP</p>
+      </div>
+      <div class="footer-col">
+        <h5>Posture</h5>
+        <p>Engineering-premium. Token-driven, borders-first, one-shot motion, square corners, tabular numerals. ASCII as signature visual language.</p>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>Design System v1.0 · 2026-05-22 · Locked</span>
+      <span>Switzer · JetBrains Mono · #296ff0 · ASCII</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

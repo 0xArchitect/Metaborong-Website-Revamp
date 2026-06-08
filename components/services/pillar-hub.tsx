@@ -16,14 +16,16 @@ import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
 import { Web3HubVisualChain } from './web3-hub-visual'
 import { AiHubVisualAgents } from './ai-hub-visual'
+import { ProductStudioHubVisualStack } from './product-studio-hub-visual'
 
 const BASE = 'https://www.metaborong.com'
 
-// Hub hero signature visual, per pillar. Only web3 has one for now; AI /
-// Product-Studio fall back to the prose hero.
+// Hub hero signature visual, per pillar — every pillar ships one so the three
+// hubs read consistently.
 const HUB_VISUALS: Partial<Record<PillarId, () => React.ReactNode>> = {
   web3: Web3HubVisualChain,
   ai: AiHubVisualAgents,
+  'product-studio': ProductStudioHubVisualStack,
 }
 
 /* ----------------------------------------------------------------------------
@@ -213,8 +215,8 @@ function PillarHero({ pillar, copy }: { pillar: Pillar; copy: PillarHubCopy }) {
 
 /* ---------- SUB-GROUP SECTION ----------
  * Each track = a left rail (number marker + H2 + description) and a right
- * column carrying the featured live-project panel + a hairline-divided service
- * manifest (NOT a card grid — see DESIGN.md 2026-05-27 Work-Preview rebuild).
+ * column carrying a hairline-divided service manifest (NOT a card grid — see
+ * DESIGN.md 2026-05-27 Work-Preview rebuild).
  */
 
 function SubGroupSection({
@@ -230,9 +232,6 @@ function SubGroupSection({
 }) {
   const numLabel = String(index).padStart(2, '0')
   const sectionBg = index % 2 === 0 ? 'subtle' : 'default'
-  // Panel fill contrasts whatever the section sits on so the proof block reads
-  // as a distinct surface from the white manifest.
-  const panelFill = sectionBg === 'subtle' ? 'bg-white' : 'bg-bg-subtle'
   // Alternate the rail/content sides so consecutive tracks don't read as the
   // same block. DOM order keeps the heading first (reading order + SEO);
   // only the lg visual columns swap.
@@ -267,59 +266,11 @@ function SubGroupSection({
           </p>
         </div>
 
-        <div className={`space-y-[24px] ${flip ? 'lg:order-1' : ''}`}>
-          {copy.caseStudy ? (
-            <LiveProjectPanel pillar={pillar} caseStudy={copy.caseStudy} subGroupLabel={subGroup.label} fill={panelFill} />
-          ) : null}
+        <div className={flip ? 'lg:order-1' : ''}>
           <ServiceManifest pillar={pillar} leaves={subGroup.children} />
         </div>
       </div>
     </Section>
-  )
-}
-
-/* ---------- LIVE-PROJECT PANEL (featured proof) ---------- */
-
-function LiveProjectPanel({
-  pillar,
-  caseStudy,
-  subGroupLabel,
-  fill,
-}: {
-  pillar: Pillar
-  caseStudy: NonNullable<SubGroupCopy['caseStudy']>
-  subGroupLabel: string
-  fill: string
-}) {
-  const external = caseStudy.href.startsWith('http')
-  return (
-    <Link
-      href={caseStudy.href}
-      className={`group block border border-border p-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:border-dark md:p-[24px] ${fill}`}
-      style={{ '--pillar-color': pillar.color } as React.CSSProperties}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener noreferrer' : undefined}
-    >
-      <div className="flex flex-wrap items-center gap-x-[10px] gap-y-[6px]">
-        <span className="inline-flex items-center gap-[7px]">
-          <span aria-hidden="true" className="h-[6px] w-[6px] rounded-full" style={{ backgroundColor: pillar.color }} />
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray">Live project</span>
-        </span>
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-gray">
-          {subGroupLabel}
-        </span>
-      </div>
-      <p className="mt-[12px] text-[16px] font-semibold tracking-[-0.01em] text-dark md:text-[18px]">
-        {caseStudy.descriptor}
-      </p>
-      <p className="mt-[8px] text-[14px] leading-[1.65] tracking-[-0.005em] text-gray">
-        {caseStudy.outcome}
-      </p>
-      <span className="mt-[16px] inline-flex items-center gap-[8px] text-[13px] font-semibold tracking-[-0.005em] text-dark group-hover:text-[var(--pillar-color)]">
-        View live project
-        <ArrowRight />
-      </span>
-    </Link>
   )
 }
 
@@ -576,14 +527,6 @@ function ArrowUpRight() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
       <path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-    </svg>
-  )
-}
-
-function ArrowRight() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2 7H12M12 7L7.5 2.5M12 7L7.5 11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
     </svg>
   )
 }
