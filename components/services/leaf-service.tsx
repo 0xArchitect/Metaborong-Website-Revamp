@@ -44,6 +44,13 @@ import { AiBusinessProcessAutomationVisual } from '@/components/services/ai-busi
 import { GenaiApisBackendIntegrationVisual } from '@/components/services/genai-apis-backend-integration-visual'
 import { RagRetrievalPipelinesVisual } from '@/components/services/rag-retrieval-pipelines-visual'
 import { AiEvaluationMonitoringVisual } from '@/components/services/ai-evaluation-monitoring-visual'
+import { ProductDiscoveryVisual } from '@/components/services/product-discovery-visual'
+import { MvpDevelopmentVisual } from '@/components/services/mvp-development-visual'
+import { SaasDevelopmentVisual } from '@/components/services/saas-development-visual'
+import { WebApplicationVisual } from '@/components/services/web-application-visual'
+import { MobileAppVisual } from '@/components/services/mobile-app-visual'
+import { CloudDevopsVisual } from '@/components/services/cloud-devops-visual'
+import { UxUiWebDesignVisual } from '@/components/services/ux-ui-web-design-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
@@ -78,6 +85,13 @@ const heroVisuals: Record<string, React.ComponentType> = {
   'ai/genai-apis-backend-integration': GenaiApisBackendIntegrationVisual,
   'ai/rag-retrieval-pipelines': RagRetrievalPipelinesVisual,
   'ai/ai-evaluation-monitoring': AiEvaluationMonitoringVisual,
+  'product-studio/product-discovery': ProductDiscoveryVisual,
+  'product-studio/mvp-development': MvpDevelopmentVisual,
+  'product-studio/saas-development': SaasDevelopmentVisual,
+  'product-studio/web-application-development': WebApplicationVisual,
+  'product-studio/mobile-app-development': MobileAppVisual,
+  'product-studio/cloud-devops-engineering': CloudDevopsVisual,
+  'product-studio/ux-ui-web-design': UxUiWebDesignVisual,
 }
 
 import {
@@ -192,7 +206,12 @@ function Hero({
         </div>
         {Visual && (
           <Reveal delay={120} className="hidden lg:block">
-            <Visual />
+            {/* Signature visuals read --pillar-color so each pillar's hero art
+                carries its own accent (web3 brand-blue, product-studio orange,
+                ai teal); falls back to --color-brand when unset. */}
+            <div style={{ '--pillar-color': pillar.color } as React.CSSProperties}>
+              <Visual />
+            </div>
           </Reveal>
         )}
       </div>

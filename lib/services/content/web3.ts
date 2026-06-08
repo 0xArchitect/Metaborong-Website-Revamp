@@ -544,7 +544,7 @@ export const nftMarketplaceDevelopment: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'tokenomics-design' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
   faqs: [
     {
@@ -833,7 +833,7 @@ export const decentralizedIdentityDidIntegration: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'defi-protocol-development' },
-    { pillar: 'product-studio', slug: 'b2b-multi-tenant-platforms' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
   faqs: [
     {
@@ -1124,7 +1124,7 @@ export const blockchainConsulting: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'tokenomics-design' },
     { pillar: 'web3', slug: 'smart-contract-development' },
-    { pillar: 'product-studio', slug: 'product-discovery-validation' },
+    { pillar: 'product-studio', slug: 'product-discovery' },
   ],
   faqs: [
     {
@@ -1256,7 +1256,7 @@ export const enterprisePrivateBlockchain: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'smart-contract-development' },
     { pillar: 'web3', slug: 'decentralized-identity-did-integration' },
-    { pillar: 'product-studio', slug: 'b2b-multi-tenant-platforms' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
   faqs: [
     {
@@ -1400,7 +1400,7 @@ export const rwaTokenization: LeafContent = {
   relatedServices: [
     { pillar: 'web3', slug: 'tokenomics-design' },
     { pillar: 'web3', slug: 'smart-contract-development' },
-    { pillar: 'product-studio', slug: 'saas-product-development' },
+    { pillar: 'product-studio', slug: 'saas-development' },
   ],
   faqs: [
     {

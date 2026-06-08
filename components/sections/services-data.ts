@@ -11,6 +11,11 @@ export type SubGroupId =
   | 'ai-agents'
   | 'business-automation'
   | 'ai-engineering'
+  // product-studio (lifecycle bands — flat Peiko-style capability list, grouped
+  // into bands for the hub only; nav/homepage flatten leaves regardless)
+  | 'discover'
+  | 'build'
+  | 'scale'
 
 export type LeafStatus = 'published' | 'coming-soon'
 
@@ -302,34 +307,25 @@ export const pillars: Pillar[] = [
     body: 'MVP, SaaS, and B2B multi-tenant platforms for founders without a CTO. One senior team owns architecture through deployment.',
     hubHref: '/services/product-studio/',
     hubCta: 'Product Studio services',
+    // Flat, Peiko-style capability list. Grouped into lifecycle bands
+    // (Plan / Build / Operate) for the hub's visual rhythm only — nav and the
+    // homepage flatten leaves via getFeaturedLeaves/getPublishedLeaves.
     subGroups: [
       {
-        id: 'strategy',
-        label: 'Strategy',
+        id: 'discover',
+        label: 'Discover',
         children: [
           {
-            name: 'Product Discovery & Validation',
-            description: 'Tight-loop discovery sprints: problem framing, hypothesis tests, and a clickable prototype in weeks.',
-            slug: 'product-discovery-validation',
+            name: 'Product Discovery',
+            description: 'Problem framing, customer evidence, and a clickable prototype that de-risks the build before engineering starts.',
+            slug: 'product-discovery',
             status: 'published',
-          },
-          {
-            name: 'Technical Architecture Planning',
-            description: 'Pre-build architecture, data-model, and infrastructure planning for production SaaS.',
-            slug: 'technical-architecture-planning',
-            status: 'coming-soon',
-          },
-          {
-            name: 'MVP Scoping & Roadmapping',
-            description: 'Scope reduction, milestone planning, and engineering estimates for founder-led MVPs.',
-            slug: 'mvp-scoping-roadmapping',
-            status: 'coming-soon',
           },
         ],
       },
       {
-        id: 'product',
-        label: 'Product',
+        id: 'build',
+        label: 'Build',
         children: [
           {
             name: 'MVP Development',
@@ -338,40 +334,40 @@ export const pillars: Pillar[] = [
             status: 'published',
           },
           {
-            name: 'SaaS Product Development',
+            name: 'SaaS Development',
             description: 'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in.',
-            slug: 'saas-product-development',
+            slug: 'saas-development',
             status: 'published',
           },
           {
-            name: 'B2B Multi-Tenant Platforms',
-            description: 'Multi-tenant B2B platforms with SSO, role-based access, audit trails, and admin tooling.',
-            slug: 'b2b-multi-tenant-platforms',
+            name: 'Web Application Development',
+            description: 'Production web apps in React and Next.js, accessible and fast from the first deploy.',
+            slug: 'web-application-development',
+            status: 'published',
+          },
+          {
+            name: 'Mobile App Development',
+            description: 'Cross-platform mobile apps from one codebase across iOS and Android.',
+            slug: 'mobile-app-development',
             status: 'published',
           },
         ],
       },
       {
-        id: 'engineering',
-        label: 'Engineering',
+        id: 'scale',
+        label: 'Scale',
         children: [
           {
-            name: 'Frontend Engineering',
-            description: 'Production React and Next.js frontends with accessibility, SEO, and performance built in.',
-            slug: 'frontend-engineering',
-            status: 'coming-soon',
+            name: 'Cloud & DevOps Engineering',
+            description: 'CI/CD, observability, and cloud infrastructure that make shipping and scaling routine.',
+            slug: 'cloud-devops-engineering',
+            status: 'published',
           },
           {
-            name: 'Backend & API Engineering',
-            description: 'API and data-layer engineering across Postgres, MongoDB, and event-driven systems.',
-            slug: 'backend-api-engineering',
-            status: 'coming-soon',
-          },
-          {
-            name: 'Design Systems & Component Libraries',
-            description: 'Token-driven design systems and component libraries owned by your product team.',
-            slug: 'design-systems-component-libraries',
-            status: 'coming-soon',
+            name: 'UI/UX & Web Design',
+            description: 'Product UX and web design your team owns - shipped as a living, token-driven system, not a static file.',
+            slug: 'ux-ui-web-design',
+            status: 'published',
           },
         ],
       },
