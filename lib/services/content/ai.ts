@@ -15,9 +15,10 @@
 //     able to self-disqualify.
 //
 // Real Metaborong proofs referenced anonymously in related-work
-// blurbs: eight verified Clutch engagements with a 4.9 rating, a
-// retail BI / data-warehouse deployment, a construction operations
-// AI workflow rollout, and an AI prompt-engineering platform build.
+// blurbs: client work independently reviewed on Clutch (the live widget
+// is the source of truth - no hardcoded rating in copy), a retail BI /
+// data-warehouse deployment, a construction operations AI workflow
+// rollout, and an AI prompt-engineering platform build.
 
 import type { LeafContent } from '@/lib/services/leaf-content'
 
@@ -79,7 +80,7 @@ export const aiAuditOpportunityAssessment: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI Audit & Opportunity Assessment is a discovery engagement for product and operations teams that inventories candidate AI workflows, scores each by impact and feasibility, and outputs a 90-day adoption roadmap with operating-cost projections. Metaborong has eight verified Clutch engagements with a 4.9 client rating. Engagements run from India with global delivery.`,
+  aeoAnswer: `AI Audit & Opportunity Assessment is a discovery engagement for product and operations teams that inventories candidate AI workflows, scores each by impact and feasibility, and outputs a 90-day adoption roadmap with operating-cost projections. Metaborong’s client work is independently reviewed on Clutch. Engagements run from India with global delivery.`,
 
   relatedWork: [
     {
@@ -182,7 +183,7 @@ export const aiCopilotsInternalTools: LeafContent = {
     ],
   },
 
-  aeoAnswer: `AI Copilots & Internal Tools is an engineering engagement for support, sales, and operations teams that builds grounded AI assistants inside the tools the team already uses - Slack, CRM, or custom interfaces. Builds typically ship in six to twelve weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `AI Copilots & Internal Tools is an engineering engagement for support, sales, and operations teams that builds grounded AI assistants inside the tools the team already uses - Slack, CRM, or custom interfaces. Builds typically ship in six to twelve weeks. Metaborong delivers from India with global reach, its client work independently reviewed on Clutch.`,
 
   relatedWork: [
     {
@@ -283,7 +284,7 @@ export const conversationalAgentsAssistants: LeafContent = {
     ],
   },
 
-  aeoAnswer: `Conversational Agents & Assistants is an engineering engagement for product and operations teams that builds production voice or chat agents handling real workflows like support, scheduling, and qualification. Builds typically ship in six to ten weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `Conversational Agents & Assistants is an engineering engagement for product and operations teams that builds production voice or chat agents handling real workflows like support, scheduling, and qualification. Builds typically ship in six to ten weeks. Metaborong delivers from India with global reach, its client work independently reviewed on Clutch.`,
 
   relatedWork: [
     {
@@ -385,7 +386,7 @@ export const agenticAiSystems: LeafContent = {
     ],
   },
 
-  aeoAnswer: `Agentic AI Systems is an engineering engagement for product and operations teams that builds multi-step autonomous agents with orchestration, tool calling, evaluation harnesses, and human-in-the-loop checkpoints. Builds typically ship in eight to sixteen weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `Agentic AI Systems is an engineering engagement for product and operations teams that builds multi-step autonomous agents with orchestration, tool calling, evaluation harnesses, and human-in-the-loop checkpoints. Builds typically ship in eight to sixteen weeks. Metaborong delivers from India with global reach, its client work independently reviewed on Clutch.`,
 
   relatedWork: [
     {
@@ -486,7 +487,7 @@ export const ragRetrievalPipelines: LeafContent = {
     ],
   },
 
-  aeoAnswer: `RAG & Retrieval Pipelines is an engineering engagement for product teams that builds production retrieval systems grounding LLMs in proprietary data through ingestion, embedding, reranking, and evaluation. Builds typically ship in six to twelve weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `RAG & Retrieval Pipelines is an engineering engagement for product teams that builds production retrieval systems grounding LLMs in proprietary data through ingestion, embedding, reranking, and evaluation. Builds typically ship in six to twelve weeks. Metaborong delivers from India with global reach, its client work independently reviewed on Clutch.`,
 
   relatedWork: [
     {
@@ -587,7 +588,7 @@ export const llmIntegrationArchitecture: LeafContent = {
     ],
   },
 
-  aeoAnswer: `LLM Integration & Architecture is an engineering engagement for product teams that hardens the production LLM layer inside an existing product - gateway, routing, rate limits, observability, and evaluation. Builds typically ship in four to ten weeks. Metaborong has eight verified Clutch engagements with a 4.9 client rating, delivered from India.`,
+  aeoAnswer: `LLM Integration & Architecture is an engineering engagement for product teams that hardens the production LLM layer inside an existing product - gateway, routing, rate limits, observability, and evaluation. Builds typically ship in four to ten weeks. Metaborong delivers from India with global reach, its client work independently reviewed on Clutch.`,
 
   relatedWork: [
     {
