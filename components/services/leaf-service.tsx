@@ -32,6 +32,13 @@ import { RwaTokenizationVisual } from '@/components/services/rwa-tokenization-vi
 import { CryptoWalletVisual } from '@/components/services/crypto-wallet-visual'
 import { CrossChainBridgeVisual } from '@/components/services/cross-chain-bridge-visual'
 import { IndexersSubgraphsVisual } from '@/components/services/blockchain-indexers-subgraphs-visual'
+import { ProductDiscoveryVisual } from '@/components/services/product-discovery-visual'
+import { MvpDevelopmentVisual } from '@/components/services/mvp-development-visual'
+import { SaasDevelopmentVisual } from '@/components/services/saas-development-visual'
+import { WebApplicationVisual } from '@/components/services/web-application-visual'
+import { MobileAppVisual } from '@/components/services/mobile-app-visual'
+import { CloudDevopsVisual } from '@/components/services/cloud-devops-visual'
+import { UxUiWebDesignVisual } from '@/components/services/ux-ui-web-design-visual'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
@@ -54,6 +61,13 @@ const heroVisuals: Record<string, React.ComponentType> = {
   'web3/crypto-wallet-development': CryptoWalletVisual,
   'web3/cross-chain-bridge-development': CrossChainBridgeVisual,
   'web3/blockchain-indexers-subgraphs': IndexersSubgraphsVisual,
+  'product-studio/product-discovery': ProductDiscoveryVisual,
+  'product-studio/mvp-development': MvpDevelopmentVisual,
+  'product-studio/saas-development': SaasDevelopmentVisual,
+  'product-studio/web-application-development': WebApplicationVisual,
+  'product-studio/mobile-app-development': MobileAppVisual,
+  'product-studio/cloud-devops-engineering': CloudDevopsVisual,
+  'product-studio/ux-ui-web-design': UxUiWebDesignVisual,
 }
 
 import {
