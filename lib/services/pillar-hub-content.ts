@@ -104,7 +104,7 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
       },
       {
         q: 'Can you integrate AI into a product we already ship?',
-        a: 'Yes. Most of our AI engineering work lands inside existing products: not greenfield. We harden auth, routing, fallback, cost controls, and observability around the LLM layer so the existing product keeps shipping while AI features layer in.',
+        a: 'Yes. Most of our AI engineering work lands inside existing products, not new builds from scratch. We harden auth, routing, fallback, cost controls, and observability around the LLM layer so the existing product keeps shipping while AI features layer in.',
       },
       {
         q: 'Which model providers do you work with?',
@@ -179,10 +179,10 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
 
   'product-studio': {
     id: 'product-studio',
-    heading: 'Product Development & Greenfield Engineering',
+    heading: 'Product Development and Engineering',
     positioning: 'We build the first version of your product, end-to-end.',
     aeoAnswer:
-      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. One senior team owns the work from architecture through deployment across the full lifecycle: product discovery, then MVP, SaaS, web, and mobile builds, then the cloud, DevOps, and design that keep a product shippable as it scales. Multi-tenancy, billing, and observability are baked in from week one.',
+      'Product Studio at Metaborong is product engineering for founders building from zero. One senior team owns the work from architecture through deployment across the full lifecycle: product discovery, then MVP, SaaS, web, and mobile builds, then the cloud, DevOps, and design that keep a product shippable as it scales. Multi-tenancy, billing, and observability are baked in from week one.',
     subGroups: [
       {
         id: 'discover',
@@ -224,7 +224,7 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
       },
       {
         q: 'Do you help with the next phase after the MVP?',
-        a: 'Yes: many teams retain us through v1, v2, and beyond. Product Studio is intentionally marketed as greenfield, but ongoing engineering for existing products is handled through direct conversation. Reach us through the contact form.',
+        a: 'Yes: many teams retain us through v1, v2, and beyond. Product Studio is intentionally focused on new product builds, but ongoing engineering for existing products is handled through direct conversation. Reach us through the contact form.',
       },
       {
         q: 'What stack do you build on?',
