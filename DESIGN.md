@@ -283,6 +283,27 @@ surfaces that genuinely lift off the canvas (hover affordance on cards, overlays
   use `display:none` to hide content that has SEO value. See `services.tsx` — `<Card>`
   list shown on mobile while `services-trefoil.tsx` shows on lg+.
 
+### `/services` index grammar (2026-06-08, impeccable live)
+
+The top-level `/services` index (`components/services/services-overview.tsx`, copy in
+`services-overview-data.ts`) sets these section idioms. Goal: vary rhythm so the page never reads as
+stacked identical card grids (PRODUCT.md anti-pattern).
+
+- **Hero — typography + spec manifest, no image.** Eyebrow → big H1 → ~40w citable answer
+  (`AEO_ANSWER`, also in `raw.md`) → CTAs, all at `max-w-[1000px]`; then a **full-width `<dl>` spec
+  manifest** (4 capability key/value cells, bordered, mono labels — *not* vanity metrics) + the live
+  Clutch widget fills the hero width. No right-side SVG. The 83-word supporting lede was dropped.
+- **Outcome router — non-boxed.** `By outcome` is a borderless 2-col directory: mono pillar kicker
+  (`AI`/`WEB3`/`PRODUCT`, token accent) + bold title + clarifier, arrow reveals on hover
+  (`group-hover`, `motion-reduce`-safe). Deliberately un-boxed to contrast the pillar cards below.
+- **Pillar cards — numeral-anchored.** Bordered cards led by an oversized pillar numeral
+  (`clamp(44px,5vw,64px)`, pillar color) + headline + body + top-3 published leaves as linked chips +
+  a `N services` hub link (real `getPublishedLeaves` count). Replaced the old tall three-subgroup leaf
+  stack.
+- **Removed on this surface.** The shared engagement-model strip (engagement lives on the pillar
+  hubs only); the standalone Clutch "Independently rated" section (Clutch now lives in the hero). FAQ
+  uses the shared `FaqSection` with an `items` prop.
+
 ---
 
 ## Motion
