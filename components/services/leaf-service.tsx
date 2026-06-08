@@ -182,7 +182,12 @@ function Hero({
         </div>
         {Visual && (
           <Reveal delay={120} className="hidden lg:block">
-            <Visual />
+            {/* Signature visuals read --pillar-color so each pillar's hero art
+                carries its own accent (web3 brand-blue, product-studio orange,
+                ai teal); falls back to --color-brand when unset. */}
+            <div style={{ '--pillar-color': pillar.color } as React.CSSProperties}>
+              <Visual />
+            </div>
           </Reveal>
         )}
       </div>

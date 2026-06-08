@@ -21,19 +21,19 @@ export function SaasDevelopmentVisual() {
 
         {/* three isolated tenant lanes — each a rounded, scoped row */}
         <g className="saasv-lane saasv-l1">
-          <rect x="40" y="60" width="150" height="44" rx="6" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="40" y="60" width="150" height="44" rx="6" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <rect x="52" y="74" width="16" height="16" rx="3" fill="none" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="80" y1="78" x2="172" y2="78" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="80" y1="88" x2="150" y2="88" stroke="var(--color-gray-light)" strokeWidth="1.5" />
         </g>
         <g className="saasv-lane saasv-l2">
-          <rect x="40" y="152" width="150" height="44" rx="6" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="40" y="152" width="150" height="44" rx="6" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <rect x="52" y="166" width="16" height="16" rx="3" fill="none" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="80" y1="170" x2="172" y2="170" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="80" y1="180" x2="150" y2="180" stroke="var(--color-gray-light)" strokeWidth="1.5" />
         </g>
         <g className="saasv-lane saasv-l3">
-          <rect x="40" y="244" width="150" height="44" rx="6" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="40" y="244" width="150" height="44" rx="6" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <rect x="52" y="258" width="16" height="16" rx="3" fill="none" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="80" y1="262" x2="172" y2="262" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="80" y1="272" x2="150" y2="272" stroke="var(--color-gray-light)" strokeWidth="1.5" />
@@ -44,13 +44,13 @@ export function SaasDevelopmentVisual() {
           className="saasv-wire"
           pathLength={1}
           d="M190,82 C228,82 240,160 270,170 M190,174 H270 M190,266 C228,266 240,180 270,174"
-          fill="none" stroke="var(--color-brand)" strokeWidth="2.5" strokeLinecap="round"
+          fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2.5" strokeLinecap="round"
         />
 
         {/* shared application core — the single platform all tenants run on */}
         <g className="saasv-core">
-          <rect x="270" y="138" width="72" height="72" rx="6" fill="var(--color-brand)" />
-          <rect x="270" y="138" width="72" height="72" rx="6" fill="none" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="270" y="138" width="72" height="72" rx="6" fill="var(--pillar-color, var(--color-brand))" />
+          <rect x="270" y="138" width="72" height="72" rx="6" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <line x1="306" y1="138" x2="306" y2="210" stroke="var(--color-bg)" strokeWidth="1" strokeOpacity="0.4" />
           <line x1="270" y1="174" x2="342" y2="174" stroke="var(--color-bg)" strokeWidth="1" strokeOpacity="0.4" />
           <circle cx="306" cy="174" r="11" fill="none" stroke="var(--color-bg)" strokeWidth="2" />
@@ -61,7 +61,7 @@ export function SaasDevelopmentVisual() {
           className="saasv-meter-wire"
           pathLength={1}
           d="M342,174 H392"
-          fill="none" stroke="var(--color-brand)" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="2 5"
+          fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="2 5"
         />
 
         {/* recurring billing cycle meter on the right */}
@@ -71,9 +71,9 @@ export function SaasDevelopmentVisual() {
             className="saasv-cycle"
             pathLength={1}
             d="M408,148 A26,26 0 1 1 388,156"
-            fill="none" stroke="var(--color-brand)" strokeWidth="2.5" strokeLinecap="round"
+            fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2.5" strokeLinecap="round"
           />
-          <path d="M385,154 L388,156 L387,160" fill="none" stroke="var(--color-brand)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M385,154 L388,156 L387,160" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </g>
 
         {/* labels (JetBrains Mono via --font-mono) */}
@@ -91,7 +91,7 @@ export function SaasDevelopmentVisual() {
         {/* the artefact handed forward — isolation contract */}
         <g className="saasv-foot" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="0.04em">
           <text x="40" y="348" fill="var(--color-gray-light)">{'// workspace-scoped data'}</text>
-          <text x="40" y="364" fill="var(--color-brand)">→ one shared platform</text>
+          <text x="40" y="364" fill="var(--pillar-color, var(--color-brand))">→ one shared platform</text>
         </g>
       </svg>
     </figure>

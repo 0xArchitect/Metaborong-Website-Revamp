@@ -24,7 +24,7 @@ export function MvpDevelopmentVisual() {
         />
 
         {/* four ascending sprint step blocks (each a two-week sprint) */}
-        <g fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2">
+        <g fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2">
           <rect className="mvpv-step mvpv-s1" x="50" y="248" width="80" height="72" rx="2" />
           <rect className="mvpv-step mvpv-s2" x="140" y="192" width="80" height="128" rx="2" />
           <rect className="mvpv-step mvpv-s3" x="230" y="136" width="80" height="184" rx="2" />
@@ -37,14 +37,14 @@ export function MvpDevelopmentVisual() {
           pathLength={1}
           d="M50,248 H130 L140,192 H220 L230,136 H310 L320,80 H400"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
 
         {/* progress waypoint nodes at each sprint corner */}
-        <g className="mvpv-nodes" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2">
+        <g className="mvpv-nodes" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2">
           <circle cx="90" cy="248" r="3.5" />
           <circle cx="180" cy="192" r="3.5" />
           <circle cx="270" cy="136" r="3.5" />
@@ -52,9 +52,9 @@ export function MvpDevelopmentVisual() {
 
         {/* launch flag at the summit */}
         <g className="mvpv-flag">
-          <line x1="360" y1="80" x2="360" y2="36" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" />
-          <path d="M360,40 L392,49 L360,58 Z" fill="var(--color-brand)" />
-          <circle cx="360" cy="80" r="4" fill="var(--color-brand)" />
+          <line x1="360" y1="80" x2="360" y2="36" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" strokeLinecap="round" />
+          <path d="M360,40 L392,49 L360,58 Z" fill="var(--pillar-color, var(--color-brand))" />
+          <circle cx="360" cy="80" r="4" fill="var(--pillar-color, var(--color-brand))" />
         </g>
 
         {/* sprint labels (JetBrains Mono via --font-mono) */}
@@ -67,7 +67,7 @@ export function MvpDevelopmentVisual() {
         <text
           className="mvpv-flag-label"
           x="360" y="28" textAnchor="middle"
-          fill="var(--color-brand)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.08em"
+          fill="var(--pillar-color, var(--color-brand))" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.08em"
         >
           LAUNCH
         </text>
