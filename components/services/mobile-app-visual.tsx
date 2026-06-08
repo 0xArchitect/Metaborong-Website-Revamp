@@ -18,7 +18,7 @@ export function MobileAppVisual() {
           pathLength={1}
           d="M180,36 h100 a16,16 0 0 1 16,16 v276 a16,16 0 0 1 -16,16 h-100 a16,16 0 0 1 -16,-16 v-276 a16,16 0 0 1 16,-16 Z"
           fill="var(--color-bg)"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
@@ -26,7 +26,7 @@ export function MobileAppVisual() {
         <line className="mob-frame" x1="212" y1="50" x2="248" y2="50" stroke="var(--color-gray-light)" strokeWidth="2" strokeLinecap="round" />
 
         {/* concentric signal rings emitted from the pin */}
-        <g className="mob-rings" fill="none" stroke="var(--color-brand)" strokeWidth="1.5">
+        <g className="mob-rings" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5">
           <circle className="mob-ring mob-r1" cx="230" cy="138" r="20" />
           <circle className="mob-ring mob-r2" cx="230" cy="138" r="34" />
           <circle className="mob-ring mob-r3" cx="230" cy="138" r="48" />
@@ -36,7 +36,7 @@ export function MobileAppVisual() {
         <g className="mob-pin">
           <path
             d="M230,108 a14,14 0 0 1 14,14 c0,10 -14,28 -14,28 c0,0 -14,-18 -14,-28 a14,14 0 0 1 14,-14 Z"
-            fill="var(--color-brand)"
+            fill="var(--pillar-color, var(--color-brand))"
           />
           <circle cx="230" cy="122" r="5" fill="var(--color-bg)" />
         </g>
@@ -49,18 +49,18 @@ export function MobileAppVisual() {
             pathLength={1}
             d="M196,238 A40,40 0 0 1 252,221"
             fill="none"
-            stroke="var(--color-brand)"
+            stroke="var(--pillar-color, var(--color-brand))"
             strokeWidth="4"
             strokeLinecap="round"
           />
-          <circle cx="230" cy="238" r="3" fill="var(--color-brand)" />
+          <circle cx="230" cy="238" r="3" fill="var(--pillar-color, var(--color-brand))" />
         </g>
 
         {/* generated collectible tile */}
         <g className="mob-tile">
-          <rect x="200" y="262" width="60" height="48" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-          <path d="M208,300 L222,280 L232,292 L244,272 L252,300 Z" fill="var(--color-brand)" opacity="0.85" />
-          <circle cx="246" cy="276" r="4" fill="var(--color-brand)" />
+          <rect x="200" y="262" width="60" height="48" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+          <path d="M208,300 L222,280 L232,292 L244,272 L252,300 Z" fill="var(--pillar-color, var(--color-brand))" opacity="0.85" />
+          <circle cx="246" cy="276" r="4" fill="var(--pillar-color, var(--color-brand))" />
         </g>
 
         {/* mono labels */}

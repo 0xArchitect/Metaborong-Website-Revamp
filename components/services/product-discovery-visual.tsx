@@ -45,7 +45,7 @@ export function ProductDiscoveryVisual() {
           pathLength={1}
           d="M60,96 C140,100 210,150 300,190"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="1.75"
           strokeLinecap="round"
         />
@@ -54,7 +54,7 @@ export function ProductDiscoveryVisual() {
           pathLength={1}
           d="M60,190 C150,190 220,190 300,190"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="1.75"
           strokeLinecap="round"
         />
@@ -63,13 +63,13 @@ export function ProductDiscoveryVisual() {
           pathLength={1}
           d="M60,288 C140,284 210,230 300,190"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="1.75"
           strokeLinecap="round"
         />
 
         {/* hypothesis origin nodes (left) */}
-        <g className="pdv-origin" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2">
+        <g className="pdv-origin" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2">
           <circle cx="60" cy="96" r="3.5" />
           <circle cx="60" cy="190" r="3.5" />
           <circle cx="60" cy="288" r="3.5" />
@@ -81,34 +81,34 @@ export function ProductDiscoveryVisual() {
           pathLength={1}
           d="M300,190 H360"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="3"
           strokeLinecap="round"
         />
         {/* convergence node where branches meet */}
-        <circle className="pdv-converge" cx="300" cy="190" r="5" fill="var(--color-brand)" />
+        <circle className="pdv-converge" cx="300" cy="190" r="5" fill="var(--pillar-color, var(--color-brand))" />
 
         {/* prototype screen frame (right) — the tested clickable artefact */}
         <g className="pdv-proto">
-          <rect x="360" y="150" width="80" height="80" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-          <line x1="360" y1="166" x2="440" y2="166" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="360" y="150" width="80" height="80" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+          <line x1="360" y1="166" x2="440" y2="166" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <circle cx="367" cy="158" r="1.5" fill="var(--color-gray-light)" />
           <circle cx="373" cy="158" r="1.5" fill="var(--color-gray-light)" />
           <line x1="370" y1="180" x2="430" y2="180" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="370" y1="192" x2="430" y2="192" stroke="var(--color-gray-light)" strokeWidth="1.5" />
-          <rect x="370" y="206" width="34" height="12" rx="2" fill="var(--color-brand)" />
+          <rect x="370" y="206" width="34" height="12" rx="2" fill="var(--pillar-color, var(--color-brand))" />
         </g>
 
         {/* stage labels (JetBrains Mono via --font-mono) */}
         <g className="pdv-label" fill="var(--color-gray)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.06em" textAnchor="middle">
           <text x="60" y="346">HYPOTHESES</text>
-          <text x="300" y="346" fill="var(--color-brand)">VALIDATED</text>
+          <text x="300" y="346" fill="var(--pillar-color, var(--color-brand))">VALIDATED</text>
           <text x="400" y="346">PROTOTYPE</text>
         </g>
 
         {/* the artefact handed forward — build-ready estimate */}
         <g className="pdv-foot" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="0.04em">
-          <text x="60" y="372" fill="var(--color-brand)">→ build-ready estimate</text>
+          <text x="60" y="372" fill="var(--pillar-color, var(--color-brand))">→ build-ready estimate</text>
         </g>
       </svg>
     </figure>

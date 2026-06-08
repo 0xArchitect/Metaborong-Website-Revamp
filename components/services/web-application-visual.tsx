@@ -35,7 +35,7 @@ export function WebApplicationVisual() {
           pathLength={1}
           d="M104,120 H188 M104,170 H188 M104,220 H188 M280,170 H348"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="2.5"
           strokeLinecap="round"
         />
@@ -43,32 +43,32 @@ export function WebApplicationVisual() {
         {/* role nodes — three distinct user roles */}
         <g className="wapp-roles" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="0.04em">
           <g className="wapp-role wapp-r1">
-            <rect x="62" y="108" width="42" height="24" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-            <circle cx="83" cy="120" r="4.5" fill="none" stroke="var(--color-brand)" strokeWidth="1.5" />
+            <rect x="62" y="108" width="42" height="24" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+            <circle cx="83" cy="120" r="4.5" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5" />
           </g>
           <g className="wapp-role wapp-r2">
-            <rect x="62" y="158" width="42" height="24" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-            <circle cx="83" cy="170" r="4.5" fill="none" stroke="var(--color-brand)" strokeWidth="1.5" />
+            <rect x="62" y="158" width="42" height="24" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+            <circle cx="83" cy="170" r="4.5" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5" />
           </g>
           <g className="wapp-role wapp-r3">
-            <rect x="62" y="208" width="42" height="24" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-            <circle cx="83" cy="220" r="4.5" fill="none" stroke="var(--color-brand)" strokeWidth="1.5" />
+            <rect x="62" y="208" width="42" height="24" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+            <circle cx="83" cy="220" r="4.5" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5" />
           </g>
         </g>
 
         {/* shared application core */}
         <g className="wapp-core">
-          <rect x="188" y="148" width="92" height="44" rx="4" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="188" y="148" width="92" height="44" rx="4" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <line x1="188" y1="162" x2="280" y2="162" stroke="var(--color-border)" strokeWidth="1" />
-          <circle cx="234" cy="178" r="6" fill="none" stroke="var(--color-brand)" strokeWidth="1.5" />
-          <line x1="234" y1="178" x2="234" y2="172" stroke="var(--color-brand)" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="234" cy="178" r="6" fill="none" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5" />
+          <line x1="234" y1="178" x2="234" y2="172" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5" strokeLinecap="round" />
         </g>
 
         {/* emitted credential badge */}
         <g className="wapp-badge">
           <path
             d="M366,148 L384,154 L384,178 C384,189 376,196 366,200 C356,196 348,189 348,178 L348,154 Z"
-            fill="var(--color-brand)"
+            fill="var(--pillar-color, var(--color-brand))"
           />
           <path
             className="wapp-check"
@@ -88,13 +88,13 @@ export function WebApplicationVisual() {
           <text x="62" y="150" fill="var(--color-gray)">VERIFIER</text>
           <text x="62" y="200" fill="var(--color-gray)">HOLDER</text>
           <text x="188" y="140" fill="var(--color-gray-light)">APPLICATION CORE</text>
-          <text x="348" y="140" fill="var(--color-brand)">CREDENTIAL</text>
+          <text x="348" y="140" fill="var(--pillar-color, var(--color-brand))">CREDENTIAL</text>
         </g>
 
         {/* footer artefact line under the window */}
         <g className="wapp-foot" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="0.04em">
           <text x="40" y="338" fill="var(--color-gray-light)">{'// multi-role access'}</text>
-          <text x="40" y="354" fill="var(--color-brand)">→ verifiable badge minted</text>
+          <text x="40" y="354" fill="var(--pillar-color, var(--color-brand))">→ verifiable badge minted</text>
         </g>
       </svg>
     </figure>

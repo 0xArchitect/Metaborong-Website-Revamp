@@ -32,14 +32,14 @@ export function UxUiWebDesignVisual() {
           height="184"
           rx="3"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="2"
         />
 
         {/* component block — card */}
         <g className="uxd-block uxd-b1">
-          <rect x="62" y="84" width="120" height="100" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-          <rect x="62" y="84" width="120" height="36" rx="3" fill="var(--color-brand)" opacity="0.12" />
+          <rect x="62" y="84" width="120" height="100" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+          <rect x="62" y="84" width="120" height="36" rx="3" fill="var(--pillar-color, var(--color-brand))" opacity="0.12" />
           <line x1="76" y1="138" x2="168" y2="138" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="76" y1="152" x2="168" y2="152" stroke="var(--color-gray-light)" strokeWidth="1.5" />
           <line x1="76" y1="166" x2="140" y2="166" stroke="var(--color-gray-light)" strokeWidth="1.5" />
@@ -47,15 +47,15 @@ export function UxUiWebDesignVisual() {
 
         {/* component block — input field */}
         <g className="uxd-block uxd-b2">
-          <rect x="204" y="100" width="156" height="30" rx="3" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-          <line x1="216" y1="115" x2="216" y2="115" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" />
-          <line x1="216" y1="108" x2="216" y2="122" stroke="var(--color-brand)" strokeWidth="1.5" />
+          <rect x="204" y="100" width="156" height="30" rx="3" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+          <line x1="216" y1="115" x2="216" y2="115" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" strokeLinecap="round" />
+          <line x1="216" y1="108" x2="216" y2="122" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="1.5" />
           <line x1="228" y1="115" x2="300" y2="115" stroke="var(--color-gray-light)" strokeWidth="1.5" />
         </g>
 
         {/* component block — button */}
         <g className="uxd-block uxd-b3">
-          <rect x="204" y="150" width="104" height="34" rx="3" fill="var(--color-brand)" />
+          <rect x="204" y="150" width="104" height="34" rx="3" fill="var(--pillar-color, var(--color-brand))" />
           <line x1="222" y1="167" x2="290" y2="167" stroke="var(--color-bg)" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.7" />
         </g>
 
@@ -65,17 +65,17 @@ export function UxUiWebDesignVisual() {
           pathLength={1}
           d="M122,184 V268 M232,184 V268 M256,184 V268 M336,184 V268"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="1.5"
           strokeDasharray="3 4"
         />
 
         {/* design-token swatches — color tints, neutrals, then spacing tokens */}
         <g className="uxd-tokens">
-          <rect className="uxd-tok uxd-t1" x="62" y="280" width="26" height="26" rx="2" fill="var(--color-brand)" />
-          <rect className="uxd-tok uxd-t2" x="98" y="280" width="26" height="26" rx="2" fill="var(--color-brand)" fillOpacity="0.65" />
-          <rect className="uxd-tok uxd-t3" x="134" y="280" width="26" height="26" rx="2" fill="var(--color-brand)" fillOpacity="0.4" />
-          <rect className="uxd-tok uxd-t4" x="170" y="280" width="26" height="26" rx="2" fill="var(--color-brand)" fillOpacity="0.22" />
+          <rect className="uxd-tok uxd-t1" x="62" y="280" width="26" height="26" rx="2" fill="var(--pillar-color, var(--color-brand))" />
+          <rect className="uxd-tok uxd-t2" x="98" y="280" width="26" height="26" rx="2" fill="var(--pillar-color, var(--color-brand))" fillOpacity="0.65" />
+          <rect className="uxd-tok uxd-t3" x="134" y="280" width="26" height="26" rx="2" fill="var(--pillar-color, var(--color-brand))" fillOpacity="0.4" />
+          <rect className="uxd-tok uxd-t4" x="170" y="280" width="26" height="26" rx="2" fill="var(--pillar-color, var(--color-brand))" fillOpacity="0.22" />
           <rect className="uxd-tok uxd-t5" x="206" y="280" width="26" height="26" rx="2" fill="var(--color-gray)" />
           <rect className="uxd-tok uxd-t6" x="242" y="280" width="26" height="26" rx="2" fill="var(--color-bg)" stroke="var(--color-gray-light)" strokeWidth="1.5" strokeDasharray="3 3" />
           <rect className="uxd-tok uxd-t7" x="278" y="280" width="12" height="26" rx="2" fill="var(--color-gray-light)" />

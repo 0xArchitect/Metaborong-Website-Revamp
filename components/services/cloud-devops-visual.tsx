@@ -30,7 +30,7 @@ export function CloudDevopsVisual() {
           pathLength={1}
           d="M58,150 H114 M146,150 H234 M266,150 H354 M386,150 H402"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="2.5"
           strokeLinecap="round"
         />
@@ -41,35 +41,35 @@ export function CloudDevopsVisual() {
           pathLength={1}
           d="M370,118 C370,70 130,70 130,116"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="1.75"
           strokeLinecap="round"
           strokeDasharray="5 4"
         />
-        <path className="cdv-rollhead" d="M130,116 l-6,-9 l12,0 Z" fill="var(--color-brand)" />
+        <path className="cdv-rollhead" d="M130,116 l-6,-9 l12,0 Z" fill="var(--pillar-color, var(--color-brand))" />
 
         {/* stage 1 — COMMIT: a node ring */}
         <g className="cdv-node cdv-n1">
-          <circle cx="40" cy="150" r="14" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
-          <circle cx="40" cy="150" r="4" fill="var(--color-brand)" />
+          <circle cx="40" cy="150" r="14" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
+          <circle cx="40" cy="150" r="4" fill="var(--pillar-color, var(--color-brand))" />
         </g>
 
         {/* stage 2 — BUILD: a stacked-block glyph */}
         <g className="cdv-node cdv-n2">
-          <rect x="116" y="136" width="28" height="28" rx="2" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
+          <rect x="116" y="136" width="28" height="28" rx="2" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <line x1="130" y1="136" x2="130" y2="164" stroke="var(--color-gray-light)" strokeWidth="1" />
           <line x1="116" y1="150" x2="144" y2="150" stroke="var(--color-gray-light)" strokeWidth="1" />
         </g>
 
         {/* stage 3 — TEST: a node with a forming checkmark */}
         <g className="cdv-node cdv-n3">
-          <circle cx="250" cy="150" r="15" fill="var(--color-bg)" stroke="var(--color-brand)" strokeWidth="2" />
+          <circle cx="250" cy="150" r="15" fill="var(--color-bg)" stroke="var(--pillar-color, var(--color-brand))" strokeWidth="2" />
           <path
             className="cdv-check"
             pathLength={1}
             d="M243,151 L248,157 L258,144"
             fill="none"
-            stroke="var(--color-brand)"
+            stroke="var(--pillar-color, var(--color-brand))"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -78,7 +78,7 @@ export function CloudDevopsVisual() {
 
         {/* stage 4 — DEPLOY: a filled cloud-block landing target */}
         <g className="cdv-node cdv-n4">
-          <rect x="404" y="134" width="32" height="32" rx="2" fill="var(--color-brand)" />
+          <rect x="404" y="134" width="32" height="32" rx="2" fill="var(--pillar-color, var(--color-brand))" />
           <line x1="420" y1="134" x2="420" y2="166" stroke="var(--color-bg)" strokeWidth="1" strokeOpacity="0.4" />
           <line x1="404" y1="150" x2="436" y2="150" stroke="var(--color-bg)" strokeWidth="1" strokeOpacity="0.4" />
         </g>
@@ -89,7 +89,7 @@ export function CloudDevopsVisual() {
           <text x="130" y="196">BUILD</text>
           <text x="250" y="196">TEST</text>
           <text x="420" y="196">DEPLOY</text>
-          <text x="250" y="62" fill="var(--color-brand)">ROLLBACK</text>
+          <text x="250" y="62" fill="var(--pillar-color, var(--color-brand))">ROLLBACK</text>
         </g>
 
         {/* observability accent — uptime/heartbeat line beneath the pipeline */}
@@ -98,14 +98,14 @@ export function CloudDevopsVisual() {
           pathLength={1}
           d="M40,290 H150 l10,-26 l14,46 l12,-32 l9,12 H300 l10,-22 l13,40 l11,-18 H420"
           fill="none"
-          stroke="var(--color-brand)"
+          stroke="var(--pillar-color, var(--color-brand))"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <g className="cdv-foot" fontFamily="var(--font-mono)" fontSize="10" letterSpacing="0.04em">
           <text x="40" y="278" fill="var(--color-gray-light)">{'// observability'}</text>
-          <text x="40" y="318" fill="var(--color-brand)">uptime 99.99%</text>
+          <text x="40" y="318" fill="var(--pillar-color, var(--color-brand))">uptime 99.99%</text>
         </g>
       </svg>
     </figure>
