@@ -1,0 +1,25 @@
+{
+  "id": "f7fd3741",
+  "phase": "agent_error",
+  "pageUrl": "/",
+  "sourceFile": null,
+  "expectedVariants": 4,
+  "arrivedVariants": 0,
+  "visibleVariant": 0,
+  "paramValues": {},
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 1,
+  "activeOwner": "a4976f2e",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "annotationArtifacts": [],
+  "diagnostics": [
+    {
+      "error": "agent_error",
+      "message": "Hero is a stateful LCP/video component — proposing 4 directions in chat, then implementing directly (hot-swap would break autoplay/poster/LCP wiring)"
+    }
+  ],
+  "updatedAt": "2026-06-04T09:38:51.318Z"
+}

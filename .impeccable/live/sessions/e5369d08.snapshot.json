@@ -1,0 +1,25 @@
+{
+  "id": "e5369d08",
+  "phase": "agent_error",
+  "pageUrl": "/",
+  "sourceFile": null,
+  "expectedVariants": 2,
+  "arrivedVariants": 0,
+  "visibleVariant": 0,
+  "paramValues": {},
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 8,
+  "activeOwner": "ab315615",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "annotationArtifacts": [],
+  "diagnostics": [
+    {
+      "error": "agent_error",
+      "message": "Superseded — you chose the cards (3 variants) instead"
+    }
+  ],
+  "updatedAt": "2026-06-03T13:52:16.881Z"
+}

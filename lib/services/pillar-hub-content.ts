@@ -179,44 +179,25 @@ export const pillarHubCopy: Record<PillarId, PillarHubCopy> = {
 
   'product-studio': {
     id: 'product-studio',
+    heading: 'Product Development & Greenfield Engineering',
     positioning: 'We build the first version of your product, end-to-end.',
-    heroParagraphs: [
-      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. The pillar exists for teams without an in-house CTO who need one senior engineering group to own the work from architecture through deployment, not a fragmented chain of specialists each handing off the last piece. It spans the full lifecycle: product discovery, then MVP, SaaS, web, and mobile builds, then the cloud, DevOps, and design disciplines that keep a product shippable as it scales.',
-      'Every build is shaped to ship to production, not to demo in a stand-up. Multi-tenancy, billing, observability, authentication, audit logging, and the operational defaults that enterprise procurement asks about are baked in from week one. Founders communicate directly with the engineers writing the code, and architecture decisions happen out in the open. We do not market modernisation, managed services, or v2/v3 retainers: Product Studio is intentionally a greenfield practice. Teams who already have a product can still reach us; we handle that conversation directly.',
-    ],
+    aeoAnswer:
+      'Product Studio at Metaborong is greenfield product engineering for founders building from zero. One senior team owns the work from architecture through deployment across the full lifecycle: product discovery, then MVP, SaaS, web, and mobile builds, then the cloud, DevOps, and design that keep a product shippable as it scales. Multi-tenancy, billing, and observability are baked in from week one.',
     subGroups: [
       {
         id: 'discover',
         description:
           'Discovery and validation before a line of production code: problem framing, customer evidence, and a clickable prototype that de-risks the build.',
-        caseStudy: {
-          descriptor: 'Product discovery sprint',
-          outcome:
-            'A two-week loop: problem framing, hypothesis tests, technical feasibility, and a clickable prototype a founder can take to customers or investors.',
-          href: '/work',
-        },
       },
       {
         id: 'build',
         description:
           'The product itself, shipped end-to-end by one senior team: MVP, SaaS, web, and mobile builds with multi-tenancy, billing, and observability baked in from week one.',
-        caseStudy: {
-          descriptor: 'GetSmart: on-chain credentialing platform',
-          outcome:
-            'A multi-role web app with embedded smart wallets, IPFS-backed evidence, NFT credentials, and token escrow shipped end-to-end by one team.',
-          href: '/work',
-        },
       },
       {
         id: 'scale',
         description:
           'The disciplines that keep a product shippable as it grows: cloud and DevOps engineering, plus the product and web design systems your team owns.',
-        caseStudy: {
-          descriptor: 'Absolveme: Web3 product frontend & design',
-          outcome:
-            'A distinctive dark, atmospheric frontend and design language built for a multi-chain Web3 product and handed to the team to run.',
-          href: '/work',
-        },
       },
     ],
     engagement: [
