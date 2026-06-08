@@ -1,8 +1,11 @@
 import { Section } from '@/components/ui/section'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
-import { FaqAccordion } from '@/components/sections/faq-accordion'
+import { FaqAccordion, type FaqAccordionItem } from '@/components/sections/faq-accordion'
 
-export function FaqSection() {
+// `items` defaults (in FaqAccordion) to the homepage FAQ set, so existing
+// homepage usage is unchanged; pass a set (e.g. the /services FAQs) to reuse
+// the shared layout with different questions.
+export function FaqSection({ items }: { items?: readonly FaqAccordionItem[] } = {}) {
   return (
     <Section as="section" maxWidth="xwide">
       <div className="grid gap-[40px] lg:grid-cols-[minmax(0,360px)_1fr] md:gap-[64px] lg:gap-[96px]">
@@ -26,7 +29,7 @@ export function FaqSection() {
             </a>
           </div>
         </div>
-        <FaqAccordion />
+        <FaqAccordion items={items} />
       </div>
     </Section>
   )

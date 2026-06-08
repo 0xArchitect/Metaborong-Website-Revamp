@@ -4,6 +4,41 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-08 — `/services` index revamp (copy chain + impeccable live)
+
+Restructured the top-level `/services` index: section architecture, UX-copy, and AEO/GEO/SEO plumbing.
+Brainstorm → A3 copy chain → impeccable live for the visual passes. Copy single-sourced in
+`components/services/services-overview-data.ts`, synced to `docs/content/services/index.md`; copy
+audit + keyword lock at `docs/superpowers/specs/2026-06-08-services-index-copy-audit.md`.
+
+- **Sections 7 → 6, rhythm varied.** Dropped the EngagementStrip (redundant with the pillar hubs).
+  Page now reads hero → non-boxed outcome router → numeral pillar cards → `TrustBar` → shared FAQ →
+  CTA, so it no longer stacks identical card grids (PRODUCT.md anti-pattern).
+- **Hero (impeccable live, emphatic).** Typography-led, no SVG. Big H1 *"AI, Web3, and product, one
+  senior team."* + ~40w citable answer (the tightened canonical `AEO_ANSWER`; the old 83w lede was
+  cut) + CTAs at `max-w-[1000px]`, then a **full-width `<dl>` spec manifest** (Pillars/Chains/Team/
+  Proof — capability key/values, not vanity metrics) + the live Clutch widget. Clutch moved here from
+  the old standalone TrustBand section.
+- **Outcome router (impeccable live V3).** Non-boxed 2-col directory; pillar kicker + title + hover
+  arrow (`motion-reduce`-safe), token accents. The 4 cards were re-selected by **search demand**
+  (Add AI · smart-contract system · MVP · AI agents), each routing to a published leaf; dropped the
+  lower-volume Token/DeFi-hub and DID cards (still reachable on their leaves + Web3 hub).
+- **Pillar cards (impeccable live V1).** Concise numeral-anchored cards (oversized pillar numeral +
+  headline + body + top-3 leaf-link chips + real `N services` hub link); replaced the tall
+  three-subgroup leaf stack.
+- **FAQ.** Swapped the inline accordion for the shared `FaqSection`; added an optional `items` prop
+  (defaults to homepage FAQs) so it carries the services FAQs in the shared layout.
+- **AEO/GEO/SEO.** The index previously emitted **zero** JSON-LD — now emits BreadcrumbList +
+  Service/OfferCatalog (3 pillars) + FAQPage (`app/services/page.tsx`). Added the missing
+  `app/services/raw.md/route.ts` GEO export + `text/markdown` alternate link. Copy re-scored 4.4 → 8.6
+  vs baseline; passes copywriting + writing-guardrails gates. Title/description reframed to the
+  primary keyword *AI and blockchain development company*.
+- **QA.** `tsc` + lint clean; live render verified (sections, JSON-LD in static markup, `raw.md` 200);
+  Clutch stays the live iframe (no hardcoded rating); no fabricated proof. DESIGN.md grammar logged
+  under Layout → `/services` index grammar.
+
+---
+
 ## 2026-05-24 — Section 5: Why-Us (A1 rebuild)
 
 Replaced the static 3-card grid with the handoff's **320vh horizontal pinned card-slide** (the second and final sanctioned pin). Brainstorm → spec → plan → subagent-driven build (per-task spec + code-quality review). Spec/plan: `docs/superpowers/{specs,plans}/2026-05-24-section-why-us.*`.
