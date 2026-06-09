@@ -126,14 +126,13 @@ function stripTrailingRule(s: string): string {
 }
 
 function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: string; parsed: ParsedContent }) {
-  const { faqItems, techItems } = parsed
+  const { faqItems } = parsed
   const directAnswer = stripTrailingRule(parsed.directAnswer)
   const problem = stripTrailingRule(parsed.problem)
   const techApproach = stripTrailingRule(parsed.techApproach)
   const results = stripTrailingRule(parsed.results)
   const solutionIntro = stripTrailingRule(parsed.solutionIntro)
   const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
-  const allTech = techItems.flatMap(t => t.items)
   const jsonLd = buildSunsetJsonLd(meta, faqItems, slug)
   const related = resolveSunsetRelated()
 
@@ -188,7 +187,6 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       )}
 
       <SunsetResults results={results} />
-      <TechMarquee allTech={allTech} />
 
       {/* ── FAQ (shared component) ───────────────────────────────────────── */}
       {faqItems.length > 0 && <FaqSection items={faqItems} />}
