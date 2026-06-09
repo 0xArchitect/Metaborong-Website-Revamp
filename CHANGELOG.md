@@ -4,6 +4,38 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-09 — `/work/sunset` case study re-architected (AEO + copy chain + impeccable)
+
+First case study (**SunsetML**) migrated to an answer-engine-first section order, keeping the
+`/work/sunset` route and the signature dark hero. Brainstorm → A3 copy chain → impeccable critique.
+Copy single-sourced in `content/work/sunset.md`; shared work metadata extracted to `lib/work.ts`.
+
+- **Section architecture (question-driven).** Hero → **"In short" direct answer** (citable ≤150w
+  AEO lead) → standalone Problem → **demo video moved up** → numbered "What Metaborong Built"
+  narrative spine → **prose** Technical Approach → dark Results band → tech marquee → **shared
+  `FaqSection`** (swapped off the inline `<details>`) → new **Related-services** hairline list
+  (links published `/services/ai/*` leaves) → CTA. Every section is self-contained and bound to a
+  real search query.
+- **Per-slug branch, others untouched.** New `SunsetCaseStudy` path in `app/work/[slug]/page.tsx`;
+  shared blocks (hero, demo, features, results, marquee, CTA) extracted with byte-identical
+  classNames so magic/orbitx/sedax keep rendering through `LegacyCaseStudy`. Regression-verified:
+  the other three are 200 and still use the legacy FAQ/Overview, no Article JSON-LD.
+- **Copy chain + 3 auditors, no fabrication.** keyword research → landing-page-writer → parallel
+  seo-content-auditor (94) + seo-authority-builder (8.5/10) + seo-geo (~91). Every metric is
+  user-supplied (350-person waitlist, 75 early users, GPT-5.5 / GPT-5.4 mini / Claude Sonnet 4.6 /
+  Opus 4.7, Next.js/React/NestJS/Framer Motion, 2026 ground-up build, equity co-founder); the
+  previously-claimed **Google Gemini was removed** as unconfirmed. Standardized on "SunsetML".
+- **AEO/GEO/SEO plumbing (work pages had none).** Added Article + BreadcrumbList + FAQPage JSON-LD
+  on the sunset path, a generic `app/work/[slug]/raw.md/route.ts` GEO export (serves all 4) +
+  `text/markdown` alternate + canonical/OG/Twitter, and `/work/*` URLs in `app/sitemap.ts`.
+- **QA.** impeccable detector clean (`[]`); critique ~35/40 after fixing a P0 (prose Technical
+  Approach was hitting the legacy bullet-grid filter → empty `--` card; now `<Markdown>` prose with
+  the trailing `---` rule stripped). Hard dark/light seams + autoplay demo shipped as-is (touch
+  shared blocks → deferred to the all-4 migration). `tsc`/lint clean (one pre-existing hero-logo
+  `<img>` warning). DESIGN.md decisions-log row added.
+
+---
+
 ## 2026-06-08 — `/services` index revamp (copy chain + impeccable live)
 
 Restructured the top-level `/services` index: section architecture, UX-copy, and AEO/GEO/SEO plumbing.
