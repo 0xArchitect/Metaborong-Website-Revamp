@@ -152,7 +152,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
         <Section bg="default" maxWidth="xwide" className="pt-[48px] sm:pt-[72px] lg:pt-[100px] pb-[32px] sm:pb-[48px] lg:pb-[60px]">
           <div className="grid grid-cols-1 gap-[12px] lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-[80px]">
             <div>
-              <h2 className="mb-[10px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand">In short</h2>
+              <h2 className="mb-[10px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">In short</h2>
               <p className="text-[clamp(20px,2.6vw,32px)] font-bold tracking-[-0.025em] leading-[1.15] text-dark">What is {meta.client ?? 'SunsetML'}?</p>
             </div>
             <div className="text-[17px] sm:text-[19px] leading-[1.6] text-dark [&_p]:mb-[16px] [&_p:last-child]:mb-0">
@@ -276,6 +276,11 @@ function LegacyCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
 
 function WorkHero({ meta }: { meta: CaseStudyMeta }) {
   const client = meta.client ?? meta.title.split(':')[0]
+  // Visible authorship + publish date (E-E-A-T). Only migrated studies carry a
+  // datePublished; legacy slugs render unchanged.
+  const publishedLabel = meta.datePublished
+    ? new Date(meta.datePublished).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+    : null
   return (
     <section className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden bg-[#0a0a0a] pt-[100px] sm:pt-[120px] lg:pt-[160px]">
       {/*
@@ -338,6 +343,7 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
           <video
             src={meta.animatedLogo}
             autoPlay muted loop playsInline
+            aria-hidden="true"
             className="relative w-full h-full object-cover rounded-[16px] sm:rounded-[20px]"
           />
         ) : (
@@ -358,9 +364,16 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
         </Link>
         <span className="block mb-[20px] font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-brand">{meta.category}</span>
         {/* Title must not overlap the logo on mobile — cap width */}
-        <h1 className="text-[clamp(28px,5vw,80px)] font-bold tracking-[-0.04em] leading-[1.0] text-white max-w-[min(620px,70vw)] sm:max-w-[min(700px,72vw)] lg:max-w-[900px] mb-[40px] sm:mb-[56px]">
+        <h1 className={`text-[clamp(28px,5vw,80px)] font-bold tracking-[-0.04em] leading-[1.0] text-white max-w-[min(620px,70vw)] sm:max-w-[min(700px,72vw)] lg:max-w-[900px] ${publishedLabel ? 'mb-[24px] sm:mb-[32px]' : 'mb-[40px] sm:mb-[56px]'}`}>
           {meta.title}
         </h1>
+        {publishedLabel && (
+          <p className="mb-[40px] sm:mb-[56px] text-[13px] sm:text-[14px] font-medium text-white/55">
+            By Metaborong, engineering partner and equity co-founder
+            <span className="mx-[8px] text-white/30">·</span>
+            Published {publishedLabel}
+          </p>
+        )}
         <div className="flex flex-wrap gap-x-[32px] sm:gap-x-[48px] gap-y-[20px] border-t border-white/10 pt-[28px] sm:pt-[36px]">
           {[
             { label: 'Client', value: client },
@@ -369,7 +382,7 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
             { label: 'Year', value: meta.year ?? '2024' },
           ].map(item => (
             <div key={item.label} className="flex flex-col gap-[6px]">
-              <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">{item.label}</span>
+              <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">{item.label}</span>
               <span className="text-[13px] sm:text-[15px] font-medium text-white/80">{item.value}</span>
             </div>
           ))}
@@ -382,7 +395,7 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
 function DemoVideo({ meta, slug }: { meta: CaseStudyMeta; slug: string }) {
   return (
     <Section bg="default" maxWidth="xwide" className="pb-[48px] sm:pb-[72px] lg:pb-[100px]">
-      <div className="w-full aspect-video sm:aspect-[16/9] lg:aspect-[21/9] rounded-[12px] sm:rounded-[20px] lg:rounded-[24px] bg-canvas border border-border/10 shadow-xl flex items-center justify-center relative overflow-hidden group cursor-pointer">
+      <div className={`w-full aspect-video sm:aspect-[16/9] lg:aspect-[21/9] rounded-[12px] sm:rounded-[20px] lg:rounded-[24px] bg-canvas border border-border/10 shadow-xl flex items-center justify-center relative overflow-hidden${meta.demoVideo ? '' : ' group cursor-pointer'}`}>
         {meta.demoVideo ? (
           <WorkDemoVideo src={meta.demoVideo} poster={meta.demoPoster} />
         ) : (
@@ -572,7 +585,7 @@ function SunsetRelatedServices({ related }: { related: { pillar: Pillar; leaf: C
   return (
     <Section bg="subtle" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
       <div className="mb-[32px] sm:mb-[40px]">
-        <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand">Related services</h2>
+        <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">Related services</h2>
         <p className="text-[clamp(22px,3vw,36px)] font-bold tracking-[-0.025em] leading-[1.1] text-dark max-w-[640px]">
           How we build platforms like SunsetML
         </p>
@@ -585,7 +598,7 @@ function SunsetRelatedServices({ related }: { related: { pillar: Pillar; leaf: C
               className="group grid grid-cols-[1fr_auto] items-center gap-[20px] border-b border-border py-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset md:py-[24px]"
             >
               <div className="min-w-0">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-brand">{pillar.label}</span>
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-[#c43a00]">{pillar.label}</span>
                 <h3 className="mt-[6px] text-[17px] font-semibold tracking-[-0.02em] leading-[1.3] text-dark md:text-[19px]">{leaf.name}</h3>
                 <p className="mt-[4px] max-w-[68ch] text-[14px] leading-[1.55] text-gray">{leaf.description}</p>
               </div>

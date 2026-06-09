@@ -1,5 +1,3 @@
-01
-
 **Page Title:** SunsetML: How Metaborong Built an AI-Native Writing Platform That Eliminates Creative Friction
 
 **Meta Description:** SunsetML is an AI-native writing platform with an in-editor AI prompt bar and live multi-model switching, built ground-up by Metaborong for creators and teams.
@@ -14,7 +12,7 @@
 
 SunsetML is an AI-native writing platform that embeds multi-model AI assistance directly inside the editor, so writers research, draft, and refine without ever leaving the document or losing context.
 
-Metaborong designed and engineered SunsetML from scratch, joining as engineering partner and equity co-founder. A Contextual PromptBar runs rewriting, summarization, ideation, and tone control inline, and writers switch live between GPT-5.5, GPT-5.4 mini, Claude Sonnet 4.6, and Claude Opus 4.7 without rebuilding a prompt or breaking flow — backed by real-time collaboration, attachment-aware prompting, and structured workspaces for creators, researchers, and content teams. As of its 2026 launch, SunsetML had onboarded 75 early users and a 350-person waitlist.
+Metaborong designed and engineered SunsetML from scratch, joining as engineering partner and equity co-founder. A Contextual PromptBar runs rewriting, summarization, ideation, and tone control inline, and writers switch live between GPT-5.5, GPT-5.4 mini, Claude Sonnet 4.6, and Claude Opus 4.7 without rebuilding a prompt or breaking flow. That flow is backed by real-time collaboration, attachment-aware prompting, and structured workspaces for creators, researchers, and content teams. As of its 2026 launch, SunsetML had onboarded 75 early users and a 350-person waitlist.
 
 ---
 
@@ -28,11 +26,11 @@ The root cause is that traditional editors were optimized for formatting, not fo
 
 ## What Metaborong Built
 
-Metaborong engineered SunsetML as a contextual AI writing system built around workflow continuity, cognitive focus, and low-friction creative production. AI lives inside the writing session — not in a separate window — across a Contextual PromptBar, live multi-model switching, an adaptive editing environment, real-time collaboration, attachment-aware prompting, and structured workspace management. Metaborong's scope spanned product design, AI integration, and full-stack engineering — the complete build, end to end.
+Metaborong engineered SunsetML as a contextual AI writing system built to keep writers in flow, hold their focus, and strip friction from the work. AI lives inside the writing session, not in a separate window: a Contextual PromptBar, live multi-model switching, an adaptive editing environment, real-time collaboration, attachment-aware prompting, and structured workspace management. Metaborong's scope spanned product design, AI integration, and full-stack engineering — the full build.
 
 ### The Contextual AI PromptBar
 
-The centerpiece is the Contextual PromptBar, an in-flow AI layer embedded directly in the writing session. Instead of opening a separate AI window, a writer highlights text in the editor and acts on it in place. The PromptBar supports rewriting and paraphrasing, summarization, ideation, custom per-document tone control, slash-command shortcuts, and attachment-aware processing that feeds PDFs and documents straight into prompts without leaving the editor.
+The centerpiece is the Contextual PromptBar, an in-flow AI layer embedded directly in the writing session. Instead of opening a separate AI window, a writer highlights text in the editor and acts on it in place. It handles rewriting and paraphrasing, summarization, ideation, custom per-document tone control, and slash-command shortcuts. Attachment-aware processing feeds PDFs and documents straight into prompts, so research never leaves the editor.
 
 ### Live Multi-Model Switching
 
@@ -44,7 +42,7 @@ SunsetML's writing environment adapts to each session in real time: dynamic UI t
 
 ### Real-Time Collaboration Infrastructure
 
-SunsetML provides full collaboration infrastructure for long-form projects: scalable workspace and folder systems for drafts, research, and publishing pipelines; real-time collaborative editing with live cursor presence; in-document commenting and annotation; and permission-based sharing for team and client workflows. That makes it a production-ready collaborative writing platform for content agencies, editorial teams, and distributed creator teams.
+SunsetML gives long-form projects a full collaboration layer. Workspaces and folders organize drafts, research, and publishing pipelines. Teams co-edit in real time with live cursor presence, comment and annotate in the document, and share with permission-based access for clients. The result is a production-ready writing platform for content agencies, editorial teams, and distributed creators.
 
 ---
 

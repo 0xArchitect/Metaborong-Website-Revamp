@@ -4,6 +4,33 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-09 — SunsetML gate-clearing pass (copy + impeccable + SEO/AEO to passing)
+
+Re-audited `/work/sunset` against three independent gates and applied each one's minimal fix set.
+All now pass: **impeccable audit 18/20, critique 37/40, SEO 90 / AEO 92 / E-E-A-T 9/10.**
+
+- **Copy.** Tightened the two run-on "What Metaborong Built" vignette bodies into short
+  self-contained sentences, de-slopped the Built intro, split a Direct-Answer em-dash run. Locked
+  facts unchanged, no fabrication.
+- **AEO blocker fixed.** `app/work/[slug]/raw.md/route.ts` was leaking the source's keyword-list
+  scaffold into the LLM-ingested export (capped AEO at 82); now strips everything before the first
+  `## ` heading (all 4 slugs). Removed the stray `01` ordinal from `content/work/sunset.md`.
+- **E-E-A-T.** Visible byline + publish date in the hero (`By Metaborong, engineering partner and
+  equity co-founder · Published June 2026`), gated on `meta.datePublished` so legacy slugs are
+  unchanged.
+- **WCAG AA contrast.** Unified the sunset eyebrow system on the AA-safe warm `#c43a00` (eyebrows,
+  Built numerals, Related-services labels — also resolves the critique's eyebrow inconsistency);
+  hero meta labels `white/30`→`white/55`; mock text `text-gray-light`→`text-gray`; `aria-hidden` on
+  the decorative hero video, `aria-label` on the demo video; dropped the false-affordance
+  `cursor-pointer` from the demo frame. The shared hero **category** eyebrow stays `#296ff0` (the
+  systemic brand-token contrast question, owner's call) — left unchanged and flagged.
+- **Motion.** PromptBar plays once and holds (removed the perpetual re-loop); re-arms only on
+  scroll-away/return.
+
+`tsc` clean, detector `[]`, magic/orbitx/sedax byte-identical (legacy path, 200).
+
+---
+
 ## 2026-06-09 — `/work/sunset` case study re-architected (AEO + copy chain + impeccable)
 
 First case study (**SunsetML**) migrated to an answer-engine-first section order, keeping the

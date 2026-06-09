@@ -41,6 +41,13 @@ export async function GET(_req: Request, ctx: Ctx): Promise<Response> {
     })
   }
 
+  // The source files carry editorial scaffolding before the first `## ` heading
+  // (page title, meta description, raw keyword lists). The HTML renderer drops
+  // it; strip it here too so the LLM-ingested export starts at real content and
+  // never leaks a naked keyword list (reads as keyword-stuffing to answer engines).
+  const firstHeading = body.search(/^## /m)
+  if (firstHeading > 0) body = body.slice(firstHeading)
+
   const header = [
     `# ${meta.seoTitle ?? meta.title}`,
     '',

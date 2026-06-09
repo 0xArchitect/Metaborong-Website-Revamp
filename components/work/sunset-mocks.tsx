@@ -18,7 +18,7 @@ export function ModelSwitchMock() {
     >
       <div className="mb-[14px] flex items-center justify-between">
         <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-gray">Model</span>
-        <span className="font-mono text-[11px] text-gray-light">switch anytime ⌘M</span>
+        <span className="font-mono text-[11px] text-gray">switch anytime ⌘M</span>
       </div>
       <ul className="flex flex-col gap-[8px]">
         {MODELS.map((m) => (
@@ -35,7 +35,7 @@ export function ModelSwitchMock() {
             {m.active ? (
               <span className="font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-brand">active</span>
             ) : (
-              <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-gray-light">{m.tag}</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-gray">{m.tag}</span>
             )}
           </li>
         ))}
@@ -69,12 +69,12 @@ export function AdaptiveMock() {
           <span className="h-[9px] w-[64%] rounded-full bg-dark/15" />
         </div>
         <div className="mt-[20px] flex items-center gap-[7px]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-gray-light">Tone</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-gray">Tone</span>
           {['Crisp', 'Warm', 'Formal'].map((t, i) => (
             <span
               key={t}
               className={`rounded-full border px-[10px] py-[4px] text-[11px] font-medium ${
-                i === 0 ? 'border-brand bg-brand/[0.06] text-dark' : 'border-border text-gray-light'
+                i === 0 ? 'border-brand bg-brand/[0.06] text-dark' : 'border-border text-gray'
               }`}
             >
               {t}
@@ -125,7 +125,7 @@ export function CollabMock() {
           <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-dark text-[10px] font-bold text-white">R</span>
           <div className="flex flex-col gap-[2px]">
             <span className="text-[12px] font-semibold text-dark">Ravi replied</span>
-            <span className="text-[12px] leading-[1.5] text-gray">Done — pushed the edit live.</span>
+            <span className="text-[12px] leading-[1.5] text-gray">Done, pushed the edit live.</span>
           </div>
         </div>
       </div>
