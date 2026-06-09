@@ -166,7 +166,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       {problem && (
         <Section bg="default" maxWidth="xwide" className="pb-[32px] sm:pb-[48px] lg:pb-[60px]">
           <div className="max-w-[800px]">
-            <h2 className="mb-[20px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-accent">The Problem</h2>
+            <h2 className="mb-[20px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">The Problem</h2>
             <div className="text-[16px] sm:text-[18px] leading-[1.7] text-gray">
               <Markdown content={problem} />
             </div>
@@ -190,7 +190,11 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       {faqItems.length > 0 && <FaqSection items={faqItems} />}
 
       <SunsetRelatedServices related={related} />
-      <ContactCtaSection />
+      {/* Sunset-scoped warm accent ramp: deep-orange functional accent (AA-safe,
+          same family as the #ff6b35 glows). Overrides the site terracotta locally. */}
+      <div style={{ '--color-accent': '#c43a00', '--cta-color': '#c43a00', '--cta-hover': '#a83100' } as React.CSSProperties}>
+        <ContactCtaSection />
+      </div>
       <Footer />
     </main>
   )
