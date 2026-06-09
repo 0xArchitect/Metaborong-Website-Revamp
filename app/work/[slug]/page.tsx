@@ -13,6 +13,7 @@ import { SITE_ORIGIN } from '@/lib/seo'
 import { caseStudyMeta, type CaseStudyMeta } from '@/lib/work'
 import { SunsetBuilt } from '@/components/work/sunset-built'
 import { SunsetResults } from '@/components/work/sunset-results'
+import { SunsetTech } from '@/components/work/sunset-tech'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -174,15 +175,10 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       <DemoVideo meta={meta} slug={slug} />
       <SunsetBuilt intro={solutionIntro} features={solutionFeatures} />
 
-      {/* ── TECHNICAL APPROACH (prose, E-E-A-T depth) ────────────────────── */}
+      {/* ── TECHNICAL APPROACH (routing pipeline, animated signal pulse) ──── */}
       {techApproach && (
         <Section bg="default" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
-          <div className="max-w-[800px]">
-            <h2 className="mb-[20px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand">Technical Approach</h2>
-            <div className="text-[16px] sm:text-[18px] leading-[1.7] text-dark [&_p]:mb-[16px] [&_p:last-child]:mb-0">
-              <Markdown content={techApproach} />
-            </div>
-          </div>
+          <SunsetTech />
         </Section>
       )}
 

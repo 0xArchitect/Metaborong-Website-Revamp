@@ -21,11 +21,13 @@ export function SunsetResults({ results }: { results: string }) {
 
   return (
     <section className="relative overflow-hidden bg-[#0a0a0a] py-[64px] sm:py-[100px] lg:py-[132px]">
+      {/* Warm bloom — same SunsetML accent as the hero glow (#ff6b35). */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 left-0 h-[60%] w-[50%] bg-[radial-gradient(ellipse_at_top_left,#3b5bff40,transparent_65%)]" />
+        <div className="absolute -top-[10%] left-0 h-[70%] w-[55%] bg-[radial-gradient(ellipse_at_top_left,#ff6b3545,transparent_66%)]" />
+        <div className="absolute top-0 left-[6%] h-[48%] w-[36%] bg-[radial-gradient(ellipse_at_center,#ff6b3522,transparent_60%)] blur-[50px]" />
       </div>
       <div className="relative z-10 mx-auto max-w-[1280px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[80px] xl:px-[128px]">
-        <h2 className="mb-[40px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-white/30 sm:mb-[56px]">
+        <h2 className="mb-[40px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-white/55 sm:mb-[56px]">
           Results &amp; Impact
         </h2>
 
@@ -41,7 +43,7 @@ export function SunsetResults({ results }: { results: string }) {
               <p className="text-[clamp(48px,7vw,84px)] font-bold leading-[0.95] tracking-[-0.04em] text-white [font-feature-settings:'tnum']">
                 {f.value}
               </p>
-              <p className="mt-[10px] text-[13px] font-medium leading-[1.4] tracking-[-0.01em] text-white/45 sm:text-[14px]">
+              <p className="mt-[10px] text-[13px] font-medium leading-[1.4] tracking-[-0.01em] text-white/60 sm:text-[14px]">
                 {f.label}
               </p>
             </div>
@@ -53,7 +55,7 @@ export function SunsetResults({ results }: { results: string }) {
           <ul className="mt-[40px] grid gap-x-[48px] gap-y-[14px] sm:mt-[52px] md:grid-cols-2 lg:max-w-[1000px]">
             {outcomes.map((o, i) => (
               <li key={i} className="flex gap-[12px] text-[15px] leading-[1.6] text-white/70 sm:text-[16px]">
-                <span aria-hidden="true" className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-brand" />
+                <span aria-hidden="true" className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#ff6b35]" />
                 <span>{o}</span>
               </li>
             ))}

@@ -13,7 +13,7 @@ const MODELS = [
 export function ModelSwitchMock() {
   return (
     <div
-      className="w-full rounded-[14px] border border-border bg-canvas p-[16px] shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)] sm:p-[20px]"
+      className="w-full rounded-[14px] border border-border bg-bg p-[16px] shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)] sm:p-[20px]"
       aria-hidden="true"
     >
       <div className="mb-[14px] flex items-center justify-between">
@@ -48,7 +48,7 @@ export function ModelSwitchMock() {
 export function AdaptiveMock() {
   return (
     <div
-      className="w-full overflow-hidden rounded-[14px] border border-border bg-canvas shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)]"
+      className="w-full overflow-hidden rounded-[14px] border border-border bg-bg shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)]"
       aria-hidden="true"
     >
       <div className="flex items-center justify-between border-b border-border/70 px-[16px] py-[11px]">
@@ -90,7 +90,7 @@ export function AdaptiveMock() {
 export function CollabMock() {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[14px] border border-border bg-canvas px-[20px] py-[24px] shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)] sm:px-[26px]"
+      className="relative w-full overflow-hidden rounded-[14px] border border-border bg-bg px-[20px] py-[24px] shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)] sm:px-[26px]"
       aria-hidden="true"
     >
       <div className="flex flex-col gap-[10px]">
@@ -135,8 +135,8 @@ export function CollabMock() {
           <span className="h-[6px] w-[6px] rounded-full bg-brand" /> 2 editing now
         </span>
         <span className="flex -space-x-[6px]">
-          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 border-canvas bg-brand text-[9px] font-bold text-white">R</span>
-          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 border-canvas bg-dark text-[9px] font-bold text-white">A</span>
+          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 border-bg bg-brand text-[9px] font-bold text-white">R</span>
+          <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full border-2 border-bg bg-dark text-[9px] font-bold text-white">A</span>
         </span>
       </div>
     </div>
