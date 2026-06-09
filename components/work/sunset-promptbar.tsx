@@ -78,7 +78,7 @@ export function SunsetPromptBar() {
   return (
     <div
       ref={ref}
-      className="relative w-full overflow-hidden rounded-[14px] border border-border bg-canvas shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)]"
+      className="relative w-full overflow-hidden rounded-[14px] border border-border bg-bg shadow-[0_24px_60px_-30px_rgba(15,23,42,0.45)]"
       aria-hidden="true"
     >
       {/* editor chrome */}
