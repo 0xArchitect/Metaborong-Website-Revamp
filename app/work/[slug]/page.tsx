@@ -162,7 +162,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
 
       {/* ── PROBLEM (standalone) ─────────────────────────────────────────── */}
       {problem && (
-        <Section bg="default" maxWidth="wide" className="pb-[32px] sm:pb-[48px] lg:pb-[60px]">
+        <Section bg="default" maxWidth="xwide" className="pb-[32px] sm:pb-[48px] lg:pb-[60px]">
           <div className="max-w-[800px]">
             <h2 className="mb-[20px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-accent">The Problem</h2>
             <div className="text-[16px] sm:text-[18px] leading-[1.7] text-gray">
@@ -177,7 +177,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
 
       {/* ── TECHNICAL APPROACH (prose, E-E-A-T depth) ────────────────────── */}
       {techApproach && (
-        <Section bg="default" maxWidth="wide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
+        <Section bg="default" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
           <div className="max-w-[800px]">
             <h2 className="mb-[20px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand">Technical Approach</h2>
             <div className="text-[16px] sm:text-[18px] leading-[1.7] text-dark [&_p]:mb-[16px] [&_p:last-child]:mb-0">
@@ -570,7 +570,7 @@ function resolveSunsetRelated(): { pillar: Pillar; leaf: ChildService }[] {
 function SunsetRelatedServices({ related }: { related: { pillar: Pillar; leaf: ChildService }[] }) {
   if (related.length === 0) return null
   return (
-    <Section bg="subtle" maxWidth="wide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
+    <Section bg="subtle" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
       <div className="mb-[32px] sm:mb-[40px]">
         <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand">Related services</h2>
         <p className="text-[clamp(22px,3vw,36px)] font-bold tracking-[-0.025em] leading-[1.1] text-dark max-w-[640px]">
