@@ -4,6 +4,30 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-10 — OrbitX + SEDAX case studies migrated to AEO grammar; Work* template extracted
+
+- 3rd + 4th case studies off the legacy pipeline, via per-slug `OrbitxCaseStudy` /
+  `SedaxCaseStudy` branches. Both Web3 (stablecoin banking; ZKP eKYC).
+- Shared template extracted across the pair: generic `work-built.tsx`, `work-tech.tsx`,
+  `work-results.tsx` (data-driven `{intro, features, mocks, accent}` / `{nodes}` / `{results,
+  glow}`); per-study = 4 bespoke vignettes + tech-node data + Direct Answer only.
+- Bespoke vignettes: OrbitX — upgradeable proxy, timelock governance, USDC treasury
+  (Aave/Morpho), animated escrow milestone-release (`orbitx-escrow.tsx`). SEDAX — animated
+  Zero-Knowledge Proof verify (`sedax-zkp.tsx`), SSI wallet, on-chain trust ledger, AI fraud
+  panel. Both Results qualitative (no fabricated metrics).
+- Copy through the A3 chain, zero fabrication (real orbitxpay.com / sedax.in links, real
+  years 2025/2026, "development partner" byline): OrbitX 88/8.5/89, SEDAX 89/8.0/90.
+  impeccable: detector `[]`, OrbitX audit 19/20 + critique 37/40, SEDAX 18/20 + 37/40.
+- Per-slug AA-safe accents: OrbitX `#22d3ee` glow + `#0e7490` teal (4.66:1); SEDAX `#10b981`
+  glow + `#047857` emerald (5.48:1). Globals untouched.
+- **Byline fix:** `WorkHero` byline was hardcoded "engineering partner and equity co-founder"
+  — now `meta.bylineRole`. Corrects Magic (was wrongly showing co-founder); Sunset unchanged.
+- `resolveRelated` generalized to a pillar id (orbitx/sedax → published `/services/web3/*`).
+- Videos optimized → `public/works/{orbitx,sedax}/` (orbitx logo 39KB / demo 300KB;
+  sedax logo 28KB / demo 582KB; + posters; h264/yuv420p/faststart); `blendLogo` on both.
+- Deferred: SEDAX demo video is a blue brand loop that clashes with the emerald system
+  (owner decision pending); shared hero-logo reduced-motion gate (global pass).
+
 ## 2026-06-09 — MAGIC case study (`/work/magic`) migrated to AEO grammar (Sunset parity)
 
 - Second case study off the legacy pipeline, via a per-slug `MagicCaseStudy` branch.

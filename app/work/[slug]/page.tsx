@@ -18,6 +18,13 @@ import { SunsetTech } from '@/components/work/sunset-tech'
 import { MagicBuilt } from '@/components/work/magic-built'
 import { MagicResults } from '@/components/work/magic-results'
 import { MagicTech } from '@/components/work/magic-tech'
+import { WorkBuilt } from '@/components/work/work-built'
+import { WorkTech, type TechNode } from '@/components/work/work-tech'
+import { WorkResults } from '@/components/work/work-results'
+import { UpgradeableMock, GovernanceMock, TreasuryMock } from '@/components/work/orbitx-mocks'
+import { OrbitxEscrow } from '@/components/work/orbitx-escrow'
+import { SsiMock, OnChainTrustMock, FraudDetectionMock } from '@/components/work/sedax-mocks'
+import { SedaxZkp } from '@/components/work/sedax-zkp'
 import { WorkDemoVideo } from '@/components/work/work-demo-video'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 
@@ -116,6 +123,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   if (slug === 'sunset') return <SunsetCaseStudy meta={meta} slug={slug} parsed={parsed} />
   if (slug === 'magic') return <MagicCaseStudy meta={meta} slug={slug} parsed={parsed} />
+  if (slug === 'orbitx') return <OrbitxCaseStudy meta={meta} slug={slug} parsed={parsed} />
+  if (slug === 'sedax') return <SedaxCaseStudy meta={meta} slug={slug} parsed={parsed} />
   return <LegacyCaseStudy meta={meta} slug={slug} parsed={parsed} />
 }
 
@@ -142,7 +151,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
   const solutionIntro = stripTrailingRule(parsed.solutionIntro)
   const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
   const jsonLd = buildWorkJsonLd(meta, faqItems, slug)
-  const related = resolveRelated(SUNSET_RELATED_SLUGS)
+  const related = resolveRelated('ai', SUNSET_RELATED_SLUGS)
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -220,7 +229,7 @@ function MagicCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: str
   const solutionIntro = stripTrailingRule(parsed.solutionIntro)
   const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
   const jsonLd = buildWorkJsonLd(meta, faqItems, slug)
-  const related = resolveRelated(MAGIC_RELATED_SLUGS)
+  const related = resolveRelated('ai', MAGIC_RELATED_SLUGS)
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -270,6 +279,160 @@ function MagicCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: str
       <WorkRelatedServices related={related} title="How we build platforms like MAGIC" accent="#6d28d9" />
       {/* MAGIC-scoped accent ramp: AA-safe violet (the #a855f7 hero-glow family). */}
       <div style={{ '--color-accent': '#6d28d9', '--cta-color': '#6d28d9', '--cta-hover': '#581ca8' } as React.CSSProperties}>
+        <ContactCtaSection />
+      </div>
+      <Footer />
+    </main>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// OrbitX — stablecoin banking infrastructure. Same AEO grammar. Accent #0e7490
+// (AA-safe teal, the #22d3ee hero-glow family); related = published Web3 leaves.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ORBITX_RELATED_SLUGS = ['smart-contract-development', 'defi-protocol-development', 'crypto-wallet-development']
+
+const ORBITX_TECH_NODES: readonly TechNode[] = [
+  { n: '01', name: 'Stablecoin rails', tech: 'USDC in and out', note: 'fiat and crypto workflows' },
+  { n: '02', name: 'Smart contract core', tech: 'UUPS proxy · RBAC', note: 'upgradeable, permissioned', chips: ['Upgrade safety', 'Timelock delays', 'Multi-sig ops', 'On-chain audit'] },
+  { n: '03', name: 'Treasury and yield', tech: 'Aave · Morpho on Base', note: 'yield on idle reserves' },
+  { n: '04', name: 'Settlement', chips: ['Payments', 'Escrow', 'Treasury', 'Cross-border'], chipsActiveFirst: true },
+]
+
+const ORBITX_TECH_INTRO = "OrbitX runs as one cohesive banking protocol on Coinbase's Base network: an upgradeable contract core gated by timelock governance and role-based access, a USDC treasury earning DeFi yield, and an on-chain escrow that settles against milestones, all sharing one secure architecture."
+
+function OrbitxCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: string; parsed: ParsedContent }) {
+  const { faqItems } = parsed
+  const directAnswer = stripTrailingRule(parsed.directAnswer)
+  const techApproach = stripTrailingRule(parsed.techApproach)
+  const results = stripTrailingRule(parsed.results)
+  const solutionIntro = stripTrailingRule(parsed.solutionIntro)
+  const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
+  const jsonLd = buildWorkJsonLd(meta, faqItems, slug)
+  const related = resolveRelated('web3', ORBITX_RELATED_SLUGS)
+  const mocks = [<UpgradeableMock key="u" />, <GovernanceMock key="g" />, <TreasuryMock key="t" />, <OrbitxEscrow key="e" />]
+
+  return (
+    <main className="flex min-h-screen flex-col">
+      {jsonLd.map((block, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }} />
+      ))}
+      <Nav />
+      <WorkHero meta={meta} />
+
+      {directAnswer && (
+        <Section bg="default" maxWidth="xwide" className="pt-[48px] sm:pt-[72px] lg:pt-[100px] pb-[32px] sm:pb-[48px] lg:pb-[60px]">
+          <div className="rounded-[16px] border border-border bg-bg-subtle p-[24px] sm:p-[32px] lg:p-[40px]">
+            <span className="block h-[3px] w-[40px] bg-[#0e7490]" />
+            <span className="mt-[18px] block font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#0e7490]">In short · What is OrbitX?</span>
+            <p className="mt-[14px] max-w-[54ch] text-[clamp(19px,2.3vw,28px)] font-bold tracking-[-0.025em] leading-[1.25] text-dark">
+              OrbitX is a stablecoin banking infrastructure platform that lets businesses spend, send, receive, and manage USDC-linked funds globally through smart contracts, treasury systems, and on-chain settlement.
+            </p>
+            <p className="mt-[14px] max-w-[62ch] text-[15px] sm:text-[16px] leading-[1.6] text-gray">
+              Re-architected from an early MVP into production-grade banking infrastructure by Metaborong as development partner, on Coinbase's Base network.{' '}
+              <a href="https://orbitxpay.com/" target="_blank" rel="noopener" className="font-semibold text-[#0e7490] underline decoration-[#0e7490]/30 underline-offset-2 hover:decoration-[#0e7490]">OrbitX</a> runs live in production.
+            </p>
+            <div className="mt-[22px] flex flex-wrap gap-[8px]">
+              {['Smart contracts', 'USDC treasury', 'On-chain escrow', 'Timelock governance'].map((c) => (
+                <span key={c} className="border border-border px-[10px] py-[5px] text-[13px] font-semibold text-gray">{c}</span>
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
+
+      <DemoVideo meta={meta} slug={slug} />
+      <WorkBuilt intro={solutionIntro} features={solutionFeatures} mocks={mocks} accent="#0e7490" />
+
+      {techApproach && (
+        <Section bg="default" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
+          <WorkTech intro={ORBITX_TECH_INTRO} nodes={ORBITX_TECH_NODES} accent="#0e7490" />
+        </Section>
+      )}
+
+      <WorkResults results={results} glow="#22d3ee" />
+      {faqItems.length > 0 && <FaqSection items={faqItems} />}
+      <WorkRelatedServices related={related} title="How we build platforms like OrbitX" accent="#0e7490" />
+      {/* OrbitX-scoped accent ramp: AA-safe teal (the #22d3ee hero-glow family). */}
+      <div style={{ '--color-accent': '#0e7490', '--cta-color': '#0e7490', '--cta-hover': '#0a5a70' } as React.CSSProperties}>
+        <ContactCtaSection />
+      </div>
+      <Footer />
+    </main>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SEDAX — blockchain eKYC with Zero-Knowledge Proofs. Same AEO grammar. Accent
+// #047857 (AA-safe emerald, the #10b981 hero-glow family); related = Web3 leaves.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SEDAX_RELATED_SLUGS = ['decentralized-identity-did-integration', 'smart-contract-development', 'enterprise-private-blockchain']
+
+const SEDAX_TECH_NODES: readonly TechNode[] = [
+  { n: '01', name: 'Identity claim', tech: 'Held in user wallet', note: 'W3C Verifiable Credentials' },
+  { n: '02', name: 'Zero-Knowledge Proof', tech: 'Prove without revealing', note: 'no raw data transmitted', chips: ['Age', 'Nationality', 'Credential', 'Liveness'] },
+  { n: '03', name: 'On-chain trust', tech: 'Issue · verify · revoke', note: 'tamper-evident ledger' },
+  { n: '04', name: 'Verified', chips: ['Reusable KYC', 'KYC/AML audit', 'GDPR · DPDP', 'No PII stored'], chipsActiveFirst: true },
+]
+
+const SEDAX_TECH_INTRO = 'SEDAX verifies identity across three layers: claims held in a user-controlled wallet as W3C Verifiable Credentials, a Zero-Knowledge Proof core that confirms a claim without transmitting the underlying data, and a tamper-evident ledger recording issuance, verification, and revocation, with AI-assisted liveness and document checks guarding onboarding.'
+
+function SedaxCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: string; parsed: ParsedContent }) {
+  const { faqItems } = parsed
+  const directAnswer = stripTrailingRule(parsed.directAnswer)
+  const techApproach = stripTrailingRule(parsed.techApproach)
+  const results = stripTrailingRule(parsed.results)
+  const solutionIntro = stripTrailingRule(parsed.solutionIntro)
+  const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
+  const jsonLd = buildWorkJsonLd(meta, faqItems, slug)
+  const related = resolveRelated('web3', SEDAX_RELATED_SLUGS)
+  const mocks = [<SedaxZkp key="z" />, <SsiMock key="s" />, <OnChainTrustMock key="t" />, <FraudDetectionMock key="f" />]
+
+  return (
+    <main className="flex min-h-screen flex-col">
+      {jsonLd.map((block, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }} />
+      ))}
+      <Nav />
+      <WorkHero meta={meta} />
+
+      {directAnswer && (
+        <Section bg="default" maxWidth="xwide" className="pt-[48px] sm:pt-[72px] lg:pt-[100px] pb-[32px] sm:pb-[48px] lg:pb-[60px]">
+          <div className="rounded-[16px] border border-border bg-bg-subtle p-[24px] sm:p-[32px] lg:p-[40px]">
+            <span className="block h-[3px] w-[40px] bg-[#047857]" />
+            <span className="mt-[18px] block font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#047857]">In short · What is SEDAX?</span>
+            <p className="mt-[14px] max-w-[54ch] text-[clamp(19px,2.3vw,28px)] font-bold tracking-[-0.025em] leading-[1.25] text-dark">
+              SEDAX is a blockchain eKYC platform that verifies identity with Zero-Knowledge Proofs, so users prove who they are without sharing the underlying personal data.
+            </p>
+            <p className="mt-[14px] max-w-[62ch] text-[15px] sm:text-[16px] leading-[1.6] text-gray">
+              Built from the ground up by Metaborong as development partner on self-sovereign identity and W3C Verifiable Credentials.{' '}
+              <a href="https://www.sedax.in/" target="_blank" rel="noopener" className="font-semibold text-[#047857] underline decoration-[#047857]/30 underline-offset-2 hover:decoration-[#047857]">SEDAX</a> replaces centralized document collection with privacy-first, reusable verification.
+            </p>
+            <div className="mt-[22px] flex flex-wrap gap-[8px]">
+              {['Zero-Knowledge Proofs', 'Self-sovereign identity', 'Verifiable credentials', 'Reusable KYC'].map((c) => (
+                <span key={c} className="border border-border px-[10px] py-[5px] text-[13px] font-semibold text-gray">{c}</span>
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
+
+      <DemoVideo meta={meta} slug={slug} />
+      <WorkBuilt intro={solutionIntro} features={solutionFeatures} mocks={mocks} accent="#047857" />
+
+      {techApproach && (
+        <Section bg="default" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
+          <WorkTech intro={SEDAX_TECH_INTRO} nodes={SEDAX_TECH_NODES} accent="#047857" />
+        </Section>
+      )}
+
+      <WorkResults results={results} glow="#10b981" />
+      {faqItems.length > 0 && <FaqSection items={faqItems} />}
+      <WorkRelatedServices related={related} title="How we build platforms like SEDAX" accent="#047857" />
+      {/* SEDAX-scoped accent ramp: AA-safe emerald (the #10b981 hero-glow family). */}
+      <div style={{ '--color-accent': '#047857', '--cta-color': '#047857', '--cta-hover': '#035e44' } as React.CSSProperties}>
         <ContactCtaSection />
       </div>
       <Footer />
@@ -457,7 +620,7 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
         </h1>
         {publishedLabel && (
           <p className="mb-[40px] sm:mb-[56px] text-[13px] sm:text-[14px] font-medium text-white/55">
-            By Metaborong, engineering partner and equity co-founder
+            By Metaborong, {meta.bylineRole ?? 'engineering partner and equity co-founder'}
             <span className="mx-[8px] text-white/30">·</span>
             Published {publishedLabel}
           </p>
@@ -659,13 +822,13 @@ const SUNSET_RELATED_SLUGS = [
   'genai-apis-backend-integration',
 ]
 
-function resolveRelated(slugs: string[]): { pillar: Pillar; leaf: ChildService }[] {
-  const ai = pillars.find((p) => p.id === 'ai')
-  if (!ai) return []
-  const leaves = getAllLeaves(ai)
+function resolveRelated(pillarId: string, slugs: string[]): { pillar: Pillar; leaf: ChildService }[] {
+  const pillar = pillars.find((p) => p.id === pillarId)
+  if (!pillar) return []
+  const leaves = getAllLeaves(pillar)
   return slugs.map((slug) => leaves.find((l) => l.slug === slug && l.status === 'published'))
     .filter((l): l is ChildService => Boolean(l))
-    .map((leaf) => ({ pillar: ai, leaf }))
+    .map((leaf) => ({ pillar, leaf }))
 }
 
 function WorkRelatedServices({ related, title, accent }: { related: { pillar: Pillar; leaf: ChildService }[]; title: string; accent: string }) {
