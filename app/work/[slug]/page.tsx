@@ -14,6 +14,8 @@ import { caseStudyMeta, type CaseStudyMeta } from '@/lib/work'
 import { SunsetBuilt } from '@/components/work/sunset-built'
 import { SunsetResults } from '@/components/work/sunset-results'
 import { SunsetTech } from '@/components/work/sunset-tech'
+import { WorkDemoVideo } from '@/components/work/work-demo-video'
+import { ContactCtaSection } from '@/components/sections/contact-cta'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -188,7 +190,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       {faqItems.length > 0 && <FaqSection items={faqItems} />}
 
       <SunsetRelatedServices related={related} />
-      <WorkCta />
+      <ContactCtaSection />
       <Footer />
     </main>
   )
@@ -345,7 +347,7 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
       <div className="relative z-10 mx-auto w-full max-w-[1280px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[80px] xl:px-[128px] pb-[48px] sm:pb-[64px] lg:pb-[100px]">
         <Link
           href="/#work"
-          className="inline-flex items-center gap-[5px] mb-[20px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/50 hover:text-white transition-colors duration-[var(--duration-instant)] group"
+          className="group -my-[12px] mb-[8px] inline-flex items-center gap-[5px] py-[12px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/50 transition-colors duration-[var(--duration-instant)] hover:text-white"
         >
           <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
           <span>All Work</span>
@@ -378,7 +380,7 @@ function DemoVideo({ meta, slug }: { meta: CaseStudyMeta; slug: string }) {
     <Section bg="default" maxWidth="xwide" className="pb-[48px] sm:pb-[72px] lg:pb-[100px]">
       <div className="w-full aspect-video sm:aspect-[16/9] lg:aspect-[21/9] rounded-[12px] sm:rounded-[20px] lg:rounded-[24px] bg-canvas border border-border/10 shadow-xl flex items-center justify-center relative overflow-hidden group cursor-pointer">
         {meta.demoVideo ? (
-          <video src={meta.demoVideo} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" />
+          <WorkDemoVideo src={meta.demoVideo} poster={meta.demoPoster} />
         ) : (
           <>
             <div className="absolute inset-0 bg-gradient-to-tr from-brand/20 via-transparent to-transparent opacity-30 group-hover:opacity-50 transition-opacity duration-700" />
