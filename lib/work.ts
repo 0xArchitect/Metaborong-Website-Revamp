@@ -9,6 +9,7 @@ export interface CaseStudyMeta {
   category: string
   animatedLogo?: string
   demoVideo?: string
+  demoPoster?: string // poster frame for the demo video
   glowColor?: string // CSS colour for hero glow — defaults to brand blue
   // SunsetML (AEO re-architecture) optional facts. Other slugs fall back to the
   // legacy hardcoded hero row until they are migrated.
@@ -33,6 +34,7 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     datePublished: '2026-06-09',
     animatedLogo: '/works/sunset/animated-logo.mp4',
     demoVideo: '/works/sunset/demo.mp4',
+    demoPoster: '/works/sunset/demo-poster.jpg',
     glowColor: '#ff6b35', // warm orange matching SunsetML brand
   },
   magic: {
