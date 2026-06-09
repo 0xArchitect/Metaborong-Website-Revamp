@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import fs from 'fs'
 import path from 'path'
 import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { Nav } from '@/components/layout/nav'
 import { Footer } from '@/components/layout/footer'
 import { Markdown } from '@/components/ui/markdown'
@@ -351,10 +352,21 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
       <div className="relative z-10 mx-auto w-full max-w-[1280px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[80px] xl:px-[128px] pb-[48px] sm:pb-[64px] lg:pb-[100px]">
         <Link
           href="/#work"
-          className="group -my-[12px] mb-[8px] inline-flex items-center gap-[5px] py-[12px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/50 transition-colors duration-[var(--duration-instant)] hover:text-white"
+          className="group -my-[14px] mb-[6px] inline-flex items-center gap-[7px] py-[14px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/65 transition-colors duration-[var(--duration-fast)] hover:text-white"
         >
-          <span className="transition-transform duration-[var(--duration-instant)] group-hover:-translate-x-[2px] inline-block">←</span>
-          <span>All Work</span>
+          <ArrowLeft
+            size={13}
+            strokeWidth={2.5}
+            aria-hidden
+            className="transition-transform duration-[var(--duration-base)] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-[3px]"
+          />
+          <span className="relative inline-block">
+            All Work
+            <span
+              aria-hidden
+              className="absolute -bottom-[3px] left-0 h-[1px] w-full origin-left scale-x-0 bg-white/70 transition-transform duration-[var(--duration-base)] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+            />
+          </span>
         </Link>
         <span className="block mb-[20px] font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-brand">{meta.category}</span>
         {/* Title must not overlap the logo on mobile — cap width */}
