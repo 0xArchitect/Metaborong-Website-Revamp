@@ -1,8 +1,7 @@
 // SunsetML "Technical Approach" — a routing pipeline rendered as a labelled
 // flow (Editor surface → NestJS orchestration → model providers) on a vertical
-// spine, with an animated signal pulse running down it and the four concurrency
-// constraints tagged on the routing node. Shows the architecture instead of
-// describing it; no card structures. Pulse is pure CSS, reduced-motion-safe.
+// spine, with the four concurrency constraints tagged on the routing node.
+// Shows the architecture instead of describing it; no card structures, static.
 
 const NODES = [
   { n: '01', name: 'Editor surface', tech: 'Next.js · React · Framer Motion', note: 'low-noise, real-time UI' },
@@ -30,12 +29,7 @@ export function SunsetTech() {
               {/* Connector to the next circle. Drawn per-segment so the line
                   terminates at the last (03) circle and never runs past it. */}
               {i < NODES.length - 1 && (
-                <span aria-hidden className="absolute left-[-22px] top-[14px] h-[calc(100%+28px)] w-[2px] bg-border">
-                  <span
-                    className="mb-techpulse absolute left-[-3px] h-[8px] w-[8px] rounded-full bg-[#c43a00]"
-                    style={{ animationDelay: i === 1 ? '1.4s' : '0s' }}
-                  />
-                </span>
+                <span aria-hidden className="absolute left-[-22px] top-[14px] h-[calc(100%+28px)] w-[2px] bg-border" />
               )}
               <span aria-hidden className="absolute left-[-26px] top-[9px] h-[10px] w-[10px] rounded-full border-2 border-[#c43a00] bg-bg" />
               <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-[#c43a00]">{node.n} · {node.name}</span>
@@ -59,12 +53,6 @@ export function SunsetTech() {
           ))}
         </div>
       </div>
-
-      <style>{`
-        @keyframes mb-techpulse { 0%,100% { top: 0; opacity: 0 } 10% { opacity: 1 } 72% { top: calc(100% - 8px); opacity: 1 } 86%,100% { opacity: 0 } }
-        .mb-techpulse { animation: mb-techpulse 2.8s cubic-bezier(0.4,0,0.2,1) infinite; }
-        @media (prefers-reduced-motion: reduce) { .mb-techpulse { display: none; } }
-      `}</style>
     </div>
   )
 }
