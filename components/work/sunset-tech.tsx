@@ -24,13 +24,21 @@ export function SunsetTech() {
       </div>
 
       <div className="relative pl-[26px]">
-        <span aria-hidden className="absolute left-[4px] top-[10px] bottom-[10px] w-[2px] bg-border" />
-        <span aria-hidden className="mb-techpulse absolute left-[1px] h-[8px] w-[8px] rounded-full bg-brand" />
         <div className="flex flex-col gap-[28px]">
           {NODES.map((node, i) => (
             <div key={i} className="relative">
-              <span aria-hidden className="absolute left-[-26px] top-[5px] h-[10px] w-[10px] rounded-full border-2 border-brand bg-bg" />
-              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-brand">{node.n} · {node.name}</span>
+              {/* Connector to the next circle. Drawn per-segment so the line
+                  terminates at the last (03) circle and never runs past it. */}
+              {i < NODES.length - 1 && (
+                <span aria-hidden className="absolute left-[-22px] top-[14px] h-[calc(100%+28px)] w-[2px] bg-border">
+                  <span
+                    className="mb-techpulse absolute left-[-3px] h-[8px] w-[8px] rounded-full bg-[#c43a00]"
+                    style={{ animationDelay: i === 1 ? '1.4s' : '0s' }}
+                  />
+                </span>
+              )}
+              <span aria-hidden className="absolute left-[-26px] top-[9px] h-[10px] w-[10px] rounded-full border-2 border-[#c43a00] bg-bg" />
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-[#c43a00]">{node.n} · {node.name}</span>
               {node.tech && <p className="mt-[4px] text-[16px] font-semibold tracking-[-0.01em] text-dark">{node.tech}</p>}
               {node.note && <p className="mt-[2px] text-[13px] text-gray">{node.note}</p>}
               {i === 1 && (
@@ -43,7 +51,7 @@ export function SunsetTech() {
               {i === 2 && (
                 <div className="mt-[10px] flex flex-wrap gap-[8px]">
                   {MODELS.map((m, j) => (
-                    <span key={m} className={`border px-[10px] py-[5px] text-[13px] font-semibold ${j === 0 ? 'border-brand bg-brand/[0.06] text-dark' : 'border-border text-gray'}`}>{m}</span>
+                    <span key={m} className={`border px-[10px] py-[5px] text-[13px] font-semibold ${j === 0 ? 'border-[#c43a00] bg-[#c43a00]/[0.06] text-dark' : 'border-border text-gray'}`}>{m}</span>
                   ))}
                 </div>
               )}

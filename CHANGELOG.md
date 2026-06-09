@@ -4,6 +4,20 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-09 — SunsetML Technical Approach: warm palette + spine fixes
+
+- Recolored the routing pipeline from brand blue `#296ff0` to the sunset warm `#c43a00`
+  (node labels 01/02/03, circles, signal pulse, active model chip).
+- Replaced the single full-height spine with per-segment connectors drawn only between
+  consecutive circles, so the line stops at the 03 · Model providers circle instead of
+  running down beside the model chips. Connector height `calc(100% + 28px)` is
+  width-independent.
+- Centered each node circle on its label line (was 6px high).
+- Verified with `/agent-browser` (in-browser measurement: connectors land exactly on the
+  next circle center, circle/label delta 0). `tsc` clean.
+
+---
+
 ## 2026-06-09 — SunsetML "In short" recut as a framed answer panel (impeccable live)
 
 Via `/impeccable live` (3 variants), owner picked the framed answer panel for the Direct
