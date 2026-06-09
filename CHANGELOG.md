@@ -25,6 +25,9 @@ All major decisions, milestones, and changes to this project.
   demo 5.2MB→427KB (CRF 28) + 32KB poster (h264 / yuv420p / faststart).
 - Hero "All Work" back-link polished to an editorial track-line (lucide ArrowLeft + hover
   underline draw; 45px tap target) — shared `WorkHero`, applies to all four studies.
+- Magic hero logo: `mix-blend-screen` (new per-slug `meta.blendLogo`) drops the logo video's
+  black background into the purple/black hero so the wordmark blends instead of sitting in a
+  dark box. Scoped to magic; other studies unchanged.
 
 ## 2026-06-09 — SunsetML Technical Approach: warm palette + spine fixes
 

@@ -20,6 +20,7 @@ export interface CaseStudyMeta {
   datePublished?: string // ISO date for Article JSON-LD (page publish date)
   appCategory?: string // JSON-LD about.SoftwareApplication applicationCategory
   appName?: string // product name (breadcrumb + JSON-LD about); falls back to client
+  blendLogo?: boolean // screen-blend the animated logo so its black bg drops into the hero
 }
 
 export const caseStudyMeta: Record<string, CaseStudyMeta> = {
@@ -57,6 +58,7 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     demoPoster: '/works/magic/demo-poster.jpg',
     glowColor: '#a855f7', // purple/violet matching MAGIC brand
     appCategory: 'AI creative automation platform',
+    blendLogo: true, // logo video has a black bg → screen-blend it into the hero
   },
   orbitx: {
     title: 'OrbitX: How Metaborong Engineered a Production-Grade Stablecoin Banking Infrastructure for Global Payments',
