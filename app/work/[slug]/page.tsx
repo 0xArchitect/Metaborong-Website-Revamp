@@ -150,25 +150,19 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       {/* ── DIRECT ANSWER (citable, leads the body) ──────────────────────── */}
       {directAnswer && (
         <Section bg="default" maxWidth="xwide" className="pt-[48px] sm:pt-[72px] lg:pt-[100px] pb-[32px] sm:pb-[48px] lg:pb-[60px]">
-          <div className="grid grid-cols-1 gap-[12px] lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-[80px]">
-            <div>
-              <h2 className="mb-[10px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">In short</h2>
-              <p className="text-[clamp(20px,2.6vw,32px)] font-bold tracking-[-0.025em] leading-[1.15] text-dark">What is {meta.client ?? 'SunsetML'}?</p>
-            </div>
-            <div className="text-[17px] sm:text-[19px] leading-[1.6] text-dark [&_p]:mb-[16px] [&_p:last-child]:mb-0">
-              <Markdown content={directAnswer} />
-            </div>
-          </div>
-        </Section>
-      )}
-
-      {/* ── PROBLEM (standalone) ─────────────────────────────────────────── */}
-      {problem && (
-        <Section bg="default" maxWidth="xwide" className="pb-[32px] sm:pb-[48px] lg:pb-[60px]">
-          <div className="max-w-[800px]">
-            <h2 className="mb-[20px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">The Problem</h2>
-            <div className="text-[16px] sm:text-[18px] leading-[1.7] text-gray">
-              <Markdown content={problem} />
+          <div className="rounded-[16px] border border-border bg-bg-subtle p-[24px] sm:p-[32px] lg:p-[40px]">
+            <span className="block h-[3px] w-[40px] bg-[#c43a00]" />
+            <span className="mt-[18px] block font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">In short · What is {meta.client ?? 'SunsetML'}?</span>
+            <p className="mt-[14px] max-w-[46ch] text-[clamp(19px,2.3vw,28px)] font-bold tracking-[-0.025em] leading-[1.25] text-dark">
+              {meta.client ?? 'SunsetML'} is an AI-native writing platform that embeds multi-model AI inside the editor, so writers research, draft, and refine without losing context.
+            </p>
+            <p className="mt-[14px] max-w-[60ch] text-[15px] sm:text-[16px] leading-[1.6] text-gray">
+              Designed and engineered from scratch by Metaborong, as engineering partner and equity co-founder. Writers switch live across four frontier models without breaking flow.
+            </p>
+            <div className="mt-[22px] flex flex-wrap gap-[8px]">
+              {['Contextual PromptBar', 'Live model switching', 'Real-time collaboration', 'Adaptive editor'].map((c) => (
+                <span key={c} className="border border-border px-[10px] py-[5px] text-[13px] font-semibold text-gray">{c}</span>
+              ))}
             </div>
           </div>
         </Section>
