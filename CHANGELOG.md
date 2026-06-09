@@ -54,6 +54,16 @@ byte-identical). New `components/work/`:
 - find-skills checked (nothing beat installed `svg-animations`/`frontend-design`). Two
   browser-verified craft iterations. `tsc`/lint clean; desktop + 390px verified, no overflow.
 
+**Polish follow-up (impeccable live session).** Owner flagged the "What Metaborong Built"
+section as too long, mobile-inconsistent, with mismatched lateral gutters and oversized text.
+Fixes: standardized the sunset-path Problem / Technical Approach / Related-services sections
+from `wide` (1120px) to `xwide` (1280px) so every section shares identical edges down the page;
+rendered the feature/intro prose as plain paragraphs instead of `<Markdown>` (which was
+force-injecting 17/18px + `mb-[28px]`), restoring the intended 15/16px scale and tightening
+length; vertically centered each row. Three layout options were explored live (alternating /
+two-up grid / dense list) — owner kept the **alternating** rows. `tsc`/lint clean; desktop +
+390px verified, gutters aligned across sections, other three case studies untouched.
+
 ---
 
 ## 2026-06-08 — `/services` index revamp (copy chain + impeccable live)
