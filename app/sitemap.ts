@@ -16,6 +16,7 @@ import type { MetadataRoute } from 'next'
 import { listPublishedPosts } from '@/lib/posts'
 import { SITE_ORIGIN } from '@/lib/seo'
 import { pillars, getPublishedLeaves } from '@/components/sections/services-data'
+import { workSlugs } from '@/lib/work'
 
 export const revalidate = 60
 
@@ -61,6 +62,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       })
     }
+  }
+
+  // Published case studies under /work/<slug>.
+  for (const slug of workSlugs) {
+    entries.push({
+      url: `${SITE_ORIGIN}/work/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
   }
 
   // Walk all published posts in pages of PAGE_SIZE so even a back catalog
