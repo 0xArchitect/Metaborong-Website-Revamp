@@ -4,6 +4,17 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-09 — SunsetML "In short" recut as a framed answer panel (impeccable live)
+
+Via `/impeccable live` (3 variants), owner picked the framed answer panel for the Direct
+Answer block (was a generic 2-col eyebrow+prose layout): a hairline-bordered `bg-bg-subtle`
+card with a warm `#c43a00` top rule, bold Switzer definition, and capability pills. Param
+baked: `fill: subtle`. Swapped the pills from model names (which repeat in the Technical
+Approach pipeline) to the four capabilities — Contextual PromptBar, Live model switching,
+Real-time collaboration, Adaptive editor. `tsc` clean.
+
+---
+
 ## 2026-06-09 — SunsetML gate-clearing pass (copy + impeccable + SEO/AEO to passing)
 
 Re-audited `/work/sunset` against three independent gates and applied each one's minimal fix set.
