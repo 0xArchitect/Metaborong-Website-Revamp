@@ -15,6 +15,9 @@ import { caseStudyMeta, type CaseStudyMeta } from '@/lib/work'
 import { SunsetBuilt } from '@/components/work/sunset-built'
 import { SunsetResults } from '@/components/work/sunset-results'
 import { SunsetTech } from '@/components/work/sunset-tech'
+import { MagicBuilt } from '@/components/work/magic-built'
+import { MagicResults } from '@/components/work/magic-results'
+import { MagicTech } from '@/components/work/magic-tech'
 import { WorkDemoVideo } from '@/components/work/work-demo-video'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 
@@ -112,6 +115,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const parsed = parseMarkdown(content)
 
   if (slug === 'sunset') return <SunsetCaseStudy meta={meta} slug={slug} parsed={parsed} />
+  if (slug === 'magic') return <MagicCaseStudy meta={meta} slug={slug} parsed={parsed} />
   return <LegacyCaseStudy meta={meta} slug={slug} parsed={parsed} />
 }
 
@@ -137,8 +141,8 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
   const results = stripTrailingRule(parsed.results)
   const solutionIntro = stripTrailingRule(parsed.solutionIntro)
   const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
-  const jsonLd = buildSunsetJsonLd(meta, faqItems, slug)
-  const related = resolveSunsetRelated()
+  const jsonLd = buildWorkJsonLd(meta, faqItems, slug)
+  const related = resolveRelated(SUNSET_RELATED_SLUGS)
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -184,10 +188,88 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       {/* ── FAQ (shared component) ───────────────────────────────────────── */}
       {faqItems.length > 0 && <FaqSection items={faqItems} />}
 
-      <SunsetRelatedServices related={related} />
+      <WorkRelatedServices related={related} title="How we build platforms like SunsetML" accent="#c43a00" />
       {/* Sunset-scoped warm accent ramp: deep-orange functional accent (AA-safe,
           same family as the #ff6b35 glows). Overrides the site terracotta locally. */}
       <div style={{ '--color-accent': '#c43a00', '--cta-color': '#c43a00', '--cta-hover': '#a83100' } as React.CSSProperties}>
+        <ContactCtaSection />
+      </div>
+      <Footer />
+    </main>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAGIC by Omagic AI — AEO re-architecture, same grammar as SunsetML. Hero →
+// Direct answer → Demo → What we built (bespoke vignettes) → Technical approach
+// (generation pipeline) → Results (qualitative) → shared FAQ → Related services
+// → CTA. Per-slug accent #6d28d9 (AA-safe violet, the #a855f7 family).
+// ─────────────────────────────────────────────────────────────────────────────
+
+const MAGIC_RELATED_SLUGS = [
+  'ai-video-generation',
+  'generative-ai-development',
+  'genai-apis-backend-integration',
+]
+
+function MagicCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: string; parsed: ParsedContent }) {
+  const { faqItems } = parsed
+  const directAnswer = stripTrailingRule(parsed.directAnswer)
+  const techApproach = stripTrailingRule(parsed.techApproach)
+  const results = stripTrailingRule(parsed.results)
+  const solutionIntro = stripTrailingRule(parsed.solutionIntro)
+  const solutionFeatures = parsed.solutionFeatures.map((f) => ({ ...f, body: stripTrailingRule(f.body) }))
+  const jsonLd = buildWorkJsonLd(meta, faqItems, slug)
+  const related = resolveRelated(MAGIC_RELATED_SLUGS)
+
+  return (
+    <main className="flex min-h-screen flex-col">
+      {jsonLd.map((block, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }} />
+      ))}
+      <Nav />
+      <WorkHero meta={meta} />
+
+      {/* ── DIRECT ANSWER (citable, leads the body) ──────────────────────── */}
+      {directAnswer && (
+        <Section bg="default" maxWidth="xwide" className="pt-[48px] sm:pt-[72px] lg:pt-[100px] pb-[32px] sm:pb-[48px] lg:pb-[60px]">
+          <div className="rounded-[16px] border border-border bg-bg-subtle p-[24px] sm:p-[32px] lg:p-[40px]">
+            <span className="block h-[3px] w-[40px] bg-[#6d28d9]" />
+            <span className="mt-[18px] block font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#6d28d9]">In short · What is MAGIC?</span>
+            <p className="mt-[14px] max-w-[52ch] text-[clamp(19px,2.3vw,28px)] font-bold tracking-[-0.025em] leading-[1.25] text-dark">
+              MAGIC is an AI creative automation platform that turns a single product image into product videos, CGI scene visuals, and marketplace packshots, generated automatically and at scale without a photography studio.
+            </p>
+            <p className="mt-[14px] max-w-[60ch] text-[15px] sm:text-[16px] leading-[1.6] text-gray">
+              Built ground-up by Metaborong as engineering partner for{' '}
+              <a href="https://omagic.ai/" target="_blank" rel="noopener" className="font-semibold text-[#6d28d9] underline decoration-[#6d28d9]/30 underline-offset-2 hover:decoration-[#6d28d9]">Omagic AI</a>, using controlled generation pipelines built for brand consistency and production reliability across Amazon, Flipkart, Shopify, and Meta Ads.
+            </p>
+            <div className="mt-[22px] flex flex-wrap gap-[8px]">
+              {['Image-to-video', 'Controlled generation', 'AI packshots', 'Multi-platform output'].map((c) => (
+                <span key={c} className="border border-border px-[10px] py-[5px] text-[13px] font-semibold text-gray">{c}</span>
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
+
+      <DemoVideo meta={meta} slug={slug} />
+      <MagicBuilt intro={solutionIntro} features={solutionFeatures} />
+
+      {/* ── TECHNICAL APPROACH (generation pipeline) ─────────────────────── */}
+      {techApproach && (
+        <Section bg="default" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
+          <MagicTech />
+        </Section>
+      )}
+
+      <MagicResults results={results} />
+
+      {/* ── FAQ (shared component) ───────────────────────────────────────── */}
+      {faqItems.length > 0 && <FaqSection items={faqItems} />}
+
+      <WorkRelatedServices related={related} title="How we build platforms like MAGIC" accent="#6d28d9" />
+      {/* MAGIC-scoped accent ramp: AA-safe violet (the #a855f7 hero-glow family). */}
+      <div style={{ '--color-accent': '#6d28d9', '--cta-color': '#6d28d9', '--cta-hover': '#581ca8' } as React.CSSProperties}>
         <ContactCtaSection />
       </div>
       <Footer />
@@ -403,7 +485,7 @@ function DemoVideo({ meta, slug }: { meta: CaseStudyMeta; slug: string }) {
     <Section bg="default" maxWidth="xwide" className="pb-[48px] sm:pb-[72px] lg:pb-[100px]">
       <div className={`w-full aspect-video sm:aspect-[16/9] lg:aspect-[21/9] rounded-[12px] sm:rounded-[20px] lg:rounded-[24px] bg-canvas border border-border/10 shadow-xl flex items-center justify-center relative overflow-hidden${meta.demoVideo ? '' : ' group cursor-pointer'}`}>
         {meta.demoVideo ? (
-          <WorkDemoVideo src={meta.demoVideo} poster={meta.demoPoster} />
+          <WorkDemoVideo src={meta.demoVideo} poster={meta.demoPoster} label={`${meta.appName ?? meta.client ?? meta.title.split(':')[0]} product demo`} />
         ) : (
           <>
             <div className="absolute inset-0 bg-gradient-to-tr from-brand/20 via-transparent to-transparent opacity-30 group-hover:opacity-50 transition-opacity duration-700" />
@@ -577,38 +659,38 @@ const SUNSET_RELATED_SLUGS = [
   'genai-apis-backend-integration',
 ]
 
-function resolveSunsetRelated(): { pillar: Pillar; leaf: ChildService }[] {
+function resolveRelated(slugs: string[]): { pillar: Pillar; leaf: ChildService }[] {
   const ai = pillars.find((p) => p.id === 'ai')
   if (!ai) return []
   const leaves = getAllLeaves(ai)
-  return SUNSET_RELATED_SLUGS.map((slug) => leaves.find((l) => l.slug === slug && l.status === 'published'))
+  return slugs.map((slug) => leaves.find((l) => l.slug === slug && l.status === 'published'))
     .filter((l): l is ChildService => Boolean(l))
     .map((leaf) => ({ pillar: ai, leaf }))
 }
 
-function SunsetRelatedServices({ related }: { related: { pillar: Pillar; leaf: ChildService }[] }) {
+function WorkRelatedServices({ related, title, accent }: { related: { pillar: Pillar; leaf: ChildService }[]; title: string; accent: string }) {
   if (related.length === 0) return null
   return (
     <Section bg="subtle" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
       <div className="mb-[32px] sm:mb-[40px]">
-        <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">Related services</h2>
+        <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: accent }}>Related services</h2>
         <p className="text-[clamp(22px,3vw,36px)] font-bold tracking-[-0.025em] leading-[1.1] text-dark max-w-[640px]">
-          How we build platforms like SunsetML
+          {title}
         </p>
       </div>
-      <ul role="list" className="border-t border-border">
+      <ul role="list" className="border-t border-border" style={{ '--rs-accent': accent } as React.CSSProperties}>
         {related.map(({ pillar, leaf }) => (
           <li key={leaf.slug}>
             <Link
               href={`${pillar.hubHref}${leaf.slug}/`}
-              className="group grid grid-cols-[1fr_auto] items-center gap-[20px] border-b border-border py-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset md:py-[24px]"
+              className="group grid grid-cols-[1fr_auto] items-center gap-[20px] border-b border-border py-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--rs-accent)] focus-visible:ring-inset md:py-[24px]"
             >
               <div className="min-w-0">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-[#c43a00]">{pillar.label}</span>
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: accent }}>{pillar.label}</span>
                 <h3 className="mt-[6px] text-[17px] font-semibold tracking-[-0.02em] leading-[1.3] text-dark md:text-[19px]">{leaf.name}</h3>
                 <p className="mt-[4px] max-w-[68ch] text-[14px] leading-[1.55] text-gray">{leaf.description}</p>
               </div>
-              <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full border border-border text-gray transition-[transform,border-color,color] duration-[var(--duration-fast)] group-hover:translate-x-[2px] group-hover:border-brand group-hover:text-brand motion-reduce:group-hover:translate-x-0">
+              <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full border border-border text-gray transition-[transform,border-color,color] duration-[var(--duration-fast)] group-hover:translate-x-[2px] group-hover:border-[var(--rs-accent)] group-hover:text-[var(--rs-accent)] motion-reduce:group-hover:translate-x-0">
                 <span aria-hidden="true">→</span>
               </span>
             </Link>
@@ -620,11 +702,13 @@ function SunsetRelatedServices({ related }: { related: { pillar: Pillar; leaf: C
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// JSON-LD — Article + BreadcrumbList + FAQPage for the SunsetML case study.
+// JSON-LD — Article + BreadcrumbList + FAQPage. Slug-agnostic: every migrated
+// case study (sunset, magic, …) emits the same three blocks from its meta.
 // ─────────────────────────────────────────────────────────────────────────────
 
-function buildSunsetJsonLd(meta: CaseStudyMeta, faqItems: { q: string; a: string }[], slug: string): Record<string, unknown>[] {
+function buildWorkJsonLd(meta: CaseStudyMeta, faqItems: { q: string; a: string }[], slug: string): Record<string, unknown>[] {
   const url = `${SITE_ORIGIN}/work/${slug}`
+  const appName = meta.appName ?? meta.client ?? meta.title.split(':')[0]
   const publisher = {
     '@type': 'Organization',
     name: 'Metaborong',
@@ -644,7 +728,7 @@ function buildSunsetJsonLd(meta: CaseStudyMeta, faqItems: { q: string; a: string
     url,
     author: { '@type': 'Organization', name: 'Metaborong', url: SITE_ORIGIN },
     publisher,
-    about: { '@type': 'SoftwareApplication', name: 'SunsetML', applicationCategory: 'AI writing platform' },
+    about: { '@type': 'SoftwareApplication', name: appName, applicationCategory: meta.appCategory ?? 'Software' },
   }
 
   const breadcrumb = {
@@ -653,7 +737,7 @@ function buildSunsetJsonLd(meta: CaseStudyMeta, faqItems: { q: string; a: string
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_ORIGIN}/` },
       { '@type': 'ListItem', position: 2, name: 'Work', item: `${SITE_ORIGIN}/#work` },
-      { '@type': 'ListItem', position: 3, name: meta.client ?? 'SunsetML', item: url },
+      { '@type': 'ListItem', position: 3, name: appName, item: url },
     ],
   }
 

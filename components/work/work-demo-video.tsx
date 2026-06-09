@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
 // + IntersectionObserver-gated play() avoids pulling the file until needed
 // (replaces bare autoPlay, which downloads the whole asset eagerly). A poster
 // fills the frame before bytes arrive; reduced-motion keeps the poster, no play.
-export function WorkDemoVideo({ src, poster }: { src: string; poster?: string }) {
+export function WorkDemoVideo({ src, poster, label }: { src: string; poster?: string; label?: string }) {
   const ref = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export function WorkDemoVideo({ src, poster }: { src: string; poster?: string })
       ref={ref}
       src={src}
       poster={poster}
-      aria-label="SunsetML product demo"
+      aria-label={label}
       muted
       loop
       playsInline
