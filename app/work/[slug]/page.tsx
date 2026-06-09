@@ -11,6 +11,8 @@ import { FaqSection } from '@/components/sections/faq'
 import { pillars, getAllLeaves, type Pillar, type ChildService } from '@/components/sections/services-data'
 import { SITE_ORIGIN } from '@/lib/seo'
 import { caseStudyMeta, type CaseStudyMeta } from '@/lib/work'
+import { SunsetBuilt } from '@/components/work/sunset-built'
+import { SunsetResults } from '@/components/work/sunset-results'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -171,7 +173,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
       )}
 
       <DemoVideo meta={meta} slug={slug} />
-      <SolutionFeatures solutionIntro={solutionIntro} solutionFeatures={solutionFeatures} />
+      <SunsetBuilt intro={solutionIntro} features={solutionFeatures} />
 
       {/* ── TECHNICAL APPROACH (prose, E-E-A-T depth) ────────────────────── */}
       {techApproach && (
@@ -185,7 +187,7 @@ function SunsetCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: st
         </Section>
       )}
 
-      <ResultsBand results={results} />
+      <SunsetResults results={results} />
       <TechMarquee allTech={allTech} />
 
       {/* ── FAQ (shared component) ───────────────────────────────────────── */}

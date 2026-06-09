@@ -34,6 +34,26 @@ Copy single-sourced in `content/work/sunset.md`; shared work metadata extracted 
   shared blocks → deferred to the all-4 migration). `tsc`/lint clean (one pre-existing hero-logo
   `<img>` warning). DESIGN.md decisions-log row added.
 
+### Visual enrichment pass (same day, impeccable overdrive/layout)
+
+Owner feedback: "What Metaborong Built" read like a document, the Results card grid was disliked.
+Reworked both on the **sunset path only** (magic/orbitx/sedax keep the shared components, verified
+byte-identical). New `components/work/`:
+
+- **`sunset-built.tsx` — product-mock vignette rows.** Each locked feature is paired with a
+  tokenized CSS mock of the real SunsetML feature, alternating sides, top-aligned, stacking on
+  mobile: an **animated PromptBar** (`sunset-promptbar.tsx`), a model switcher, an adaptive/focus
+  editor, and a live-collaboration thread (`sunset-mocks.tsx`). The section now *shows the app*.
+- **`sunset-results.tsx` — cards out, figures in.** Oversized hairline-separated numerals
+  (350 / 75 / 4 / 2026; 4-up desktop → 2×2 mobile) + qualitative outcomes as dotted lines (parsed
+  from the markdown, prose single-sourced).
+- **One signature motion moment** (overdrive — focus, not excess): the PromptBar runs a
+  scroll-triggered select → Rewrite pill → word-by-word reveal; `prefers-reduced-motion` + pre-JS
+  show the resolved static frame; transform/opacity only, scoped caret keyframe (no globals.css
+  change).
+- find-skills checked (nothing beat installed `svg-animations`/`frontend-design`). Two
+  browser-verified craft iterations. `tsc`/lint clean; desktop + 390px verified, no overflow.
+
 ---
 
 ## 2026-06-08 — `/services` index revamp (copy chain + impeccable live)
