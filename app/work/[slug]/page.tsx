@@ -421,7 +421,7 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
             src={meta.animatedLogo}
             autoPlay muted loop playsInline
             aria-hidden="true"
-            className="relative w-full h-full object-cover rounded-[16px] sm:rounded-[20px]"
+            className={`relative w-full h-full object-cover rounded-[16px] sm:rounded-[20px]${meta.blendLogo ? ' mix-blend-screen' : ''}`}
           />
         ) : (
           <div className="relative w-full h-full flex items-center justify-center">
