@@ -42,7 +42,9 @@ export function SunsetPromptBar() {
       at(2000, () => setPhase('stream'))
       RESULT_WORDS.forEach((_, i) => at(2100 + i * 150, () => setRevealed(i + 1)))
       at(2100 + RESULT_WORDS.length * 150 + 1600, () => setPhase('hold'))
-      at(2100 + RESULT_WORDS.length * 150 + 2600, () => cycle())
+      // Plays once and holds on the resolved rewrite — no perpetual re-loop
+      // (a restless loop fights the page's own "focus" thesis). Replays only if
+      // the reader scrolls away and back (the IO resets `running` on exit).
     }
 
     const io = new IntersectionObserver(
@@ -86,7 +88,7 @@ export function SunsetPromptBar() {
         <span className="h-[10px] w-[10px] rounded-full bg-border" />
         <span className="h-[10px] w-[10px] rounded-full bg-border" />
         <span className="h-[10px] w-[10px] rounded-full bg-border" />
-        <span className="ml-[8px] font-mono text-[11px] tracking-[0.04em] text-gray-light">launch-note.md</span>
+        <span className="ml-[8px] font-mono text-[11px] tracking-[0.04em] text-gray">launch-note.md</span>
       </div>
 
       {/* document body */}
@@ -96,7 +98,7 @@ export function SunsetPromptBar() {
           <span
             className={`rounded-[3px] px-[2px] transition-colors duration-300 ${
               highlighted ? 'bg-brand/15 text-dark' : ''
-            } ${struck ? 'text-gray-light line-through decoration-gray-light/50' : ''}`}
+            } ${struck ? 'text-gray line-through decoration-gray-light/50' : ''}`}
           >
             {SELECTED}
           </span>
@@ -134,7 +136,7 @@ export function SunsetPromptBar() {
         >
           <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">✦</span>
           <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-dark">Rewrite</span>
-          <span className="text-[11px] text-gray-light">·</span>
+          <span className="text-[11px] text-gray">·</span>
           <span className="text-[12px] text-gray">sharper</span>
           <kbd className="ml-[4px] rounded-[4px] border border-border bg-bg px-[6px] py-[2px] font-mono text-[10px] text-gray">↵</kbd>
         </div>

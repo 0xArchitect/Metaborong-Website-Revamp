@@ -17,7 +17,7 @@ export function SunsetTech() {
   return (
     <div className="grid gap-[32px] lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-[72px]">
       <div>
-        <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-brand">Technical Approach</h2>
+        <h2 className="mb-[16px] font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#c43a00]">Technical Approach</h2>
         <p className="max-w-[42ch] text-[15px] leading-[1.65] text-gray sm:text-[16px]">
           A contextual routing layer keeps AI assistance invisible until it is needed and near-instant when called, so switching across GPT-5.5, GPT-5.4 mini, Claude Sonnet 4.6, and Claude Opus 4.7 never interrupts the writing session.
         </p>
@@ -30,7 +30,7 @@ export function SunsetTech() {
           {NODES.map((node, i) => (
             <div key={i} className="relative">
               <span aria-hidden className="absolute left-[-26px] top-[5px] h-[10px] w-[10px] rounded-full border-2 border-brand bg-bg" />
-              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-brand/70">{node.n} · {node.name}</span>
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-brand">{node.n} · {node.name}</span>
               {node.tech && <p className="mt-[4px] text-[16px] font-semibold tracking-[-0.01em] text-dark">{node.tech}</p>}
               {node.note && <p className="mt-[2px] text-[13px] text-gray">{node.note}</p>}
               {i === 1 && (

@@ -30,6 +30,7 @@ export function WorkDemoVideo({ src, poster }: { src: string; poster?: string })
       ref={ref}
       src={src}
       poster={poster}
+      aria-label="SunsetML product demo"
       muted
       loop
       playsInline
