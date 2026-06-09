@@ -4,6 +4,28 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-09 — MAGIC case study (`/work/magic`) migrated to AEO grammar (Sunset parity)
+
+- Second case study off the legacy pipeline, via a per-slug `MagicCaseStudy` branch.
+  Decision: build Magic bespoke first, extract the shared template later.
+- New bespoke non-card vignettes in `components/work/`: `magic-pipeline.tsx` (animated,
+  reduced-motion-safe image→video filmstrip), `magic-mocks.tsx` (controlled-generation grid,
+  packshot grid, multi-platform strip), `magic-built.tsx`, `magic-tech.tsx` (generation
+  pipeline spine), `magic-results.tsx` (qualitative — no figure band, no fabricated numbers).
+- Copy rewritten through the A3 SEO chain with zero fabrication (byline "engineering partner",
+  Omagic AI linked, real 2025 year): content 88 / E-E-A-T 8.3 / GEO 91. impeccable: detector
+  `[]`, audit 19/20, critique 37/40.
+- Per-slug accent: decorative `#a855f7` glow kept; functional AA-safe violet `#6d28d9`
+  (7.10:1 on white) for eyebrows/CTA/spine/related-services, scoped locally; global tokens
+  untouched.
+- Generalized shared seams (Sunset verified byte-identical): `buildWorkJsonLd` (slug-agnostic,
+  new `appName`/`appCategory` meta), `WorkRelatedServices({title,accent})`, `resolveRelated`,
+  `WorkDemoVideo` `label` prop (fixes a hardcoded `aria-label` that leaked onto Magic).
+- Videos optimized with ffmpeg → `public/works/magic/`: animated-logo 480KB→21KB,
+  demo 5.2MB→427KB (CRF 28) + 32KB poster (h264 / yuv420p / faststart).
+- Hero "All Work" back-link polished to an editorial track-line (lucide ArrowLeft + hover
+  underline draw; 45px tap target) — shared `WorkHero`, applies to all four studies.
+
 ## 2026-06-09 — SunsetML Technical Approach: warm palette + spine fixes
 
 - Recolored the routing pipeline from brand blue `#296ff0` to the sunset warm `#c43a00`

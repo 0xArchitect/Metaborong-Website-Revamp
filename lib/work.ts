@@ -18,6 +18,8 @@ export interface CaseStudyMeta {
   services?: string // hero "Services" value; falls back to 'Platform Engineering'
   year?: string // hero "Year" value; falls back to '2024'
   datePublished?: string // ISO date for Article JSON-LD (page publish date)
+  appCategory?: string // JSON-LD about.SoftwareApplication applicationCategory
+  appName?: string // product name (breadcrumb + JSON-LD about); falls back to client
 }
 
 export const caseStudyMeta: Record<string, CaseStudyMeta> = {
@@ -36,14 +38,25 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     demoVideo: '/works/sunset/demo.mp4',
     demoPoster: '/works/sunset/demo-poster.jpg',
     glowColor: '#ff6b35', // warm orange matching SunsetML brand
+    appCategory: 'AI writing platform',
   },
   magic: {
     title: 'MAGIC by Omagic AI: How Metaborong Built a Scalable AI Product Video and Creative Automation Platform for E-commerce',
+    seoTitle: 'MAGIC by Omagic AI: AI Creative Automation Case Study',
     description:
-      'Metaborong built MAGIC, an AI creative automation platform generating product videos, CGI visuals, and ad creatives from a single product image. Built for e-commerce at scale.',
+      'MAGIC by Omagic AI turns one product image into product videos, CGI visuals, and marketplace packshots at scale. Built ground-up by Metaborong for e-commerce.',
     logo: '/clients/magic.svg',
+    client: 'Omagic AI',
+    appName: 'MAGIC',
     category: 'AI · Automation',
-    glowColor: '#a855f7', // purple/violet
+    services: 'AI Integration · Full-Stack Engineering',
+    year: '2025',
+    datePublished: '2026-06-09',
+    animatedLogo: '/works/magic/animated-logo.mp4',
+    demoVideo: '/works/magic/demo.mp4',
+    demoPoster: '/works/magic/demo-poster.jpg',
+    glowColor: '#a855f7', // purple/violet matching MAGIC brand
+    appCategory: 'AI creative automation platform',
   },
   orbitx: {
     title: 'OrbitX: How Metaborong Engineered a Production-Grade Stablecoin Banking Infrastructure for Global Payments',
