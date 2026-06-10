@@ -94,8 +94,8 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     year: '2026',
     datePublished: '2026-06-10',
     animatedLogo: '/works/sedax/animated-logo.mp4',
-    demoVideo: '/works/sedax/demo.mp4',
-    demoPoster: '/works/sedax/demo-poster.jpg',
+    // No demoVideo: the provided SEDAX clip is a brand-logo loop (not a product
+    // demo) and clashes with the emerald system; the ZKP vignette is the motion.
     glowColor: '#10b981', // emerald matching SEDAX brand
     appCategory: 'Blockchain identity verification platform',
     blendLogo: true,

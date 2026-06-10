@@ -419,7 +419,9 @@ function SedaxCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: str
         </Section>
       )}
 
-      <DemoVideo meta={meta} slug={slug} />
+      {/* No demo frame: the provided SEDAX clip is a brand-logo loop, not a
+          product demo, and clashes with the emerald system (owner call). The
+          animated ZKP verification vignette below is the page's motion moment. */}
       <WorkBuilt intro={solutionIntro} features={solutionFeatures} mocks={mocks} accent="#047857" />
 
       {techApproach && (
