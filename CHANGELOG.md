@@ -25,8 +25,10 @@ All major decisions, milestones, and changes to this project.
 - `resolveRelated` generalized to a pillar id (orbitx/sedax → published `/services/web3/*`).
 - Videos optimized → `public/works/{orbitx,sedax}/` (orbitx logo 39KB / demo 300KB;
   sedax logo 28KB / demo 582KB; + posters; h264/yuv420p/faststart); `blendLogo` on both.
-- Deferred: SEDAX demo video is a blue brand loop that clashes with the emerald system
-  (owner decision pending); shared hero-logo reduced-motion gate (global pass).
+- SEDAX demo frame dropped (owner call): the provided clip is a blue brand-logo loop, not a
+  product demo, and clashed with the emerald system; the animated ZKP vignette is now the
+  page's motion moment. Orphaned `public/works/sedax/demo.{mp4,jpg}` removed.
+- Deferred (global pass): shared hero-logo reduced-motion gate; nav 44px touch targets.
 
 ## 2026-06-09 — MAGIC case study (`/work/magic`) migrated to AEO grammar (Sunset parity)
 
