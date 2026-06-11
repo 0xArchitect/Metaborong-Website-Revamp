@@ -4,8 +4,6 @@
 
 @import "tailwindcss";
 
-@import "tw-animate-css";
-
 /* ── Switzer (Indian Type Foundry) — self-hosted .woff2 from /public/fonts ── */
 @font-face {
   font-family: 'Switzer';
@@ -49,9 +47,6 @@
   font-display: swap;
   src: url('/fonts/Switzer-Black.woff2') format('woff2');
 }
-
-/* @import "shadcn/tailwind.css"; */
-/* TEMP: file/package not present — broken import predates Section 5 work */
 
 @custom-variant dark (&:is(.dark *));
 

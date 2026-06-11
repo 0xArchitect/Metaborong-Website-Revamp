@@ -8,7 +8,7 @@ export function ProblemAEOAccordion() {
       </summary>
       <div className="problem-aeo-body">
         {PROBLEM_QA.map((qa, i) => (
-          <div key={i} className="problem-aeo-pair">
+          <div key={i}>
             <h3 className="problem-aeo-q">{qa.q}</h3>
             <p className="problem-aeo-a">{qa.a}</p>
           </div>

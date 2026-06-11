@@ -1,11 +1,5 @@
 import { faqs } from '@/components/sections/faq-data'
-import {
-  pillars,
-  getPublishedLeaves,
-  type Pillar,
-  type ChildService,
-  type SubGroup,
-} from '@/components/sections/services-data'
+import { pillars, getPublishedLeaves } from '@/components/sections/services-data'
 
 const BASE = 'https://www.metaborong.com'
 const ORG_ID = `${BASE}/#organization`
@@ -152,69 +146,11 @@ export const whyUsAeoSchemaJson = JSON.stringify(whyUsAeoSchema)
 export const serviceSchemasJson: ReadonlyArray<{ id: string; json: string }> =
   serviceSchemas.map((s) => ({ id: s['@id'], json: JSON.stringify(s) }))
 
-// ─── v1 leaf-level Service nodes ──────────────────────────────────────────────
-//
-// SERVICES_PLAN.md § 5 — one Service node per *published* v1 leaf. Coming-soon
-// stubs are excluded; they're noindex pages and get no schema until authored.
-// `isRelatedTo` lists up to 3 v1 siblings under the same pillar (excluding the
-// leaf itself) — provides the entity-graph cross-links Google/Perplexity use
-// to cluster the studio's offerings.
-
-const leafServiceId = (pillarId: string, leafSlug: string): string =>
-  `${BASE}/#service-${pillarId}-${leafSlug}`
-
-const leafServiceUrl = (pillarId: string, leafSlug: string): string =>
-  `${BASE}/services/${pillarId}/${leafSlug}`
-
-// "AI Engineering", "Web3 Strategy", "Product Studio Engineering" — used as
-// serviceType per SERVICES_PLAN.md § 5 example ("AI Engineering").
-const subGroupServiceType = (pillar: Pillar, subGroup: SubGroup): string =>
-  `${pillar.label} ${subGroup.label}`
-
-interface PublishedLeafContext {
-  pillar: Pillar
-  subGroup: SubGroup
-  leaf: ChildService
-}
-
-const publishedLeafContexts: readonly PublishedLeafContext[] = pillars.flatMap(
-  (pillar) =>
-    pillar.subGroups.flatMap((subGroup) =>
-      subGroup.children
-        .filter((leaf) => leaf.status === 'published')
-        .map((leaf) => ({ pillar, subGroup, leaf })),
-    ),
-)
-
-export const leafServiceSchemas = publishedLeafContexts.map(
-  ({ pillar, subGroup, leaf }) => {
-    const siblingIds = publishedLeafContexts
-      .filter((c) => c.pillar.id === pillar.id && c.leaf.slug !== leaf.slug)
-      .slice(0, 3)
-      .map((c) => ({ '@id': leafServiceId(c.pillar.id, c.leaf.slug) }))
-
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      '@id': leafServiceId(pillar.id, leaf.slug),
-      name: leaf.name,
-      serviceType: subGroupServiceType(pillar, subGroup),
-      description: leaf.description,
-      provider: { '@id': ORG_ID },
-      areaServed: 'Worldwide',
-      url: leafServiceUrl(pillar.id, leaf.slug),
-      category: pillar.label,
-      isRelatedTo: siblingIds,
-    }
-  },
-)
-
 // ─── BreadcrumbList builders ──────────────────────────────────────────────────
 //
 // Absolute URLs per SERVICES_PLAN.md § 5 caveat. Used by:
-//   - app/services/page.tsx                  → buildServicesOverviewBreadcrumb()
-//   - app/services/[pillar]/page.tsx         → buildPillarBreadcrumb(pillar)
-//   - app/services/[pillar]/[slug]/page.tsx  → buildLeafBreadcrumb(pillar, leaf)
+//   - app/services/page.tsx → buildServicesOverviewBreadcrumb()
+// (Pillar/leaf pages build their breadcrumb JSON-LD inline.)
 
 interface BreadcrumbItem {
   '@type': 'ListItem'
@@ -239,40 +175,5 @@ export function buildServicesOverviewBreadcrumb(): BreadcrumbListSchema {
   return breadcrumbList([
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
     { '@type': 'ListItem', position: 2, name: 'Services', item: `${BASE}/services/` },
-  ])
-}
-
-export function buildPillarBreadcrumb(pillar: Pillar): BreadcrumbListSchema {
-  return breadcrumbList([
-    { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: `${BASE}/services/` },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: pillar.label,
-      item: `${BASE}${pillar.hubHref}`,
-    },
-  ])
-}
-
-export function buildLeafBreadcrumb(
-  pillar: Pillar,
-  leaf: ChildService,
-): BreadcrumbListSchema {
-  return breadcrumbList([
-    { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: `${BASE}/services/` },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: pillar.label,
-      item: `${BASE}${pillar.hubHref}`,
-    },
-    {
-      '@type': 'ListItem',
-      position: 4,
-      name: leaf.name,
-      item: leafServiceUrl(pillar.id, leaf.slug),
-    },
   ])
 }
