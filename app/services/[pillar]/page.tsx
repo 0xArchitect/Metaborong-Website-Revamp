@@ -1,8 +1,32 @@
 import { notFound } from 'next/navigation'
-import { pillars } from '@/components/sections/services-data'
 import type { Metadata } from 'next'
+import { pillars } from '@/components/sections/services-data'
+import { PillarHub } from '@/components/services/pillar-hub'
 
 type Params = { pillar: string }
+
+// Pillar meta titles and descriptions are pinned in SERVICES_PLAN.md § 4 —
+// this map mirrors that table so the hubs ship indexable from day one.
+// Titles are BARE — the root layout's `title.template` ('%s | Metaborong')
+// appends the brand suffix. Do NOT bake '| Metaborong' in here or it doubles.
+// Keep each bare title <=47 chars so the rendered title stays <=60.
+const PILLAR_META: Record<string, { title: string; description: string }> = {
+  ai: {
+    title: 'AI Development Services | Copilots, Agents, RAG',
+    description:
+      'Production AI engineering for startups and enterprise. We build agentic workflows, custom RAG pipelines, and specialized LLM integrations that solve concrete business problems.',
+  },
+  web3: {
+    title: 'Web3 Development Services | Smart Contracts',
+    description:
+      'Smart-contract, DeFi, NFT, DID, tokenomics, and RWA engineering across EVM, Solana, and Cosmos. Audit-ready multichain Web3 studio, India and global delivery.',
+  },
+  'product-studio': {
+    title: 'Product Studio | MVP, SaaS, B2B Product Builds',
+    description:
+      'End-to-end product builds for founders. We take zero-to-one SaaS, B2B platforms, and complex MVPs from technical scope through to production launch.',
+  },
+}
 
 export async function generateStaticParams(): Promise<Params[]> {
   return pillars.map((p) => ({ pillar: p.id }))
@@ -10,12 +34,25 @@ export async function generateStaticParams(): Promise<Params[]> {
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { pillar } = await params
+  const meta = PILLAR_META[pillar]
   const p = pillars.find((x) => x.id === pillar)
-  if (!p) return { robots: { index: false, follow: false } }
+  if (!p || !meta) return { robots: { index: false, follow: false } }
+  // No-slash canonical: hubHref carries a trailing slash that 308-redirects,
+  // so the canonical/OG/markdown-alternate URLs are stripped to the 200 URL.
+  const hubUrl = `https://www.metaborong.com${p.hubHref.replace(/\/$/, '')}`
   return {
-    title: `${p.label} — Metaborong`,
-    description: `${p.headline}. Coming soon.`,
-    robots: { index: false, follow: false },
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: hubUrl,
+      types: { 'text/markdown': `${hubUrl}/raw.md` },
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: hubUrl,
+      type: 'website',
+    },
   }
 }
 
@@ -23,24 +60,5 @@ export default async function PillarHubPage({ params }: { params: Promise<Params
   const { pillar } = await params
   const p = pillars.find((x) => x.id === pillar)
   if (!p) notFound()
-  return (
-    <main className="min-h-screen flex items-center justify-center px-6">
-      <div className="max-w-[640px] text-center">
-        <p
-          className="text-[11px] font-bold tracking-[0.1em] uppercase mb-4"
-          style={{ color: p.color }}
-        >
-          {p.label}
-        </p>
-        <h1 className="text-[clamp(32px,4vw,52px)] font-bold tracking-[-0.035em] leading-[1.05] text-dark mb-6">
-          {p.headline}
-        </h1>
-        <p className="text-[16px] text-gray leading-[1.65] mb-8">{p.body}</p>
-        <p className="text-[14px] text-gray-light">
-          Detailed service pages launching soon.{' '}
-          <a href="/" className="underline hover:text-dark">Back to home</a>
-        </p>
-      </div>
-    </main>
-  )
+  return <PillarHub pillar={p} />
 }

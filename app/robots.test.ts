@@ -30,8 +30,8 @@ describe('app/robots.ts', () => {
     expect(rules?.userAgent).toBe('*')
     expect(rules?.allow).toBe('/')
     expect(rules?.disallow).toEqual([
-      '/admin/',
       '/api/',
+      '/admin/',
       '/admin/posts/*/preview',
     ])
   })

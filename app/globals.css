@@ -1,24 +1,60 @@
-/* ── Satoshi via Fontshare ───────────────────────────────── */
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
-/* ── Space Grotesk fallback ──────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* ── Switzer self-hosted — see @font-face below (replaces Satoshi + Space Grotesk per design-system v1.0) ── */
 /* ── JetBrains Mono (ASCII canvas renderer) ─────────────── */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
 
 @import "tailwindcss";
 
-@import "tw-animate-css";
-
-/* @import "shadcn/tailwind.css"; */
-/* TEMP: file/package not present — broken import predates Section 5 work */
+/* ── Switzer (Indian Type Foundry) — self-hosted .woff2 from /public/fonts ── */
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/Switzer-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Switzer-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Switzer-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Switzer-Semibold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Switzer-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Switzer';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/Switzer-Black.woff2') format('woff2');
+}
 
 @custom-variant dark (&:is(.dark *));
 
 /* ── Tailwind v4 theme tokens ────────────────────────────── */
 @theme {
   /* Brand colors */
-  --color-brand: #204AF8;
-  --color-accent: #F6851B;
+  --color-brand: #296ff0;
+  --color-accent: #C2410C;
 
   /* Neutrals */
   --color-dark: #303030;
@@ -30,15 +66,16 @@
   /* Semantic surfaces */
   --color-bg: #ffffff;
   --color-bg-subtle: #f5f7ff;
+  --color-bg-raised: #fafbff;
   --color-canvas: #0a0a0a;
 
   /* Third pillar + borders */
-  --color-ai: #10b981;
+  --color-ai: #0F766E;
   --color-border: #e5e7eb;
   --color-border-subtle: #f3f4f6;
 
   /* Typography */
-  --font-brand: 'Satoshi', 'Space Grotesk', sans-serif;
+  --font-brand: 'Switzer', 'Inter', 'Helvetica Neue', sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* Spacing scale */
@@ -59,6 +96,17 @@
   --radius-lg: 12px;
   --radius-xl: 20px;
 
+  /* Elevation / shadows — borders-first; use sparingly */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04), 0 1px 3px 0 rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.08), 0 2px 6px -1px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.12), 0 6px 16px -4px rgb(0 0 0 / 0.06);
+
+  /* Motion duration tokens */
+  --duration-instant: 150ms;
+  --duration-fast: 250ms;
+  --duration-base: 400ms;
+  --duration-slow: 620ms;
+
   /* Animations */
   --animate-marquee: trustBarScroll 24s linear infinite;
 
@@ -71,6 +119,21 @@
       transform: translate3d(-50%, 0, 0);
     }
   }
+}
+
+@keyframes mega-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* Mobile nav <details>/<summary> — hide native disclosure marker so the
+   custom rotating chevron carries the open/closed signal. */
+.nav-summary {
+  list-style: none;
+}
+.nav-summary::-webkit-details-marker {
+  display: none;
 }
 
 /* ── Base styles ─────────────────────────────────────────── */
@@ -87,7 +150,8 @@
   html {
     font-family: var(--font-brand);
     -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
+    /* No `scroll-behavior: smooth` — it fights Lenis (components/providers/smooth-scroll.tsx).
+       Reduced-motion users get native instant jumps (Lenis is not initialized for them). */
   }
 
   body {
@@ -98,38 +162,64 @@
   }
 }
 
-/* ── Nav dropdown enter ──────────────────────────────────────────────────── */
-@keyframes navDropdownIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Lenis smooth-scroll (components/providers/smooth-scroll.tsx) ─────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
-@keyframes navDropdownRowIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Focus ring (DESIGN.md mandate, applies to interactive elements) ─────── */
+:where(a, button, [role="button"], input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--cta-color, var(--color-brand));
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-.nav-dd-row {
-  opacity: 0;
-  animation: navDropdownRowIn 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* ── Pillar CTA theming (DESIGN.md pillar color rule) ──────────────────────
+   Each pillar owns its color on its own service surfaces: the primary action,
+   secondary action, and focus ring localize to the pillar accent. Set on the
+   pillar <main>; cascades to every descendant CTA. Shared/neutral surfaces
+   (homepage, nav, blog) set no --cta-color and keep the brand-blue fallback.
+   Web3 == brand, so .pillar-theme-web3 is intentionally a no-op. */
+.pillar-theme-ai {
+  --cta-color: var(--color-ai);
+  --cta-hover: color-mix(in srgb, var(--color-ai) 86%, #000);
+  --cta-active: color-mix(in srgb, var(--color-ai) 74%, #000);
+}
+.pillar-theme-product-studio {
+  --cta-color: var(--color-accent);
+  --cta-hover: color-mix(in srgb, var(--color-accent) 86%, #000);
+  --cta-active: color-mix(in srgb, var(--color-accent) 74%, #000);
 }
 
-.nav-dd-card {
-  animation: navDropdownIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+/* Hide Safari's default media-controls overlay on the decorative hero video.
+   Use the bare `video` tag + class selector to outweigh the UA stylesheet.
+   The overlay-play-button is the giant centered ▶ Safari paints when autoplay
+   is refused (e.g. Low Power Mode or codec hiccup). */
+video.hero-ascii-image::-webkit-media-controls,
+video.hero-ascii-image::-webkit-media-controls-enclosure,
+video.hero-ascii-image::-webkit-media-controls-panel,
+video.hero-ascii-image::-webkit-media-controls-panel-container,
+video.hero-ascii-image::-webkit-media-controls-overlay-enclosure,
+video.hero-ascii-image::-webkit-media-controls-overlay-play-button,
+video.hero-ascii-image::-webkit-media-controls-start-playback-button,
+video.hero-ascii-image::-webkit-media-controls-play-button,
+video.hero-ascii-image::-webkit-media-controls-container {
+  display: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* ── Hero scroll affordance ──────────────────────────────────────────── */
@@ -145,131 +235,53 @@
   }
 }
 
-/* ── Hero orb HUD label ──────────────────────────────────────────────────── */
-@keyframes orbLabelIn {
-  0% {
+/* Hero overlay cards pop in 700ms after first paint, in unison */
+.hero-card-pop {
+  animation: heroCardPop 380ms cubic-bezier(0.2, 0.8, 0.2, 1) 700ms forwards;
+}
+
+@keyframes heroCardPop {
+  from {
     opacity: 0;
-    transform: translateY(-10px) scale(0.9);
+    transform: scale(0.92);
   }
-
-  14% {
+  to {
     opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  72% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
+    transform: scale(1);
   }
 }
 
-@keyframes orbBlink {
-
-  0%,
-  100% {
+@media (prefers-reduced-motion: reduce) {
+  .hero-card-pop {
+    animation: none;
     opacity: 1;
   }
+}
 
-  50% {
-    opacity: 0;
+/* ── Typewriter (hero H1) ────────────────────────────────────────────────── */
+.typewriter-line {
+  display: block;
+}
+
+.typewriter-text {
+  display: inline-block;
+  clip-path: inset(-0.15em 100% -0.25em 0);
+  animation-name: typewriterReveal;
+  animation-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes typewriterReveal {
+  to {
+    clip-path: inset(-0.15em 0 -0.25em 0);
   }
 }
 
-@keyframes orbScan {
-  0% {
-    transform: translateY(-100%);
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-text {
+    animation: none !important;
+    clip-path: none !important;
   }
-
-  100% {
-    transform: translateY(400%);
-  }
-}
-
-.orb-label {
-  position: relative;
-  background: rgba(0, 5, 22, 0.92);
-  border: 1px solid rgba(32, 74, 248, 0.75);
-  border-radius: 2px;
-  padding: 10px 18px 10px 14px;
-  box-shadow: 0 0 22px rgba(32, 74, 248, 0.28), 0 0 6px rgba(32, 74, 248, 0.55), inset 0 0 16px rgba(32, 74, 248, 0.04);
-  animation: orbLabelIn 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.orb-label-corner {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-}
-
-.orb-label-corner.tl {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid #F6851B;
-  border-left: 2px solid #F6851B;
-}
-
-.orb-label-corner.tr {
-  top: -1px;
-  right: -1px;
-  border-top: 2px solid #F6851B;
-  border-right: 2px solid #F6851B;
-}
-
-.orb-label-corner.bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 2px solid #F6851B;
-  border-left: 2px solid #F6851B;
-}
-
-.orb-label-corner.br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid #F6851B;
-  border-right: 2px solid #F6851B;
-}
-
-.orb-label-scan {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 30%;
-  background: linear-gradient(transparent, rgba(32, 74, 248, 0.06), transparent);
-  animation: orbScan 2s linear infinite;
-  pointer-events: none;
-}
-
-.orb-label-cat {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  color: #F6851B;
-  font-weight: 700;
-  margin-bottom: 4px;
-  opacity: 0.95;
-}
-
-.orb-label-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: #c8d8ff;
-  letter-spacing: 0.05em;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.orb-label-cursor {
-  color: #204AF8;
-  font-weight: 700;
-  animation: orbBlink 0.8s step-end infinite;
-  margin-left: 2px;
 }
 
 @theme inline {
@@ -293,7 +305,6 @@
   --color-border: var(--border);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -393,3 +404,470 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ============================================================
+   PROBLEM SECTION
+   Spec: docs/superpowers/specs/2026-05-11-section-problem.md
+   Scoped to .problem-card. No global token changes.
+   ============================================================ */
+
+.problem-card {
+  position: relative;
+  border-radius: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: #296ff0;
+  box-shadow: inset 0 80px 200px 0 rgba(255, 255, 255, 0.24);
+  overflow: clip;
+}
+
+.problem-chrome {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 8px;
+  background: #fffffc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+.problem-chrome-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}
+.problem-chrome-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: #040404;
+  letter-spacing: -0.3px;
+  margin-left: 4px;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 32px);
+  padding: clamp(26px, 4svh, 40px) clamp(20px, 2.4vw, 32px);
+}
+
+.problem-chart-wrap {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  transform-origin: center center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (min-width: 1024px) {
+  .problem-chart-wrap {
+    cursor: zoom-in;
+  }
+  .problem-chart-wrap:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (min-width: 1536px) {
+  .problem-grid {
+    grid-template-columns: minmax(0, 1.58fr) minmax(0, 1fr);
+    gap: 30px;
+    padding: clamp(30px, 4svh, 44px) 36px;
+  }
+  .problem-chart-wrap {
+    transform: scale(1.0);
+  }
+  .problem-chart-wrap:hover {
+    transform: scale(1.015);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .problem-chart-wrap {
+    transition: none;
+  }
+  .problem-chart-wrap:hover {
+    transform: none;
+  }
+}
+.problem-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.problem-chart-flat {
+  display: none;
+}
+
+.problem-chart-lane-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.problem-chart-lane-label.is-emphasis {
+  font-size: 15px;
+}
+.problem-chart-window-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.problem-chart-week-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.problem-chart-status {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.problem-chart-status.is-emphasis {
+  font-size: 12px;
+}
+.problem-chart-status-glyph {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+.problem-chart-axis-week {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.problem-chart-axis-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.problem-chart-sweep {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.problem-chart-sweep[data-active='true'] {
+  animation: problem-sweep 1s ease-out forwards;
+}
+@keyframes problem-sweep {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  20%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(220%); opacity: 0; }
+}
+
+.problem-content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2.2svh, 20px);
+  padding-left: 8px;
+}
+.problem-h2 {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: clamp(32px, 3vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: #fffffc;
+  margin: 0;
+}
+.problem-body {
+  font-family: var(--font-brand);
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 252, 0.82);
+  margin: 0;
+}
+.problem-bridge {
+  font-family: var(--font-brand);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #fffffc;
+  margin: 0;
+}
+
+.problem-blockquote {
+  margin: 0;
+  padding: clamp(18px, 2.6svh, 24px) clamp(20px, 2.4vw, 32px);
+  border-top: 1px solid rgba(255, 255, 252, 0.18);
+  font-family: var(--font-brand);
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+  color: rgba(255, 255, 252, 0.92);
+  font-style: normal;
+  quotes: none;
+}
+
+.problem-aeo {
+  border-top: 1px solid rgba(255, 255, 252, 0.18);
+  margin: 0;
+  padding: 8px clamp(20px, 2.4vw, 32px) clamp(20px, 3svh, 28px);
+  color: #fffffc;
+}
+.problem-aeo > summary {
+  font-family: var(--font-brand);
+  font-size: 14px;
+  color: rgba(255, 255, 252, 0.85);
+  cursor: pointer;
+  list-style: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.problem-aeo > summary::-webkit-details-marker {
+  display: none;
+}
+.problem-aeo > summary::after {
+  content: '+';
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 300;
+  transform: translateY(-1px);
+}
+.problem-aeo[open] > summary::after {
+  content: '–';
+}
+.problem-aeo > summary:focus-visible {
+  outline: 2px solid #fffffc;
+  outline-offset: 4px;
+}
+.problem-aeo-body {
+  margin-top: 16px;
+  display: grid;
+  gap: 20px;
+}
+.problem-aeo-q {
+  font-family: var(--font-brand);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #fffffc;
+}
+.problem-aeo-a {
+  font-family: var(--font-brand);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 252, 0.9);
+  margin: 0;
+}
+
+/* Services shares the white section bg; the stacking context is kept for the
+   pinned pillar stage. (Prior Problem→Services grey bridge removed — both white.) */
+.services-section-bridge {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ── Dot-grid filler texture (supermemory-style) ──────────────────────────────
+   Faint brand-tinted 1px dot grid on an 18px pitch, for filling whitespace.
+   Decorative: applied to aria-hidden layers behind content, masked so dots only
+   occupy empty space and never sit behind text. */
+.dot-grid {
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 40%, transparent) 1px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+/* Soft center: dots cover the whole area but drop to a faint ~20% through the
+   center band (instead of clearing) — keeps texture behind content, readable. */
+.dot-grid-fade-x-soft {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 14%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.2) 60%, #000 86%, transparent 100%);
+}
+
+/* Site-wide section-padding air: a fainter dot layer on every <Section>, masked
+   to a vertical fade so dots fill the top/bottom padding bands and clear the
+   content in the middle. Pseudo-element keeps it zero-DOM and zero-a11y. */
+.section-dotair { position: relative; }
+.section-dotair > * { position: relative; z-index: 1; }
+.section-dotair::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 22%, transparent) 1px, transparent 1.6px);
+  background-size: 18px 18px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+          mask-image: linear-gradient(180deg, #000 0%, transparent 24%, transparent 76%, #000 100%);
+}
+
+/* Leaf-page scroll choreography v1 (one-shot, IO-gated via .is-visible on the
+   <Stagger> wrapper). Gated behind no-preference so reduced-motion + no-JS keep
+   content in its natural visible state. Mirrors the locked one-shot grammar. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Per-item cascade: children carry .stag + --i; parent gets .is-visible on entry. */
+  .stagger > .stag {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--duration-base) cubic-bezier(0.16, 1, 0.3, 1),
+                transform var(--duration-base) cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stagger.is-visible > .stag {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  /* Key-concept tick scales in just after its row lands. */
+  .stagger > .stag .kc-tick {
+    transform: scale(0);
+    transition: transform var(--duration-fast) cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stagger.is-visible > .stag .kc-tick {
+    transform: scale(1);
+    transition-delay: calc(var(--i, 0) * 80ms + 140ms);
+  }
+}
+
+/* ─────────── Process spine (How we work) ───────────
+   Numbered nodes on a connector line. md+: horizontal, the brand progress
+   segment scrubs with scroll (animation-timeline: view); <md: vertical spine.
+   No support / reduced motion: the progress segment is fully drawn (static). */
+.phase-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--color-gray);
+  z-index: 1;
+  transition: border-color var(--duration-fast), color var(--duration-fast);
+  top: 0;
+  left: 0;
+}
+.phase-step:hover .phase-node { border-color: var(--pillar-color); color: var(--pillar-color); }
+
+/* <md: vertical connector down the left rail */
+@media (max-width: 767px) {
+  .phase-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: 44px;
+    width: 2px;
+    height: calc(100% + 40px - 44px);
+    background: var(--color-border);
+  }
+}
+
+/* md+: horizontal connector through node centers, segment per step */
+@media (min-width: 768px) {
+  .phase-step:not(:last-child)::before,
+  .phase-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 21px;
+    left: 44px;
+    width: calc(100% - 44px + 32px);
+    height: 2px;
+  }
+  .phase-step:not(:last-child)::before { background: var(--color-border); }
+  .phase-step:not(:last-child)::after {
+    background: var(--pillar-color);
+    transform-origin: left;
+    transform: scaleX(1); /* fallback: fully drawn */
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .phase-step:not(:last-child)::after {
+      transform: scaleX(0);
+      animation: spineDraw linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 55%;
+    }
+    @keyframes spineDraw { to { transform: scaleX(1); } }
+  }
+}
+
+/* Responsive: tablet */
+@media (max-width: 1023px) {
+  .problem-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px 24px;
+  }
+  .problem-content {
+    padding-left: 0;
+  }
+}
+
+/* Responsive: mobile — flat chart */
+@media (max-width: 767px) {
+  .problem-chart-iso {
+    display: none;
+  }
+  .problem-chart-flat {
+    display: block;
+  }
+  .problem-grid {
+    padding: 24px 16px;
+    gap: 24px;
+  }
+  .problem-blockquote {
+    padding: 20px 16px;
+  }
+  .problem-aeo {
+    padding: 8px 16px 24px;
+  }
+  .problem-chrome-label {
+    font-size: 9px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .problem-chart-sweep[data-active='true'] {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Windows high-contrast mode */
+@media (forced-colors: active) {
+  .problem-card {
+    background: Canvas;
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+  .problem-h2,
+  .problem-body,
+  .problem-bridge,
+  .problem-aeo-q,
+  .problem-aeo-a,
+  .problem-aeo > summary {
+    color: CanvasText;
+  }
+  .problem-chart polygon,
+  .problem-chart rect {
+    fill: Canvas;
+    stroke: Highlight;
+    stroke-width: 1;
+  }
+  .problem-chart text {
+    fill: CanvasText;
+  }
+}
+

@@ -1,0 +1,94 @@
+// Authored-content registry for v1 leaf service pages.
+//
+// One `LeafContent` per published slug. Each content stream drops its file
+// into `lib/services/content/<pillar>/<slug>.ts` (default export a
+// `LeafContent`) and registers it in the map below. Keep the keys in the
+// `${pillar}/${slug}` composite form so the lookup matches route params
+// directly.
+//
+// When a slug is published in `services-data.ts` but absent from this
+// registry, the route falls back to the noindex coming-soon stub. This
+// lets the data layer, SEO map, and authored content land in any order
+// without coupling.
+
+import type { LeafContent } from '@/lib/services/leaf-content'
+import {
+  aiAuditOpportunityAssessment,
+  aiCopilotsInternalTools,
+  conversationalAgentsAssistants,
+  agenticAiSystems,
+  ragRetrievalPipelines,
+  llmIntegrationArchitecture,
+  generativeAiDevelopment,
+  aiKnowledgeBase,
+  aiBusinessProcessAutomation,
+  aiVideoGeneration,
+  aiAdoptionRoadmap,
+  aiEvaluationMonitoring,
+} from './ai'
+import productDiscovery from './product-studio/product-discovery'
+import mvpDevelopment from './product-studio/mvp-development'
+import saasDevelopment from './product-studio/saas-development'
+import webApplicationDevelopment from './product-studio/web-application-development'
+import mobileAppDevelopment from './product-studio/mobile-app-development'
+import uxUiWebDesign from './product-studio/ux-ui-web-design'
+import cloudDevopsEngineering from './product-studio/cloud-devops-engineering'
+import {
+  smartContractDevelopment,
+  defiProtocolDevelopment,
+  web3TokenomicsDesign,
+  nftMarketplaceDevelopment,
+  liquidStakingVaults,
+  decentralizedIdentityDidIntegration,
+  tokenLaunchpadDevelopment,
+  blockchainConsulting,
+  enterprisePrivateBlockchain,
+  rwaTokenization,
+  cryptoWalletDevelopment,
+  crossChainBridgeDevelopment,
+  blockchainIndexersSubgraphs,
+} from './web3'
+
+const registry: Record<string, LeafContent> = {
+  'ai/ai-consulting': aiAuditOpportunityAssessment,
+  'ai/ai-copilots-internal-tools': aiCopilotsInternalTools,
+  'ai/conversational-ai-voice-agents': conversationalAgentsAssistants,
+  'ai/ai-agent-development': agenticAiSystems,
+  'ai/rag-retrieval-pipelines': ragRetrievalPipelines,
+  'ai/genai-apis-backend-integration': llmIntegrationArchitecture,
+  'ai/generative-ai-development': generativeAiDevelopment,
+  'ai/ai-knowledge-base': aiKnowledgeBase,
+  'ai/ai-business-process-automation': aiBusinessProcessAutomation,
+  'ai/ai-video-generation': aiVideoGeneration,
+  'ai/ai-adoption-roadmap': aiAdoptionRoadmap,
+  'ai/ai-evaluation-monitoring': aiEvaluationMonitoring,
+  'web3/smart-contract-development': smartContractDevelopment,
+  'web3/defi-protocol-development': defiProtocolDevelopment,
+  'web3/tokenomics-design': web3TokenomicsDesign,
+  'web3/nft-marketplace-development': nftMarketplaceDevelopment,
+  'web3/liquid-staking-vaults': liquidStakingVaults,
+  'web3/decentralized-identity-did-integration': decentralizedIdentityDidIntegration,
+  'web3/token-launchpad-development': tokenLaunchpadDevelopment,
+  'web3/blockchain-consulting': blockchainConsulting,
+  'web3/enterprise-private-blockchain': enterprisePrivateBlockchain,
+  'web3/rwa-tokenization': rwaTokenization,
+  'web3/crypto-wallet-development': cryptoWalletDevelopment,
+  'web3/cross-chain-bridge-development': crossChainBridgeDevelopment,
+  'web3/blockchain-indexers-subgraphs': blockchainIndexersSubgraphs,
+  'product-studio/product-discovery': productDiscovery,
+  'product-studio/mvp-development': mvpDevelopment,
+  'product-studio/saas-development': saasDevelopment,
+  'product-studio/web-application-development': webApplicationDevelopment,
+  'product-studio/mobile-app-development': mobileAppDevelopment,
+  'product-studio/ux-ui-web-design': uxUiWebDesign,
+  'product-studio/cloud-devops-engineering': cloudDevopsEngineering,
+}
+
+/**
+ * Look up authored content for a leaf. Returns `undefined` when the slug
+ * has no registered content - the route is expected to fall back to the
+ * noindex stub in that case.
+ */
+export function getLeafContent(pillar: string, slug: string): LeafContent | undefined {
+  return registry[`${pillar}/${slug}`]
+}

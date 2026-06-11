@@ -3,7 +3,8 @@ import { Footer } from '@/components/layout/footer'
 import { Button } from '@/components/ui/button'
 
 export const metadata = {
-  title: 'Page Not Found',
+  title: 'Page not found | Metaborong',
+  robots: { index: false, follow: true },
 }
 
 export default function NotFound() {
@@ -16,10 +17,10 @@ export default function NotFound() {
             Error 404
           </p>
           <h1 className="text-[clamp(40px,5vw,72px)] font-bold tracking-[-0.04em] leading-[1.02] text-dark mb-6">
-            NEED TO FIX CONTENT
+            This page moved or never shipped
           </h1>
           <p className="text-base text-gray leading-[1.6] max-w-[480px] mx-auto mb-8">
-            NEED TO FIX CONTENT &mdash; placeholder body copy. Content team to replace with the real 404 voice that matches Metaborong&apos;s tone.
+            The URL you followed does not resolve to a page. Check it for a typo, or head back to the homepage and pick up from our work, services, or blog.
           </p>
           <Button href="/">Back to home</Button>
         </div>

@@ -1,6 +1,6 @@
 'use client'
 
-// Reusable image picker modal — drives every M4 image-selection affordance
+// Reusable image picker modal - drives every M4 image-selection affordance
 // (cover, og, inline image block). Two tabs: Library (paginated grid backed
 // by GET /api/admin/images) and Upload (drag-drop + clipboard + file
 // picker, posting to POST /api/admin/images).
@@ -19,7 +19,7 @@
 //     auto-selects it; admin then enters alt + clicks Use, which PATCHes
 //     the alt up before emitting.
 //
-// The component does NOT mutate the post itself — that's the parent's job
+// The component does NOT mutate the post itself - that's the parent's job
 // via onSelect. We treat alt + focal entirely on the image row (PATCH
 // /api/admin/images/[id]) so future inline blocks reuse the same image
 // without re-uploading.
@@ -93,7 +93,7 @@ export function ImagePicker({ open, mode, onClose, onSelect }: ImagePickerProps)
   const altInputRef = useRef<HTMLInputElement | null>(null)
   // Captures the element that opened the picker so focus returns there
   // on close. WCAG 2.4.3: focus order should not jump to <body> when a
-  // dialog dismisses — keyboard users would otherwise be tabbing back
+  // dialog dismisses - keyboard users would otherwise be tabbing back
   // through the entire page.
   const triggerRef = useRef<HTMLElement | null>(null)
 
@@ -198,7 +198,7 @@ export function ImagePicker({ open, mode, onClose, onSelect }: ImagePickerProps)
           }
         }
       }
-      // (b) URL fallback — fetch the URL, validate type, upload as File.
+      // (b) URL fallback - fetch the URL, validate type, upload as File.
       const text = dt.getData('text/plain').trim()
       if (text && /^https?:\/\//i.test(text)) {
         e.preventDefault()
@@ -469,7 +469,7 @@ function LibraryGrid({
   if (items.length === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-        <p className="text-[15px] font-medium text-dark">No images yet — upload your first.</p>
+        <p className="text-[15px] font-medium text-dark">No images yet - upload your first.</p>
         <p className="text-[13px] text-gray">Switch to the Upload tab.</p>
       </div>
     )
@@ -676,8 +676,8 @@ function truncate(s: string, max: number): string {
 }
 
 function errorToMessage(err: unknown, fallback: string): string {
-  if (err instanceof CsrfMissingError) return 'Session expired — sign in again.'
-  if (err instanceof NetworkError) return 'Network error — try again.'
+  if (err instanceof CsrfMissingError) return 'Session expired - sign in again.'
+  if (err instanceof NetworkError) return 'Network error - try again.'
   if (err instanceof ApiError) return err.message || fallback
   return fallback
 }
