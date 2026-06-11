@@ -69,30 +69,27 @@ async function insertPublished(slug: string, title: string, updatedAt: Date) {
 }
 
 // Static-route count: homepage + /blog/ + /services/ overview + 3 pillar
-// hubs + 16 v1 published leaves. Sourced from services-data.ts.
-const STATIC_ROUTE_COUNT = 22
+// hubs + 32 published leaves + 4 /work/ case studies. Sourced from
+// services-data.ts and lib/work.ts. Services URLs are no-trailing-slash;
+// blog URLs keep the trailing slash.
+const STATIC_ROUTE_COUNT = 42
 
 describe('app/sitemap.ts', () => {
-  it('emits homepage, /blog/, /services/ overview, pillar hubs and v1 leaves with no posts', async () => {
+  it('emits homepage, /blog/, /services/ overview, pillar hubs, leaves and /work/ with no posts', async () => {
     const sitemap = await loadSitemap()
     const out = await sitemap()
     const urls = out.map((e) => e.url)
     expect(urls).toContain('https://www.metaborong.com/')
     expect(urls).toContain('https://www.metaborong.com/blog/')
     expect(urls).toContain('https://www.metaborong.com/services/')
-    expect(urls).toContain('https://www.metaborong.com/services/ai/')
-    expect(urls).toContain('https://www.metaborong.com/services/web3/')
-    expect(urls).toContain('https://www.metaborong.com/services/product-studio/')
+    expect(urls).toContain('https://www.metaborong.com/services/ai')
+    expect(urls).toContain('https://www.metaborong.com/services/web3')
+    expect(urls).toContain('https://www.metaborong.com/services/product-studio')
     expect(urls).toContain(
-      'https://www.metaborong.com/services/web3/decentralized-identity-did-integration/',
+      'https://www.metaborong.com/services/web3/decentralized-identity-did-integration',
     )
-    // Coming-soon leaves must be excluded.
-    expect(urls).not.toContain(
-      'https://www.metaborong.com/services/ai/ai-adoption-roadmap/',
-    )
-    expect(urls).not.toContain(
-      'https://www.metaborong.com/services/product-studio/frontend-engineering/',
-    )
+    expect(urls).toContain('https://www.metaborong.com/work/sunset')
+    expect(urls).toContain('https://www.metaborong.com/work/sedax')
     expect(urls).toHaveLength(STATIC_ROUTE_COUNT)
   })
 
