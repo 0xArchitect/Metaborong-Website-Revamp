@@ -96,14 +96,16 @@ live in `lib/blocks-to-md.ts`, `lib/markdown/`, `lib/editor/serialize.ts`.
 **Always read `DESIGN.md` before any visual or UI decision.** Fonts, colors, spacing,
 motion grammar, primitive variants, and section patterns are defined there. Do not deviate
 without explicit user approval. In QA/review mode, flag code that doesn't match `DESIGN.md`.
-When a section needs a deviation, log it under
-`docs/superpowers/specs/<date>-section-<name>.md` per the override rule in `DESIGN.md`.
+When a section needs a deviation, log it in the `DESIGN.md` Decisions Log per the override
+rule in `DESIGN.md`.
 
 ## Context Documents
 
 - `db/README.md` — CMS data-layer operator notes (indexes, `_id` convention, test DB).
 - `.env.local.example` — annotated env var reference (every var, who consumes it).
-- `docs/superpowers/specs/` — locked section specs and deviation logs.
-- `docs/superpowers/plans/` — implementation plans.
-- `docs/cms/` — CMS handoffs and reports.
-- `docs/metaborong-seo-strategy.pdf`, `docs/SEO AUDIT.pdf` — SEO strategy and audit.
+- `docs/cms/mcp-guide.md` — authoring posts via the `/api/mcp` server.
+- `docs/writing-guardrails.md` — copy rules for ALL visible text.
+- `SERVICES_PLAN.md`, `SEO content map.md` — services taxonomy and SEO keyword targets.
+
+Historical build artifacts (session specs/plans, CMS handoffs, design-handoff bundles,
+SEO PDFs) were pruned on 2026-06-11; recover them from git history if ever needed.

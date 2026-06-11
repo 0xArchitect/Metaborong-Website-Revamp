@@ -3,14 +3,12 @@
 ## Mission
 Single source of truth for visual decisions on metaborong.com. Token-driven, extracted
 from shipped state, optimized for consistency across sections built session-by-session.
-Read this file before any UI change. If a section deviates, log it under
-`docs/superpowers/specs/<date>-<section>.md` per the override rule below.
+Read this file before any UI change. If a section deviates, log it in the Decisions Log
+per the override rule below.
 
-> **Foundation source (2026-05-23):** the homepage revamp adopts the design-system v1.0
-> handoff (`docs/design_handoff_homepage_revamp/design-system.html`). This DESIGN.md is the
-> **operational** authority and is kept in sync; the handoff doc is historical reference
-> **but wins on any value conflict** (it is the newer revision). See the 2026-05-23
-> Decisions Log entry.
+> **Foundation source (2026-05-23):** the homepage revamp adopted the design-system v1.0
+> handoff (removed from the tree 2026-06-11; recoverable from git history). This DESIGN.md
+> is now the sole authority; live token values are in `app/globals.css`.
 
 ## Brand
 - **Product:** Metaborong (metaborong.com)
@@ -583,16 +581,10 @@ The master grammar above locks the design baseline. Sections may deviate when a 
 visual demands it (e.g., the trefoil's atmospheric backdrop is a section-level addition,
 not a global pattern). When deviating:
 
-1. Add a `## Deviations from master plan` heading to the section's spec at
-   `docs/superpowers/specs/<date>-section-<name>.md` and list each change with rationale.
-2. Reference this file (`DESIGN.md`) as the master spec.
-3. Honor hard constraints regardless: SSR/SEO viability, ARIA semantics, mobile fallback,
+1. Log each deviation with its rationale as a dated row in the Decisions Log below
+   (per-section spec files were retired 2026-06-11; older logs live in git history).
+2. Honor hard constraints regardless: SSR/SEO viability, ARIA semantics, mobile fallback,
    `prefers-reduced-motion`, brand color discipline, focus-visible.
-
-Historical deviation logs (now archived):
-- `docs/superpowers/archive/specs/2026-05-04-section-services-design.md` — services
-  trefoil polish #1, #2.
-- `docs/superpowers/archive/specs/2026-05-02-section-hero-redesign.md` — hero orb HUD.
 
 ---
 
