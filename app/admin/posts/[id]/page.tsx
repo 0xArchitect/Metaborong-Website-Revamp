@@ -58,7 +58,7 @@ export default async function AdminEditPostPage({ params }: EditPageProps) {
             Open standalone preview ↗
           </Link>
           <InfoTooltip
-            info="Opens a full-bleed admin-only preview of the saved draft in a new tab. Useful for previewing on a phone or sharing with a teammate. The URL is admin-gated — unauthenticated visits redirect to /admin/login."
+            info="Opens a full-bleed admin-only preview of the saved draft in a new tab. Useful for previewing on a phone or sharing with a teammate. The URL is admin-gated; unauthenticated visits redirect to /admin/login."
             label="Help: Open standalone preview"
             side="bottom-end"
           />

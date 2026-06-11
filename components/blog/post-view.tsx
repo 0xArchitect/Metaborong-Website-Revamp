@@ -71,7 +71,7 @@ export function PostView({ post, resolveImage, draftBanner, withToc }: PostViewP
   const cover = post.cover_image_id ? resolveImage?.(post.cover_image_id) ?? null : null
 
   const articleNode = (
-    <article className="mx-auto max-w-[720px] px-[24px] py-[64px] md:px-[48px] md:py-[96px]">
+    <article className="mx-auto max-w-[720px] px-[24px] py-[56px] md:px-[48px] md:py-[72px]">
       {draftBanner ? (
         <div className="mb-[24px] rounded-lg border border-dashed border-accent bg-[#fff8f1] px-4 py-3">
           <p

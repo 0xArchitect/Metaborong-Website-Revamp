@@ -1,14 +1,20 @@
 // Next.js convention: app/robots.ts → /robots.txt.
 //
 // Two-mode output:
-//   · production (NEXT_PUBLIC_VERCEL_ENV === 'production') →
-//     allow-list rules with Disallow for /admin/, /api/, and the
-//     standalone preview path. References /sitemap.xml.
+//   · production (NEXT_PUBLIC_VERCEL_ENV === 'production') → allow-list
+//     with Disallow for /api/, /services/ (noindex stubs) and /admin/
+//     (CMS). Explicit AI-crawler opt-in so the site is citable in AI
+//     search engines, with the same disallow applied.
 //   · everywhere else (preview, development) → blanket "Disallow: /"
 //     so test deploys never get indexed.
 
 import type { MetadataRoute } from 'next'
 import { SITE_ORIGIN } from '@/lib/seo'
+
+// `/services/` removed (2026-05-31): published v1 leaves now ship structured
+// content + JSON-LD and need to be reachable by AI crawlers. Coming-soon stubs
+// self-exclude via `robots: { index: false, follow: false }` on the route.
+const DISALLOW = ['/api/', '/admin/', '/admin/posts/*/preview']
 
 export default function robots(): MetadataRoute.Robots {
   const isProd = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
@@ -24,15 +30,18 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-        disallow: [
-          '/admin/',
-          '/api/',
-          '/admin/posts/*/preview',
-        ],
-      },
+      { userAgent: '*', allow: '/', disallow: DISALLOW },
+      // Explicit AI crawler allows — opt-in to citation in AI search
+      // engines. Repeat the disallow so AI crawlers don't ingest
+      // "Coming soon" stub pages or the CMS admin into retrieval indices.
+      { userAgent: 'GPTBot',          allow: '/', disallow: DISALLOW },
+      { userAgent: 'OAI-SearchBot',   allow: '/', disallow: DISALLOW },
+      { userAgent: 'ChatGPT-User',    allow: '/', disallow: DISALLOW },
+      { userAgent: 'ClaudeBot',       allow: '/', disallow: DISALLOW },
+      { userAgent: 'anthropic-ai',    allow: '/', disallow: DISALLOW },
+      { userAgent: 'PerplexityBot',   allow: '/', disallow: DISALLOW },
+      { userAgent: 'Google-Extended', allow: '/', disallow: DISALLOW },
+      { userAgent: 'CCBot',           allow: '/', disallow: DISALLOW },
     ],
     sitemap: `${SITE_ORIGIN}/sitemap.xml`,
     host: SITE_ORIGIN,

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Nav } from '@/components/layout/nav'
+import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import { PostView } from '@/components/blog/post-view'
 import { getPostBySlug } from '@/lib/posts'
 import { getImagesByIds } from '@/lib/images'
@@ -126,7 +127,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       )}
 
       <Nav />
-      <main className="bg-bg pt-[80px]">
+      <main className="bg-bg">
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: '/', home: true },
+            { label: 'Blog', href: '/blog/' },
+            { label: post.title },
+          ]}
+        />
         <PostView post={post} resolveImage={resolveImage} withToc />
       </main>
     </>

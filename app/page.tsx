@@ -12,10 +12,16 @@ import { FoundersSection } from '@/components/sections/founders'
 import { ComparisonSection } from '@/components/sections/comparison'
 import { FaqSection } from '@/components/sections/faq'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
-import { organizationSchema, websiteSchema } from '@/lib/schema'
+import {
+  organizationSchemaJson,
+  websiteSchemaJson,
+  faqSchemaJson,
+  whyUsAeoSchemaJson,
+  serviceSchemasJson,
+} from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Web3 & AI Development Studio | Metaborong',
+  // Title inherits from layout.tsx default — single source of truth.
   description:
     'Metaborong builds DeFi protocols, AI agent systems, and custom SaaS products for founders and crypto-native teams. Fast delivery, product-first thinking.',
   alternates: {
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
     types: { 'text/plain': '/llms.txt' },
   },
   openGraph: {
-    title: 'Web3 & AI Development Studio | Metaborong',
+    title: 'Web3 Protocols, AI Agents & SaaS Products | Metaborong',
     description:
       'Metaborong builds DeFi protocols, AI agent systems, and custom SaaS products for founders and crypto-native teams.',
     url: 'https://www.metaborong.com',
@@ -38,12 +44,27 @@ export default function HomePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        dangerouslySetInnerHTML={{ __html: organizationSchemaJson }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        dangerouslySetInnerHTML={{ __html: websiteSchemaJson }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: faqSchemaJson }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: whyUsAeoSchemaJson }}
+      />
+      {serviceSchemasJson.map(({ id, json }) => (
+        <script
+          key={id}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: json }}
+        />
+      ))}
 
       <Nav />
 
@@ -51,13 +72,18 @@ export default function HomePage() {
         <HeroSection />
         <TrustBar />
         <ProblemSection />
+        <span id="services" className="block scroll-mt-[64px]" aria-hidden="true" />
         <ServicesSection />
-        <WhyUsSection />
+        <span id="work" className="block scroll-mt-[64px]" aria-hidden="true" />
         <WorkPreviewSection />
+        <WhyUsSection />
         <TestimonialsSection />
+        <span id="founders" className="block scroll-mt-[64px]" aria-hidden="true" />
         <FoundersSection />
         <ComparisonSection />
+        <span id="faq" className="block scroll-mt-[64px]" aria-hidden="true" />
         <FaqSection />
+        <span id="contact" className="block scroll-mt-[64px]" aria-hidden="true" />
         <ContactCtaSection />
       </main>
 

@@ -1,9 +1,42 @@
-export type PillarId = 'web3' | 'ai-agents' | 'product-studio'
+export type PillarId = 'ai' | 'web3' | 'product-studio'
+
+export type SubGroupId =
+  // web3 + product-studio (delivery-mode spine)
+  | 'strategy'
+  | 'product'
+  | 'engineering'
+  // ai (buyer-outcome spine)
+  | 'consulting'
+  | 'generative-ai'
+  | 'ai-agents'
+  | 'business-automation'
+  | 'ai-engineering'
+  // product-studio (lifecycle bands — flat Peiko-style capability list, grouped
+  // into bands for the hub only; nav/homepage flatten leaves regardless)
+  | 'discover'
+  | 'build'
+  | 'scale'
+
+export type LeafStatus = 'published' | 'coming-soon'
 
 export type ChildService = {
   name: string
   description: string
   slug: string
+  status: LeafStatus
+  // Curated surfacing rank (1-based display order) for the nav mega-menu and
+  // homepage services section. Decouples the featured sets from taxonomy order
+  // + the old slice(0,5) cap. Optional: leaves without a rank fall back behind
+  // ranked ones (in taxonomy order) via getFeaturedLeaves(). See the Web3 spec
+  // (docs/superpowers/specs/2026-06-02-web3-services-taxonomy-design.md).
+  featuredNav?: number
+  featuredHome?: number
+}
+
+export type SubGroup = {
+  id: SubGroupId
+  label: string
+  children: ChildService[]
 }
 
 export type Pillar = {
@@ -15,58 +48,363 @@ export type Pillar = {
   body: string
   hubHref: string
   hubCta: string
-  children: ChildService[]
+  subGroups: SubGroup[]
 }
 
+// Data array order preserved from the prior taxonomy so existing rendering
+// (homepage accordion numbering [01/02/03], nav mega-menu column order)
+// stays visually identical through the refactor.
 export const pillars: Pillar[] = [
   {
     id: 'web3',
     num: '01',
-    label: 'Web3 / Blockchain',
-    color: '#204AF8',
+    label: 'Web3',
+    color: '#296ff0',
     headline: 'Decentralised protocol engineering',
-    body: 'DeFi protocols, NFT marketplaces, crypto wallets, token launches, liquid staking, and DAO systems — built multichain.',
+    body: 'Smart contracts, DeFi protocols, NFT marketplaces, tokenomics, and DID integration. Multichain across EVM, Solana, and Cosmos.',
     hubHref: '/services/web3/',
-    hubCta: 'Explore Web3 Services',
-    children: [
-      { name: 'DeFi Protocol Development', description: 'Lending, AMM, perp-DEX, and yield infrastructure built audit-ready.', slug: 'defi-protocol-development' },
-      { name: 'Smart Contract Security', description: 'Specs, audits, and post-deploy monitoring for production contracts.', slug: 'smart-contract-security' },
-      { name: 'NFT Marketplace Development', description: 'Custom marketplaces with royalties, lazy-mint, and curation.', slug: 'nft-marketplace-development' },
-      { name: 'Crypto Wallet Development', description: 'Custodial and self-custody wallets across EVM, Solana, Cosmos.', slug: 'crypto-wallet-development' },
-      { name: 'Token Launchpad', description: 'Token sales, vesting, and distribution infrastructure end-to-end.', slug: 'token-launchpad' },
-      { name: 'Liquid Staking Vaults', description: 'LST/LRT vault systems with restaking and risk controls.', slug: 'liquid-staking-vaults' },
-      { name: 'DAO & Governance Systems', description: 'On-chain governance, treasury, and voting tooling.', slug: 'dao-governance-systems' },
+    hubCta: 'Web3 services',
+    subGroups: [
+      {
+        id: 'strategy',
+        label: 'Strategy',
+        children: [
+          {
+            name: 'Tokenomics Design',
+            description: 'Token supply, distribution, emissions, and governance modelling stress-tested against on-chain behaviour.',
+            slug: 'tokenomics-design',
+            status: 'published',
+            featuredNav: 5,
+          },
+          {
+            name: 'Blockchain Consulting',
+            description: 'Chain selection, protocol architecture, and technical due diligence for teams building on-chain.',
+            slug: 'blockchain-consulting',
+            status: 'published',
+          },
+        ],
+      },
+      {
+        id: 'product',
+        label: 'Product',
+        children: [
+          {
+            name: 'NFT Marketplace Development',
+            description: 'Custom marketplaces with royalties, lazy-mint, curated drops, and multi-chain support.',
+            slug: 'nft-marketplace-development',
+            status: 'published',
+            featuredNav: 3,
+          },
+          {
+            name: 'Token Launchpad Development',
+            description: 'Token sale and distribution platforms: fair launch, vesting, bonding curves, and allowlists, engineered for audit.',
+            slug: 'token-launchpad-development',
+            status: 'published',
+          },
+          {
+            name: 'Crypto Wallet Development',
+            description: 'Account-abstraction and smart-account wallets with gasless flows and social recovery.',
+            slug: 'crypto-wallet-development',
+            status: 'published',
+          },
+          {
+            name: 'RWA Tokenization',
+            description: 'Real-world asset tokenization: on-chain issuance, ownership records, and compliance-aware token design.',
+            slug: 'rwa-tokenization',
+            status: 'published',
+          },
+        ],
+      },
+      {
+        id: 'engineering',
+        label: 'Engineering',
+        children: [
+          {
+            name: 'Smart Contract Development',
+            description: 'Solidity, Vyper, and Move contracts engineered for third-party audit, with tests and monitoring.',
+            slug: 'smart-contract-development',
+            status: 'published',
+            featuredNav: 1,
+          },
+          {
+            name: 'DeFi Protocol Development',
+            description: 'Lending, perpetuals, yield, and vault infrastructure spec\'d for third-party audit.',
+            slug: 'defi-protocol-development',
+            status: 'published',
+            featuredNav: 2,
+          },
+          {
+            name: 'Liquid Staking & Restaking Vaults',
+            description: 'LST and LRT vault systems with restaking, validator routing, and risk controls.',
+            slug: 'liquid-staking-vaults',
+            status: 'published',
+            featuredNav: 4,
+          },
+          {
+            name: 'Decentralized Identity & ZKP',
+            description: 'Verifiable credentials, DID resolvers, and zero-knowledge selective disclosure. Live Aadhaar eKYC integration, portable across identity systems.',
+            slug: 'decentralized-identity-did-integration',
+            status: 'published',
+            featuredHome: 5,
+          },
+          {
+            name: 'Cross-Chain Bridges & Interoperability',
+            description: 'Bridges and cross-chain messaging engineered for safe asset and data transfer between chains.',
+            slug: 'cross-chain-bridge-development',
+            status: 'published',
+          },
+          {
+            name: 'Blockchain Indexers & Subgraphs',
+            description: 'Subgraphs and custom indexers that turn on-chain events into fast, queryable application data.',
+            slug: 'blockchain-indexers-subgraphs',
+            status: 'published',
+          },
+          {
+            name: 'Enterprise & Private Blockchain',
+            description: 'Permissioned and private-chain deployments built on the audited contract engineering we ship to public chains.',
+            slug: 'enterprise-private-blockchain',
+            status: 'published',
+          },
+        ],
+      },
     ],
   },
   {
-    id: 'ai-agents',
+    id: 'ai',
     num: '02',
-    label: 'AI Agents',
-    color: '#10b981',
-    headline: 'AI systems that work while you sleep',
-    body: 'Agentic pipelines, RAG applications, voice agents, generative AI, and workflow automation — from prototype to production.',
-    hubHref: '/services/ai-agents/',
-    hubCta: 'Explore AI Agent Services',
-    children: [
-      { name: 'Agentic AI Systems', description: 'Multi-step autonomous agents that plan, tool-use, and report.', slug: 'agentic-ai-systems' },
-      { name: 'Generative AI Development', description: 'Custom GenAI products beyond ChatGPT wrappers.', slug: 'generative-ai-development' },
-      { name: 'AI Workflow Automation', description: 'Trigger-driven AI flows across your existing stack.', slug: 'ai-workflow-automation' },
-      { name: 'Voice Agent Integration', description: 'Real-time voice agents for support, sales, and operations.', slug: 'voice-agent-integration' },
-      { name: 'RAG & Knowledge Systems', description: 'Retrieval pipelines that ground LLMs in your data.', slug: 'rag-knowledge-systems' },
-      { name: 'AI Systems Integration', description: 'Embedding LLMs into existing software and infrastructure.', slug: 'ai-systems-integration' },
+    label: 'AI',
+    color: '#0F766E',
+    headline: 'Production AI capability',
+    body: 'AI agents, copilots, generative AI, knowledge bases, and business-process automation. We add production AI capability to existing products and teams.',
+    hubHref: '/services/ai/',
+    hubCta: 'AI services',
+    subGroups: [
+      {
+        id: 'consulting',
+        label: 'AI Consulting',
+        children: [
+          {
+            name: 'AI Consulting & Strategy',
+            description: 'Use-case mapping, feasibility, and a sequenced adoption plan scoped to impact and operating cost.',
+            slug: 'ai-consulting',
+            status: 'published',
+            featuredNav: 5,
+          },
+          {
+            name: 'AI Adoption Roadmap',
+            description: 'A phased plan from audit findings to deployment, with team enablement and governance built in.',
+            slug: 'ai-adoption-roadmap',
+            status: 'published',
+            featuredNav: 10,
+          },
+        ],
+      },
+      {
+        id: 'generative-ai',
+        label: 'Generative AI Solutions',
+        children: [
+          {
+            name: 'Generative AI Development',
+            description: 'GenAI built into your product: content generation, enrichment, and backend integration.',
+            slug: 'generative-ai-development',
+            status: 'published',
+            featuredNav: 7,
+          },
+          {
+            name: 'AI Copilots & Internal Tools',
+            description: 'Custom copilots for support, sales, and ops teams, grounded in your data and wired into your stack.',
+            slug: 'ai-copilots-internal-tools',
+            status: 'published',
+            featuredNav: 2,
+            featuredHome: 2,
+          },
+          {
+            name: 'Conversational AI & Voice Agents',
+            description: 'Chat and voice agents that handle real workflows: discovery, support, and scheduling.',
+            slug: 'conversational-ai-voice-agents',
+            status: 'published',
+            featuredNav: 3,
+            featuredHome: 3,
+          },
+          {
+            name: 'AI Video Generation',
+            description: 'Generative video pipelines engineered into products: scripted, templated, and API-driven.',
+            slug: 'ai-video-generation',
+            status: 'published',
+            featuredNav: 12,
+          },
+        ],
+      },
+      {
+        id: 'ai-agents',
+        label: 'Custom AI Agents',
+        children: [
+          {
+            name: 'AI Agent Development',
+            description: 'Custom autonomous and multi-agent systems that plan, use tools, and report, with evals and guardrails.',
+            slug: 'ai-agent-development',
+            status: 'published',
+            featuredNav: 1,
+            featuredHome: 1,
+          },
+        ],
+      },
+      {
+        id: 'business-automation',
+        label: 'AI for Business Automation',
+        children: [
+          {
+            name: 'AI Business Process Automation',
+            description: 'Automate document, email, and reporting workflows, with CRM, ERP, and third-party integration.',
+            slug: 'ai-business-process-automation',
+            status: 'published',
+            featuredNav: 9,
+          },
+          {
+            name: 'AI Knowledge Base',
+            description: 'A compounding, LLM-maintained knowledge base your teams and agents query in seconds.',
+            slug: 'ai-knowledge-base',
+            status: 'published',
+            featuredNav: 8,
+          },
+        ],
+      },
+      {
+        id: 'ai-engineering',
+        label: 'AI Engineering',
+        children: [
+          {
+            name: 'GenAI APIs & Backend Integration',
+            description: 'Architect, integrate, and harden LLMs in your stack: auth, routing, fallback, cost controls, observability.',
+            slug: 'genai-apis-backend-integration',
+            status: 'published',
+            featuredNav: 4,
+          },
+          {
+            name: 'RAG & Retrieval Pipelines',
+            description: 'Retrieval pipelines that ground LLMs in your data: embeddings, vector stores, reranking, evaluations.',
+            slug: 'rag-retrieval-pipelines',
+            status: 'published',
+            featuredNav: 6,
+          },
+          {
+            name: 'AI Evaluation & Monitoring',
+            description: 'Production evals, drift detection, and observability for live LLM and agent systems.',
+            slug: 'ai-evaluation-monitoring',
+            status: 'published',
+            featuredNav: 11,
+          },
+        ],
+      },
     ],
   },
   {
     id: 'product-studio',
     num: '03',
     label: 'Product Studio',
-    color: '#F6851B',
-    headline: 'SaaS products built to scale',
-    body: 'End-to-end Web2 product builds — architecture, design, development, and deployment for startups that need a full technical team.',
+    color: '#C2410C',
+    headline: 'End-to-end product engineering',
+    body: 'MVP, SaaS, and B2B multi-tenant platforms for founders without a CTO. One senior team owns architecture through deployment.',
     hubHref: '/services/product-studio/',
-    hubCta: 'Explore Product Studio',
-    children: [
-      { name: 'SaaS Product Development', description: 'End-to-end Web2 product builds, architecture to deployment.', slug: 'saas-product-development' },
+    hubCta: 'Product Studio services',
+    // Flat, Peiko-style capability list. Grouped into lifecycle bands
+    // (Plan / Build / Operate) for the hub's visual rhythm only — nav and the
+    // homepage flatten leaves via getFeaturedLeaves/getPublishedLeaves.
+    subGroups: [
+      {
+        id: 'discover',
+        label: 'Discover',
+        children: [
+          {
+            name: 'Product Discovery',
+            description: 'Problem framing, customer evidence, and a clickable prototype that de-risks the build before engineering starts.',
+            slug: 'product-discovery',
+            status: 'published',
+          },
+        ],
+      },
+      {
+        id: 'build',
+        label: 'Build',
+        children: [
+          {
+            name: 'MVP Development',
+            description: 'Zero-to-launch product builds - founder-led scope through first paying users.',
+            slug: 'mvp-development',
+            status: 'published',
+          },
+          {
+            name: 'SaaS Development',
+            description: 'End-to-end SaaS builds with multi-tenancy, billing, and observability baked in.',
+            slug: 'saas-development',
+            status: 'published',
+          },
+          {
+            name: 'Web Application Development',
+            description: 'Production web apps in React and Next.js, accessible and fast from the first deploy.',
+            slug: 'web-application-development',
+            status: 'published',
+          },
+          {
+            name: 'Mobile App Development',
+            description: 'Cross-platform mobile apps from one codebase across iOS and Android.',
+            slug: 'mobile-app-development',
+            status: 'published',
+          },
+        ],
+      },
+      {
+        id: 'scale',
+        label: 'Scale',
+        children: [
+          {
+            name: 'Cloud & DevOps Engineering',
+            description: 'CI/CD, observability, and cloud infrastructure that make shipping and scaling routine.',
+            slug: 'cloud-devops-engineering',
+            status: 'published',
+          },
+          {
+            name: 'UI/UX & Web Design',
+            description: 'Product UX and web design your team owns - shipped as a living, token-driven system, not a static file.',
+            slug: 'ux-ui-web-design',
+            status: 'published',
+          },
+        ],
+      },
     ],
   },
 ]
+
+// Flatten a pillar's sub-groups into a single ordered list of leaves.
+// Used by route generation, schema emitters, and llms.txt - anywhere the
+// pillar-level view of "every leaf under this pillar" is the natural shape.
+export function getAllLeaves(pillar: Pillar): ChildService[] {
+  return pillar.subGroups.flatMap((sg) => sg.children)
+}
+
+// v1 published leaves only - used by surfaces that must hide coming-soon
+// stubs from users and crawlers (mega-menu, homepage accordion, schema
+// OfferCatalog). See SERVICES_PLAN.md § Risk 3.
+export function getPublishedLeaves(pillar: Pillar): ChildService[] {
+  return getAllLeaves(pillar).filter((c) => c.status === 'published')
+}
+
+// Curated featured leaves for a surface (nav mega-menu / homepage services
+// section). Flagged leaves come first (in taxonomy order), then the list is
+// topped up from the remaining published leaves and capped at `count`. Pillars
+// with no flags fall back to published order, preserving the prior slice(0,N)
+// behaviour. As new leaves publish with their featured flag set, they take
+// their slot automatically. See the Web3 taxonomy spec.
+export function getFeaturedLeaves(
+  pillar: Pillar,
+  surface: 'nav' | 'home',
+  count: number,
+): ChildService[] {
+  const published = getPublishedLeaves(pillar)
+  const rankOf = (c: ChildService) => (surface === 'nav' ? c.featuredNav : c.featuredHome)
+  const flagged = published
+    .filter((c) => rankOf(c) != null)
+    .sort((a, b) => rankOf(a)! - rankOf(b)!)
+  const rest = published.filter((c) => rankOf(c) == null)
+  return [...flagged, ...rest].slice(0, count)
+}

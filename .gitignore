@@ -34,7 +34,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-!.env.local.example
+.env.local.example
 
 # vercel
 .vercel
@@ -47,6 +47,10 @@ next-env.d.ts
 # dev session artifacts
 .superpowers/
 screenshots/
+.impeccable/
+
+# raw case-study video sources (pre-compression; optimized copies live in public/works/)
+case-studies-assets/
 
 
 # Playwright test artifacts

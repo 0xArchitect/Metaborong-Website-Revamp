@@ -11,6 +11,115 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
     ],
   },
+
+  // SERVICES_PLAN.md § 2 — preserve inbound links for the `ai-agents` → `ai`
+  // rename and the two Product Studio slug renames. 308 (permanent) so search
+  // engines transfer authority to the new canonical URL. Order matters: list
+  // the more-specific leaf redirects before the pillar-level catch-all so the
+  // first match wins inside Next's routing.
+  async redirects() {
+    return [
+      // AI taxonomy revamp — reslugged leaves (4 reframed) + 2 dropped stubs.
+      {
+        source: '/services/ai/ai-audit-opportunity-assessment',
+        destination: '/services/ai/ai-consulting',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/conversational-agents-assistants',
+        destination: '/services/ai/conversational-ai-voice-agents',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/agentic-ai-systems',
+        destination: '/services/ai/ai-agent-development',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/llm-integration-architecture',
+        destination: '/services/ai/genai-apis-backend-integration',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/ai-education-workshops',
+        destination: '/services/ai',
+        permanent: true,
+      },
+      {
+        source: '/services/ai/ai-augmented-customer-journeys',
+        destination: '/services/ai',
+        permanent: true,
+      },
+      // Legacy `/services/ai-agents/*` → point straight at the new slugs (no chains).
+      {
+        source: '/services/ai-agents/agentic-ai-systems',
+        destination: '/services/ai/ai-agent-development',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-agents/rag-knowledge-systems',
+        destination: '/services/ai/rag-retrieval-pipelines',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-agents/generative-ai-development',
+        destination: '/services/ai/genai-apis-backend-integration',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-agents/voice-agent-integration',
+        destination: '/services/ai/conversational-ai-voice-agents',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-agents/ai-systems-integration',
+        destination: '/services/ai/genai-apis-backend-integration',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-agents/ai-workflow-automation',
+        destination: '/services/ai',
+        permanent: true,
+      },
+      {
+        source: '/services/ai-agents',
+        destination: '/services/ai',
+        permanent: true,
+      },
+      {
+        source: '/services/product-studio/mvp-software-development',
+        destination: '/services/product-studio/mvp-development',
+        permanent: true,
+      },
+      {
+        source: '/services/product-studio/b2b-software-development',
+        destination: '/services/product-studio/saas-development',
+        permanent: true,
+      },
+      // Product Studio head-term reslug (Peiko-aligned taxonomy re-cut).
+      {
+        source: '/services/product-studio/product-discovery-validation',
+        destination: '/services/product-studio/product-discovery',
+        permanent: true,
+      },
+      {
+        source: '/services/product-studio/saas-product-development',
+        destination: '/services/product-studio/saas-development',
+        permanent: true,
+      },
+      // B2B Multi-Tenant folded into SaaS Development.
+      {
+        source: '/services/product-studio/b2b-multi-tenant-platforms',
+        destination: '/services/product-studio/saas-development',
+        permanent: true,
+      },
+      {
+        source: '/services/web3/web3-tokenomics-design',
+        destination: '/services/web3/tokenomics-design',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default nextConfig;

@@ -1,57 +1,92 @@
-// /llms.txt — llmstxt.org-format index of every published post.
+// /llms.txt — llmstxt.org-format index for the whole site.
 //
-// This is the GEO surface for LLM crawlers (Perplexity, ChatGPT search,
-// Google AIO/AI Mode). The companion /llms-full.txt route emits the same
-// header followed by full markdown bodies; per-post grounding lives at
-// /blog/{slug}/raw.md (M5-core).
+// One comprehensive GEO surface for LLM crawlers (Perplexity, ChatGPT
+// search, Google AIO/AI Mode): company facts + services + FAQs (static,
+// from the marketing data) followed by every published blog post. The
+// companion /llms-full.txt route emits full post bodies; per-post
+// grounding lives at /blog/{slug}/raw.md (M5-core).
 //
-// Format (https://llmstxt.org/):
-//
-//   # Metaborong
-//   > One-line site description.
-//
-//   ## Posts
-//
-//   - [Post Title](https://www.metaborong.com/blog/<slug>/): one-line tldr
-//   - …
-//
-// One bullet per published post, newest first. Region-neutral — geo
-// variants don't expand into separate entries; the user-region resolver
-// applies at /blog/{slug} request time, not at index emission time.
+// Reads published posts from the DB, so this route is ISR (revalidate
+// 300s) rather than force-static.
 
+import { pillars } from '@/components/sections/services-data'
+import { faqs } from '@/components/sections/faq-data'
+import { SITE_ORIGIN } from '@/lib/seo'
 import { listAllPublishedForLlms } from '@/lib/posts'
 import { deriveTextDescription } from '@/lib/blocks-to-md'
 
-const SITE_ORIGIN = 'https://www.metaborong.com'
-const SITE_TITLE = 'Metaborong'
-const SITE_DESCRIPTION =
-  'Metaborong is a Web3 development company and AI agent studio that builds DeFi protocols, autonomous AI systems, and custom SaaS products for founders and crypto-native teams.'
+export const revalidate = 300
 
 // Soft cap for the per-post tldr line. Long enough for a useful sentence,
 // short enough that a 200-post catalog stays under a few hundred KB.
 const TLDR_MAX_CHARS = 140
 
 export async function GET(): Promise<Response> {
+  const lines: string[] = []
+
+  lines.push('# Metaborong')
+  lines.push('')
+  lines.push('> Metaborong is a Web3 development company and AI agent studio. A remote-first team of senior engineers, globally distributed. We ship DeFi protocols and smart contract audits across EVM chains and Solana, AI agents spanning RAG, agentic workflows, and generative systems, and full-stack SaaS for founders and early-stage startups. Spec to production, fast.')
+  lines.push('')
+
+  lines.push('## Key facts')
+  lines.push('- Founded by three technical co-founders: Arnab Ray (CEO), Anik Ghosh (COO), Soumojit Ash (CTO).')
+  lines.push('- Remote-first and globally distributed; no single head office.')
+  lines.push('- Direct contact: contact@metaborong.com (no account managers, no pitch decks).')
+  lines.push('- Typical project duration: 4–12 weeks; smart contract audits and AI integrations deliver in 4–6 weeks.')
+  lines.push('- 8+ products shipped in production across DeFi, gaming, AI, and SaaS.')
+  lines.push('- Three service pillars: Web3, AI, and Product Studio.')
+  lines.push('')
+
+  lines.push('## Main pages')
+  lines.push(`- [Homepage](${SITE_ORIGIN}/): Studio overview, services, work, team, and FAQs.`)
+  lines.push(`- [Blog](${SITE_ORIGIN}/blog/): Articles on Web3, AI agents, and product engineering.`)
+  lines.push('')
+
+  lines.push('## Services')
+  for (const p of pillars) {
+    lines.push(`### ${p.label}`)
+    lines.push(`${p.body}`)
+    lines.push('')
+    for (const sg of p.subGroups) {
+      lines.push(`#### ${sg.label}`)
+      for (const c of sg.children) {
+        const marker = c.status === 'coming-soon' ? ' _(coming soon)_' : ''
+        const url =
+          c.status === 'published'
+            ? ` -> ${SITE_ORIGIN}/services/${p.id}/${c.slug}/`
+            : ''
+        lines.push(`- **${c.name}**${marker}${url}: ${c.description}`)
+      }
+      lines.push('')
+    }
+  }
+
+  lines.push('## Frequently asked questions')
+  for (const f of faqs) {
+    lines.push(`### ${f.q}`)
+    lines.push(f.a)
+    lines.push('')
+  }
+
+  lines.push('## Posts')
+  lines.push('')
   const items = await listAllPublishedForLlms()
-
-  const lines: string[] = [
-    `# ${SITE_TITLE}`,
-    `> ${SITE_DESCRIPTION}`,
-    '',
-    '## Posts',
-    '',
-  ]
-
   if (items.length === 0) {
     lines.push('- No posts yet.')
   } else {
     for (const p of items) {
       const tldr = pickTldr(p)
       const safeTitle = escapeMarkdownTitle(p.title)
-      const url = `${SITE_ORIGIN}/blog/${p.slug}/`
-      lines.push(`- [${safeTitle}](${url}): ${tldr}`)
+      lines.push(`- [${safeTitle}](${SITE_ORIGIN}/blog/${p.slug}/): ${tldr}`)
     }
   }
+  lines.push('')
+
+  lines.push('## Contact')
+  lines.push('- Email: contact@metaborong.com')
+  lines.push('- LinkedIn: https://linkedin.com/company/metaborong-technologies')
+  lines.push('- X (Twitter): https://x.com/Metaborong')
   lines.push('')
 
   return new Response(lines.join('\n'), {
@@ -65,6 +100,7 @@ export async function GET(): Promise<Response> {
 
 interface LlmsItem {
   title: string
+  slug: string
   excerpt: string | null
   meta_description: string | null
   content_json: import('@/lib/blog-schema').Post['content_json']
