@@ -4,6 +4,28 @@ All major decisions, milestones, and changes to this project.
 
 ---
 
+## 2026-06-11 — Repo cleanup: shipped-work history pruned, dead code removed
+
+- **Docs purge** (all recoverable from git history): `docs/cms/{handoffs,reports}`,
+  `.reports/`, `docs/superpowers/{archive,specs,plans,reports,assets}`, the
+  `docs/design_handoff_homepage_revamp/` bundle, `docs/clients/` duplicates,
+  `metaborong_case_studies_seo_rewrite.md` (migrated into `content/work/*.md`),
+  the Gemini placeholder PNG, `ascii-animation.mp4`, and both SEO PDFs (~25 MB).
+- **Override rule simplified:** per-section spec files retired; deviations now go
+  directly into the `DESIGN.md` Decisions Log. `CLAUDE.md`/`DESIGN.md`/superpowers
+  docs updated to match. DESIGN.md is the sole design authority (the v1.0 handoff
+  HTML is gone; live tokens in `app/globals.css`).
+- **Dead code:** `components/ui/back-button.tsx` (never rendered), three unused
+  `lib/schema.ts` JSON-LD builders (pillar/leaf pages build theirs inline),
+  `tw-animate-css` (imported, zero utilities used), the commented shadcn import,
+  an undefined `problem-aeo-pair` className.
+- **Stale facts:** testimonials sr-only Clutch fallback de-numberized (hardcoded
+  4.9/9 vs live 5.0/13) — the live widget is the source of truth.
+- **Hygiene:** `.impeccable/` untracked + gitignored; `case-studies-assets/` (raw
+  video sources) gitignored; README rewritten from create-next-app boilerplate.
+- Deferred (unchanged): the ~35 `set-state-in-effect` lint errors from the design
+  pass.
+
 ## 2026-06-10 — OrbitX + SEDAX case studies migrated to AEO grammar; Work* template extracted
 
 - 3rd + 4th case studies off the legacy pipeline, via per-slug `OrbitxCaseStudy` /
