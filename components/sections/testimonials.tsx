@@ -2,15 +2,12 @@ import { Section } from '@/components/ui/section'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
 import { clutchProfileUrl } from '@/lib/links'
-const rating = '4.9'
-const reviewCount = '9'
-
 // Verbatim review highlights from the verified Clutch profile
 // (clutch.co/profile/metaborong-technologies-private). Surfaced natively (white,
 // borderless, crawlable) as the section's main element; the live Clutch type-16
 // review-collector badge sits top-right as the verifiable third-party marker.
-// Aggregate figures are mirrored in AggregateRating JSON-LD on the Organization
-// node (lib/schema.ts). Refresh quotes when the Clutch profile changes.
+// The live widget is the source of truth for rating/count — never hardcode the
+// numbers. Refresh quotes when the Clutch profile changes.
 const reviews = [
   { quote: 'Their implementation and prompt product delivery stood out.', role: 'Executive', company: 'Sedax Data Solutions' },
   { quote: 'They had great teamwork and the ability to understand and adapt to the business problems.', role: 'President', company: 'Digital Financial Aid Corporation' },
@@ -90,7 +87,7 @@ export function TestimonialsSection() {
       </div>
 
       <a href={clutchProfileUrl} target="_blank" rel="noopener noreferrer" className="sr-only">
-        Metaborong is rated {rating} out of 5 based on {reviewCount} verified client reviews on Clutch.
+        Read Metaborong&apos;s verified client reviews on Clutch.
       </a>
     </Section>
   )
