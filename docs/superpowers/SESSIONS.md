@@ -276,7 +276,7 @@ Hard rule to prevent the contradicting-plans mess from coming back:
 | `docs/content/` | Canonical copy — what ships in components |
 | `docs/superpowers/specs/<file>` | Locked intent for one section, in-flight |
 | `docs/superpowers/plans/<file>` | Implementation playbook for one section, in-flight |
-| `docs/superpowers/archive/**` | Historical reference only — never authoritative |
+| git history (pruned specs/plans) | Historical reference only — never authoritative |
 | `~/.claude/plans/<file>` | Plan-mode scratch — not authoritative once executed |
 
 If a spec contradicts `DESIGN.md`, fix the spec or update `DESIGN.md` — never let both versions live. One section = one spec + one plan. Direction change = archive old, write new with `Supersedes:` frontmatter.
