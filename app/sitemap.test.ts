@@ -68,14 +68,29 @@ async function insertPublished(slug: string, title: string, updatedAt: Date) {
   }))
 }
 
+// Static-route count: homepage + /blog/ + /services/ overview + 3 pillar
+// hubs + 32 published leaves + 4 /work/ case studies. Sourced from
+// services-data.ts and lib/work.ts. Services URLs are no-trailing-slash;
+// blog URLs keep the trailing slash.
+const STATIC_ROUTE_COUNT = 42
+
 describe('app/sitemap.ts', () => {
-  it('emits the homepage and /blog/ entries with no posts', async () => {
+  it('emits homepage, /blog/, /services/ overview, pillar hubs, leaves and /work/ with no posts', async () => {
     const sitemap = await loadSitemap()
     const out = await sitemap()
     const urls = out.map((e) => e.url)
     expect(urls).toContain('https://www.metaborong.com/')
     expect(urls).toContain('https://www.metaborong.com/blog/')
-    expect(urls).toHaveLength(2)
+    expect(urls).toContain('https://www.metaborong.com/services/')
+    expect(urls).toContain('https://www.metaborong.com/services/ai')
+    expect(urls).toContain('https://www.metaborong.com/services/web3')
+    expect(urls).toContain('https://www.metaborong.com/services/product-studio')
+    expect(urls).toContain(
+      'https://www.metaborong.com/services/web3/decentralized-identity-did-integration',
+    )
+    expect(urls).toContain('https://www.metaborong.com/work/sunset')
+    expect(urls).toContain('https://www.metaborong.com/work/sedax')
+    expect(urls).toHaveLength(STATIC_ROUTE_COUNT)
   })
 
   it('includes every published post with lastModified = updated_at', async () => {
@@ -115,8 +130,7 @@ describe('app/sitemap.ts', () => {
     }
     const sitemap = await loadSitemap()
     const out = await sitemap()
-    // 2 fixed entries + 60 posts.
-    expect(out).toHaveLength(62)
+    expect(out).toHaveLength(STATIC_ROUTE_COUNT + 60)
     for (let i = 0; i < 60; i++) {
       const slug = `post-${String(i).padStart(3, '0')}`
       expect(out.some((e) => e.url === `https://www.metaborong.com/blog/${slug}/`))

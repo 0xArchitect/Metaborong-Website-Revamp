@@ -1,40 +1,23 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Eyebrow } from '@/components/ui/eyebrow'
-import { useGeo } from '@/lib/use-geo'
 import { Reveal } from '@/components/ui/reveal'
-
-// Three.js: client-only, lazy-loaded after paint — no LCP impact
-const HeroOrb = dynamic(
-  () => import('@/components/hero-orb/hero-orb').then(m => ({ default: m.HeroOrb })),
-  { ssr: false, loading: () => null }
-)
-
-const STATIC_MICROCOPY = 'No pitch decks. No retainers. Direct from founders.'
-
-/** Two-letter ISO country code → flag emoji via Regional Indicator Symbols.
- *  Returns '' for invalid input. */
-function countryFlag(code: string): string {
-  if (!code || code.length !== 2) return ''
-  const upper = code.toUpperCase()
-  const A = 0x1F1E6
-  const offset = 'A'.charCodeAt(0)
-  const cp1 = A + upper.charCodeAt(0) - offset
-  const cp2 = A + upper.charCodeAt(1) - offset
-  if (cp1 < A || cp1 > A + 25 || cp2 < A || cp2 > A + 25) return ''
-  return String.fromCodePoint(cp1, cp2)
-}
+import { Typewriter } from '@/components/ui/typewriter'
+import { SectionEyebrow } from '@/components/ui/section-eyebrow'
 
 export function HeroSection() {
   const [scrolled, setScrolled] = useState(false)
-  // SSR-stable default; client effect swaps in a timezone-aware variant after
-  // mount so search engines and the first paint show the brand-on-message line.
-  const [microCopy, setMicroCopy] = useState(STATIC_MICROCOPY)
-  const geo = useGeo()
+  // Tracks whether the ASCII video has actually started painting frames.
+  // Until then we hold the poster image on top so Safari's giant ▶
+  // overlay (shown when autoplay is refused) is never visible.
+  const [videoPlaying, setVideoPlaying] = useState(false)
+  // Defer the <video> mount until the browser is idle. The MP4 is 432 KB
+  // and competes with the LCP poster for bandwidth on initial paint.
+  // Once idle (or window 'load' fires), we mount the video and let it
+  // autoplay over the visible poster.
+  const [mountVideo, setMountVideo] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100)
@@ -42,88 +25,223 @@ export function HeroSection() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Re-run when geo changes (post-consent) so the line picks up the country
-  // immediately on Accept without waiting for the next minute tick.
   useEffect(() => {
-    const update = () => {
-      try {
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-        // IANA strings can be "Etc/GMT" / "UTC" / region-only; prefer the trailing
-        // segment when there's a slash, otherwise fall back to the full id.
-        const tzCity = tz.includes('/')
-          ? tz.split('/').pop()!.replace(/_/g, ' ')
-          : tz
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        // When geo is present (consent accepted + Vercel edge headers available),
-        // the line names the visitor's country and uses their city if known.
-        const city = geo?.city || tzCity
-        const country = geo?.country
-        setMicroCopy(
-          country
-            ? `Shipping Web3 to ${country} from ${city}, currently ${time}.`
-            : `Shipping from ${city}, currently ${time}.`,
-        )
-      } catch {
-        // Older browser without Intl.DateTimeFormat — keep current copy.
-      }
+    // Wait for window load OR requestIdleCallback before requesting the MP4.
+    // Whichever fires first wins so we don't sit idle on slow connections
+    // that never fire idleCallback for ages.
+    let didMount = false
+    const mount = () => {
+      if (didMount) return
+      didMount = true
+      setMountVideo(true)
     }
-    update()
-    const id = setInterval(update, 60_000)
-    return () => clearInterval(id)
-  }, [geo])
+    const ric = typeof window.requestIdleCallback === 'function' ? window.requestIdleCallback : null
+    const cic = typeof window.cancelIdleCallback === 'function' ? window.cancelIdleCallback : null
+    const idleId = ric ? ric(mount, { timeout: 1500 }) : window.setTimeout(mount, 800)
+    window.addEventListener('load', mount, { once: true })
+    return () => {
+      window.removeEventListener('load', mount)
+      if (ric && cic) cic(idleId)
+      else window.clearTimeout(idleId)
+    }
+  }, [])
+
+  // Pause the ASCII video when the hero scrolls out of view.
+  // Frees the decoder + saves battery on mobile while in-section visuals stay live.
+  const asciiBoxRef = useRef<HTMLDivElement | null>(null)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  useEffect(() => {
+    if (!mountVideo) return
+    const box = asciiBoxRef.current
+    const video = videoRef.current
+    if (!box || !video) return
+    // Safari's autoplay gate inspects the muted property at the moment
+    // play() is called. React's declarative `muted` prop occasionally
+    // lands a tick late, so enforce it on the DOM node before kicking
+    // playback. defaultMuted persists the state across reloads/back-forward
+    // cache, which Safari also honors.
+    video.muted = true
+    video.defaultMuted = true
+    video.playsInline = true
+    video.playbackRate = 0.3
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion) {
+      video.pause()
+      return
+    }
+
+    const tryPlay = () => {
+      if (!video.paused) return
+      video.muted = true
+      video.play().catch(() => {})
+    }
+
+    // Eager first attempt.
+    tryPlay()
+
+    // Safari refuses programmatic play() in tabs that opened in the
+    // background and never received user activation — so initial
+    // autoplay + the IntersectionObserver retries both fail silently
+    // until the user switches back to the tab. Retry on any signal
+    // that grants activation: visibility change, scroll, click, touch,
+    // pointer. Each listener is { once: true } so we don't accumulate
+    // handlers.
+    const onActivation = () => tryPlay()
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') tryPlay()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    window.addEventListener('scroll', onActivation, { passive: true, once: true })
+    window.addEventListener('pointerdown', onActivation, { once: true })
+    window.addEventListener('keydown', onActivation, { once: true })
+    window.addEventListener('touchstart', onActivation, { passive: true, once: true })
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          tryPlay()
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0 },
+    )
+    obs.observe(box)
+    return () => {
+      obs.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
+      window.removeEventListener('scroll', onActivation)
+      window.removeEventListener('pointerdown', onActivation)
+      window.removeEventListener('keydown', onActivation)
+      window.removeEventListener('touchstart', onActivation)
+    }
+  }, [mountVideo])
 
   return (
-    <section className="relative min-h-screen bg-bg-subtle">
-      <div className="max-w-[1600px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-[60fr_40fr]">
+    <section className="relative min-h-screen bg-bg px-[16px] sm:px-[24px] md:px-[40px] lg:px-[48px] xl:px-[80px] 2xl:px-[128px]">
+      {/* Preload the AVIF poster — React 19 hoists this to <head> so it
+          races ahead of the bundle and wins the LCP slot. fetchPriority high
+          marks it as critical-path. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/hero-ascii-poster.avif"
+        type="image/avif"
+        fetchPriority="high"
+      />
+      {/* Dot-grid filler — covers the whole hero, faint through the center. */}
+      <div aria-hidden="true" className="dot-grid dot-grid-fade-x-soft pointer-events-none absolute inset-0 z-0" />
+      <div className="relative z-[1] w-full max-w-[1280px] mx-auto min-h-screen lg:min-h-[calc(100svh-56px)] lg:mt-[56px] grid grid-cols-1 lg:grid-cols-[57fr_43fr] lg:gap-[64px]">
         {/* Left: copy */}
-        <Reveal className="flex flex-col justify-center py-[64px] lg:py-[96px] px-[24px] md:px-[48px] lg:px-[96px] xl:px-[128px]">
-          {/* Eyebrow chip */}
-          <div className="inline-flex items-center gap-2 mb-7 bg-bg border border-border rounded-sm px-3 py-[5px] w-fit">
-            <span className="w-2 h-2 bg-brand rounded-sm shrink-0 inline-block" />
-            <Eyebrow>
-              Web3 Development · AI Agents · Product Studio
-              {geo?.country && geo?.city && ` · ${countryFlag(geo.country)} ${geo.city}`}
-            </Eyebrow>
+        <Reveal className="flex flex-col justify-center pt-[80px] pb-[36px] lg:pt-0 lg:pb-0">
+          {/* Inner block mirrors the ASCII video frame's vertical extent (h-[82%], centered)
+              so the eyebrow top aligns with the video top and the CTAs bottom with the video
+              bottom on lg+. Three zones (eyebrow+H1 / lede / CTAs) spread by justify-between
+              so the lede sits equidistant between the headline and the buttons. On mobile/tablet
+              they stack with a fixed 28px gap. */}
+          <div className="flex flex-col gap-[28px] lg:h-[80%] lg:max-h-[700px] lg:justify-between lg:gap-0">
+            {/* Eyebrow + H1 */}
+            <div>
+              {/* Eyebrow — unified square + mono treatment (SectionEyebrow primitive) */}
+              <SectionEyebrow className="mb-7">Web3 &amp; AI development studio</SectionEyebrow>
+
+              <h1 className="text-[clamp(40px,6vw,84px)] font-black tracking-[-0.04em] leading-[1.02] text-dark">
+                <Typewriter
+                  lines={[
+                    { text: 'Web3 protocols.' },
+                    { text: 'AI agents.' },
+                    { text: 'Shipped.', className: 'text-brand' },
+                  ]}
+                  durationMs={520}
+                  startDelayMs={120}
+                  staggerMs={150}
+                />
+              </h1>
+            </div>
+
+            {/* AEO extraction blockquote / lede — own zone so it sits equidistant on lg+ */}
+            <blockquote cite="/#services">
+              <p className="text-base text-gray leading-[1.6] tracking-[-0.005em] max-w-[560px]">
+                Metaborong is a Web3 development company and AI agent studio. A
+                remote-first team of senior engineers, globally distributed. We ship
+                DeFi protocols and smart contract audits across EVM chains and Solana,
+                AI agents spanning RAG, agentic workflows, and generative systems, and
+                full-stack SaaS for founders and early-stage startups. Spec to
+                production, fast.
+              </p>
+            </blockquote>
+
+            {/* CTAs */}
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
+              <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
+            </div>
           </div>
-
-          {/* H1 */}
-          <h1 className="text-[clamp(40px,5vw,72px)] font-bold tracking-[-0.04em] leading-[1.02] text-dark mb-6">
-            Web3 protocols.
-            <br />
-            AI agents.
-            <br />
-            <span className="text-brand">Shipped.</span>
-          </h1>
-
-          {/* AEO extraction blockquote — promoted */}
-          <blockquote cite="/about" className="border-l-[3px] border-brand pl-5 py-1 mb-6">
-            <p className="text-base font-medium text-dark leading-[1.6] tracking-[-0.015em] max-w-[560px]">
-              Metaborong is a Web3 and AI agent development studio that ships DeFi protocols,
-              autonomous AI systems, and custom SaaS products for founders and crypto-native teams
-              across the US and Europe.
-            </p>
-          </blockquote>
-
-          {/* Body lead — demoted */}
-          <p className="text-sm text-gray leading-[1.6] tracking-[-0.005em] max-w-[480px] mb-8">
-            For founders who need a technical partner that ships — not an agency that pitches.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex items-center gap-3 mb-5">
-            <Button href="/contact/" size="lg">Start a Project &rarr;</Button>
-            <Button href="/work/" variant="ghost" size="lg">See Our Work</Button>
-          </div>
-
-          {/* Micro-copy — context-aware after hydration (timezone + local time) */}
-          <p className="text-xs text-gray tracking-[-0.01em]">
-            {microCopy}
-          </p>
         </Reveal>
 
-        {/* Right: Three.js orb */}
-        <div className="relative overflow-hidden flex items-center justify-center h-[60vh] lg:h-auto lg:min-h-screen">
-          <HeroOrb />
+        {/* Right: ASCII-art still — replaces the orb */}
+        <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-0 flex items-center justify-center lg:justify-end">
+          {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
+          <div ref={asciiBoxRef} className="relative w-[92%] h-[82%] max-w-[520px] max-h-[700px] sm:w-[86%] sm:h-[80%]">
+            {mountVideo && (
+              <video
+                ref={videoRef}
+                src="/hero-ascii.mp4"
+                poster="/hero-ascii-poster.opt.png"
+                autoPlay
+                loop
+                muted
+                playsInline
+                disablePictureInPicture
+                controls={false}
+                preload="auto"
+                aria-hidden="true"
+                onPlaying={() => setVideoPlaying(true)}
+                onPause={() => setVideoPlaying(false)}
+                onEnded={() => setVideoPlaying(false)}
+                onStalled={() => setVideoPlaying(false)}
+                className="hero-ascii-image absolute inset-0 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-center select-none pointer-events-none"
+              />
+            )}
+            {/* Poster overlay — the LCP element. <picture> negotiates the
+                smallest format the browser can decode (AVIF 49KB → WebP 75KB
+                → PNG 176KB). Also masks Safari's autoplay-refused ▶ overlay
+                that would otherwise sit on the paused video. Fades out once
+                the first real frame paints. */}
+            <picture>
+              <source srcSet="/hero-ascii-poster.avif" type="image/avif" />
+              <source srcSet="/hero-ascii-poster.webp" type="image/webp" />
+              <img
+                src="/hero-ascii-poster.opt.png"
+                alt=""
+                width={720}
+                height={960}
+                aria-hidden="true"
+                draggable={false}
+                fetchPriority="high"
+                decoding="async"
+                className={`absolute inset-0 z-10 w-full h-full object-cover object-[50%_24%] scale-[1.08] sm:scale-100 sm:object-center select-none pointer-events-none transition-opacity duration-300 ${
+                  videoPlaying ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+            </picture>
+            {/* Glassmorphic overlay "windows" — three pillar proofs, anchored to the image frame */}
+            <HeroOverlayCard
+              loadingLabels={['Cogitating…', 'Reasoning…', 'Inferring…', 'Embedding…']}
+              resultLabel="w₁ 0.83, ∑ 0.44"
+              style={{ left: '7.4%', top: '25.3%' }}
+            />
+            <HeroOverlayCard
+              loadingLabels={['Mining block…', 'Signing tx…', 'Validating…', 'Committing…']}
+              resultLabel="0x4a7f..."
+              style={{ left: '41.8%', top: '7.4%' }}
+            />
+            <HeroOverlayCard
+              loadingLabels={['Deploying…', 'Building…', 'Migrating…', 'Scaling…']}
+              resultLabel="/v1/deploy"
+              style={{ left: '66%', top: '34%' }}
+            />
+          </div>
         </div>
       </div>
 
@@ -138,5 +256,112 @@ export function HeroSection() {
         <span className="text-[10px] tracking-[0.15em] uppercase">Scroll</span>
       </div>
     </section>
+  )
+}
+
+/** Glassmorphic "browser-window" card overlay — used over the hero ASCII-art
+ *  to encode the three pillars (AI weights, web3 hash, product API path).
+ *  Cycles loading → result → loading → result while hero is in viewport.
+ *  Pauses when hero scrolls out of view (mirror of ASCII shimmer pattern). */
+function HeroOverlayCard({
+  loadingLabels,
+  resultLabel,
+  style,
+}: {
+  loadingLabels: string[]
+  resultLabel: string
+  style: React.CSSProperties
+}) {
+  const [phase, setPhase] = useState<'loading' | 'result'>('loading')
+  const [gerundIdx, setGerundIdx] = useState(0)
+  const [cycle, setCycle] = useState(0)
+  const cardRef = useRef<HTMLDivElement | null>(null)
+  const inViewRef = useRef(true)
+
+  // Pause cycle when card scrolls out of view (matches ASCII shimmer gate)
+  useEffect(() => {
+    const card = cardRef.current
+    if (!card) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { inViewRef.current = entry.isIntersecting },
+      { threshold: 0 },
+    )
+    obs.observe(card)
+    return () => obs.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setPhase('result')
+      return
+    }
+    let cancelled = false
+    let timer: ReturnType<typeof setTimeout> | null = null
+
+    const advance = (to: 'loading' | 'result') => {
+      if (cancelled) return
+      // Park transitions while out of view
+      if (!inViewRef.current) {
+        timer = setTimeout(() => advance(to), 500)
+        return
+      }
+      if (to === 'result') {
+        setPhase('result')
+        // Settled hold before re-entering loading
+        timer = setTimeout(() => advance('loading'), 6000)
+      } else {
+        setGerundIdx(i => (i + 1) % loadingLabels.length)
+        setCycle(c => c + 1)
+        setPhase('loading')
+        // Loading window before swap to result
+        timer = setTimeout(() => advance('result'), 1500)
+      }
+    }
+
+    // Initial sequence: card pop completes ~1080ms, loading text types ~1100→1500ms,
+    // hold ~800ms, swap to result at 2300ms. Subsequent cycles use 1500ms loading window.
+    timer = setTimeout(() => advance('result'), 2300)
+
+    return () => { cancelled = true; if (timer) clearTimeout(timer) }
+  }, [loadingLabels.length])
+
+  return (
+    <div
+      ref={cardRef}
+      aria-hidden="true"
+      className="hero-card-pop max-[420px]:hidden absolute z-20 w-[92px] h-[108px] lg:w-[116px] lg:h-[137px] backdrop-blur-[15px] border border-white/80 opacity-0"
+      style={style}
+    >
+      {/* Title bar with three traffic-light squares */}
+      <div className="absolute inset-x-0 top-0 h-[22px] bg-white/95 border-b border-white flex items-center gap-[2px] px-[3px]">
+        <span className="w-[15px] h-[14px] bg-[#d90429]" />
+        <span className="w-[15px] h-[14px] bg-[#ffba08]" />
+        <span className="w-[15px] h-[14px] bg-[#38b000]" />
+      </div>
+      {/* Body label, bottom-left */}
+      {phase === 'loading' ? (
+        <div className="absolute left-[9px] bottom-[10px] flex items-center gap-[5px] text-white whitespace-nowrap drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
+          <Loader2 size={11} strokeWidth={2.5} className="animate-spin opacity-90" />
+          <span className="font-mono text-[10px] lg:text-[11px] tracking-[-0.01em]">
+            <Typewriter
+              key={`loading-${cycle}`}
+              lines={[{ text: loadingLabels[gerundIdx] }]}
+              durationMs={400}
+              startDelayMs={cycle === 0 ? 1100 : 0}
+            />
+          </span>
+        </div>
+      ) : (
+        <p className="absolute left-[9px] bottom-[10px] font-bold text-[11px] lg:text-[12px] tracking-[-0.01em] text-white whitespace-nowrap drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
+          <Typewriter
+            key={`result-${cycle}`}
+            lines={[{ text: resultLabel }]}
+            durationMs={550}
+            startDelayMs={0}
+          />
+        </p>
+      )}
+    </div>
   )
 }
