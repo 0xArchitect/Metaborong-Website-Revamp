@@ -132,9 +132,9 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexProps) {
 function PostCard({ post }: { post: PostSummary }) {
   return (
     <article className="group flex h-full flex-col rounded-xl border border-border bg-white transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-brand/30">
-      {/* Pre-M4: cover_image_id isn't carried on PostSummary, so the card
-          uses a brand-tinted placeholder. Once images are wired (M4) the
-          summary type or this card will accept a resolved cover URL. */}
+      {/* cover_image_id isn't carried on PostSummary, so the card uses a
+          brand-tinted placeholder. Wiring covers here means widening the
+          summary type (or resolving the URL) first. */}
       <div
         aria-hidden="true"
         className="rounded-t-xl bg-bg-subtle"

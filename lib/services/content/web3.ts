@@ -8,7 +8,7 @@
 // typedef in `lib/services/leaf-content.ts`. Real Metaborong proofs used
 // here (Neemo Finance smart contracts cleared by Hacken; nsASTR and
 // nrETH liquid staking products; Sedax ZKP identity partnership;
-// 8 Clutch reviews at 4.9) are the only verifiable signals - no invented
+// the verified Clutch profile) are the only verifiable signals - no invented
 // client names, no fabricated metrics.
 
 import type { LeafContent } from '@/lib/services/leaf-content'
