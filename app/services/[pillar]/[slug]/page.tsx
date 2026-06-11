@@ -1,49 +1,256 @@
 import { notFound } from 'next/navigation'
-import { pillars } from '@/components/sections/services-data'
+import Link from 'next/link'
 import type { Metadata } from 'next'
+import { pillars, getAllLeaves, type Pillar, type SubGroup, type ChildService } from '@/components/sections/services-data'
+import { getLeafSeo } from '@/lib/services/seo-map'
+import { getLeafContent } from '@/lib/services/content'
+import { LeafServicePage } from '@/components/services/leaf-service'
+import { SITE_ORIGIN } from '@/lib/seo'
+import type { LeafContent } from '@/lib/services/leaf-content'
 
 type Params = { pillar: string; slug: string }
 
 export async function generateStaticParams(): Promise<Params[]> {
   return pillars.flatMap((p) =>
-    p.children.map((c) => ({ pillar: p.id, slug: c.slug }))
+    getAllLeaves(p).map((c) => ({ pillar: p.id, slug: c.slug })),
   )
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { pillar, slug } = await params
-  const p = pillars.find((x) => x.id === pillar)
-  const c = p?.children.find((x) => x.slug === slug)
-  if (!p || !c) return { robots: { index: false, follow: false } }
+  const resolved = resolveLeaf(pillar, slug)
+  if (!resolved) return { robots: { index: false, follow: false } }
+
+  // Authored v1 leaf with published status → use SEO map entry.
+  const isPublished = resolved.leaf.status === 'published'
+  const hasContent = Boolean(getLeafContent(pillar, slug))
+  if (isPublished && hasContent) {
+    const seo = getLeafSeo(pillar, slug)
+    if (seo) {
+      const leafUrl = `${SITE_ORIGIN}/services/${pillar}/${slug}`
+      return {
+        title: seo.title,
+        description: seo.description,
+        alternates: {
+          canonical: leafUrl,
+          types: { 'text/markdown': `${leafUrl}/raw.md` },
+        },
+        openGraph: {
+          title: seo.title,
+          description: seo.description,
+          url: leafUrl,
+          type: 'website',
+          images: [{ url: `${SITE_ORIGIN}/opengraph-image`, width: 1200, height: 630, alt: seo.title }],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: seo.title,
+          description: seo.description,
+          images: [`${SITE_ORIGIN}/opengraph-image`],
+        },
+      }
+    }
+  }
+
+  // Coming-soon (or published-but-unauthored) → noindex stub.
   return {
-    title: `${c.name} — Metaborong`,
-    description: `${c.description} Coming soon.`,
+    title: resolved.leaf.name,
+    description: `${resolved.leaf.description} Coming soon.`,
     robots: { index: false, follow: false },
   }
 }
 
 export default async function ServicePage({ params }: { params: Promise<Params> }) {
   const { pillar, slug } = await params
-  const p = pillars.find((x) => x.id === pillar)
-  const c = p?.children.find((x) => x.slug === slug)
-  if (!p || !c) notFound()
+  const resolved = resolveLeaf(pillar, slug)
+  if (!resolved) notFound()
+
+  const { pillar: p, subGroup, leaf } = resolved
+
+  if (leaf.status === 'published') {
+    const content = getLeafContent(pillar, slug)
+    if (content) {
+      const seo = getLeafSeo(pillar, slug)
+      const jsonLd = buildLeafJsonLd({ pillar: p, leaf, content, description: seo?.description })
+      return (
+        <>
+          {jsonLd.map((block, i) => (
+            <script
+              key={i}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+            />
+          ))}
+          <LeafServicePage pillar={p} subGroup={subGroup} leaf={leaf} content={content} />
+        </>
+      )
+    }
+    // Published in the taxonomy but content not yet authored → render the
+    // coming-soon stub. Keeps the route alive for build-time `generateStaticParams`
+    // while content streams catch up. See SERVICES_PLAN.md § Risk 3 + § Risk 4.
+  }
+
+  return <ComingSoonStub pillar={p} leaf={leaf} />
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// JSON-LD — Service + FAQPage + BreadcrumbList + HowTo + (optional) DefinedTermSet.
+// Emitted per published leaf to give crawlers and AI search engines the
+// structured surface they need to cite the page. HowTo mirrors the visible
+// "How we work" phases (a top AEO schema type). DefinedTermSet only emits when
+// the leaf authored a `keyConcepts` block.
+// ─────────────────────────────────────────────────────────────────────────────
+
+function buildLeafJsonLd({
+  pillar,
+  leaf,
+  content,
+  description,
+}: {
+  pillar: Pillar
+  leaf: ChildService
+  content: LeafContent
+  description?: string
+}): Record<string, unknown>[] {
+  const leafUrl = `${SITE_ORIGIN}/services/${pillar.id}/${leaf.slug}`
+
+  const service: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${leafUrl}#service`,
+    name: leaf.name,
+    description: description ?? leaf.description,
+    serviceType: leaf.name,
+    category: `${pillar.label} engineering services`,
+    url: leafUrl,
+    provider: {
+      '@type': 'Organization',
+      name: 'Metaborong',
+      url: SITE_ORIGIN,
+    },
+    areaServed: content.areaServed
+      ? { '@type': 'Country', name: content.areaServed }
+      : { '@type': 'AdministrativeArea', name: 'Worldwide' },
+  }
+  if (content.lastReviewed) {
+    service.dateModified = content.lastReviewed
+    service.reviewedBy = {
+      '@type': 'Organization',
+      name: 'Metaborong engineering team',
+    }
+  }
+
+  const faqPage = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: content.faqs.map((qa) => ({
+      '@type': 'Question',
+      name: qa.question,
+      acceptedAnswer: { '@type': 'Answer', text: qa.answer },
+    })),
+  }
+
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_ORIGIN}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_ORIGIN}/services/` },
+      { '@type': 'ListItem', position: 3, name: pillar.label, item: `${SITE_ORIGIN}${pillar.hubHref}` },
+      { '@type': 'ListItem', position: 4, name: leaf.name, item: leafUrl },
+    ],
+  }
+
+  const blocks: Record<string, unknown>[] = [service, faqPage, breadcrumb]
+
+  if (content.phases.length > 0) {
+    const howTo = {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      '@id': `${leafUrl}#howto`,
+      name: `How we deliver ${leaf.name}`,
+      step: content.phases.map((phase, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: phase.title,
+        text: phase.body,
+      })),
+    }
+    blocks.push(howTo)
+  }
+
+  if (content.keyConcepts && content.keyConcepts.length > 0) {
+    const definedTermSet = {
+      '@context': 'https://schema.org',
+      '@type': 'DefinedTermSet',
+      '@id': `${leafUrl}#defined-terms`,
+      name: `${leaf.name} glossary`,
+      hasDefinedTerm: content.keyConcepts.map((c) => ({
+        '@type': 'DefinedTerm',
+        name: c.term,
+        description: c.definition,
+      })),
+    }
+    blocks.push(definedTermSet)
+  }
+
+  return blocks
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Resolver — finds the pillar, sub-group, and leaf for a given route param
+// pair. Returns undefined when either segment is unknown so the caller can
+// 404 cleanly.
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface ResolvedLeaf {
+  pillar: Pillar
+  subGroup: SubGroup
+  leaf: ChildService
+}
+
+function resolveLeaf(pillarId: string, slug: string): ResolvedLeaf | undefined {
+  const pillar = pillars.find((p) => p.id === pillarId)
+  if (!pillar) return undefined
+  for (const subGroup of pillar.subGroups) {
+    const leaf = subGroup.children.find((c) => c.slug === slug)
+    if (leaf) return { pillar, subGroup, leaf }
+  }
+  return undefined
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Template D — coming-soon stub. noindex; minimal surface with the leaf
+// name and a contact CTA. See SERVICES_PLAN.md § 3 Template D.
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ComingSoonStub({ pillar, leaf }: { pillar: Pillar; leaf: ChildService }) {
   return (
-    <main className="min-h-screen flex items-center justify-center px-6">
+    <main className="min-h-screen flex items-center justify-center px-[16px] py-[64px] sm:px-[24px]">
       <div className="max-w-[640px] text-center">
         <p
-          className="text-[11px] font-bold tracking-[0.1em] uppercase mb-4"
-          style={{ color: p.color }}
+          className="text-[11px] font-bold tracking-[0.1em] uppercase mb-[16px]"
+          style={{ color: pillar.color }}
         >
-          {p.label}
+          {pillar.label}
         </p>
-        <h1 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.03em] leading-[1.1] text-dark mb-6">
-          {c.name}
+        <h1 className="text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.03em] leading-[1.1] text-dark mb-[24px]">
+          {leaf.name}
         </h1>
-        <p className="text-[16px] text-gray leading-[1.65] mb-8">{c.description}</p>
-        <p className="text-[14px] text-gray-light">
-          Detailed service page launching soon.{' '}
-          <a href={p.hubHref} className="underline hover:text-dark">Back to {p.label}</a>{' · '}
-          <a href="/" className="underline hover:text-dark">Home</a>
+        <p className="text-[16px] leading-[1.65] text-gray mb-[32px]">{leaf.description}</p>
+        <div className="flex flex-col items-stretch justify-center gap-[12px] sm:flex-row sm:items-center">
+          <a
+            href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
+            className="inline-flex min-h-[44px] items-stretch justify-center bg-brand text-[15px] font-semibold tracking-[-0.01em] text-white no-underline [font-feature-settings:'tnum']"
+          >
+            <span className="px-[22px] py-[12px]">Talk to us</span>
+            <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[16px] py-[12px]">→</span>
+          </a>
+        </div>
+        <p className="mt-[32px] text-[13px] text-gray-light">
+          <Link href={pillar.hubHref} className="underline hover:text-dark">Back to {pillar.label}</Link>
+          {' · '}
+          <Link href="/" className="underline hover:text-dark">Home</Link>
         </p>
       </div>
     </main>

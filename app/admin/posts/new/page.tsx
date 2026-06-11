@@ -20,7 +20,7 @@ export default function AdminNewPostPage() {
           Start a draft
         </h1>
         <p className="mt-[8px] text-[14px] leading-[1.55] tracking-[-0.005em] text-gray">
-          Pick a title — we&rsquo;ll generate a slug and drop you into the editor.
+          Pick a title. We&rsquo;ll generate a slug and drop you into the editor.
         </p>
       </header>
       <NewPostForm />

@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
+import { SmoothScroll } from '@/components/providers/smooth-scroll'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Web3 & AI Development Studio | Metaborong',
+    default: 'Web3 Protocols, AI Agents & SaaS Products | Metaborong',
     template: '%s | Metaborong',
   },
   description:
@@ -14,9 +15,13 @@ export const metadata: Metadata = {
     siteName: 'Metaborong',
     locale: 'en_US',
     type: 'website',
+    // OG image is generated dynamically at the edge via app/opengraph-image.tsx —
+    // Next.js auto-wires the metadata, no explicit `images` array needed.
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@Metaborong',
+    creator: '@Metaborong',
   },
 }
 
@@ -32,8 +37,8 @@ export default function RootLayout({
           `data-new-gr-c-s-check-loaded`) inject attributes into <body> before
           React hydrates. The flag suppresses *only* the body element's
           attribute mismatch, not anything inside it. */}
-      <body suppressHydrationWarning>
-        {children}
+      <body className="overflow-x-hidden" suppressHydrationWarning>
+        <SmoothScroll>{children}</SmoothScroll>
         <ConsentBanner />
         <ConsentRevokePill />
       </body>

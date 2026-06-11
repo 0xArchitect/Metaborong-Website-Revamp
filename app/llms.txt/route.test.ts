@@ -126,8 +126,9 @@ describe('GET /llms.txt', () => {
     expect(text).toContain(
       '- [Third post](https://www.metaborong.com/blog/third/): Third summary.',
     )
+    // 3 post bullets + the 2 fixed "Main pages" bullets (Homepage, Blog).
     const bulletCount = (text.match(/^- \[/gm) ?? []).length
-    expect(bulletCount).toBe(3)
+    expect(bulletCount).toBe(5)
   })
 
   it('orders bullets by published_at DESC (newest first)', async () => {
