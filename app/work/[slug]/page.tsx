@@ -10,7 +10,7 @@ import { Section } from '@/components/ui/section'
 import { FaqSection } from '@/components/sections/faq'
 import { pillars, getAllLeaves, type Pillar, type ChildService } from '@/components/sections/services-data'
 import { SITE_ORIGIN } from '@/lib/seo'
-import { caseStudyMeta, type CaseStudyMeta } from '@/lib/work'
+import { caseStudyMeta, workSlugs, type CaseStudyMeta } from '@/lib/work'
 import { SunsetBuilt } from '@/components/work/sunset-built'
 import { SunsetResults } from '@/components/work/sunset-results'
 import { SunsetTech } from '@/components/work/sunset-tech'
@@ -26,6 +26,10 @@ import { SsiMock, OnChainTrustMock, FraudDetectionMock } from '@/components/work
 import { SedaxZkp } from '@/components/work/sedax-zkp'
 import { WorkDemoVideo } from '@/components/work/work-demo-video'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
+
+export function generateStaticParams() {
+  return workSlugs.map((slug) => ({ slug }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params

@@ -234,6 +234,52 @@ describe('cms_upload_image', () => {
       } satisfies UploadImageInput)
     }).rejects.toBeInstanceOf(ToolError)
   })
+
+  // SSRF guard: non-http(s) protocols and private/loopback/link-local hosts
+  // must be rejected before any fetch happens.
+  const blockedUrls = [
+    'ftp://example.com/x.png',
+    'file:///etc/passwd',
+    'http://localhost/x.png',
+    'http://127.0.0.1:8080/x.png',
+    'http://10.0.0.5/x.png',
+    'http://192.168.1.1/x.png',
+    'http://169.254.169.254/latest/meta-data',
+    'http://172.16.0.1/x.png',
+    'http://[::1]/x.png',
+    'http://internal.local/x.png',
+  ]
+  for (const url of blockedUrls) {
+    it(`VALIDATION_FAILED for blocked URL ${url}`, async () => {
+      const tool = registry().cms_upload_image
+      await expect(async () => {
+        await tool.handler({
+          source:   { url },
+          alt:      'x',
+          filename: 'x.png',
+        } satisfies UploadImageInput)
+      }).rejects.toMatchObject({ appCode: 'VALIDATION_FAILED', field: 'source.url' })
+    })
+  }
+
+  it('a public https URL proceeds past the guard to the fetch layer', async () => {
+    // Stub fetch so the test stays off the network; a network-layer failure
+    // surfaces as INTERNAL, proving the guard did not reject the URL.
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('fetch failed'))
+    try {
+      const tool = registry().cms_upload_image
+      await expect(async () => {
+        await tool.handler({
+          source:   { url: 'https://example.com/x.png' },
+          alt:      'x',
+          filename: 'x.png',
+        } satisfies UploadImageInput)
+      }).rejects.toMatchObject({ appCode: 'INTERNAL' })
+      expect(fetchSpy).toHaveBeenCalledOnce()
+    } finally {
+      fetchSpy.mockRestore()
+    }
+  })
 })
 
 // ── cms_list_posts / cms_get_post ────────────────────────────────────────────
