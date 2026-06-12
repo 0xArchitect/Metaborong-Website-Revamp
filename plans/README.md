@@ -18,7 +18,7 @@ read `DESIGN.md` before any visual change.
 | 002  | CI pipeline (typecheck/test/build gate) + doc fixes  | P1 | M   | 001  | DONE — workflow's first green run still needs a push (operator) |
 | 003  | SEO surface characterization tests (JSON-LD/metadata)| P1 | M   | —    | DONE — 24 new tests (697→721); buildLeafJsonLd extracted to lib/services/leaf-jsonld.ts |
 | 004  | /work static params + MCP SSRF guard                 | P2 | S   | —    | DONE — 4 /work paths now SSG (●); 11 new SSRF tests (total 732) |
-| 005  | /work index page (case-study hub)                    | P2 | M   | 004* | TODO |
+| 005  | /work index page (case-study hub)                    | P2 | M   | 004* | DONE — logo-led numeral cards (work-area idiom, no DESIGN.md deviation); sitemap 42→43; nav link = owner follow-up |
 | 006  | Vercel Analytics + tracked contact CTA               | P2 | S–M | —    | TODO |
 | 007  | Leaf content-gap audit (read-only spike)             | P2 | S   | —    | TODO |
 
