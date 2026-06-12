@@ -18,6 +18,7 @@ import { Reveal } from '@/components/ui/reveal'
 import { Stagger } from '@/components/ui/stagger'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
+import { TrackClick } from '@/components/ui/track-click'
 import { ContactCtaSection } from '@/components/sections/contact-cta'
 import { TokenomicsSupplyVisual } from '@/components/services/tokenomics-supply-visual'
 import { LaunchpadBondingCurveVisual } from '@/components/services/launchpad-bonding-curve-visual'
@@ -198,9 +199,18 @@ function Hero({
             </p>
           </Reveal>
           <Reveal delay={180} className="flex flex-wrap items-center gap-x-[24px] gap-y-[16px]">
-            <Button href="/#contact" variant="primary" size="lg" arrow="→">
-              Talk to us
-            </Button>
+            <TrackClick event="book_call_click" data={{ source: 'leaf-service' }}>
+              <Button
+                variant="primary"
+                size="lg"
+                arrow="→"
+                data-cal-namespace="30min"
+                data-cal-link="anik-metaborong/30min"
+                data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+              >
+                Talk to us
+              </Button>
+            </TrackClick>
             <ClutchWidget widgetType="2" className="w-[280px] max-w-full" />
           </Reveal>
         </div>
