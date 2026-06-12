@@ -6,9 +6,10 @@ existing posts via JSON-RPC 2.0. Publishing, unpublishing, and deletion are
 deliberately admin-UI-only — the MCP surface is **draft-first** to keep a
 human review step in the loop.
 
-This doc is the canonical reference. For implementation context see
-`docs/cms/handoffs/mcp-be-2026-05-15.md`; for the Tester report see
-`docs/cms/reports/mcp-2026-05-15.md`.
+This doc is the canonical reference. The original build handoff and tester
+report were pruned from the tree on 2026-06-11; recover
+`docs/cms/handoffs/mcp-be-2026-05-15.md` and
+`docs/cms/reports/mcp-2026-05-15.md` from git history if needed.
 
 ---
 
@@ -463,6 +464,4 @@ WebSockets vs SSE, include a callout about reconnection handling"*.
 - Source: `app/api/mcp/route.ts`, `lib/mcp/*`, `lib/markdown/*`
 - Tests: `app/api/mcp/route.test.ts`, `lib/mcp/tools.test.ts`, `lib/markdown/markdown-to-blocks.test.ts`, `e2e/mcp-regression.spec.ts`
 - Block schema (the contract): `lib/blog-schema.ts`
-- Handoff: `docs/cms/handoffs/mcp-be-2026-05-15.md`
-- Tester report: `docs/cms/reports/mcp-2026-05-15.md`
 - MCP spec: <https://modelcontextprotocol.io>
