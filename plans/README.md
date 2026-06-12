@@ -16,7 +16,7 @@ read `DESIGN.md` before any visual change.
 |------|-------|----------|--------|------------|--------|
 | 001  | Next.js 16.2.5 security upgrade (7 HIGH CVEs)        | P1 | S   | —    | DONE — shipped 16.2.9 (latest 16.2.x per STOP clause); one out-of-scope moderate advisory remains in next's pinned postcss@8.4.31 |
 | 002  | CI pipeline (typecheck/test/build gate) + doc fixes  | P1 | M   | 001  | DONE — workflow's first green run still needs a push (operator) |
-| 003  | SEO surface characterization tests (JSON-LD/metadata)| P1 | M   | —    | TODO |
+| 003  | SEO surface characterization tests (JSON-LD/metadata)| P1 | M   | —    | DONE — 24 new tests (697→721); buildLeafJsonLd extracted to lib/services/leaf-jsonld.ts |
 | 004  | /work static params + MCP SSRF guard                 | P2 | S   | —    | TODO |
 | 005  | /work index page (case-study hub)                    | P2 | M   | 004* | TODO |
 | 006  | Vercel Analytics + tracked contact CTA               | P2 | S–M | —    | TODO |
