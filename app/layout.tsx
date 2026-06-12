@@ -7,7 +7,7 @@ import { CalInit } from '@/components/providers/cal-init'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Web3 Protocols, AI Agents & SaaS Products | Metaborong',
+    default: 'Metaborong | Web3, AI and Product Studio',
     template: '%s | Metaborong',
   },
   description:
