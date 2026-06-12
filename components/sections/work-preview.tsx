@@ -1,5 +1,6 @@
 import { Section } from '@/components/ui/section'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
+import { TrackClick } from '@/components/ui/track-click'
 
 type Project = { name: string; title: string; category: string; pillar: 'AI' | 'Web3'; logo: string; slug: string }
 
@@ -52,7 +53,15 @@ export function WorkPreviewSection() {
           <SectionEyebrow>Our work</SectionEyebrow>
           <h2 className="text-balance text-[clamp(28px,3.5vw,44px)] font-bold tracking-[-0.035em] text-dark">What we&apos;ve built</h2>
         </div>
-        <a href="/#contact" className="inline-flex min-h-[44px] items-center text-[14px] font-semibold text-brand no-underline">Talk to us →</a>
+        <TrackClick event="book_call_click" data={{ source: 'work-preview' }}>
+          <button
+            type="button"
+            className="inline-flex min-h-[44px] cursor-pointer items-center text-[14px] font-semibold text-brand no-underline"
+            data-cal-namespace="30min"
+            data-cal-link="anik-metaborong/30min"
+            data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+          >Talk to us →</button>
+        </TrackClick>
       </div>
       <p className="mb-[36px] max-w-[600px] text-[16px] leading-[1.65] tracking-[-0.01em] text-gray">
         Live products across Web3, AI, fintech, and SaaS. Each is engineered for production and shipped with founders we still work with.

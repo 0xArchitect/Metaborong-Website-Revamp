@@ -4,6 +4,7 @@ import { Fragment, useState, useEffect, useRef, type KeyboardEvent } from 'react
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { Logo } from '@/components/ui/logo'
 import { Button } from '@/components/ui/button'
+import { TrackClick } from '@/components/ui/track-click'
 import { pillars, getFeaturedLeaves } from '@/components/sections/services-data'
 
 const navLinks = [
@@ -230,7 +231,15 @@ export function Nav() {
 
             <Divider />
 
-            <Button href="/#contact" size="sm" arrow="→">Let&apos;s Talk</Button>
+            <TrackClick event="book_call_click" data={{ source: 'nav' }}>
+              <Button
+                size="sm"
+                arrow="→"
+                data-cal-namespace="30min"
+                data-cal-link="anik-metaborong/30min"
+                data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+              >Let&apos;s Talk</Button>
+            </TrackClick>
           </div>
 
           {/* Mobile hamburger (<lg) */}
@@ -400,7 +409,15 @@ export function Nav() {
 
           {/* CTA */}
           <div className="pt-[8px]">
-            <Button href="/#contact" size="sm" arrow="→">Let&apos;s Talk</Button>
+            <TrackClick event="book_call_click" data={{ source: 'nav-mobile' }}>
+              <Button
+                size="sm"
+                arrow="→"
+                data-cal-namespace="30min"
+                data-cal-link="anik-metaborong/30min"
+                data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+              >Let&apos;s Talk</Button>
+            </TrackClick>
           </div>
         </div>
       )}

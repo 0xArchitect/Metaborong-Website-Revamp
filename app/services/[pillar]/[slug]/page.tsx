@@ -7,6 +7,7 @@ import { getLeafContent } from '@/lib/services/content'
 import { LeafServicePage } from '@/components/services/leaf-service'
 import { SITE_ORIGIN } from '@/lib/seo'
 import { buildLeafJsonLd } from '@/lib/services/leaf-jsonld'
+import { TrackClick } from '@/components/ui/track-click'
 
 type Params = { pillar: string; slug: string }
 
@@ -135,13 +136,18 @@ function ComingSoonStub({ pillar, leaf }: { pillar: Pillar; leaf: ChildService }
         </h1>
         <p className="text-[16px] leading-[1.65] text-gray mb-[32px]">{leaf.description}</p>
         <div className="flex flex-col items-stretch justify-center gap-[12px] sm:flex-row sm:items-center">
-          <a
-            href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
-            className="inline-flex min-h-[44px] items-stretch justify-center bg-brand text-[15px] font-semibold tracking-[-0.01em] text-white no-underline [font-feature-settings:'tnum']"
-          >
-            <span className="px-[22px] py-[12px]">Talk to us</span>
-            <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[16px] py-[12px]">→</span>
-          </a>
+          <TrackClick event="book_call_click" data={{ source: 'coming-soon' }}>
+            <button
+              type="button"
+              className="inline-flex min-h-[44px] cursor-pointer items-stretch justify-center bg-brand text-[15px] font-semibold tracking-[-0.01em] text-white no-underline [font-feature-settings:'tnum']"
+              data-cal-namespace="30min"
+              data-cal-link="anik-metaborong/30min"
+              data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+            >
+              <span className="px-[22px] py-[12px]">Talk to us</span>
+              <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[16px] py-[12px]">→</span>
+            </button>
+          </TrackClick>
         </div>
         <p className="mt-[32px] text-[13px] text-gray-light">
           <Link href={pillar.hubHref} className="underline hover:text-dark">Back to {pillar.label}</Link>

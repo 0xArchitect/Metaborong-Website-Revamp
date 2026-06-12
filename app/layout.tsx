@@ -3,6 +3,7 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
 import { SmoothScroll } from '@/components/providers/smooth-scroll'
+import { CalInit } from '@/components/providers/cal-init'
 
 export const metadata: Metadata = {
   title: {
@@ -45,6 +46,7 @@ export default function RootLayout({
         {/* Vercel Web Analytics is cookieless (no browser identifiers), so it
             sits outside the mb_consent gate that guards the mb_geo cookie. */}
         <Analytics />
+        <CalInit />
       </body>
     </html>
   )
