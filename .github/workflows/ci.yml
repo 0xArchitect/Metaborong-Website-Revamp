@@ -32,6 +32,10 @@ jobs:
           key: mongodb-binaries-${{ runner.os }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
+      # Warm the mongodb-memory-server binary cache single-threaded first:
+      # parallel Vitest workers racing the cold-cache download fail with
+      # lockfile/ETXTBSY errors (first CI run, 2026-06-12).
+      - run: node -e "import('mongodb-memory-server').then(async (m) => { const s = await m.MongoMemoryServer.create(); await s.stop(); })"
       - run: pnpm test
       - run: pnpm build
 
