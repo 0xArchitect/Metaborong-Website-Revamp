@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { TrackClick } from '@/components/ui/track-click'
 import { Reveal } from '@/components/ui/reveal'
 import { Typewriter } from '@/components/ui/typewriter'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
@@ -173,7 +174,16 @@ export function HeroSection() {
 
             {/* CTAs */}
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-              <Button href="/#contact" size="lg" arrow="→" className="justify-center w-full sm:w-auto">Get a scope</Button>
+              <TrackClick event="book_call_click" data={{ source: 'hero' }}>
+                <Button
+                  size="lg"
+                  arrow="→"
+                  className="justify-center w-full sm:w-auto"
+                  data-cal-namespace="30min"
+                  data-cal-link="anik-metaborong/30min"
+                  data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+                >Get a scope</Button>
+              </TrackClick>
               <Button href="/#work" variant="ghost" size="lg" className="justify-center w-full sm:w-auto">Open recent work</Button>
             </div>
           </div>

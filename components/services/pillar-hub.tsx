@@ -13,6 +13,7 @@ import {
 import { pillarHubCopy, type PillarHubCopy, type SubGroupCopy } from '@/lib/services/pillar-hub-content'
 import { serviceSchemas } from '@/lib/schema'
 import { SectionEyebrow } from '@/components/ui/section-eyebrow'
+import { TrackClick } from '@/components/ui/track-click'
 import { FaqAccordion } from '@/components/sections/faq-accordion'
 import { Web3HubVisualChain } from './web3-hub-visual'
 import { AiHubVisualAgents } from './ai-hub-visual'
@@ -115,13 +116,18 @@ function PillarHero({ pillar, copy }: { pillar: Pillar; copy: PillarHubCopy }) {
 
   const ctas = (
     <div className="flex flex-col items-stretch gap-[12px] sm:flex-row sm:items-center">
-      <a
-        href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
-        className="inline-flex min-h-[44px] items-stretch justify-center bg-[var(--cta-color,var(--color-brand))] text-[14px] font-semibold tracking-[-0.005em] text-white no-underline"
-      >
-        <span className="px-[20px] py-[12px]">Talk to us</span>
-        <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[14px] py-[12px]">→</span>
-      </a>
+      <TrackClick event="book_call_click" data={{ source: 'pillar-hub' }}>
+        <button
+          type="button"
+          className="inline-flex min-h-[44px] cursor-pointer items-stretch justify-center bg-[var(--cta-color,var(--color-brand))] text-[14px] font-semibold tracking-[-0.005em] text-white no-underline"
+          data-cal-namespace="30min"
+          data-cal-link="anik-metaborong/30min"
+          data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+        >
+          <span className="px-[20px] py-[12px]">Talk to us</span>
+          <span aria-hidden="true" className="border-l border-white/15 bg-white/10 px-[14px] py-[12px]">→</span>
+        </button>
+      </TrackClick>
       <Link
         href="/work"
         className="inline-flex min-h-[44px] items-center justify-center border border-border bg-white px-[18px] py-[10px] text-[14px] font-semibold tracking-[-0.005em] text-dark no-underline hover:border-dark"
