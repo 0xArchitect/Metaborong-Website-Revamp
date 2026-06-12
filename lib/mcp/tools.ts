@@ -323,6 +323,30 @@ async function uploadImageHandler(
   }
 }
 
+function assertFetchableImageUrl(url: string): void {
+  let parsed: URL
+  try {
+    parsed = new URL(url)
+  } catch {
+    throw new ToolError(APP_VALIDATION_FAILED, 'VALIDATION_FAILED', 'malformed URL', 'source.url')
+  }
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    throw new ToolError(APP_VALIDATION_FAILED, 'VALIDATION_FAILED', 'only http(s) URLs are fetchable', 'source.url')
+  }
+  const host = parsed.hostname.toLowerCase()
+  // Best-effort SSRF guard: literal private/loopback/link-local addresses and
+  // obvious internal names. DNS rebinding is out of scope (token-gated tool).
+  const isPrivate =
+    host === 'localhost' || host.endsWith('.local') || host.endsWith('.internal') ||
+    host === '0.0.0.0' || host === '::1' || host === '[::1]' ||
+    /^127\./.test(host) || /^10\./.test(host) || /^192\.168\./.test(host) ||
+    /^169\.254\./.test(host) || /^172\.(1[6-9]|2\d|3[01])\./.test(host) ||
+    /^\[?f[cd][0-9a-f]{2}:/.test(host) || /^\[?fe80:/.test(host)
+  if (isPrivate) {
+    throw new ToolError(APP_VALIDATION_FAILED, 'VALIDATION_FAILED', 'URL resolves to a private or local address', 'source.url')
+  }
+}
+
 /**
  * Fetch an image by URL with a 10s timeout and an 8 MB cap. data: URLs
  * are decoded inline so callers don't need to construct an HTTP fetch
@@ -345,6 +369,8 @@ async function fetchImageBytes(url: string): Promise<Buffer> {
     }
     return bytes
   }
+
+  assertFetchableImageUrl(url)
 
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
