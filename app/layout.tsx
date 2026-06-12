@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
 import { Analytics } from '@vercel/analytics/next'
+import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
 import { SmoothScroll } from '@/components/providers/smooth-scroll'
-
+import { CalInit } from '@/components/providers/cal-init'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Web3 Protocols, AI Agents & SaaS Products | Metaborong',
+    default: 'Metaborong | Web3, AI and Product Studio',
     template: '%s | Metaborong',
   },
   description:
@@ -43,7 +43,10 @@ export default function RootLayout({
         <SmoothScroll>{children}</SmoothScroll>
         <ConsentBanner />
         <ConsentRevokePill />
+        {/* Vercel Web Analytics is cookieless (no browser identifiers), so it
+            sits outside the mb_consent gate that guards the mb_geo cookie. */}
         <Analytics />
+        <CalInit />
       </body>
     </html>
   )

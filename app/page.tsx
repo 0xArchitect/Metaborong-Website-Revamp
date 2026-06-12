@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     types: { 'text/plain': '/llms.txt' },
   },
   openGraph: {
-    title: 'Web3 Protocols, AI Agents & SaaS Products | Metaborong',
+    title: 'Metaborong | Web3, AI and Product Studio',
     description:
       'Metaborong builds DeFi protocols, AI agent systems, and custom SaaS products for founders and crypto-native teams.',
     url: 'https://www.metaborong.com',

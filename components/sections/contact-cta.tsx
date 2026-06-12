@@ -1,5 +1,6 @@
 import { Section } from '@/components/ui/section'
 import { Button } from '@/components/ui/button'
+import { TrackClick } from '@/components/ui/track-click'
 
 export function ContactCtaSection() {
   return (
@@ -40,15 +41,17 @@ export function ContactCtaSection() {
           </div>
 
           <div className="flex flex-col items-start gap-[18px]">
-            <Button
-              variant="primary"
-              size="md"
-              href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
-              arrow="→"
-              className="min-h-[44px]"
-            >
-              Start a conversation
-            </Button>
+            <TrackClick event="contact_click" data={{ source: 'contact-cta' }}>
+              <Button
+                variant="primary"
+                size="md"
+                href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
+                arrow="→"
+                className="min-h-[44px]"
+              >
+                Start a conversation
+              </Button>
+            </TrackClick>
             <div className="flex flex-col gap-[6px] font-mono text-[11px] uppercase tracking-[0.14em] text-white/60">
               <span>
                 Reply within <b className="font-bold text-white">12h</b>

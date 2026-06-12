@@ -1,6 +1,7 @@
 import { Section } from '@/components/ui/section'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
+import { TrackClick } from '@/components/ui/track-click'
 import { pillars, getPublishedLeaves, type Pillar } from '@/components/sections/services-data'
 import { TrustBar } from '@/components/sections/trust-bar'
 import { ClutchWidget } from '@/components/sections/clutch-widget'
@@ -42,14 +43,18 @@ function HeroBlock() {
           </p>
         </blockquote>
         <div className="mt-[28px] flex flex-wrap items-center gap-[12px]">
-          <Button
-            href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
-            variant="primary"
-            size="lg"
-            arrow="→"
-          >
-            Talk to us
-          </Button>
+          <TrackClick event="book_call_click" data={{ source: 'services-overview' }}>
+            <Button
+              variant="primary"
+              size="lg"
+              arrow="→"
+              data-cal-namespace="30min"
+              data-cal-link="anik-metaborong/30min"
+              data-cal-config={'{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'}
+            >
+              Talk to us
+            </Button>
+          </TrackClick>
           <Button href="/#work" variant="ghost" size="lg">
             Read case studies
           </Button>
