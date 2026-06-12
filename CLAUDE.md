@@ -16,15 +16,15 @@ in one app:
 
 ## Commands
 
-- Dev: `npm run dev` (port 3000).
-- Production-like local: `npm run build && PORT=3001 npm run start`.
-- Lint: `npm run lint` · Types: `npm run typecheck` (`tsc --noEmit`).
-- Unit/integration tests: `npm run test` (Vitest, Node env by default).
-  - Single file: `npx vitest run lib/auth.test.ts`
-  - By name: `npx vitest run -t "rejects unescaped"`
+- Dev: `pnpm dev` (port 3000).
+- Production-like local: `pnpm build && PORT=3001 pnpm start`.
+- Lint: `pnpm lint` · Types: `pnpm typecheck` (`tsc --noEmit`).
+- Unit/integration tests: `pnpm test` (Vitest, Node env by default).
+  - Single file: `pnpm vitest run lib/auth.test.ts`
+  - By name: `pnpm vitest run -t "rejects unescaped"`
   - Component tests (`*.test.tsx`) opt into happy-dom via a `// @vitest-environment happy-dom` directive at the top of the file.
-- E2E: `npm run test:e2e` (Playwright, Chromium only, `workers: 1`; auto-starts `pnpm dev`).
-- Coverage: `npm run test:coverage`.
+- E2E: `pnpm test:e2e` (Playwright, Chromium only, `workers: 1`; auto-starts `pnpm dev`).
+- Coverage: `pnpm test:coverage`.
 
 Tests use `mongodb-memory-server` (one instance per Vitest worker, fresh DB per test) — no
 external MongoDB needed. The first run downloads a ~70 MB Mongo binary into the OS cache.
