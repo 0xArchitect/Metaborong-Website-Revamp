@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
-import { ConsentBanner, ConsentRevokePill } from '@/components/consent/consent-banner'
 import { SmoothScroll } from '@/components/providers/smooth-scroll'
 import { CalInit } from '@/components/providers/cal-init'
 
@@ -41,8 +40,6 @@ export default function RootLayout({
           attribute mismatch, not anything inside it. */}
       <body className="overflow-x-hidden" suppressHydrationWarning>
         <SmoothScroll>{children}</SmoothScroll>
-        <ConsentBanner />
-        <ConsentRevokePill />
         {/* Vercel Web Analytics is cookieless (no browser identifiers), so it
             sits outside the mb_consent gate that guards the mb_geo cookie. */}
         <Analytics />

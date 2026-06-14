@@ -9,9 +9,9 @@ const companyLinks = [
 ]
 
 const serviceLinks = [
-  { label: 'Web3 / Blockchain', href: '/#services' },
-  { label: 'AI Agents', href: '/#services' },
-  { label: 'Product Studio', href: '/#services' },
+  { label: 'Web3 / Blockchain', href: '/services/web3' },
+  { label: 'AI Agents', href: '/services/ai' },
+  { label: 'Product Studio', href: '/services/product-studio' },
 ]
 
 const offices = [

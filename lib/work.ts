@@ -22,6 +22,8 @@ export interface CaseStudyMeta {
   appName?: string // product name (breadcrumb + JSON-LD about); falls back to client
   blendLogo?: boolean // screen-blend the animated logo so its black bg drops into the hero
   bylineRole?: string // E-E-A-T hero byline role; falls back to the SunsetML phrasing
+  liveLink?: string // Link to the live site
+  bannerLogo?: boolean // Render the animated logo as a wider linked banner
 }
 
 export const caseStudyMeta: Record<string, CaseStudyMeta> = {
@@ -42,6 +44,7 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     glowColor: '#ff6b35', // warm orange matching SunsetML brand
     appCategory: 'AI writing platform',
     bylineRole: 'engineering partner and equity co-founder',
+    bannerLogo: true,
   },
   magic: {
     title: 'MAGIC by Omagic AI: How Metaborong Built a Scalable AI Product Video and Creative Automation Platform for E-commerce',
@@ -62,6 +65,7 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     appCategory: 'AI creative automation platform',
     blendLogo: true, // logo video has a black bg → screen-blend it into the hero
     bylineRole: 'engineering partner',
+    bannerLogo: true,
   },
   orbitx: {
     title: 'OrbitX: How Metaborong Engineered a Production-Grade Stablecoin Banking Infrastructure for Global Payments',
@@ -77,10 +81,12 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     animatedLogo: '/works/orbitx/animated-logo.mp4',
     demoVideo: '/works/orbitx/demo.mp4',
     demoPoster: '/works/orbitx/demo-poster.jpg',
-    glowColor: '#22d3ee', // cyan/teal matching OrbitX brand
+    glowColor: '#EDAD8E', // Custom peach/beige color
     appCategory: 'Stablecoin banking infrastructure',
     blendLogo: true,
     bylineRole: 'development partner',
+    liveLink: 'https://orbitxpay.com/',
+    bannerLogo: true,
   },
   sedax: {
     title: 'SEDAX: How Metaborong Built a Blockchain eKYC Platform with Zero-Knowledge Proof Identity Verification',
@@ -96,10 +102,11 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     animatedLogo: '/works/sedax/animated-logo.mp4',
     // No demoVideo: the provided SEDAX clip is a brand-logo loop (not a product
     // demo) and clashes with the emerald system; the ZKP vignette is the motion.
-    glowColor: '#10b981', // emerald matching SEDAX brand
+    glowColor: '#3254fbff', // brighter electric blue matching SEDAX vibe
     appCategory: 'Blockchain identity verification platform',
     blendLogo: true,
     bylineRole: 'development partner',
+    bannerLogo: true,
   },
 }
 
