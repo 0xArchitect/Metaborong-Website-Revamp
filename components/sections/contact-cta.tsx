@@ -57,9 +57,7 @@ export function ContactCtaSection() {
                 Reply within <b className="font-bold text-white">12h</b>
               </span>
               <span>No pitch deck. No commitment.</span>
-              <span>
-                <b className="font-bold text-white">contact@metaborong.com</b>
-              </span>
+                <a href="mailto:contact@metaborong.com" className="font-bold text-white hover:underline focus-visible:underline focus-visible:outline-none">contact@metaborong.com</a>
             </div>
           </div>
         </div>
