@@ -442,122 +442,232 @@ function WorkHero({ meta }: { meta: CaseStudyMeta }) {
   const publishedLabel = meta.datePublished
     ? new Date(meta.datePublished).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
     : null
+
+  const [titlePrefix, ...titleSuffixParts] = meta.title.split(':')
+  const titleSuffix = titleSuffixParts.length > 0 ? titleSuffixParts.join(':').trim() : null
+
   return (
-    <section className="relative min-h-[100svh] flex flex-col justify-end overflow-hidden bg-[#0a0a0a] pt-[100px] sm:pt-[120px] lg:pt-[160px]">
-      {/*
-        Gradient system: soft, massively-blurred orbs that blend seamlessly.
-        The primary orb sits behind/around the logo (top-right).
-        Color comes from per-project glowColor metadata.
-      */}
+    <section className={`relative flex flex-col justify-end overflow-hidden bg-[#0a0a0a] ${meta.bannerLogo ? 'min-h-0 pt-[80px] sm:pt-[96px] lg:pt-[112px]' : 'min-h-[100svh] pt-[100px] sm:pt-[120px] lg:pt-[160px]'}`}>
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        {/* Primary orb — behind logo, large + very blurry for soft bloom */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: '-10%', right: '-10%',
-            width: '70%', height: '70%',
-            background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}55 0%, transparent 70%)`,
-            filter: 'blur(60px)',
-          }}
-        />
-        {/* Tight bright inner core */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: '0%', right: '0%',
-            width: '40%', height: '45%',
-            background: `radial-gradient(ellipse at top right, ${meta.glowColor ?? '#3b5bff'}88 0%, transparent 60%)`,
-            filter: 'blur(40px)',
-          }}
-        />
-        {/* Subtle secondary scatter bloom */}
-        <div
-          className="absolute rounded-full mix-blend-screen"
-          style={{
-            top: '15%', right: '5%',
-            width: '35%', height: '40%',
-            background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}44 0%, transparent 55%)`,
-            filter: 'blur(80px)',
-            opacity: 0.6,
-          }}
-        />
-        {/* Dark vignette bottom-left keeps text readable */}
-        <div className="absolute bottom-0 left-0 h-[65%] w-[65%] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.9),transparent_65%)]" />
-        {/* Hard bottom fade to solid black */}
-        <div className="absolute bottom-0 inset-x-0 h-[35%] bg-gradient-to-t from-[#0a0a0a] to-transparent" />
-      </div>
+        {meta.bannerLogo ? (
+          <>
+            {/* Top black section to ensure Nav and Eyebrow are super clear */}
+            <div className="absolute top-0 inset-x-0 h-[50%] bg-gradient-to-b from-[#0a0a0a] to-transparent z-10" />
 
-      {/* Animated Logo — floats with glow underneath, NO hard box */}
-      <div
-        className="absolute top-[72px] sm:top-[88px] lg:top-[100px] right-[16px] sm:right-[24px] md:right-[40px] lg:right-[80px] xl:right-[128px]
-                   w-[110px] sm:w-[150px] md:w-[190px] lg:w-[240px] aspect-square"
-      >
-        {/* Soft coloured glow halo beneath the logo */}
-        <div
-          className="absolute inset-[-20%] rounded-full"
-          style={{
-            background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}33 0%, transparent 65%)`,
-            filter: 'blur(24px)',
-          }}
-        />
-        {meta.animatedLogo ? (
-          <video
-            src={meta.animatedLogo}
-            autoPlay muted loop playsInline
-            aria-hidden="true"
-            className={`relative w-full h-full object-cover rounded-[16px] sm:rounded-[20px]${meta.blendLogo ? ' mix-blend-screen' : ''}`}
-          />
-        ) : (
-          <div className="relative w-full h-full flex items-center justify-center">
-            <img src={meta.logo} alt="" className="h-[40px] sm:h-[56px] object-contain invert opacity-80" />
-          </div>
-        )}
-      </div>
-
-      {/* Hero text */}
-      <div className="relative z-10 mx-auto w-full max-w-[1280px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[80px] xl:px-[128px] pb-[48px] sm:pb-[64px] lg:pb-[100px]">
-        <Link
-          href="/#work"
-          className="group -my-[14px] mb-[6px] inline-flex items-center gap-[7px] py-[14px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/65 transition-colors duration-[var(--duration-fast)] hover:text-white"
-        >
-          <ArrowLeft
-            size={13}
-            strokeWidth={2.5}
-            aria-hidden
-            className="transition-transform duration-[var(--duration-base)] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-[3px]"
-          />
-          <span className="relative inline-block">
-            All Work
-            <span
-              aria-hidden
-              className="absolute -bottom-[3px] left-0 h-[1px] w-full origin-left scale-x-0 bg-white/70 transition-transform duration-[var(--duration-base)] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+            {/* Ambient glow for banner layout — shifted upwards */}
+            <div
+              className="absolute bottom-[10%] left-[-20%] right-[-20%] h-[80vh] mix-blend-screen opacity-50 pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse at 50% 75%, ${meta.glowColor ?? '#3b5bff'} 0%, transparent 70%)`,
+                filter: 'blur(120px)',
+              }}
             />
-          </span>
-        </Link>
-        <span className="block mb-[20px] font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-brand">{meta.category}</span>
-        {/* Title must not overlap the logo on mobile — cap width */}
-        <h1 className={`text-[clamp(28px,5vw,80px)] font-bold tracking-[-0.04em] leading-[1.0] text-white max-w-[min(620px,70vw)] sm:max-w-[min(700px,72vw)] lg:max-w-[900px] ${publishedLabel ? 'mb-[24px] sm:mb-[32px]' : 'mb-[40px] sm:mb-[56px]'}`}>
-          {meta.title}
-        </h1>
-        {publishedLabel && (
-          <p className="mb-[40px] sm:mb-[56px] text-[13px] sm:text-[14px] font-medium text-white/55">
-            By Metaborong, {meta.bylineRole ?? 'engineering partner and equity co-founder'}
-            <span className="mx-[8px] text-white/30">·</span>
-            Published {publishedLabel}
-          </p>
+            {/* Secondary bloom, shifted upwards slightly */}
+            <div
+              className="absolute bottom-[5%] left-[-10%] right-[-10%] h-[40vh] opacity-30 pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse at 50% 75%, ${meta.glowColor ?? '#3b5bff'} 0%, transparent 60%)`,
+                filter: 'blur(100px)',
+              }}
+            />
+          </>
+        ) : (
+          <>
+            {/* Primary orb — behind logo, large + very blurry for soft bloom */}
+            <div
+              className="absolute rounded-full"
+              style={{
+                top: '-10%', right: '-10%',
+                width: '70%', height: '70%',
+                background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}55 0%, transparent 70%)`,
+                filter: 'blur(60px)',
+              }}
+            />
+            {/* Tight bright inner core */}
+            <div
+              className="absolute rounded-full"
+              style={{
+                top: '0%', right: '0%',
+                width: '40%', height: '45%',
+                background: `radial-gradient(ellipse at top right, ${meta.glowColor ?? '#3b5bff'}88 0%, transparent 60%)`,
+                filter: 'blur(40px)',
+              }}
+            />
+            {/* Subtle secondary scatter bloom */}
+            <div
+              className="absolute rounded-full mix-blend-screen"
+              style={{
+                top: '15%', right: '5%',
+                width: '35%', height: '40%',
+                background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}44 0%, transparent 55%)`,
+                filter: 'blur(80px)',
+                opacity: 0.6,
+              }}
+            />
+            {/* Dark vignette bottom-left keeps text readable */}
+            <div className="absolute bottom-0 left-0 h-[65%] w-[65%] bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.9),transparent_65%)]" />
+            {/* Hard bottom fade to solid black */}
+            <div className="absolute bottom-0 inset-x-0 h-[35%] bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+          </>
         )}
-        <div className="flex flex-wrap gap-x-[32px] sm:gap-x-[48px] gap-y-[20px] border-t border-white/10 pt-[28px] sm:pt-[36px]">
-          {[
-            { label: 'Client', value: client },
-            { label: 'Category', value: meta.category },
-            { label: 'Services', value: meta.services ?? 'Platform Engineering' },
-            { label: 'Year', value: meta.year ?? '2024' },
-          ].map(item => (
-            <div key={item.label} className="flex flex-col gap-[6px]">
-              <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">{item.label}</span>
-              <span className="text-[13px] sm:text-[15px] font-medium text-white/80">{item.value}</span>
+      </div>
+
+      {/* Animated Logo — floats with glow underneath, NO hard box (Only for Square Logo) */}
+      {!meta.bannerLogo && (
+        meta.liveLink ? (
+          <a
+            href={meta.liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-[72px] sm:top-[88px] lg:top-[100px] right-[16px] sm:right-[24px] md:right-[40px] lg:right-[80px] xl:right-[128px] w-[110px] sm:w-[150px] md:w-[190px] lg:w-[240px] aspect-square group block z-20"
+            aria-label={`Visit ${client} live website`}
+          >
+            {/* Soft coloured glow halo beneath the logo */}
+            <div
+              className="absolute inset-[-20%] rounded-full opacity-100 group-hover:opacity-80 transition-opacity duration-300"
+              style={{
+                background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}33 0%, transparent 65%)`,
+                filter: 'blur(24px)',
+              }}
+            />
+            {meta.animatedLogo ? (
+              <video
+                src={meta.animatedLogo}
+                autoPlay muted loop playsInline
+                aria-hidden="true"
+                className={`relative w-full h-full object-cover rounded-[16px] sm:rounded-[20px] transition-transform duration-[400ms] ease-out group-hover:scale-[1.03] group-hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]${meta.blendLogo ? ' mix-blend-screen' : ''}`}
+              />
+            ) : (
+              <div className="relative w-full h-full flex items-center justify-center transition-transform duration-[400ms] ease-out group-hover:scale-105">
+                <img src={meta.logo} alt="" className="h-[40px] sm:h-[56px] object-contain invert opacity-80" />
+              </div>
+            )}
+          </a>
+        ) : (
+          <div className="absolute top-[72px] sm:top-[88px] lg:top-[100px] right-[16px] sm:right-[24px] md:right-[40px] lg:right-[80px] xl:right-[128px] w-[110px] sm:w-[150px] md:w-[190px] lg:w-[240px] aspect-square z-20">
+            {/* Soft coloured glow halo beneath the logo */}
+            <div
+              className="absolute inset-[-20%] rounded-full"
+              style={{
+                background: `radial-gradient(ellipse at center, ${meta.glowColor ?? '#3b5bff'}33 0%, transparent 65%)`,
+                filter: 'blur(24px)',
+              }}
+            />
+            {meta.animatedLogo ? (
+              <video
+                src={meta.animatedLogo}
+                autoPlay muted loop playsInline
+                aria-hidden="true"
+                className={`relative w-full h-full object-cover rounded-[16px] sm:rounded-[20px]${meta.blendLogo ? ' mix-blend-screen' : ''}`}
+              />
+            ) : (
+              <div className="relative w-full h-full flex items-center justify-center">
+                <img src={meta.logo} alt="" className="h-[40px] sm:h-[56px] object-contain invert opacity-80" />
+              </div>
+            )}
+          </div>
+        )
+      )}
+
+      {/* Main Content Flow */}
+      <div className={`relative z-10 mx-auto w-full max-w-[1280px] px-[16px] sm:px-[24px] md:px-[48px] lg:px-[80px] xl:px-[128px] flex flex-col ${meta.bannerLogo ? 'pb-[24px] sm:pb-[40px]' : 'flex-1 justify-end pb-[48px] sm:pb-[64px] lg:pb-[100px]'}`}>
+        
+        {/* Eyebrow & Breadcrumb */}
+        <div className={meta.bannerLogo ? 'mb-[8px] sm:mb-[16px] shrink-0' : 'mb-[16px]'}>
+          <Link
+            href="/#work"
+            className="group -my-[14px] inline-flex items-center gap-[7px] py-[14px] font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-white/65 transition-colors duration-[var(--duration-fast)] hover:text-white"
+          >
+            <ArrowLeft
+              size={13}
+              strokeWidth={2.5}
+              aria-hidden
+              className="transition-transform duration-[var(--duration-base)] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-[3px]"
+            />
+            <span className="relative inline-block">
+              All Work
+              <span
+                aria-hidden
+                className="absolute -bottom-[3px] left-0 h-[1px] w-full origin-left scale-x-0 bg-white/70 transition-transform duration-[var(--duration-base)] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+              />
+            </span>
+          </Link>
+        </div>
+
+        {/* LinkedIn-style Horizontal Banner */}
+        {meta.bannerLogo && (
+          meta.liveLink ? (
+            <a
+              href={meta.liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-full h-[25vh] min-h-[180px] sm:min-h-[260px] lg:min-h-[340px] max-h-[450px] rounded-[16px] sm:rounded-[24px] overflow-hidden group block pointer-events-auto shrink-0 mb-[16px] sm:mb-[24px] z-0"
+              aria-label={`Visit ${client} live website`}
+            >
+              {/* Edge blending removed per user request */}
+              {meta.animatedLogo ? (
+                <video
+                  src={meta.animatedLogo}
+                  autoPlay muted loop playsInline
+                  aria-hidden="true"
+                  className={`relative z-0 w-full h-full object-cover object-center opacity-70 group-hover:opacity-100 transition-transform duration-[700ms] ease-out group-hover:scale-[1.03]${meta.blendLogo ? ' mix-blend-screen' : ''}`}
+                />
+              ) : (
+                <div className="relative z-0 w-full h-full flex items-center justify-center bg-white/5">
+                  <img src={meta.logo} alt="" className="h-[40px] sm:h-[64px] object-contain invert opacity-80 transition-transform duration-[700ms] ease-out group-hover:scale-[1.05]" />
+                </div>
+              )}
+            </a>
+          ) : (
+            <div className="relative w-full h-[25vh] min-h-[180px] sm:min-h-[260px] lg:min-h-[340px] max-h-[450px] rounded-[16px] sm:rounded-[24px] overflow-hidden group block pointer-events-none shrink-0 mb-[16px] sm:mb-[24px] z-0">
+              {/* Edge blending removed per user request */}
+              {meta.animatedLogo ? (
+                <video
+                  src={meta.animatedLogo}
+                  autoPlay muted loop playsInline
+                  aria-hidden="true"
+                  className={`relative z-0 w-full h-full object-cover object-center opacity-70 group-hover:opacity-100 transition-transform duration-[700ms] ease-out group-hover:scale-[1.03]${meta.blendLogo ? ' mix-blend-screen' : ''}`}
+                />
+              ) : (
+                <div className="relative z-0 w-full h-full flex items-center justify-center bg-white/5">
+                  <img src={meta.logo} alt="" className="h-[40px] sm:h-[64px] object-contain invert opacity-80 transition-transform duration-[700ms] ease-out group-hover:scale-[1.05]" />
+                </div>
+              )}
             </div>
-          ))}
+          )
+        )}
+
+        {/* Title and Metadata */}
+        <div className={`relative z-10 ${meta.bannerLogo ? 'mt-auto' : ''}`}>
+          {titleSuffix ? (
+            <h2 className={`text-[clamp(24px,3.5vw,48px)] font-medium tracking-[-0.02em] leading-[1.1] text-white/80 ${meta.bannerLogo ? 'max-w-full' : 'max-w-[min(620px,70vw)] sm:max-w-[min(700px,72vw)] lg:max-w-[900px]'} pr-[16px] ${publishedLabel ? 'mb-[16px] sm:mb-[24px]' : 'mb-[24px] sm:mb-[32px]'}`}>
+              {titleSuffix}
+            </h2>
+          ) : (
+            <h1 className={`text-[clamp(28px,5vw,80px)] font-bold tracking-[-0.04em] leading-[1.0] text-white pr-[16px] ${meta.bannerLogo ? 'max-w-full' : 'max-w-[min(620px,70vw)] sm:max-w-[min(700px,72vw)] lg:max-w-[900px]'} ${publishedLabel ? 'mb-[24px] sm:mb-[32px]' : 'mb-[40px] sm:mb-[56px]'}`}>
+              {meta.title}
+            </h1>
+          )}
+          {publishedLabel && (
+            <p className="mb-[40px] sm:mb-[56px] text-[13px] sm:text-[14px] font-medium text-white/55">
+              By Metaborong, {meta.bylineRole ?? 'engineering partner and equity co-founder'}
+              <span className="mx-[8px] text-white/30">·</span>
+              Published {publishedLabel}
+            </p>
+          )}
+          <div className="flex flex-wrap gap-x-[32px] sm:gap-x-[48px] gap-y-[20px] border-t border-white/10 pt-[28px] sm:pt-[36px]">
+            {[
+              { label: 'Client', value: client },
+              { label: 'Category', value: meta.category },
+              { label: 'Services', value: meta.services ?? 'Platform Engineering' },
+              { label: 'Year', value: meta.year ?? '2024' },
+            ].map(item => (
+              <div key={item.label} className="flex flex-col gap-[6px]">
+                <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-white/55">{item.label}</span>
+                <span className="text-[13px] sm:text-[15px] font-medium text-white/80">{item.value}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

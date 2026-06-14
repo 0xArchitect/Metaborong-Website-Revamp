@@ -55,12 +55,8 @@ export function TrustBar() {
           if (c.customColor) {
             return (
               <li key={`${c.name}-${i}`} className="shrink-0">
-                <a
-                  href={c.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${c.name}, visit site`}
-                  className="group relative flex items-center justify-center rounded-md transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                <div
+                  className="group relative flex items-center justify-center rounded-md transition-all duration-200 ease-out"
                   style={{ height: cellH }}
                 >
                   {/* Invisible image forces the parent 'a' tag to automatically snap to the exact intrinsic layout width/height.
@@ -92,7 +88,7 @@ export function TrustBar() {
                       width: '100%',
                     } as React.CSSProperties}
                   />
-                </a>
+                </div>
               </li>
             )
           }
@@ -104,12 +100,8 @@ export function TrustBar() {
               : '[filter:brightness(0)] hover:[filter:none] focus-visible:[filter:none]'
           return (
             <li key={`${c.name}-${i}`} className="shrink-0">
-              <a
-                href={c.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${c.name}, visit site`}
-                className="group flex items-center justify-center rounded-md opacity-60 transition-opacity duration-200 ease-out hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+              <div
+                className="group flex items-center justify-center rounded-md opacity-60 transition-opacity duration-200 ease-out hover:opacity-100"
                 style={{ height: cellH }}
               >
                 <img
@@ -123,7 +115,7 @@ export function TrustBar() {
                     width: 'auto', // Let intrinsic width take over
                   }}
                 />
-              </a>
+              </div>
             </li>
           )
         })}
