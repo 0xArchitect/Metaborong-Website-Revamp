@@ -560,7 +560,7 @@ function RelatedServices({ items }: { items: readonly ResolvedRelated[] }) {
               <span
                 className="flex shrink-0 items-center justify-center text-gray transition-[transform,color] duration-[var(--duration-fast)] group-hover:translate-x-[6px] group-hover:text-[color:var(--pillar-color)] motion-reduce:group-hover:translate-x-0 mr-2"
               >
-                <ArrowRight className="h-[22px] w-[22px] stroke-[1.5px]" aria-hidden="true" />
+                <ArrowRight className="h-[22px] w-[22px] sm:h-[26px] sm:w-[26px] md:h-[30px] md:w-[30px] stroke-[1.5px]" aria-hidden="true" />
               </span>
             </Link>
           </li>

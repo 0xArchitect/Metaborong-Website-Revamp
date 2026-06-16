@@ -81,7 +81,7 @@ export function Button({
       </span>
       <span
         aria-hidden="true"
-        className={`flex items-center self-stretch ${sz.arrowPad} bg-[rgba(255,255,255,0.10)] border-l border-white/15`}
+        className={`flex items-center self-stretch ${sz.arrowPad} bg-[rgba(255,255,255,0.10)] border-l border-white/15 text-[18px] sm:text-[20px] md:text-[22px] font-light`}
       >
         {arrow}
       </span>

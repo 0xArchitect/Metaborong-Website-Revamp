@@ -18,7 +18,12 @@ export const metadata: Metadata = {
     canonical: SERVICES_URL,
     types: { 'text/markdown': `${SERVICES_URL}raw.md` },
   },
-  openGraph: { title: TITLE, description: DESCRIPTION, url: SERVICES_URL },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SERVICES_URL,
+    images: [{ url: 'https://www.metaborong.com/opengraph-image', width: 1200, height: 630, alt: TITLE }],
+  },
 }
 
 // FAQPage built from the same OVERVIEW_FAQS the page renders, so the visible

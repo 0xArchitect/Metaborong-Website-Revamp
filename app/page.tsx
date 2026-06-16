@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     description:
       'Metaborong builds DeFi protocols, AI agent systems, and custom SaaS products for founders and crypto-native teams.',
     url: 'https://www.metaborong.com',
+    images: [{ url: 'https://www.metaborong.com/opengraph-image', width: 1200, height: 630, alt: 'Metaborong' }],
   },
 }
 
