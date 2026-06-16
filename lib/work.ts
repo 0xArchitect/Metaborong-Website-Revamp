@@ -100,6 +100,7 @@ export const caseStudyMeta: Record<string, CaseStudyMeta> = {
     year: '2026',
     datePublished: '2026-06-10',
     animatedLogo: '/works/sedax/animated-logo.mp4',
+    demoVideo: '/works/sedax/SEDAX.mp4',
     // No demoVideo: the provided SEDAX clip is a brand-logo loop (not a product
     // demo) and clashes with the emerald system; the ZKP vignette is the motion.
     glowColor: '#3254fbff', // brighter electric blue matching SEDAX vibe
