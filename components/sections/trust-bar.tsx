@@ -62,6 +62,7 @@ export function TrustBar() {
                   {/* Invisible image forces the parent 'a' tag to automatically snap to the exact intrinsic layout width/height.
                       alt="" so screen readers don't double-announce — the visible mask-rendered logo is the accessible name carrier via the parent <a> aria-label.
                       loading="lazy" keeps Next.js/React 19 from auto-promoting this to <link rel="preload">, which would otherwise race the hero AVIF for bandwidth. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={c.src}
                     alt=""
@@ -104,6 +105,7 @@ export function TrustBar() {
                 className="group flex items-center justify-center rounded-md opacity-60 transition-opacity duration-200 ease-out hover:opacity-100"
                 style={{ height: cellH }}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={c.src}
                   alt={c.name}
