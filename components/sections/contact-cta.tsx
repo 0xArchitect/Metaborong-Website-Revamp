@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Section } from '@/components/ui/section'
 import { Button } from '@/components/ui/button'
 import { TrackClick } from '@/components/ui/track-click'
@@ -7,13 +8,13 @@ export function ContactCtaSection() {
     <Section bg="default" maxWidth="xwide">
       <div className="relative isolate overflow-hidden bg-canvas text-off-white">
         {/* Background landscape (Figma Super-Visuals node 1:19), muted to a texture. */}
-        <img
+        <Image
           src="/contact/landscape.webp"
           alt=""
           aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full select-none object-cover opacity-[.35] grayscale-[80%] contrast-[1.1]"
+          fill
+          unoptimized
+          className="pointer-events-none z-0 select-none object-cover opacity-[.35] grayscale-[80%] contrast-[1.1]"
         />
         {/* Two stacked background gradients: left-weighted dark→transparent wash +
             top/bottom vignette so the copy clears AA over the image. */}
@@ -45,7 +46,8 @@ export function ContactCtaSection() {
               <Button
                 variant="primary"
                 size="md"
-                href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
+                data-cal-link="anik-metaborong/30min"
+                data-cal-namespace="30min"
                 arrow="→"
                 className="min-h-[44px]"
               >
@@ -57,9 +59,7 @@ export function ContactCtaSection() {
                 Reply within <b className="font-bold text-white">12h</b>
               </span>
               <span>No pitch deck. No commitment.</span>
-              <span>
-                <b className="font-bold text-white">contact@metaborong.com</b>
-              </span>
+                <a href="mailto:contact@metaborong.com" className="font-bold text-white hover:underline focus-visible:underline focus-visible:outline-none">contact@metaborong.com</a>
             </div>
           </div>
         </div>

@@ -539,10 +539,10 @@ function RelatedServices({ items }: { items: readonly ResolvedRelated[] }) {
       {/* Compact hairline rows, not a card grid. Arrow node slides + inks on hover. */}
       <ul role="list" className="border-t border-border">
         {items.map(({ pillar, leaf }) => (
-          <li key={`${pillar.id}/${leaf.slug}`}>
+          <li key={`${pillar.id}/${leaf.slug}`} className="border-b border-border">
             <Link
               href={`${pillar.hubHref}${leaf.slug}/`}
-              className="group grid grid-cols-[1fr_auto] items-center gap-[20px] border-b border-border py-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset md:py-[24px]"
+              className="group grid grid-cols-[1fr_auto] items-center gap-[20px] py-[20px] px-[16px] md:px-[24px] -mx-[16px] md:-mx-[24px] rounded-[12px] md:rounded-[16px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset md:py-[24px]"
               style={{ '--pillar-color': pillar.color } as React.CSSProperties}
             >
               <div className="min-w-0">
@@ -558,9 +558,9 @@ function RelatedServices({ items }: { items: readonly ResolvedRelated[] }) {
                 <p className="mt-[4px] max-w-[68ch] text-[14px] leading-[1.55] text-gray">{leaf.description}</p>
               </div>
               <span
-                className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full border border-border text-gray transition-[transform,border-color,color] duration-[var(--duration-fast)] group-hover:translate-x-[2px] group-hover:border-[color:var(--pillar-color)] group-hover:text-[color:var(--pillar-color)] motion-reduce:group-hover:translate-x-0"
+                className="flex shrink-0 items-center justify-center text-gray transition-[transform,color] duration-[var(--duration-fast)] group-hover:translate-x-[6px] group-hover:text-[color:var(--pillar-color)] motion-reduce:group-hover:translate-x-0 mr-2"
               >
-                <ArrowRight className="h-[16px] w-[16px]" aria-hidden="true" />
+                <ArrowRight className="h-[22px] w-[22px] sm:h-[26px] sm:w-[26px] md:h-[30px] md:w-[30px] stroke-[1.5px]" aria-hidden="true" />
               </span>
             </Link>
           </li>

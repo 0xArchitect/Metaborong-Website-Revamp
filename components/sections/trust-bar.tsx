@@ -55,17 +55,14 @@ export function TrustBar() {
           if (c.customColor) {
             return (
               <li key={`${c.name}-${i}`} className="shrink-0">
-                <a
-                  href={c.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${c.name}, visit site`}
-                  className="group relative flex items-center justify-center rounded-md transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+                <div
+                  className="group relative flex items-center justify-center rounded-md transition-all duration-200 ease-out"
                   style={{ height: cellH }}
                 >
                   {/* Invisible image forces the parent 'a' tag to automatically snap to the exact intrinsic layout width/height.
                       alt="" so screen readers don't double-announce — the visible mask-rendered logo is the accessible name carrier via the parent <a> aria-label.
                       loading="lazy" keeps Next.js/React 19 from auto-promoting this to <link rel="preload">, which would otherwise race the hero AVIF for bandwidth. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={c.src}
                     alt=""
@@ -92,7 +89,7 @@ export function TrustBar() {
                       width: '100%',
                     } as React.CSSProperties}
                   />
-                </a>
+                </div>
               </li>
             )
           }
@@ -104,14 +101,11 @@ export function TrustBar() {
               : '[filter:brightness(0)] hover:[filter:none] focus-visible:[filter:none]'
           return (
             <li key={`${c.name}-${i}`} className="shrink-0">
-              <a
-                href={c.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${c.name}, visit site`}
-                className="group flex items-center justify-center rounded-md opacity-60 transition-opacity duration-200 ease-out hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40"
+              <div
+                className="group flex items-center justify-center rounded-md opacity-60 transition-opacity duration-200 ease-out hover:opacity-100"
                 style={{ height: cellH }}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={c.src}
                   alt={c.name}
@@ -123,7 +117,7 @@ export function TrustBar() {
                     width: 'auto', // Let intrinsic width take over
                   }}
                 />
-              </a>
+              </div>
             </li>
           )
         })}
