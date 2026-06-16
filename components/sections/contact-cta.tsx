@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Section } from '@/components/ui/section'
 import { Button } from '@/components/ui/button'
 import { TrackClick } from '@/components/ui/track-click'
@@ -7,13 +8,13 @@ export function ContactCtaSection() {
     <Section bg="default" maxWidth="xwide">
       <div className="relative isolate overflow-hidden bg-canvas text-off-white">
         {/* Background landscape (Figma Super-Visuals node 1:19), muted to a texture. */}
-        <img
+        <Image
           src="/contact/landscape.webp"
           alt=""
           aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full select-none object-cover opacity-[.35] grayscale-[80%] contrast-[1.1]"
+          fill
+          unoptimized
+          className="pointer-events-none z-0 select-none object-cover opacity-[.35] grayscale-[80%] contrast-[1.1]"
         />
         {/* Two stacked background gradients: left-weighted dark→transparent wash +
             top/bottom vignette so the copy clears AA over the image. */}
