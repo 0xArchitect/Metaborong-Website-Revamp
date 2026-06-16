@@ -45,7 +45,8 @@ export function ContactCtaSection() {
               <Button
                 variant="primary"
                 size="md"
-                href="mailto:contact@metaborong.com?subject=New%20project%20inquiry"
+                data-cal-link="anik-metaborong/30min"
+                data-cal-namespace="30min"
                 arrow="→"
                 className="min-h-[44px]"
               >

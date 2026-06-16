@@ -408,9 +408,7 @@ function SedaxCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: str
         </Section>
       )}
 
-      {/* No demo frame: the provided SEDAX clip is a brand-logo loop, not a
-          product demo, and clashes with the emerald system (owner call). The
-          animated ZKP verification vignette below is the page's motion moment. */}
+      <DemoVideo meta={meta} slug={slug} />
       <WorkBuilt intro={solutionIntro} features={solutionFeatures} mocks={mocks} accent="#047857" />
 
       {techApproach && (
@@ -730,18 +728,18 @@ function WorkRelatedServices({ related, title, accent }: { related: { pillar: Pi
       </div>
       <ul role="list" className="border-t border-border" style={{ '--rs-accent': accent } as React.CSSProperties}>
         {related.map(({ pillar, leaf }) => (
-          <li key={leaf.slug}>
+          <li key={leaf.slug} className="border-b border-border">
             <Link
               href={`${pillar.hubHref}${leaf.slug}/`}
-              className="group grid grid-cols-[1fr_auto] items-center gap-[20px] border-b border-border py-[20px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--rs-accent)] focus-visible:ring-inset md:py-[24px]"
+              className="group grid grid-cols-[1fr_auto] items-center gap-[20px] py-[20px] px-[16px] md:px-[24px] -mx-[16px] md:-mx-[24px] rounded-[12px] md:rounded-[16px] no-underline transition-colors duration-[var(--duration-fast)] hover:bg-bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--rs-accent)] focus-visible:ring-inset md:py-[24px]"
             >
               <div className="min-w-0">
                 <span className="font-mono text-[11px] font-bold uppercase tracking-[0.1em]" style={{ color: accent }}>{pillar.label}</span>
                 <h3 className="mt-[6px] text-[17px] font-semibold tracking-[-0.02em] leading-[1.3] text-dark md:text-[19px]">{leaf.name}</h3>
                 <p className="mt-[4px] max-w-[68ch] text-[14px] leading-[1.55] text-gray">{leaf.description}</p>
               </div>
-              <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full border border-border text-gray transition-[transform,border-color,color] duration-[var(--duration-fast)] group-hover:translate-x-[2px] group-hover:border-[var(--rs-accent)] group-hover:text-[var(--rs-accent)] motion-reduce:group-hover:translate-x-0">
-                <span aria-hidden="true">→</span>
+              <span className="flex shrink-0 items-center justify-center text-gray transition-[transform,color] duration-[var(--duration-fast)] group-hover:translate-x-[6px] group-hover:text-[var(--rs-accent)] motion-reduce:group-hover:translate-x-0 mr-2">
+                <span aria-hidden="true" className="text-[22px] font-light leading-none">→</span>
               </span>
             </Link>
           </li>
