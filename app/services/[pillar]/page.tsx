@@ -52,6 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       description: meta.description,
       url: hubUrl,
       type: 'website',
+      images: [{ url: 'https://www.metaborong.com/opengraph-image', width: 1200, height: 630, alt: meta.title }],
     },
   }
 }

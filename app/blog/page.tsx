@@ -14,6 +14,13 @@ export const metadata: Metadata = {
     // duplicate-content competitors of the unfiltered index.
     canonical: '/blog',
   },
+  openGraph: {
+    title: 'Blog | Web3, AI agents, and product engineering | Metaborong',
+    description:
+      'Technical writing from the Metaborong engineering team. Post-mortem insights from production AI deployments, smart-contract patterns, and SaaS architecture.',
+    url: 'https://www.metaborong.com/blog',
+    images: [{ url: 'https://www.metaborong.com/opengraph-image', width: 1200, height: 630, alt: 'Blog | Metaborong' }],
+  },
 }
 
 // Per PRD §5.4 — published posts revalidate every 60s; publish/unpublish

@@ -390,14 +390,14 @@ function SedaxCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: str
       {directAnswer && (
         <Section bg="default" maxWidth="xwide" className="pt-[48px] sm:pt-[72px] lg:pt-[100px] pb-[32px] sm:pb-[48px] lg:pb-[60px]">
           <div className="rounded-[16px] border border-border bg-bg-subtle p-[24px] sm:p-[32px] lg:p-[40px]">
-            <span className="block h-[3px] w-[40px] bg-[#047857]" />
-            <span className="mt-[18px] block font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#047857]">In short · What is SEDAX?</span>
+            <span className="block h-[3px] w-[40px] bg-[#3254fb]" />
+            <span className="mt-[18px] block font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#3254fb]">In short · What is SEDAX?</span>
             <p className="mt-[14px] max-w-[54ch] text-[clamp(19px,2.3vw,28px)] font-bold tracking-[-0.025em] leading-[1.25] text-dark">
               SEDAX is a blockchain eKYC platform that verifies identity with Zero-Knowledge Proofs, so users prove who they are without sharing the underlying personal data.
             </p>
             <p className="mt-[14px] max-w-[62ch] text-[15px] sm:text-[16px] leading-[1.6] text-gray">
               Built from the ground up by Metaborong as development partner on self-sovereign identity and W3C Verifiable Credentials.{' '}
-              <a href="https://www.sedax.in/" target="_blank" rel="noopener" className="font-semibold text-[#047857] underline decoration-[#047857]/30 underline-offset-2 hover:decoration-[#047857]">SEDAX</a> replaces centralized document collection with privacy-first, reusable verification.
+              <a href="https://www.sedax.in/" target="_blank" rel="noopener" className="font-semibold text-[#3254fb] underline decoration-[#3254fb]/30 underline-offset-2 hover:decoration-[#3254fb]">SEDAX</a> replaces centralized document collection with privacy-first, reusable verification.
             </p>
             <div className="mt-[22px] flex flex-wrap gap-[8px]">
               {['Zero-Knowledge Proofs', 'Self-sovereign identity', 'Verifiable credentials', 'Reusable KYC'].map((c) => (
@@ -409,19 +409,19 @@ function SedaxCaseStudy({ meta, slug, parsed }: { meta: CaseStudyMeta; slug: str
       )}
 
       <DemoVideo meta={meta} slug={slug} />
-      <WorkBuilt intro={solutionIntro} features={solutionFeatures} mocks={mocks} accent="#047857" />
+      <WorkBuilt intro={solutionIntro} features={solutionFeatures} mocks={mocks} accent="#3254fb" />
 
       {techApproach && (
         <Section bg="default" maxWidth="xwide" className="py-[48px] sm:py-[72px] lg:py-[100px] border-t border-border">
-          <WorkTech intro={SEDAX_TECH_INTRO} nodes={SEDAX_TECH_NODES} accent="#047857" />
+          <WorkTech intro={SEDAX_TECH_INTRO} nodes={SEDAX_TECH_NODES} accent="#3254fb" />
         </Section>
       )}
 
-      <WorkResults results={results} glow="#10b981" />
+      <WorkResults results={results} glow="#3254fb" />
       {faqItems.length > 0 && <FaqSection items={faqItems} />}
-      <WorkRelatedServices related={related} title="How we build platforms like SEDAX" accent="#047857" />
-      {/* SEDAX-scoped accent ramp: AA-safe emerald (the #10b981 hero-glow family). */}
-      <div style={{ '--color-accent': '#047857', '--cta-color': '#047857', '--cta-hover': '#035e44' } as React.CSSProperties}>
+      <WorkRelatedServices related={related} title="How we build platforms like SEDAX" accent="#3254fb" />
+      {/* SEDAX-scoped accent ramp: electric blue matching hero glow */}
+      <div style={{ '--color-accent': '#3254fb', '--cta-color': '#3254fb', '--cta-hover': '#2642d9' } as React.CSSProperties}>
         <ContactCtaSection />
       </div>
       <Footer />
@@ -739,7 +739,7 @@ function WorkRelatedServices({ related, title, accent }: { related: { pillar: Pi
                 <p className="mt-[4px] max-w-[68ch] text-[14px] leading-[1.55] text-gray">{leaf.description}</p>
               </div>
               <span className="flex shrink-0 items-center justify-center text-gray transition-[transform,color] duration-[var(--duration-fast)] group-hover:translate-x-[6px] group-hover:text-[var(--rs-accent)] motion-reduce:group-hover:translate-x-0 mr-2">
-                <span aria-hidden="true" className="text-[22px] font-light leading-none">→</span>
+                <span aria-hidden="true" className="text-[22px] sm:text-[26px] md:text-[30px] font-light leading-none">→</span>
               </span>
             </Link>
           </li>
