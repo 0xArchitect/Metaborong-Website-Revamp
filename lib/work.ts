@@ -24,6 +24,8 @@ export interface CaseStudyMeta {
   bylineRole?: string // E-E-A-T hero byline role; falls back to the SunsetML phrasing
   liveLink?: string // Link to the live site
   bannerLogo?: boolean // Render the animated logo as a wider linked banner
+  bgColor?: string // Custom background hex color (defaults to #0a0a0a)
+  lightTheme?: boolean // Use light theme (dark text) for the case study header
 }
 
 export const caseStudyMeta: Record<string, CaseStudyMeta> = {
