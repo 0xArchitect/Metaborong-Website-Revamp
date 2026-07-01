@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { SmoothScroll } from '@/components/providers/smooth-scroll'
 import { CalInit } from '@/components/providers/cal-init'
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         {/* Vercel Web Analytics is cookieless (no browser identifiers), so it
             sits outside the mb_consent gate that guards the mb_geo cookie. */}
         <Analytics />
+        <GoogleAnalytics gaId="G-2Z0B03N55X" />
         <CalInit />
       </body>
     </html>
