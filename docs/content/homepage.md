@@ -557,7 +557,7 @@ Metaborong builds and ships Web3 protocols, AI agents, and SaaS products — a s
 
 **Wordmark:** `METABORONG` — rendered as live text (not a raster; SSR/SEO-crawlable, crisp, responsive).
 
-**Column — Company:** Work `/#work` · About `/#founders` · Blog `/blog` · FAQ `/#faq` · Contact `/#contact`
+**Column — Company:** Work `/work` · About `/#founders` · Blog `/blog` · FAQ `/#faq` · Contact `/#contact`
 
 **Column — Services:** Web3 / Blockchain · AI Agents · Product Studio — all → `/#services` (service pillar/leaf pages are `robots:noindex,nofollow`; the homepage anchor is the only indexable, SEO-valuable target)
 
