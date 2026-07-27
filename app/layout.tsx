@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { SmoothScroll } from '@/components/providers/smooth-scroll'
 import { CalInit } from '@/components/providers/cal-init'
+import { ClarityInit } from '@/components/providers/clarity-init'
 
 export const metadata: Metadata = {
   title: {
@@ -39,12 +40,18 @@ export default function RootLayout({
           `data-new-gr-c-s-check-loaded`) inject attributes into <body> before
           React hydrates. The flag suppresses *only* the body element's
           attribute mismatch, not anything inside it. */}
-      <body className="overflow-x-hidden" suppressHydrationWarning>
+      {/* overflow-x-clip, not overflow-x-hidden: `hidden` on one axis forces
+          the other axis's computed overflow to `auto`, turning <body> into a
+          scroll container — which breaks `position: sticky` for every
+          pinned-scroll section on the page (What we build, Why us). `clip`
+          suppresses the same horizontal bleed without that side effect. */}
+      <body className="overflow-x-clip" suppressHydrationWarning>
         <SmoothScroll>{children}</SmoothScroll>
         {/* Vercel Web Analytics is cookieless (no browser identifiers), so it
             sits outside the mb_consent gate that guards the mb_geo cookie. */}
         <Analytics />
         <GoogleAnalytics gaId="G-2Z0B03N55X" />
+        <ClarityInit />
         <CalInit />
       </body>
     </html>
