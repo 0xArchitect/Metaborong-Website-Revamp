@@ -192,7 +192,23 @@ export function HeroSection() {
         {/* Right: ASCII-art still — replaces the orb */}
         <div className="relative overflow-hidden h-[52vh] min-h-[360px] sm:h-[58vh] lg:h-auto lg:min-h-0 flex items-center justify-center lg:justify-end">
           {/* Inner box constrains the ASCII-art to a sensible size on tall viewports. */}
-          <div ref={asciiBoxRef} className="relative w-[92%] h-[82%] max-w-[520px] max-h-[700px] sm:w-[86%] sm:h-[80%]">
+          {/* innner shadow white blur-50px */}
+          <div
+            ref={asciiBoxRef}
+            className="relative h-[82%] max-h-[700px] w-full sm:h-[80%]"
+            style={{
+              maskImage: [
+                'linear-gradient(to bottom, transparent 0%, black 18%, black 90%, transparent 100%)',
+                'linear-gradient(to right,  transparent 0%, black 14%, black 90%, transparent 100%)',
+              ].join(', '),
+              WebkitMaskImage: [
+                'linear-gradient(to bottom, transparent 0%, black 18%, black 90%, transparent 100%)',
+                'linear-gradient(to right,  transparent 0%, black 14%, black 90%, transparent 100%)',
+              ].join(', '),
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'destination-in',
+            }}
+          >
             {mountVideo && (
               <video
                 ref={videoRef}

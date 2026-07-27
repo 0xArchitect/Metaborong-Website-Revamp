@@ -6,7 +6,7 @@ import { TrackClick } from '@/components/ui/track-click'
 export function ContactCtaSection() {
   return (
     <Section bg="default" maxWidth="xwide">
-      <div className="relative isolate overflow-hidden bg-canvas text-off-white">
+      <div className="relative isolate overflow-hidden bg-canvas/10 text-off-white">
         {/* Background landscape (Figma Super-Visuals node 1:19), muted to a texture. */}
         <Image
           src="/contact/landscape.webp"
@@ -14,7 +14,7 @@ export function ContactCtaSection() {
           aria-hidden="true"
           fill
           unoptimized
-          className="pointer-events-none z-0 select-none object-cover opacity-[.35] grayscale-[80%] contrast-[1.1]"
+          className="pointer-events-none z-0 select-none object-cover opacity-80 "
         />
         {/* Two stacked background gradients: left-weighted dark→transparent wash +
             top/bottom vignette so the copy clears AA over the image. */}
@@ -33,10 +33,10 @@ export function ContactCtaSection() {
               <span aria-hidden="true" className="inline-block h-[8px] w-[8px] bg-[var(--cta-color,var(--color-brand))]" />
               Got a project in mind?
             </div>
-            <h2 className="max-w-[18ch] text-balance text-[clamp(36px,5vw,64px)] font-extrabold leading-[1.0] tracking-[-0.04em] text-white">
+            <h2 className="max-w-[18ch] text-balance text-[clamp(36px,5vw,64px)] font-bold leading-[1.0] tracking-[-0.04em] text-white">
               Tell us what you are building.
             </h2>
-            <p className="mt-[20px] max-w-[56ch] text-[17px] leading-[1.55] text-white/85">
+            <p className="mt-[20px]  max-w-[56ch] text-[14px] sm:text-base leading-[1.55] text-white/85">
               We build what large agencies under-deliver and freelancers can&apos;t architect, across Web3 protocols, AI agents, and SaaS products. Tell us what you are building. We will tell you how we would approach it, no pitch deck, no fluff, no commitment required.
             </p>
           </div>

@@ -389,13 +389,13 @@ function FitBlock({ pillar, fit }: { pillar: Pillar; fit: LeafContent['fit'] }) 
             <tr>
               <th scope="col" className="w-1/2 align-top px-[16px] py-[20px] md:border-r border-border md:p-[32px]">
                 <span className="flex items-center gap-[8px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-dark md:gap-[10px]">
-                  <Check className="h-[16px] w-[16px] shrink-0" strokeWidth={2.5} style={{ color: pillar.color }} aria-hidden="true" />
+                  {/* <Check className="h-[16px] w-[16px] shrink-0" strokeWidth={2.5} style={{ color: pillar.color }} aria-hidden="true" /> */}
                   This fits when
                 </span>
               </th>
               <th scope="col" className="w-1/2 align-top bg-bg-subtle px-[16px] py-[20px] md:p-[32px]">
                 <span className="flex items-center gap-[8px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-gray md:gap-[10px]">
-                  <X className="h-[16px] w-[16px] shrink-0 text-gray-light" strokeWidth={2.5} aria-hidden="true" />
+                  {/* <X className="h-[16px] w-[16px] shrink-0 text-gray-light" strokeWidth={2.5} aria-hidden="true" /> */}
                   This doesn&apos;t fit when
                 </span>
               </th>

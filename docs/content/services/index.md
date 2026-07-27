@@ -43,7 +43,7 @@ moved here from the old TrustBand.
 > protocols, and SaaS products, from architecture to deployment. Agentic AI runs in production at
 > PredictRAM; DeFi ships audited across EVM, Solana, and Cosmos.
 
-**CTAs:** `Talk to us` (mailto) · `Read case studies` (/#work)
+**CTAs:** `Talk to us` (mailto) · `Read case studies` (/work)
 
 **Spec manifest (full-width `<dl>`, 4 capability cells — not vanity metrics):**
 `Pillars` = AI · Web3 · Product Studio · `Chains` = EVM · Solana · Cosmos ·

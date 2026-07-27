@@ -27,7 +27,7 @@ export function Typewriter({
 }: Props) {
   const step = staggerMs ?? durationMs
   return (
-    <span className={`typewriter ${className}`}>
+    <span className={`typewriter font-medium ${className}`}>
       {lines.map((line, i) => {
         const delay = startDelayMs + i * step
         return (

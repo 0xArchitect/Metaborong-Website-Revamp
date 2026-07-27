@@ -20,7 +20,7 @@ export function ComparisonSection() {
       bg="default"
       maxWidth="xwide"
       reveal={false}
-      className="lg:flex lg:min-h-[calc(100svh-56px)] lg:flex-col lg:justify-center lg:py-[clamp(16px,3svh,48px)]! [&>div]:w-full"
+      className="hidden sm:block lg:flex lg:min-h-[calc(100svh-56px)] lg:flex-col lg:justify-center lg:py-[clamp(16px,3svh,48px)]! [&>div]:w-full"
     >
       <div className="mb-[clamp(14px,2.4svh,28px)]">
         <SectionEyebrow className="mb-[clamp(10px,1.5svh,16px)]">Comparison</SectionEyebrow>

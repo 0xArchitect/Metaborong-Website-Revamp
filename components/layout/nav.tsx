@@ -8,7 +8,7 @@ import { TrackClick } from '@/components/ui/track-click'
 import { pillars, getFeaturedLeaves } from '@/components/sections/services-data'
 
 const navLinks = [
-  { label: 'Work', href: '/#work' },
+  { label: 'Work', href: '/work' },
   { label: 'Team', href: '/#founders' },
   { label: 'FAQ',  href: '/#faq' },
   { label: 'Blog', href: '/blog' },

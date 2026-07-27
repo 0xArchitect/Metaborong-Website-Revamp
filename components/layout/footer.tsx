@@ -1,7 +1,7 @@
 import { Logo } from '@/components/ui/logo'
 
 const companyLinks = [
-  { label: 'Work', href: '/#work' },
+  { label: 'Work', href: '/work' },
   { label: 'About', href: '/#founders' },
   { label: 'Blog', href: '/blog' },
   { label: 'FAQ', href: '/#faq' },

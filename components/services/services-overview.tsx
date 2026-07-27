@@ -55,7 +55,7 @@ function HeroBlock() {
               Talk to us
             </Button>
           </TrackClick>
-          <Button href="/#work" variant="ghost" size="lg">
+          <Button href="/work" variant="ghost" size="lg">
             Read case studies
           </Button>
         </div>

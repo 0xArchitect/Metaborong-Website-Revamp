@@ -152,6 +152,7 @@
     -webkit-font-smoothing: antialiased;
     /* No `scroll-behavior: smooth` — it fights Lenis (components/providers/smooth-scroll.tsx).
        Reduced-motion users get native instant jumps (Lenis is not initialized for them). */
+    overflow-y: overlay; /* Chrome/Safari/Edge: absolute overlay positioning */
   }
 
   body {
@@ -159,6 +160,28 @@
     color: var(--color-dark);
     line-height: 1.5;
     letter-spacing: -0.01em;
+  }
+
+  /* WebKit: Custom absolute overlay scrollbar with transparent track + brand-blue thumb */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-brand);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-brand) 85%, black);
+  }
+
+  /* Firefox standard styling */
+  html {
+    scrollbar-color: var(--color-brand) transparent;
+    scrollbar-width: thin;
   }
 }
 
